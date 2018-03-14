@@ -1,0 +1,143 @@
+<div ng-controller="AuthoringSuiteChallengeQuestionsController">
+    <ul ng-show="challenge.questions.length>0"
+        dnd-list="challenge.questions"
+        dnd-drop="questionDrop(event, index, item, external, type, 'question')"
+        dnd-allowed-types="['question']">
+        <li ng-repeat="question in challenge.questions"
+            dnd-type="'question'"
+            dnd-draggable="question"
+            dnd-moved="challenge.questions.splice($index, 1)"
+            dnd-selected="selectQuestion(challenge, question)"
+            dnd-effect-allowed="move"
+            dnd-disable-if="!questionCanDrag"
+            ng-class="{'selected':challenge.selectedQuestion===question}">
+
+            <div class="panel-group accordion">
+                <div class="panel panel-default" ng-class="{'quest-error':question.hasError}">
+                    <div class="panel-heading" style="padding-left:10px;">
+                        <div class="panel-title" ng-class="{'has-error':question.val.question.req}">
+                            <%/*<div class="text-muted handle" ng-mousedown="questionDragHandleDown($event,question)" ng-mouseup="questionDragHandleUp($event,question)"><span style="margin-left:4px" class="fa fa-ellipsis-v"></span></div>*/%>
+                            <div class="content" style="padding-left:0;">
+                                <!--<input type="text"
+                                       class="form-control"
+                                       placeholder="What is your question?"
+                                       title="What is your question?"
+                                       ng-model="question.question">-->
+                                <ng-quill-editor placeholder="What is your question?" title="What is your question?" ng-model="question.question"></ng-quill-editor>
+                                <div class="text-sm text-danger" ng-if="question.val.question.req">Question cannot be empty.</div>
+                            </div>
+                        </div>
+                        <div class="manage manage-program">
+                            <div style="position: relative;">
+                                <button type="button" class="manage-dropdown btn btn-primary" ng-click="toggleQuestionMenu($event,challenge, question)" tabindex="-1" onfocus="blur()">
+                                    <span class="fa fa-ellipsis-h"></span>
+                                </button>
+                                <div class="dropdown" ng-show="question.menuOpen">
+                                    <ul class="dropdown-menu" style="display:block;margin-left:-30px;margin-top:33px;">
+                                        <li><a href="#"
+                                               ng-click="removeQuestion($event,$index,challenge, quest, program)"
+                                               tabindex="-1"
+                                               onfocus="blur()">delete</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <button type="button" class="manage-expand btn btn-primary" ng-click="toggleQuestion($event,challenge,question)" tabindex="-1" onfocus="blur()">
+                                <span class="icon fa" ng-class="{'fa-chevron-down':!question.expanded, 'fa-chevron-up':question.expanded}"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="panel-collapse collapse" ng-class="{'in':question.expanded}">
+                        <div class="panel-body">
+
+                            <div class="btn-group" style="width:100%;">
+                                <button ng-disabled="!canEditEntity(quest, program)"
+                                        type="button"
+                                        style="width:100%;"
+                                        class="btn btn-primary outline dropdown-toggle"
+                                        aria-expanded="false"
+                                        ng-click="toggleQuestionType($event,challenge,question)">
+                                    {{(question.type.id > 0 ? ('Question Type: ' + question.type.name) : 'Question Type')}} <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" ng-show="question.typeOpen" style="display:block;width:100%;">
+                                    <li ng-repeat="type in questionTypesForDropdown"><a href="#" ng-click="canEditEntity(quest, program) && selectQuestionType($event,question,type)">{{type.name}}</a></li>
+                                </ul>
+                            </div>
+                            <div class="text-sm text-danger" ng-if="question.val.question.type">Must have Question Type.</div>
+
+                            <div>
+                                <br ng-if="question.type.id>0">
+                                <!-- Multiple Choice - Single Select -->
+                                <div ng-show="question.type.id==questionTypes.singleSelect.id">
+                                    <%- partial('manage/views/authoringSuite/program/questionSingleSelect') %>
+                                </div>
+                                <!-- Multiple Choice - Multi Select -->
+                                <div ng-show="question.type.id==questionTypes.multiSelect.id">
+                                    <%- partial('manage/views/authoringSuite/program/questionMultiSelect') %>
+                                </div>
+                                <!-- Poll -->
+                                <div ng-show="question.type.id==questionTypes.poll.id">
+                                    <%- partial('manage/views/authoringSuite/program/questionPoll') %>
+                                </div>
+                                <!-- Poll Multi Select -->
+                                <div ng-show="question.type.id==questionTypes.pollMultiSelect.id">
+                                    <%- partial('manage/views/authoringSuite/program/questionPollMultiSelect') %>
+                                </div>
+                                <!-- Free Response -->
+                                <div ng-show="question.type.id==questionTypes.narrative.id">
+                                    <%- partial('manage/views/authoringSuite/program/questionNarrative') %>
+                                </div>
+                                <!-- Free Fill In The Blank -->
+                                <div ng-show="question.type.id==questionTypes.fillBlank.id">
+                                    <%- partial('manage/views/authoringSuite/program/questionFillBlank') %>
+                                </div>
+                                <!-- Item Matching -->
+                                <div ng-show="question.type.id==questionTypes.matching.id">
+                                    <%- partial('manage/views/authoringSuite/program/questionMatching') %>
+                                </div>
+                                <!-- Short Answer -->
+                                <div ng-show="question.type.id==questionTypes.shortAnswer.id">
+                                    <%- partial('manage/views/authoringSuite/program/questionShortAnswer') %>
+                                </div>
+                                <!-- Contrasting -->
+                                <div ng-show="question.type.id==questionTypes.contrasting.id">
+                                    <%- partial('manage/views/authoringSuite/program/questionContrasting') %>
+                                </div>
+                                <!-- Sentence / Phrase Builder -->
+                                <div ng-show="question.type.id==questionTypes.sentenceBuilder.id">
+                                    <%- partial('manage/views/authoringSuite/program/questionSentenceBuilder') %>
+                                </div>
+                                <!-- Free Contrasting -->
+                                <div ng-show="question.type.id==questionTypes.freeContrasting.id">
+                                    <%- partial('manage/views/authoringSuite/program/questionFreeContrasting') %>
+                                </div>
+                                <!-- Sequencing -->
+                                <div ng-show="question.type.id==questionTypes.sequencing.id">
+                                    <%- partial('manage/views/authoringSuite/program/questionSequencing') %>
+                                </div>
+                                <!-- Grouping -->
+                                <div ng-show="question.type.id==questionTypes.grouping.id">
+                                    <%- partial('manage/views/authoringSuite/program/questionGrouping') %>
+                                </div>
+                            </div>
+                            <div ng-if="!(question.type.id==questionTypes.poll.id || question.type.id==questionTypes.pollMultiSelect.id || question.type.id==questionTypes.narrative.id)">
+                                <%- partial('manage/views/authoringSuite/program/questionHints') %>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </li>
+    </ul>
+
+    <div ng-show="challenge.questions.length<=0" style="padding-bottom: 15px;">
+        <button ng-disabled="!canEditEntity(quest, program)"
+                type="button"
+                class="btn btn-primary outline btn-block"
+                ng-click="addQuestion(challenge)">
+            <span class="icon fa fa-plus" title="Add Question"></span> Add Question
+        </button>
+    </div>
+</div>

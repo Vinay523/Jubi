@@ -1,0 +1,295 @@
+<div ng-controller="AuthoringSuiteProgramTodoEditController" ng-show="!loading.isLoading" class="todo-item">
+    <div class="row page-heading panel">
+        <div class="col-xs-12">
+            <%- partial('manage/views/authoringSuite/todos/todoEditHeader') %>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-8 col-lg-9">
+
+            <div class="loading" ng-show="isSaving">
+                <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+
+                <div>One moment please...</div>
+            </div>
+
+            <div ng-show="!isSaving">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading" ng-class="{'has-error':todo.val.title.req}">
+                        <input type="text" class="form-control" ng-model="todo.title" placeholder="Do activity title.">
+
+                        <div class="text-sm text-danger" ng-if="todo.val.title.req">Please enter a title.
+                        </div>
+                    </div>
+                    <div class="panel-body form-horizontal">
+
+                        <div class="form-group">
+                            <label class="col-xs-2 control-label">Instructions</label>
+
+                            <div class="col-xs-10">
+                                <textarea class="form-control" rows="2" ng-model="todo.instructions"
+                                          placeholder="Do activity instructions."></textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" ng-class="{'has-error':todo.val.points.fmt || todo.val.points.range}">
+                            <label class="col-xs-2 control-label">Points</label>
+
+                            <div class="col-xs-10">
+                                <input ng-readonly="!canEditTodoEntity(todo, program)"
+                                       allow-decimal="false" number-mask type="text" class="form-control"
+                                       ng-model="todo.points"
+                                       placeholder="Do activity points." style="max-width: 150px;">
+
+                                <div class="text-sm text-danger" ng-if="todo.val.points.fmt">Please enter a valid
+                                    number.
+                                </div>
+                                <div class="text-sm text-danger" ng-if="todo.val.points.range">Please enter a number
+                                    between 1 and 1000.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error':todo.val.dueDate.req}">
+                            <label class="col-xs-2 control-label">Due Date</label>
+
+                            <div class="col-xs-3 todo-due-date" style="padding-top:7px;">
+                                <label ng-click="selectByUser(todo)">
+                                    <i class="fa"
+                                       ng-class="{'fa-square-o':!todo.due.byUser,'fa-check-square-o':todo.due.byUser}"></i>
+                                    Specified by user.
+                                </label>
+                            </div>
+                            <div class="col-xs-3 todo-due-date" style="padding-top:7px;">
+                                <label ng-click="selectByAuthor(todo)">
+                                    <i class="fa"
+                                       ng-class="{'fa-square-o':!todo.due.byAuthor,'fa-check-square-o':todo.due.byAuthor}"></i>
+                                    Specified by author.
+                                </label>
+
+                                <div class="input-group todo-datepicker">
+                                    <input type="text" class="form-control" ng-model="todo.due.date"
+                                           is-open="todo.due.open"
+                                           datepicker-popup="MM/dd/yyyy" readonly ng-disabled="!todo.due.byAuthor"
+                                           ng-click="todo.due.open=true"
+                                           datepicker-options="{showWeeks:false}" min-date="today"/>
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary"
+                                                            ng-click="todo.due.open=true"
+                                                            ng-disabled="!todo.due.byAuthor">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </button>
+                                                </span>
+                                </div>
+                                <div class="text-sm text-danger" ng-if="todo.val.dueDate.req">Please select a due
+                                    date.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-xs-12 col-sm-2 text-right">
+                                <label for="exLink" class="control-label" style="padding-top:0;">Download
+                                    Content</label>
+                            </div>
+                            <div class="col-xs-10">
+                                <div ng-if="todo.resource.url">
+                                    <div class="row">
+                                        <div class="col-xs-1 resourceImage">
+                                            <i class="fa fa-file fa-4x text-muted"></i><br>
+                                            <i class="fa fa-times-circle remove pull-right" title="Remove Content"
+                                               ng-click="removeDownloadContent($event, todo)"></i>
+                                        </div>
+                                        <div class="col-xs-11">
+                                            <div class="form-group" style="margin:0 0 15px;">
+                                                <input type="text" ng-model="todo.resource.name"
+                                                       placeholder="Content name." class="form-control">
+                                            </div>
+                                            <textarea ng-model="todo.resource.description"
+                                                      placeholder="Content description." class="form-control"
+                                                      rows="1"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-if="!todo.resource.url">
+                                    <div ng-if="todo.resource.uploading">
+                                        <i class="fa fa-spinner fa-spin"></i>
+                                        Uploading content...
+                                    </div>
+                                    <div ng-if="!todo.resource.uploading">
+                                        <div class="btn btn-primary" ng-file-select
+                                             ng-file-change="uploadDownloadContent($files, todo)">Choose Content
+                                        </div>
+                                        <div class="text-sm text-danger" ng-if="todo.val.resource.type">Unsupported file
+                                            type.
+                                        </div>
+                                        <div class="text-sm text-danger" ng-if="todo.val.resource.size">File is too
+                                            large.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Do Activity Assignment
+                    </div>
+                    <div class="panel-body badge-requirements">
+
+                        <div ng-if="quests.length<=0 && levels.length<=0">
+                            <p class="text-xl text-muted text-center" style="padding:50px 0;">
+                                No quests or levels defined.
+                            </p>
+                        </div>
+
+                        <div class="col-xs-6" ng-if="programHasQuests(program)">
+                            <h4 style="margin-bottom: 15px;">Part of quest</h4>
+
+                            <div ng-if="level.quests.length > 0" ng-repeat="level in levels">
+                                <div class="text-muted">{{level.title}}</div>
+                                <div class="badge-requirement-item" ng-repeat="quest in level.quests"
+                                     style="margin-left:20px;">
+                                    <label ng-class="{'text-muted':!quest.available || !canEditTodoEntity(todo, program) || !canEditEntity(quest, program)}"
+                                           ng-click="toggleQuest(todo, quest)">
+                                        <i class="fa"
+                                           ng-class="{'fa-square-o':!quest.selected,'fa-check-square-o':quest.selected}"></i>{{quest.title}}
+                                        <span ng-if="!quest.available"
+                                              class="text-muted text-sm">(already assigned)</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div ng-if="quests.length>0" class="text-muted" style="margin-top:30px;">
+                                Quests not in a level.
+                            </div>
+
+                            <div class="badge-requirement-item" ng-repeat="quest in quests">
+                                <label ng-class="{'text-muted':!quest.available || !canEditTodoEntity(todo, program) || !canEditEntity(quest, program)}"
+                                       ng-click="toggleQuest(todo, quest)">
+                                    <i class="fa"
+                                       ng-class="{'fa-square-o':!quest.selected,'fa-check-square-o':quest.selected}"></i>{{quest.title}}
+                                    <span ng-if="!quest.available" class="text-muted text-sm">(already assigned)</span>
+                                </label>
+                            </div>
+
+                        </div>
+
+                        <div class="col-xs-6" ng-if="levels.length > 0">
+                            <h4 style="margin-bottom: 15px;">Part of level</h4>
+
+                            <div class="badge-requirement-item" ng-repeat="level in levels">
+                                <label ng-class="{'text-muted':!level.available || !canEditTodoEntity(todo, program) || levelHasLockedContent(level)}"
+                                       ng-click="toggleLevel(todo, level)">
+                                    <i class="fa"
+                                       ng-class="{'fa-square-o':!level.selected,'fa-check-square-o':level.selected}"></i>{{level.title}}
+                                    <span ng-if="!level.available" class="text-muted text-sm">(already assigned)</span>
+                                </label>
+
+                                <div ng-repeat="quest in level.quests">
+                                    <div class="text-muted text-sm" style="margin-left:20px;">- {{quest.title}}</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Do Activity Verifications
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-xs-2 control-label">Verification Instructions</label>
+
+                                <div class="col-xs-10">
+                                <textarea class="form-control" rows="2" ng-model="todo.verificationInstructions"
+                                          placeholder="Do activity verification instructions."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <label ng-click="todo.validate = !canEditTodoEntity(todo, program) ? todo.validate : !todo.validate; programEditFrm.$setDirty();"
+                                           ng-class="{'text-muted': !canEditTodoEntity(todo, program)}">
+                                        <i class="fa"
+                                           ng-class="{'fa-square-o':!todo.validate,'fa-check-square-o':todo.validate}"></i>
+                                        {{getBuddyLabel(true)}} Validated
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <label ng-click="todo.allowUserMediaUpload = !canEditTodoEntity(todo, program) ? todo.allowUserMediaUpload : !todo.allowUserMediaUpload ; programEditFrm.$setDirty();"
+                                           ng-class="{'text-muted': !canEditTodoEntity(todo, program)}">
+                                        <i class="fa"
+                                           ng-class="{'fa-square-o':!todo.allowUserMediaUpload,'fa-check-square-o':todo.allowUserMediaUpload}"></i>
+                                        Enable user media upload
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div><label>Reflection Questions:</label></div>
+                                <div ng-repeat="verification in todo.verifications">
+                                    <div class="col-xs-11">
+                                        <select ng-if="!verification.custom"
+                                                ng-model="verification.predefinedQuestionId"
+                                                ng-change="predefinedQuestionSelected(verification)"
+                                                style="width:100%"
+                                                ng-disabled="!canEditTodoEntity(todo, program)"
+                                                ng-options="question.id as question.value for question in predefinedVerificationQuestions">
+                                        </select>
+                                        <input ng-if="verification.custom"
+                                               placeholder="Question..."
+                                               type="text"
+                                               ng-model="verification.challenge.questions[0].question"
+                                               style="width:100%"/>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <a href="javascript:void(0)" style="color:black"
+                                           ng-if="canEditTodoEntity(todo, program)"
+                                           ng-click="removeVerification(verification)"><span class="fa fa-close"></span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="btn-group btn-group-justified" role="group">
+                                    <a href="javascript:void(0)"
+                                       ng-click="canEditTodoEntity(todo, program) && addVerification($event)"
+                                       ng-disabled="!canEditTodoEntity(todo, program)"
+                                       class="btn btn-primary btn-sm"><span
+                                                class="icon fa fa-bookmark"></span><span
+                                                class="hidden-xs hidden-sm"><br/>Add Question</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-4 col-lg-3">
+            <%- partial('manage/views/authoringSuite/todos/sidebar', {hidePublish: true}) %>
+        </div>
+    </div>
+</div>

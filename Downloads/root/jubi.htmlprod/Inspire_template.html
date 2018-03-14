@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Inspire Appreciate</title>
+    <link rel="stylesheet" href="./css/bootstrap-multiselect.css">
+    
+<link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="./bootstrap/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="./css/styles.css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+<script src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="./js/bootstrap.min.js"></script>
+<script src="./js/bootstrap-multiselect.js"></script>
+<script>
+    $(document).ready(function(){
+    
+     $('#click-to-add').multiselect({ 
+         
+           enableFiltering:true         
+           
+     });
+     
+     } );
+     function valueChanged(){
+         if(jQuery('input[id=radio1]').is(':checked')){
+         $(' .multiselect-native-select').hide();  
+    }
+      else if(jQuery('input[id=radio2]').is(':checked')){
+    
+      $(' .multiselect-native-select').show();  
+    }
+    else  if(jQuery('input[id=radio3]').is(':checked')){
+         $(' .multiselect-native-select').show();  
+    } 
+     }
+     
+      
+    
+</script>
+    </head>
+    <body>
+         
+        
+    <div class="template-wrapper col-lg-12 col-md-12 col-sm-12 col-xs-12 inspire-wrapper">
+           <div class="program-body">
+            <div class="topbar row">
+            <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2 quest-section">
+                <a class="questboard-icon" href="#"><i class="fa fa-square" aria-hidden="true"></i>
+                <i class="fa fa-square" aria-hidden="true"></i>
+                <i class="fa fa-square" aria-hidden="true"></i>
+                <i class="fa fa-square" aria-hidden="true"></i>
+                </a>
+                <p class="heading">QuestBoard</p>
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 zeropadding">
+                <div class="greenbutton"><img src="./images/Green Left Arrow.png"></div>
+                <div class="greenbutton-mobile"><img src="./images/mobileleftgreenarrow.png"></div>
+                <div class="current-activity">
+                    <p class="currentactivity-heading"><span>Current Activity</span><span class="activity">INSPIRE</span></p>
+                     <p><span class="currentactivity-desc">Ready, Set, Inspire</span></p>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-5 zeropadding">
+                <div class="nextactivity">
+                    <p class="nextactivity-heading"><span>Next Activity</span><span class="activity">LEARN</span></p>
+                    <p class="nextactivity-desc">Authenticity Advantage</p>
+                </div>
+                <div  class="yellowbutton">
+                 <img src="./images/top-navigation-arrow.svg"/></div>
+                  <div class="yellowbutton-mobile"> <img src="./images/yellow_mobile.png"/></div>
+            </div>
+            </div>
+           
+          <div class="Inspire-content row">
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 appreciate-content zeropadding">
+   
+   <div class="col-lg-6 col-md-6 col-push-sm-12 col-push-xs-12 zeropadding mobileview-down">
+       <p class="tooltip">Share an Appreciation<img src="./images/info-circle.svg"/><span class="tooltiptext">Encouraging others inspires them to keep making progress. Make a difference for someone else by sending words of encouragement, a personal video message, or another helpful video or image.</span></p>
+   </div>
+   <div class="col-lg-6 col-md-6 col-pull-sm-12 col-pull-xs-12 zeropadding mobileview-up">
+    <ul class="inspire-tabs">
+        <li class="active"><a href="#">Appreciate</a></li>
+        <li class="border-right"><a href="#" >Story</a></li>
+        <li><a href="#" >Encourage</a></li>
+    </ul>
+   </div>
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding">
+   <textarea class="appreciation-message" placeholder="What is your message?"></textarea>
+     </div>
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding">
+      <p class="add-media">
+     <a href="#" data-toggle="modal" data-target="#myModal"><img src="./images/media-button-icon.png" /> ADD MEDIA</a>
+    </p>  
+    </div>
+    <div class="media-uploaded col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 media-image"><img class="media-icon " src="./images/media-placeholder.svg"/></div>
+        <div class="media-info col-lg-9 col-md-9 col-sm-9 col-xs-9">
+            <textarea class="media-link" placeholder="Media file">MyPic.jpg</textarea>
+            <textarea class="media-desc" placeholder="Description">Description</textarea>
+        </div>
+        <div class="close col-lg-1 col-md-1 col-sm-1 col-xs-1"><img src="./images/x.svg"/></div>
+    </div>
+      <div class="col-lg-6 col-md-6 col-sm-0 col-xs-0"></div>
+  
+   <div class="appreciate-recommendation col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+       <p>Who would you like to Appreciate?</p>
+       <form class="choose-option">
+           <div class="radio1 form-group">
+           <input type="radio" name="radio" value="Everyone" id="radio1" checked="checked" onchange="valueChanged()"><label>Everyone</label>
+            </div>
+            <div class="radio2 form-group">
+           <input type="radio" name="radio" value="Groups" id="radio2" onchange="valueChanged()"><label>Groups</label>
+            </div>
+            <div class="radio3 form-group">
+           <input type="radio" name="radio" value="Individuals" id="radio3" onchange="valueChanged()"><label>Individuals</label>
+            </div>
+          <select id="click-to-add" multiple="multiple">
+<option value="Chad Osgood">Chad Osgood</option>
+<option value="Loren Eckart">Loren Eckart</option>
+<option value="Barbara Keihm">Barbara Keihm</option>
+<option value="Yogitha Vittala">Yogitha Vittala</option>
+<option value="Manisha">Manisha</option>
+<option value="Karthik">Karthik</option>
+</select>
+<div class="save-users"><p><a href="#" class="SAVE-USERS-TO-GROUP">SAVE USERS TO GROUP</a></p>
+<p class="user1"><span>Chad Osgood</span><span><a href="#"><img src="./images/blue-x.svg"/></a></span></p>
+<p class="user2"><span>Yogitha Vittala</span><span><a href="#"><img src="./images/blue-x.svg"/></a></span></p>
+</div>
+       </form>
+   </div>
+
+</div>
+          </div>
+         
+             <div class="bottom-bar row bottom-bar-inspire">
+                  <div class="col-lg-5 col-md-5 col-sm-2 col-xs-2"></div>
+                <div class="submit col-lg-2 col-md-2 col-sm-3 col-xs-3">
+                  <a href="#">SUBMIT</a>
+                </div>
+               <div class="activity-points-earned col-lg-3 col-md-3 col-sm-4 col-xs-4">
+                    <p>Activity Points Earned: <span class="points-earned">0</span><span class="out-of">/</span><span class="total-activity-points">40</span></p>
+                  
+                </div>
+                
+                <div class="discussion col-lg-2 col-md-2 col-sm-3 col-xs-3">
+                    <img src="./images/Speechbubble.png"><span class="count">2</span>
+                    <p>Discussion</p> 
+                </div>
+                
+            </div>
+        </div>
+         <div id="myModal" class="modal fade" role="dialog">
+             <div class="modal-dialog modal-lg">
+   <div class="modal-content add-modal">
+        <div class="addverification">Add Verification</div>
+        <div class="upload-from-computer"><a href="#">UPLOAD FROM YOUR COMPUTER</a></div>
+        <hr>
+        <div class="embed-media">
+           <div>
+                 <p>Embed Media</p>
+                <textarea></textarea>
+				</div>
+                
+            <div class="float-left text-left"><a href="#" class="cancelbutton" data-dismiss="modal">CANCEL</a></div><div class="float-right text-right"><a href="#" class="addbutton">ADD</a></div>
+        </div>
+    </div>
+      </div>
+    </div>
+       </div>
+       
+    </body> 
+</html>

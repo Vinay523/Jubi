@@ -1,0 +1,59 @@
+<div ng-controller="AuthoringSuiteQuestsEditManagerController as c"
+     ng-init="c.init('<%- model.slug %>', <%- model.restore %>)" onbeforeunload="angular.scope().onBack()" ng-cloak>
+
+    <div class="loading-overlay" style="left:-15px;right:-15px" ng-show="loading.isLoading">
+        <div class="loading">
+            <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+            <div>One moment please...</div>
+        </div>
+    </div>
+    <form action="" method="post" novalidate name="programEditFrm">
+        <div ng-show="!loading.isLoading" ng-controller="AuthoringSuiteQuestsEditController">
+            <div ng-click="offCanvasClick($event)" ng-controller="AuthoringSuiteQuestEditController">
+
+                <div class="row page-heading panel">
+                    <div class="col-xs-12" ng-show="inState=='quests'">
+                        <%- partial('manage/views/authoringSuite/program/questsEditHeader') %>
+                    </div>
+                    <div class="col-xs-12" ng-show="inState=='quest' || inState=='levelQuest'">
+                        <%- partial('manage/views/authoringSuite/program/questEditHeader') %>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-8 col-lg-9">
+                        <div id="bodyCanvas">
+                            <div ng-show="inState=='quests'">
+                                <%- partial('manage/views/authoringSuite/program/questsEdit') %>
+                            </div>
+                            <div ng-show="inState=='quest' || inState=='levelQuest'">
+                                <div ng-if="quest.type=='L'">
+                                    <%- partial('manage/views/authoringSuite/program/questEdit') %>
+                                </div>
+                                    <div ng-if="quest.type=='I'" ng-controller="AuthoringSuiteInspireEditController" ng-init="loadQuest()">
+                                        <%- partial('manage/views/authoringSuite/program/questInspireEdit') %>
+                                    </div>
+                                
+                                    <div ng-if="quest.type=='T'">
+                                        <%- partial('manage/views/authoringSuite/program/questDoEdit') %>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div id="sidebarCanvas" class="col-xs-12 col-md-4 col-lg-3">
+                        <div ng-show="inState=='quests'">
+                            <%- partial('manage/views/authoringSuite/program/questsEditSidebar') %>
+                        </div>
+                        <div ng-show="inState=='quest' || inState=='levelQuest'">
+                            <%- partial('manage/views/authoringSuite/program/questEditSidebar') %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<%- partial('partials/videoPlayer') %>
+<%- partial('partials/youTubePlayer') %>
+

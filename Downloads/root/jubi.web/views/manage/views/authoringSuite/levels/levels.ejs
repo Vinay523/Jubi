@@ -1,0 +1,53 @@
+<div ng-controller="AuthoringSuiteProgramLevelsController as c" ng-click="offClick($event)" class="level-edit" ng-init="c.init('<%- model.slug %>','<%- model.restore %>')" >
+
+    <div class="loading-overlay" style="left:-15px;right:-15px" ng-show="loading.isLoading">
+        <div class="loading">
+            <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+            <div>One moment please...</div>
+        </div>
+    </div>
+
+    <form action="" method="post" novalidate name="programEditFrm">
+        <div ng-show="!loading.isLoading">
+
+            <div class="row page-heading panel">
+                <div class="col-xs-12">
+                    <%- partial('manage/views/authoringSuite/levels/header') %>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-8 col-lg-9">
+
+                    <div style="left:-15px;right:-15px" ng-show="isSaving">
+                        <div class="loading">
+                            <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+                            <div>One moment please...</div>
+                        </div>
+                    </div>
+
+                    <div id="bodyCanvas" ng-style="{ 'height' : canvasHeight + 'px' }" style="overflow-y:auto" ng-show="!isSaving">
+                        <div ng-if="program.levels.length <= 0">
+                            <p class="text-xl text-muted text-center" style="padding:50px 0;">No levels defined.<br>Click
+                                the Add Level button below to get started.</p>
+                        </div>
+                        <div ng-if="program.levels.length > 0">
+                            <%- partial('manage/views/authoringSuite/levels/levelEdit') %>
+                        </div>
+
+                        <div class="btn-group btn-group-justified" role="group" style="padding-bottom:20px;">
+                            <a href="#" ng-click="addLevel($event)" class="btn btn-primary btn-lg"><span
+                                        class="fa fa-line-chart"></span><span
+                                        class="hidden-xs hidden-sm"><br/>Add Level</span></a>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="sidebarCanvas" style="overflow-y:auto" class="col-xs-12 col-md-4 col-lg-3">
+                    <%- partial('manage/views/authoringSuite/levels/sidebar') %>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<%- partial('modals/confirmModal') %>
+

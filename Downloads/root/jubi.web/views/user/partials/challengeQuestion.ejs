@@ -1,0 +1,215 @@
+<div>
+    <!--<p class="question" ng-bind-html="toHtml(question.question)"></p>-->
+    <ng-quill-editor ng-model="question.question" read-only="true"></ng-quill-editor>
+
+    <div ng-if="question.type.id==questionTypes.singleSelect.id">
+        <div class="text-sm" style="font-size:18px;"><em>(select one)</em></div>
+        <div class="answers col-lg-12 col-md-12 col-sm-12 col-xs-12" style="z-index: 1;position: relative;">
+            <div class="answer" ng-repeat="answer in question.answers">
+                <label><input autocomplete="off" ng-model="question.selected" ng-selected="question.selected == challenge.result.items[0].answerId" value="{{$index}}" type="radio" name="answer">{{answer.answer}}</label>
+            </div>
+        </div>
+    </div>
+    <div ng-if="question.type.id==questionTypes.multiSelect.id">
+        <div class="text-sm" style="font-size:18px;"><em>(select all that apply)</em></div>
+        <div class="answers col-lg-12 col-md-12 col-sm-12 col-xs-12" style="z-index: 1;position: relative;">
+            <div class="answer" ng-repeat="answer in question.answers">
+                <label><input autocomplete="off" ng-model="answer.isSelected" ng-selected="answer.isSelected == challenge.result.items[0].answerId" value="{{$index}}" name="answer" type="checkbox">{{answer.answer}}</label>
+            </div>
+        </div>
+    </div>
+    <div ng-if="question.type.id==questionTypes.poll.id">
+        <div class="text-sm" style="font-size:18px;"><em>(select one)</em></div>
+        <div class="answers col-lg-12 col-md-12 col-sm-12 col-xs-12" style="z-index: 1;position: relative;">
+            <div class="answer" ng-repeat="answer in question.answers">
+                <label><input autocomplete="off" ng-model="answer.selected" type="radio" name="answer" value="{{$index}}">{{answer.answer}}</label>
+            </div>
+        </div>
+    </div>
+    <div ng-if="question.type.id==questionTypes.pollMultiSelect.id">
+        <div class="text-sm" style="font-size:18px;"><em>(select {{question.selectCount == 0 ? '1 or more' : question.selectCount}})</em></div>
+        <div class="answers col-lg-12 col-md-12 col-sm-12 col-xs-12" style="z-index: 1;position: relative;">
+            <div class="answer" ng-repeat="answer in question.answers">
+                <label><input autocomplete="off" ng-model="answer.selected" type="checkbox" name="answer" value="{{$index}}">{{answer.answer}}</label>
+            </div>
+        </div>
+    </div>
+    <div ng-if="question.type.id==questionTypes.narrative.id">
+        <div class="text-sm" style="font-size:18px;"><em>(write your narrative)</em></div>
+        <div class="answers col-lg-12 col-md-12 col-sm-12 col-xs-12" style="z-index: 1;position: relative;">
+            <div class="answer">
+                <textarea autocomplete="off" class="form-control answerText4" rows="6" name="answer" ng-model="question.result"></textarea>
+            </div>
+        </div>
+    </div>
+    <div ng-if="question.type.id==questionTypes.fillBlank.id">
+        <div class="text-sm" style="font-size:18px;"><em>(write your answer)</em></div>
+        <div class="answers col-lg-12 col-md-12 col-sm-12 col-xs-12" style="z-index: 1;position: relative;">
+            <div class="answer blank" ng-repeat="answer in question.answers">
+                <span ng-if="!$first">&nbsp;</span>
+                <span ng-if="!answer.correct">{{answer.answer}}</span>
+                <input autocomplete="off" ng-if="answer.correct" ng-model="answer.result" name="answer" type="text" value="{{answer.result}}">
+            </div>
+        </div>
+    </div>
+    <div ng-if="question.type.id==questionTypes.matching.id">
+        <div class="text-sm" style="font-size:18px;"><em>(drag-n-drop or use the up/down arrows to match items in the right column to those in the left)</em></div>
+        <div class="answers matching row col-lg-12 col-md-12 col-sm-12 col-xs-12" style="z-index: 1;position: relative;">
+            <!--removed col-lg-6 col-md-6 from above div.-->
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <ul dnd-list="question.answers"
+                    dnd-allowed-types="['matchAnswer']">
+                    <li class="dndquestions"
+                        ng-repeat="answer in question.answers"
+                        dnd-type="'matchAnswer'"
+                        dnd-draggable="false"
+                        dnd-disable-if="true">
+                        <div class="match-answer">
+                            {{answer.answer}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+
+                <ul dnd-list="question.matchingItems"
+                    dnd-drop="matchItemDrop(event, index, item, external, type, 'matchItem', question)"
+                    dnd-allowed-types="['matchItem']">
+                    <li class="dndanswers"
+                        ng-repeat="matchItem in question.matchingItems"
+                        dnd-type="'matchItem'"
+                        dnd-draggable="matchItem"
+                        dnd-moved="question.matchingItems.splice($index, 1)"
+                        dnd-selected="question.selectedMatchItem=matchItem"
+                        dnd-effect-allowed="move"
+                        dnd-disable-if="false"
+                        ng-class="{'selected':question.selectedMatchItem===matchItem}">
+                        <div class="match-item">
+                            <a href="#" class="match-item-up" title="Move up." ng-click="matchItemMoveUp($event,question,$index,matchItem)"><i class="fa fa-angle-up"></i></a>
+                            <a href="#" class="match-item-down" title="Move down." ng-click="matchItemMoveDown($event,question,$index,matchItem)"><i class="fa fa-angle-down"></i></a>
+                            {{matchItem.match}}
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+    </div>
+    <div ng-if="question.type.id==questionTypes.shortAnswer.id">
+        <div class="text-sm" style="font-size:18px;"><em>(provide a short answer)</em></div>
+        <div class="answers col-lg-12 col-md-12 col-sm-12 col-xs-12" style="z-index: 1;position: relative;">
+            <div class="answer">
+                <textarea rows="1" class="form-control answerText3" name="answer" ng-model="question.result" ng-keyup="autoResizeHeight()"></textarea>
+            </div>
+        </div>
+    </div>
+    <div ng-if="question.type.id==questionTypes.contrasting.id">
+        <div class="text-sm" style="font-size:18px;"><em>(write your answers)</em></div>
+        <div class="answers col-lg-12 col-md-12 col-sm-12 col-xs-12" style="z-index: 1;position: relative;">
+            <div ng-if="question.similarityResults.length > 0">
+                <h5>Similarities:</h5>
+                <div ng-repeat="answer in question.similarityResults" class="answer">
+                    <textarea rows="1" class="form-control" name="answer" ng-model="answer.result" style="overflow-y:auto;"></textarea>
+                </div>
+            </div>
+            <div ng-if="question.differenceResults.length > 0">
+                <h5>Differences:</h5>
+                <div ng-repeat="answer in question.differenceResults" class="answer">
+                    <textarea rows="1" class="form-control" name="answer" ng-model="answer.result" style="overflow-y:auto;"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="question.type.id==questionTypes.sentenceBuilder.id">
+        <div class="text-sm" style="font-size:18px;"><em>(Build the sentence by clicking the phrases)</em></div>
+        <div class="answers builder col-lg-6 col-md-6 col-sm-12 col-xs-12" style="z-index: 1;position: relative;">
+            <div>
+                <a href="#" class="builder-item" ng-repeat="item in question.items" ng-click="builderItemClick($event,question,$index,item)">
+                    <i class="fa fa-check" ng-show="item.inResult"></i>
+                    {{item.answer}}
+                </a>
+            </div>
+
+            <div class="builder-result" ng-show="question.result">
+                <span>{{question.result}}</span>
+            </div>
+            <div class="text-sm" ng-show="question.result">
+                (<a class="builder-clear" href="#" ng-click="builderClear($event,question)">clear</a>)
+            </div>
+        </div>
+    </div>
+    <div ng-if="question.type.id==questionTypes.sequencing.id">
+        <div class="text-sm" style="font-size:18px;"><em>(drag-n-drop or use up/down buttons to order item from top to bottom)</em></div>
+        <div class="answers matching col-lg-6 col-md-6 col-sm-12 col-xs-12" style="z-index: 1;position: relative;">
+
+            <ul dnd-list="question.seqItems"
+                dnd-drop="seqItemDrop(event, index, item, external, type, 'seqItem', question)"
+                dnd-allowed-types="['seqItem']">
+                <li ng-repeat="seqItem in question.seqItems"
+                    dnd-type="'seqItem'"
+                    dnd-draggable="seqItem"
+                    dnd-moved="question.seqItems.splice($index, 1)"
+                    dnd-selected="question.selectedSeqItem=seqItem"
+                    dnd-effect-allowed="move"
+                    dnd-disable-if="false"
+                    ng-class="{'selected':question.selectedSeqItem===seqItem}" class="seqquestion">
+                    <div class="match-item-sequence">
+                        <a href="#" class="match-item-up" title="Move up." ng-click="seqItemMoveUp($event,question,$index,seqItem)"><i class="fa fa-angle-up"></i></a>
+                        <a href="#" class="match-item-down" title="Move down." ng-click="seqItemMoveDown($event,question,$index,seqItem)"><i class="fa fa-angle-down"></i></a>
+                        {{seqItem.answer}}
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <div ng-if="question.type.id==questionTypes.grouping.id">
+        <div class="text-sm" style="font-size:18px;"><em>(drag-n-drop items on right to a group)</em></div>
+        <div class="row answers grouping col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class=" col-lg-6 col-md-6 col-sm-6 col-xs-6">
+
+                <div class="group" ng-repeat="answer in question.answers">
+                    <h4>{{answer.answer}}</h4>
+                    <ul dnd-list="answer.resultItems"
+                        dnd-drop="groupResultItemDrop(event, index, item, answer)"
+                        dnd-allowed-types="['groupItem']"
+                        class="group-results">
+                        <li ng-repeat="item in answer.resultItems"
+                            dnd-type="'groupItem'"
+                            dnd-draggable="item"
+                            dnd-moved="answer.resultItems.splice($index, 1)"
+                            dnd-selected="answer.selectedResultItem=item"
+                            dnd-effect-allowed="move"
+                            dnd-disable-if="false"
+                            ng-class="{'selected':answer.selectedResultItem===item}" class="groupquestion">
+                            <div class="group-result-item">
+                                <a href="#" title="Remove group item." ng-click="groupItemResultRemove(question,answer,$index,item)"><i class="fa fa-times"></i></a>
+                                {{item.item}}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class=" col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <ul dnd-list="question.groupItems"
+                    dnd-drop="groupItemDrop(event, index, item, question)"
+                    dnd-allowed-types="['groupItem']">
+                    <li ng-repeat="item in question.groupItems"
+                        dnd-type="'groupItem'"
+                        dnd-draggable="item"
+                        dnd-moved="question.groupItems.splice($index, 1)"
+                        dnd-selected="question.selectedGroupItem=item"
+                        dnd-effect-allowed="move"
+                        dnd-disable-if="false"
+                        ng-class="{'selected':question.selectedGroupItem===item}" class="groupquestion">
+                        <div class="group-item">
+                            {{item.item}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

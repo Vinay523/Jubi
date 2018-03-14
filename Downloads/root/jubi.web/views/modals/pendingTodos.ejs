@@ -1,0 +1,55 @@
+<script type="text/ng-template" id="pendingTodos.html">
+    <div class="modal-content getBackColor">
+        <div class="text-center modal-header Do-Activity-Name zeropadding">
+            Do Activities Awaiting Verification
+        </div>
+        <div class="modal-body">
+            <div ng-controller="TodoManagementController as c" ng-init="c.init('<%- model.slug %>', '<%- model.userId %>')" ng-cloak>
+                <section class="forum-topic-list" ng-show="!model.inCreate">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                            <div ng-if="filteredUserTodos.length<=0" class="lead" style="margin-top:40px;color:white;">
+                                No Do Activities Pending Verification
+                            </div>
+
+                            <div ng-click="clickTodo(userTodo)"
+                                 href="#"
+                                 ng-repeat="userTodo in filteredUserTodos = ( todosModel.userTodos | filter: {status: todoStatusesObj.submitted.value})"
+                                 class="forum-topic clearfix">
+                                <div class="forum-avatar col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    <img ng-if="userTodo.user.avatarUrl" alt="" ng-src="{{userTodo.user.avatarUrl + '/100x100'}}">
+                                    <img ng-if="!userTodo.user.avatarUrl" alt="" src="/img/avatar.jpg">
+                                </div>
+                                <div class="forum-content col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                    <span style="float:left">>
+                                        <h1>{{userTodo.todo.title}}</h1>
+                                        <span class="text-xs">By: {{userTodo.user.firstName}} {{userTodo.user.lastName}} - {{formatTime(userTodo.updatedAt)}}</span>
+                                    </span>
+                                    <span style="float:right">
+                                        <h1 style="float:right">{{getStatusStringForUserTodo(userTodo)}}</h1></span>
+                                        
+                                        <!--<span ng-if="todo.quest" class="badge badge-quest">{{topic.quest.title}}</span>-->
+                                        <!--<span ng-if="topic.challenge" class="badge badge-challenge">{{topic.challenge.title}}</span>-->
+                                        <!--<span class="badge badge-category" ng-if="topic.category">{{topic.category.name}}</span>-->
+                                        <!--<span class="text-xs" ng-if="topic.category">By: {{topic.createdBy.firstName}} {{topic.createdBy.lastName}} - {{formatTime(topic.createdAt)}}</span>-->
+                                        <!--<button class="badge"-->
+                                        <!--ng-if="topic.createdBy.id == userId && topic.children.length == 0 && topic.categoryId != null"-->
+                                        <!--ng-click="deleteForumItem($event, topic, true)"-->
+                                        <!--onfocus="blur()" tabindex="-1" title="Delete Topic"-->
+                                        <!--style="background:rgba(0,0,0,0.5);border:none">-->
+                                        <!--<i class="fa fa-times"></i>-->
+                                        <!--</button>-->
+                                        <!--<span class="badge pull-right">{{topic.children.length}} comments</span>-->
+</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-success btn-sm" ng-enter="ok()" ng-click="ok()">{{okLabel}}</button>
+        </div>
+        </div>
+</script>

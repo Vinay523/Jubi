@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Jubi" ng-controller="RootController as c" ng-init="c.init('<%- model.slug %>')">
+<head>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="<%- config.web.contentUrl %>/img/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+
+    <title><%- title %></title>
+    <link href="<%- config.web.contentUrl %>/css/app/main.css" rel="stylesheet" />
+    <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="<%- config.web.contentUrl %>/css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%- config.web.contentUrl %>/css/bootstrap/css/bootstrap-theme.min.css">
+    <!--<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.2/angular-material.min.css">
+    <link rel="stylesheet" href="//cdn.quilljs.com/1.2.0/quill.bubble.css">
+    <link rel="stylesheet" href="<%- config.web.contentUrl %>/css/app/styles.css">
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+    <!--<script src="code.jquery.com/jquery-3.1.0.min.js"></script>-->
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <script src="<%- config.web.contentUrl %>/js/app/bootstrap.min.js"></script>
+
+    <script>
+        var _jubi_clientData = <%- JSON.stringify(clientInitData()) %>;
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+</head>
+<body class="user-layout" ng-style="getMainCanvasStyle()">
+
+    <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+        your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+
+    <div ng-show="loading.isLoading > 0" style="position: relative;" ng-cloak ng-style="getBackgroundFontStyle()">
+        <div class="loading">
+            <span us-spinner="{radius:30, width:8, length: 16, color: getBackgroundFontColor()}"></span>
+            <div ng-style="getBackgroundFontStyle()">One moment please...</div>
+        </div>
+    </div>
+
+    <div class="row questboard-wrapper" ng-show="loading.isLoading <= 0" ng-cloak>
+
+        <!-- Header -->
+        <header id="headerBar" class="header">
+            <nav role="navigation">
+                <%- partial('user/partials/header') %>
+            </nav>
+        </header>
+
+        <tnav id="topNavBar" ng-show="program">
+            <%- partial('user/partials/topNav') %>
+        </tnav>
+
+        <!-- Main Body -->
+        <main class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+              ng-style="getMainCanvasStyle()">
+            <%- renderBody() %>
+        </main>
+
+
+        <!-- Footer -->
+        <footer class="container-fluid footer">
+            <div class="row">
+                <nav id="footerBar" class="navbar-fixed-bottom" role="navigation">
+                    <%- partial('user/partials/footer') %>
+                </nav>
+            </div>
+        </footer>
+
+
+    </div>
+
+
+
+    <%- partial('modals/confirmModal') %>
+    <%- partial('modals/infoModal') %>
+    <%- partial('modals/todo') %>
+    <%- partial('modals/pendingTodos') %>
+    <%- partial('modals/createUserGroup') %>
+    <%- partial('modals/encourage') %>
+    <%- partial('modals/story') %>
+    <%- partial('modals/appreciate') %>
+    <%- partial('partials/videoPlayer') %>
+    <%- partial('partials/youTubePlayer') %>
+
+
+
+    <%- scripts({
+    name: 'user',
+    /*forceMinify: true,*/
+    files: [
+    '/js/lib/jquery.min.js',
+    '/js/lib/jquery.browser.js',
+    '/js/lib/bootstrap.js',
+    '/js/lib/spin.min.js',
+    '/js/lib/moment.js',
+    '/js/lib/underscore-min.js',
+
+    <!-- 1.5.5-->
+    '/js/lib/angular/angular.js',
+
+    <!-- 1.3.1-->
+    '/js/lib/angular/angular-animate.js',
+    '/js/lib/angular/angular-sanitize.js',
+    '/js/lib/angular/angular-strap.min.js',
+    '/js/lib/angular/angular-strap.tpl.min.js',
+    '/js/lib/angular/ui-bootstrap.min.js',
+    '/js/lib/angular/ui-utils.min.js',
+    '/js/lib/angular/angular-spinner.js',
+    '/js/lib/angular/angular-file-upload-all.min.js',
+    '/js/lib/angular/angularjs-dropdown-multiselect.min.js',
+    '/js/lib/angular/angular-scroll.js',
+    '/js/lib/videogular.min.js',
+    '/js/lib/angular/ng-video.js',
+    '/js/lib/angular/ng-audio.js',
+    '/js/lib/angular/angular-route.min.js',
+    '/js/lib/highstock.js',
+    '/js/lib/highcharts-ng.min.js',
+    '/js/lib/jquery.tabletojson.min.js',
+
+    '/js/common/directives/datePickerInitialDateFix.js',
+    '/js/common/services/helperService.js',
+    '/js/common/directives/autoResizer.js',
+    '/js/common/directives/blink.js',
+    '/js/common/services/authService.js',
+    '/js/common/directives/numberMask.js',
+    '/js/common/services/sessionStorage.js',
+    '/js/common/controllers/modals.js',
+    '/js/common/services/controllerState.js',
+    '/js/user/app.js',
+    '/js/user/controllers/layout.js',
+    '/js/user/controllers/todo.js',
+    '/js/user/controllers/todoManagement.js',
+    '/js/user/controllers/userGroups.js',
+    '/js/user/controllers/profile.js',
+    '/js/user/controllers/discussion.js',
+    '/js/user/controllers/view.js',
+    '/js/user/controllers/inspiration.js',
+    '/js/user/controllers/resources.js',
+    '/js/user/controllers/dashboard.js']
+    }) %>
+
+    <!-- Angular Material requires Angular.js Libraries -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.2/angular-material.min.js"></script>
+
+    <!--Angular pagination-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.3/ui-bootstrap-tpls.js"></script>
+
+    <!--Quill Js and Ng-Quill -->
+    <script type="text/javascript" src="//cdn.quilljs.com/1.2.0/quill.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/ng-quill/2.2.1/ng-quill.js"></script>
+
+    <!--Angular cookies-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.min.js"></script>
+
+    <!--SheetJs for export table data to excel-->
+    <!-- add the shim first -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.11.19/shim.min.js"></script>
+    <!-- after the shim is referenced, add the library -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.11.19/cpexcel.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.11.19/jszip.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.11.19/xlsx.js"></script>
+
+   
+
+</body>
+</html>
+

@@ -1,0 +1,221 @@
+<ul dnd-list="program.levels"
+    dnd-drop="levelDrop(event, index, item, external, type, 'level')"
+    dnd-allowed-types="['level']">
+    <li ng-repeat="level in program.levels"
+        dnd-type="'level'"
+        dnd-draggable="level"
+        dnd-moved="levelMoved()"
+        dnd-selected="selectLevel(level)"
+        dnd-effect-allowed="move"
+        dnd-disable-if="!levelCanDrag"
+        ng-class="{'selected': selectedLevel===level}"
+        id="level{{$index}}">
+        <div class="panel panel-default" ng-class="{'level-error' : level.hasError}">
+            <div class="panel-heading" style="padding-left:10px;">
+                <div class="panel-title" ng-class="{'has-error':level.val.title.req}">
+                    <div class="text-muted handle" ng-mousedown="levelDragHandleDown($event,level)"
+                         ng-mouseup="levelDragHandleUp($event,level)"><span
+                                style="margin-left:4px"
+                                ng-style="{ color: getEntityHandleColorForLevel(level, program) }"
+                                class="fa fa-ellipsis-v"></span></div>
+                    <div class="content">
+                        <input dnd-no-drop type="text" class="form-control" placeholder="Level title."
+                               title="Level title."
+                               ng-model="level.title">
+
+                        <div class="text-sm text-danger" ng-if="level.val.title.req">Level title cannot be empty.
+                        </div>
+                    </div>
+                </div>
+                <div class="manage manage-program">
+                    <div style="position: relative;">
+                        <button type="button" class="manage-dropdown btn btn-primary"
+                                ng-click="toggleLevelMenu($event,level)" tabindex="-1" onfocus="blur()">
+                            <span class="fa fa-ellipsis-h"></span>
+                        </button>
+                        <div class="dropdown" ng-show="!busy && level.menuOpen">
+                            <ul class="dropdown-menu" style="display:block;margin-left:-30px;margin-top:28px;">
+                                <li><a href="#" ng-click="removeLevel($event,$index, level)" tabindex="-1"
+                                       onfocus="blur()"><i
+                                                class="fa fa-trash-o"></i> delete</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button type="button" class="manage-expand btn btn-primary"
+                            ng-click="toggleLevel($event,level)" tabindex="-1" onfocus="blur()">
+                                    <span class="icon fa"
+                                          ng-class="{'fa-chevron-down':!level.expanded, 'fa-chevron-up':level.expanded}"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="panel-collapse collapse" ng-class="{'in':level.expanded}">
+                <div class="panel-body" ng-mouseup="addQuestToLevel($event, level)">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Activity Unlock Sequence</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <span for="sequencingTypeSelect">Sequencing Type</span>
+                                <select name="sequencingTypeSelect" ng-model="level.sequencingTypeId" required
+                                        class="form-control"
+                                        ng-change="sequencingTypeSet(level)"
+                                        ng-disabled="!canEditEntity(level, program)"
+                                        ng-options="sequenceType.id as sequenceType.title for sequenceType in program.sequencingTypes"></select>
+
+                                <div class="text-sm text-danger" ng-if="level.val.sequencing.type.req">Level must have
+                                    sequencing type.
+                                </div>
+                                <div ng-if="level.sequencingTypeId == sequencingTypes.interval.id">
+                                    <span for="intervalStartType">Unlock activities starting on:</span>
+                                    <select name="inervalStartType"
+                                            ng-model="level.sequencingParameters.intervalStartTypeId"
+                                            ng-options="type.id as type.name for type in intervalStartTypesForLevelSelect"
+                                            required
+                                            class="form-control">
+                                    </select>
+
+                                    <div class="text-sm text-danger" ng-if="level.val.sequencing.intervalType.req">
+                                        Interval start type must be set.
+                                    </div>
+
+                                    <div ng-if="level.sequencingParameters.intervalStartTypeId == intervalStartTypes.onSpecificDate.id" class="col-xs-12">
+                                        <div class="input-group datepicker" ng-class="{'has-error':level.val.sequencing.startDate.req || level.val.sequencing.startDate.min}">
+                                            <input datepicker-popup="MM/dd/yyyy"
+                                                   dnd-no-drop
+                                                   min-date="today"
+                                                   ng-change="setTimeToMidnight(level.sequencingParameters)"
+                                                   datepicker-options="{showWeeks:false}"
+                                                   is-open="levelSequencingParametersIntervalStartTypeDatePickerOpened"
+                                                   ng-focus="levelSequencingParametersIntervalStartTypeDatePickerOpened = true; focusMe($event);"
+                                                   ng-click="levelSequencingParametersIntervalStartTypeDatePickerOpened = true; focusMe($event);"
+                                                   type="text" class="form-control" id="interval-startdate"
+                                                   placeholder="Start Date"
+                                                   title="Start Date"
+                                                   ng-model="level.sequencingParameters.startDate">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary"
+                                                            ng-click="levelSequencingParametersIntervalStartTypeDatePickerOpened = true">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </button>
+                                                </span>
+                                        </div>
+                                        <div class="text-sm text-danger" ng-if="level.val.sequencing.startDate.req">
+                                            Start date must be set.
+                                        </div>
+                                        <div class="text-sm text-danger" ng-if="level.val.sequencing.startDate.min">
+                                            Start date cannot be in the past.
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-lg-7 col-no-padding"
+                                         ng-if="level.sequencingParameters.startDate || level.sequencingParameters.intervalStartTypeId == intervalStartTypes.onStartDate.id">
+                                        <span class="col-xs-12 col-sm-1 col-md-2 col-lg-2 col-no-padding">Every</span>
+
+                                        <div ng-class="{'has-error':level.val.sequencing.interval.req || level.val.sequencing.interval.min || level.val.sequencing.interval.fmt}" class="col-xs-8 col-sm-3 col-md-5 col-lg-5 col-no-padding">
+                                            <input dnd-no-drop type="text" number-mask style="text-align:right"
+                                                   class="form-control"
+                                                   id="interval" placeholder="Enter number amount of"
+                                                   title="Interval" ng-model="level.sequencingParameters.interval">
+
+                                            <div class="text-sm text-danger" ng-if="level.val.sequencing.interval.req">
+                                                Interval must be set.
+                                            </div>
+                                            <div class="text-sm text-danger" ng-if="level.val.sequencing.interval.min">
+                                                Interval must be at least .5
+                                            </div>
+                                            <div class="text-sm text-danger" ng-if="level.val.sequencing.interval.fmt">
+                                                Interval must be a valid number.
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4 col-md-5 col-lg-5 col-no-padding">
+                                            <select name="sequencingIntervalPeriodSelect"
+                                                    ng-model="level.sequencingParameters.intervalPeriod"
+                                                    required
+                                                    class="form-control">
+                                                <option value="Hour">Hours</option>
+                                                <option value="Day">Days</option>
+                                                <option value="Week">Weeks</option>
+                                                <option value="Month">Months</option>
+                                            </select>
+
+                                            <div class="text-sm text-danger" ng-if="level.val.sequencing.period.req">
+                                                Interval period must be set.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default program-details">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Activities</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div>
+                                <ul dnd-list="level.quests"
+                                    dnd-drop="questDrop(event, index, item, external, type, 'quest', level)"
+                                    dnd-allowed-types="['quest']">
+                                    <li ng-if="!(level.quests.length > 0)">
+                                        <p class="text-xl text-muted text-center" style="padding:50px 0;">No activities defined for this level.
+                                        <br>
+                                        Drag and drop activities from the activity panel on the right to add activities to this level.</p>
+                                    </li>
+                                    <li ng-repeat="quest in level.quests"
+                                        dnd-type="'quest'"
+                                        dnd-draggable="quest"
+                                        dnd-selected="selectQuest(quest, level)"
+                                        dnd-effect-allowed="move"
+                                        dnd-disable-if="!questCanDrag"
+                                        ng-class="{'selected': selectedQuest===quest}">
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" style="padding-left:10px;">
+                                                <div class="panel-title">
+                                                    <div class="text-muted handle"
+                                                         ng-mousedown="canEditEntity(quest, program) && questDragHandleDown($event,quest,level)"
+                                                         ng-mouseup="canEditEntity(quest, program) && questDragHandleUp($event,quest,level)">
+                                                        <span style="margin-left:4px"
+                                                              ng-style="{ color: getEntityHandleColor(quest, program) }"
+                                                              class="fa fa-ellipsis-v"></span>
+                                                    </div>
+                                                    <div class="content">{{quest.title}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li ng-if="(level.quests.length > 0)"
+                                        style="height:45px; border: dashed; text-align: center; opacity: .5; display:table;width:100%;">
+                                        <p style="display:table-cell;vertical-align: middle">Drop activity here</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer clearfix">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <ul class="program-meta list-inline text-sm">
+                                    <li><strong>Challenges: </strong>{{ getNumberOfChallengesInLevel(level) }}</li>
+                                    <li><strong>Media: </strong>{{ getNumberOfMediaInLevel(level) }}</li>
+                                    <!--<li><strong>To-Do's: </strong>{{quest.counts.toDos}}</li>-->
+                                </ul>
+                            </div>
+                            <!--<div class="col-xs-6 text-right text-sm">-->
+                                <!--<strong>Last edited: </strong>{{program.history[0].by.firstName}}-->
+                                <!--{{program.history[0].by.lastName}}-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-sm text-danger" style="text-align: -webkit-center" ng-if="level.val.quest.req">
+                Level cannot be empty.
+            </div>
+        </div>
+    </li>
+</ul>
+
+

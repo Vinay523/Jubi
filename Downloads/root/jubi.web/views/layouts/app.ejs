@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="Jubi">
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=0">
+    <link href="<%- config.web.contentUrl %>/img/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    <title><%- title %></title>
+    <link href="<%- config.web.contentUrl %>/css/app/main.css" rel="stylesheet" />
+	<link rel="stylesheet" href="<%- config.web.contentUrl %>/css/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="<%- config.web.contentUrl %>/css/bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="<%- config.web.contentUrl %>/css/lib/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="<%- config.web.contentUrl %>/css/app/styles.css">
+    
+    
+    
+	<link rel="stylesheet" href="<%- config.web.contentUrl %>/css/lib/1.12.0/jquery-ui.css">
+       
+	<script src="<%- config.web.contentUrl %>/js/lib/jquery-3.1.0.min.js"></script>
+	<script src="<%- config.web.contentUrl %>/js/lib/jquery-1.12.4.js"></script>
+	<script src="<%- config.web.contentUrl %>/js/lib/1.12.0/jquery-ui.js"></script>
+	<script src="<%- config.web.contentUrl %>/js/app/bootstrap.min.js"></script>
+    <script src="<%- config.web.contentUrl %>/js/lib/angular/1.4.8/angular.min.js"></script> 
+  
+    <script>
+        var _jubi_clientData = <%- JSON.stringify(clientInitData()) %>;
+    </script>
+</head>
+<body >
+
+    <div id="wrapper">
+        <%- renderBody() %>
+    </div>
+
+    <%- scripts({
+        name: 'app',
+        /*forceMinify: true,*/
+        files: [
+            '/js/lib/jquery.min.js',
+            '/js/lib/jquery.browser.js',
+            '/js/lib/bootstrap.js',
+            '/js/lib/spin.min.js',
+            '/js/lib/base64.js',
+            '/js/lib/moment.js',
+            '/js/lib/underscore-min.js',
+
+            '/js/lib/angular/angular.js',
+            '/js/lib/angular/angular-animate.js',
+            '/js/lib/angular/angular-sanitize.js',
+            '/js/lib/angular/angular-strap.min.js',
+            '/js/lib/angular/angular-strap.tpl.min.js',
+            '/js/lib/angular/ui-bootstrap.min.js',
+            '/js/lib/angular/ui-utils.min.js',
+            '/js/lib/angular/angular-spinner.js',
+            '/js/lib/angular/angular-drag-and-drop-lists.js',
+            '/js/lib/angular/angular-scroll.js',
+
+            '/js/common/services/authService.js',
+            '/js/common/services/sessionStorage.js',
+            '/js/common/directives/autoResizer.js',
+            '/js/common/controllers/modals.js',
+
+            '/js/app/app.js',
+            '/js/app/controllers/home.js',
+            '/js/app/controllers/session.js']}) %>
+
+</body>
+</html>

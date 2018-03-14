@@ -1,0 +1,39 @@
+<ul dnd-list="question.hints"
+    dnd-drop="answerDrop(event, index, item, external, type, 'poll', question)"
+    dnd-allowed-types="['hint']">
+    <li ng-repeat="hint in question.hints"
+        dnd-type="'hint'"
+        dnd-draggable="hint"
+        dnd-moved="question.hints.splice($index, 1)"
+        dnd-effect-allowed="move"
+        dnd-disable-if="!canEditEntity(quest, program)">
+
+        <div class="panel-group accordion">
+            <div class="panel panel-default" ng-class="{'quest-error':hint.hasError}">
+                <div class="panel-heading" style="padding-left:10px;">
+                    <div class="panel-title" ng-class="{'has-error':hint.hasError}">
+                        <div class="text-muted handle"
+                             ng-mousedown="canEditEntity(quest, program)"
+                             ng-mouseup="canEditEntity(quest, program)">
+                            <span ng-style="{ color: getEntityHandleColor(quest, program) }"
+                                  style="margin-left:4px"
+                                  class="fa fa-ellipsis-v"></span>
+                        </div>
+                        <div class="content">
+                            <input type="text" class="form-control" placeholder="Hint" ng-model="hint.hint">
+                            <div class="text-xs">
+                                <a href="#" ng-click="canEditEntity(quest, program) && removeHint($event, question, $index)">Remove Hint</a>
+                            </div>
+                            <div class="text-sm text-danger" ng-if="hint.hasError">Hint cannot be empty.</div>
+                            <div class="text-sm text-danger" ng-if="hint.length">Hint cannot be more than 45 Characters.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+<button ng-disabled="!canEditEntity(quest, program) || question.hints.length >= 3" type="button" class="btn btn-primary outline btn-block" ng-click="addHints(question)">
+    <span class="icon fa fa-plus" title="Add New Hint"></span> Add New Hint
+    
+</button>

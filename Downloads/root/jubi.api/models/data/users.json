@@ -1,0 +1,544 @@
+[
+  {
+    "model": "Client",
+    "data": {
+      "id": 1,
+      "name": "Jubi",
+      "slug": "jubi"
+    }
+  },
+
+  {
+    "model": "User",
+    "data": {
+      "id": 1,
+      "firstName": "Jubi",
+      "lastName": "Admin",
+      "title": "Administrator",
+      "email": "admin@premierlogic.com",
+      "password": "$2a$10$vJN/N.9M/64rNICvC08aletLD2U3Qsy7vUOiySS.EVWW/RwY80QAW"
+    }
+  },
+  {
+    "model": "ClientUser",
+    "data": {
+      "clientId": 1,
+      "userId": 1
+    }
+  },
+  {
+    "model": "UserRole",
+    "data": {
+      "userId": 1,
+      "roleId": 1
+    }
+  },
+
+
+
+  {
+    "model": "User",
+    "data": {
+      "id": 2,
+      "firstName": "Larry",
+      "lastName": "Mohl",
+      "title": "Founder",
+      "email":"larry@getjubi.com",
+      "password":"$2a$10$wrFqLpbI8N33KlQPevZF9e4LTnwgzl/mCk4pjSiv33hVMeNNJreom"
+    }
+  },
+  {
+    "model": "ClientUser",
+    "data": {
+      "clientId": 1,
+      "userId": 2
+    }
+  },
+  {
+    "model": "UserRole",
+    "data": {
+      "userId": 2,
+      "roleId": 1
+    }
+  },
+
+  {
+    "model": "User",
+    "data": {
+      "id": 3,
+      "firstName": "Terry",
+      "lastName": "Barber",
+      "title": "Founder",
+      "email":"terry@getjubi.com",
+      "password":"$2a$10$wrFqLpbI8N33KlQPevZF9e4LTnwgzl/mCk4pjSiv33hVMeNNJreom"
+    }
+  },
+  {
+    "model": "ClientUser",
+    "data": {
+      "clientId": 1,
+      "userId": 2
+    }
+  },
+  {
+    "model": "UserRole",
+    "data": {
+      "userId": 3,
+      "roleId": 1
+    }
+  },
+
+
+
+
+  {
+    "model": "Client",
+    "data": {
+      "id": 3,
+      "name": "Georgia State University",
+      "slug": "gsu"
+    }
+  },
+
+  {
+    "model": "User",
+    "data": {
+      "id": 9,
+      "firstName": "Dan",
+      "lastName": "Stotz",
+      "title": "Client",
+      "email":"dstotz@gsu.edu",
+      "password":"$2a$10$wrFqLpbI8N33KlQPevZF9e4LTnwgzl/mCk4pjSiv33hVMeNNJreom"
+    }
+  },
+  {
+    "model": "ClientUser",
+    "data": {
+      "clientId": 3,
+      "userId": 9
+    }
+  },
+  {
+    "model": "UserRole",
+    "data": {
+      "userId": 9,
+      "roleId": 2
+    }
+  },
+
+  {
+    "model": "User",
+    "data": {
+      "id": 10,
+      "firstName": "Steve",
+      "lastName": "Olson",
+      "title": "Client",
+      "email":"solson@gsu.edu",
+      "password":"$2a$10$wrFqLpbI8N33KlQPevZF9e4LTnwgzl/mCk4pjSiv33hVMeNNJreom"
+    }
+  },
+  {
+    "model": "ClientUser",
+    "data": {
+      "clientId": 3,
+      "userId": 10
+    }
+  },
+  {
+    "model": "UserRole",
+    "data": {
+      "userId": 10,
+      "roleId": 3
+    }
+  },
+
+  {
+    "model": "User",
+    "data": {
+      "id": 11,
+      "firstName": "Amogh",
+      "lastName": "Kumar",
+      "title": "Client",
+      "email":"amoghm92@gmail.com",
+      "password":"$2a$10$wrFqLpbI8N33KlQPevZF9e4LTnwgzl/mCk4pjSiv33hVMeNNJreom"
+    }
+  },
+  {
+    "model": "ClientUser",
+    "data": {
+      "clientId": 3,
+      "userId": 11
+    }
+  },
+  {
+    "model": "UserRole",
+    "data": {
+      "userId": 11,
+      "roleId": 3
+    }
+  },
+
+  {
+    "model": "User",
+    "data": {
+      "id": 12,
+      "firstName": "Rob",
+      "lastName": "Williams",
+      "title": "Client",
+      "email":"rwilliams133@gsu.edu",
+      "password":"$2a$10$wrFqLpbI8N33KlQPevZF9e4LTnwgzl/mCk4pjSiv33hVMeNNJreom"
+    }
+  },
+  {
+    "model": "ClientUser",
+    "data": {
+      "clientId": 3,
+      "userId": 12
+    }
+  },
+  {
+    "model": "UserRole",
+    "data": {
+      "userId": 12,
+      "roleId": 3
+    }
+  },
+
+
+
+  {
+    "model": "Client",
+    "data": {
+      "id": 4,
+      "name": "Growing Leaders",
+      "slug": "growing-leaders"
+    }
+  },
+
+  {
+    "model": "User",
+    "data": {
+      "id": 13,
+      "firstName": "Ginine",
+      "lastName": "Capozzi",
+      "title": "Client",
+      "email":"ginine@knowledgeforceconsulting.com",
+      "password":"$2a$10$wrFqLpbI8N33KlQPevZF9e4LTnwgzl/mCk4pjSiv33hVMeNNJreom"
+    }
+  },
+  {
+    "model": "ClientUser",
+    "data": {
+      "clientId": 4,
+      "userId": 13
+    }
+  },
+  {
+    "model": "UserRole",
+    "data": {
+      "userId": 13,
+      "roleId": 2
+    }
+  },
+
+
+
+
+
+  {
+    "model": "Client",
+    "data": {
+      "id": 5,
+      "name": "Accelerated Leadership Group",
+      "slug": "algleaders"
+    }
+  },
+
+  {
+    "model": "User",
+    "data": {
+      "id": 14,
+      "firstName": "Lauara",
+      "lastName": "Soscia",
+      "title": "Client",
+      "email":"lsoscia@algleaders.com",
+      "password":"$2a$10$wrFqLpbI8N33KlQPevZF9e4LTnwgzl/mCk4pjSiv33hVMeNNJreom"
+    }
+  },
+  {
+    "model": "ClientUser",
+    "data": {
+      "clientId": 5,
+      "userId": 14
+    }
+  },
+  {
+    "model": "UserRole",
+    "data": {
+      "userId": 14,
+      "roleId": 2
+    }
+  },
+
+  {
+    "model": "User",
+    "data": {
+      "id": 15,
+      "firstName": "Shawn",
+      "lastName": "Devine",
+      "title": "Client",
+      "email":"sdevine@algleaders.com",
+      "password":"$2a$10$wrFqLpbI8N33KlQPevZF9e4LTnwgzl/mCk4pjSiv33hVMeNNJreom"
+    }
+  },
+  {
+    "model": "ClientUser",
+    "data": {
+      "clientId": 5,
+      "userId": 15
+    }
+  },
+  {
+    "model": "UserRole",
+    "data": {
+      "userId": 15,
+      "roleId": 3
+    }
+  },
+
+
+
+
+  {
+    "model": "Client",
+    "data": {
+      "id": 6,
+      "name": "Patrick Craig Academy",
+      "slug": "patrick-craig-academy"
+    }
+  },
+
+  {
+    "model": "User",
+    "data": {
+      "id": 16,
+      "firstName": "Patrick",
+      "lastName": "Craig",
+      "title": "Client",
+      "email":"pcraiguva@gmail.com",
+      "password":"$2a$10$wrFqLpbI8N33KlQPevZF9e4LTnwgzl/mCk4pjSiv33hVMeNNJreom"
+    }
+  },
+  {
+    "model": "ClientUser",
+    "data": {
+      "clientId": 6,
+      "userId": 16
+    }
+  },
+  {
+    "model": "UserRole",
+    "data": {
+      "userId": 16,
+      "roleId": 2
+    }
+  },
+
+  {
+    "model": "User",
+    "data": {
+      "id": 17,
+      "firstName": "Lawson",
+      "lastName": "Mohl",
+      "title": "Client",
+      "email":"lawsonmohl@gmail.com",
+      "password":"$2a$10$wrFqLpbI8N33KlQPevZF9e4LTnwgzl/mCk4pjSiv33hVMeNNJreom"
+    }
+  },
+  {
+    "model": "ClientUser",
+    "data": {
+      "clientId": 6,
+      "userId": 17
+    }
+  },
+  {
+    "model": "UserRole",
+    "data": {
+      "userId": 17,
+      "roleId": 3
+    }
+  },
+
+
+
+  {
+    "model": "Client",
+    "data": {
+      "id": 7,
+      "name": "Thought Leadership Leverage",
+      "slug": "thoughtleadershipleverage"
+    }
+  },
+
+  {
+    "model": "User",
+    "data": {
+      "id": 18,
+      "firstName": "Bill",
+      "lastName": "Sherman",
+      "title": "Client",
+      "email":"bill@thoughtleadershipleverage.com",
+      "password":"$2a$10$wrFqLpbI8N33KlQPevZF9e4LTnwgzl/mCk4pjSiv33hVMeNNJreom"
+    }
+  },
+  {
+    "model": "ClientUser",
+    "data": {
+      "clientId": 7,
+      "userId": 18
+    }
+  },
+  {
+    "model": "UserRole",
+    "data": {
+      "userId": 18,
+      "roleId": 2
+    }
+  },
+
+
+  {
+    "model": "Client",
+    "data": {
+      "id": 8,
+      "name": "XINNIX",
+      "slug": "xinnix"
+    }
+  },
+
+  {
+    "model": "User",
+    "data": {
+      "id": 19,
+      "firstName": "Rick",
+      "lastName": "Carter",
+      "title": "Client",
+      "email":"rcarter@xinnix.com",
+      "password":"$2a$10$wrFqLpbI8N33KlQPevZF9e4LTnwgzl/mCk4pjSiv33hVMeNNJreom"
+    }
+  },
+  {
+    "model": "ClientUser",
+    "data": {
+      "clientId": 8,
+      "userId": 19
+    }
+  },
+  {
+    "model": "UserRole",
+    "data": {
+      "userId": 19,
+      "roleId": 2
+    }
+  },
+
+
+  {
+    "model": "Client",
+    "data": {
+      "id": 9,
+      "name": "Children's Healthcare of Atlanta",
+      "slug": "choa"
+    }
+  },
+
+  {
+    "model": "User",
+    "data": {
+      "id": 20,
+      "firstName": "Kathy",
+      "lastName": "Stancil",
+      "title": "Client",
+      "email":"Katherine.Stancil@choa.org",
+      "password":"$2a$10$wrFqLpbI8N33KlQPevZF9e4LTnwgzl/mCk4pjSiv33hVMeNNJreom"
+    }
+  },
+  {
+    "model": "ClientUser",
+    "data": {
+      "clientId": 9,
+      "userId": 20
+    }
+  },
+  {
+    "model": "UserRole",
+    "data": {
+      "userId": 20,
+      "roleId": 2
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 21,
+      "firstName": "Kristen",
+      "lastName": "Crammer",
+      "title": "Client",
+      "email":"KristenB.Cranmer@choa.org",
+      "password":"$2a$10$wrFqLpbI8N33KlQPevZF9e4LTnwgzl/mCk4pjSiv33hVMeNNJreom"
+    }
+  },
+  {
+    "model": "ClientUser",
+    "data": {
+      "clientId": 9,
+      "userId": 21
+    }
+  },
+  {
+    "model": "UserRole",
+    "data": {
+      "userId": 21,
+      "roleId": 3
+    }
+  },
+
+
+
+  {
+    "model": "Client",
+    "data": {
+      "id": 10,
+      "name": "Signature Healthcare",
+      "slug": "signaturehealthcarellc"
+    }
+  },
+
+  {
+    "model": "User",
+    "data": {
+      "id": 22,
+      "firstName": "Paul",
+      "lastName": "Reid",
+      "title": "Client",
+      "email":"preid@signaturehealthcarellc.com",
+      "password":"$2a$10$wrFqLpbI8N33KlQPevZF9e4LTnwgzl/mCk4pjSiv33hVMeNNJreom"
+    }
+  },
+  {
+    "model": "ClientUser",
+    "data": {
+      "clientId": 10,
+      "userId": 22
+    }
+  },
+  {
+    "model": "UserRole",
+    "data": {
+      "userId": 22,
+      "roleId": 2
+    }
+  }
+
+]

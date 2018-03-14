@@ -1,0 +1,156 @@
+<div ng-controller="AuthoringSuiteProgramBadgeEditController" ng-show="!loading.isLoading">
+    <div class="row page-heading panel">
+        <div class="col-xs-12">
+            <%- partial('manage/views/authoringSuite/badges/badgeEditHeader') %>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-8 col-lg-9">
+
+            <div class="loading" ng-show="isSaving">
+                <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+
+                <div>One moment please...</div>
+            </div>
+
+            <div ng-show="!isSaving">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <input type="text" class="form-control" ng-model="badge.title" placeholder="{{getBadgeLabel(true)}} title.">
+                    </div>
+                    <div class="panel-body form-horizontal">
+                        <div class="row form-group">
+                            <label class="col-xs-2 control-label" style="padding-top:1px;">Description</label>
+
+                            <div class="col-xs-10">
+                                <textarea class="form-control" rows="2" ng-model="badge.description"
+                                          placeholder="{{getBadgeLabel(true)}} description."></textarea>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-xs-2 control-label" style="padding-top:1px;">
+                                Badge Image
+                                <div class="text-xs text-muted">Max File Size: 4MB<br>(JPG, JPEG, GIF, PNG)</div>
+                            </label>
+
+                            <div class="col-xs-10">
+                                <div class="quest-edit thumbnail">
+                                    <div class="program-img">
+                                        <div ng-show="uploadingImage">
+                                            <div class="loading loading-sm">
+                                                <img src="<%- config.web.contentUrl %>/img/empty.png"/>
+                                                <span us-spinner="{radius:15, width:4, length: 9, color: '#b0b0b7'}"></span>
+                                            </div>
+                                        </div>
+
+                                        <div ng-show="!uploadingImage">
+                                            <div class="manage manage-photo btn-sm">
+                                                <a ng-if="badge.imageUrl" href="#"
+                                                   class="btn btn-default red pull-right"
+                                                   ng-click="removeBadgeImage($event)">
+                                                    <span class="fa fa-trash-o" title="Remove Image"></span>
+                                                </a>
+
+                                                <div class="btn btn-default blue pull-left" ng-file-select
+                                                     ng-file-change="uploadBadgeImage($files)">
+                                                    upload
+                                                </div>
+                                            </div>
+
+                                            <div ng-if="badge.imageUrl">
+                                                <img ng-src="{{badge.imageUrl}}/250x250" alt=""/>
+                                            </div>
+                                            <div ng-if="!badge.imageUrl">
+                                                <img src="<%- config.web.contentUrl %>/img/empty.png"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-sm text-danger" ng-if="val.image.type"
+                                         style="padding-top:5px;">Unsupported image type.
+                                    </div>
+                                    <div class="text-sm text-danger" ng-if="val.image.size"
+                                         style="padding-top:5px;">Image is too large.
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {{getBadgeLabel(true)}} Requirements
+                    </div>
+                    <div class="panel-body badge-requirements">
+
+                        <div ng-if="quests.length<=0 && levels.length<=0">
+                            <p class="text-xl text-muted text-center" style="padding:50px 0;">
+                                No quests or levels defined.
+                            </p>
+                        </div>
+
+                        <div class="col-xs-6" ng-if="programHasQuests(program)">
+                            <h4 style="margin-bottom: 15px;">Award by quest</h4>
+
+                            <div ng-if="level.quests.length > 0" ng-repeat="level in levels">
+                                <div style="margin-bottom:30px;">
+                                    <div class="text-muted">{{level.title}}</div>
+                                    <div class="badge-requirement-item" ng-repeat="quest in level.quests"
+                                         style="margin-left:20px;">
+                                        <label ng-class="{'text-muted':!quest.available || !canEditEntity(badge, program) || !canEditEntity(quest, program)}"
+                                               ng-click="canEditEntity(badge, program) && toggleQuest(badge, quest)">
+                                            <i class="fa"
+                                               ng-class="{'fa-square-o':!quest.selected,'fa-check-square-o':quest.selected}"></i>{{quest.title}}
+                                            <span ng-if="!quest.available"
+                                                  class="text-muted text-sm">(already assigned)</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div ng-if="quests.length > 0" class="text-muted">
+                                Quests not in a level.
+                            </div>
+
+                            <div class="badge-requirement-item" ng-repeat="quest in quests">
+                                <label ng-class="{'text-muted':!quest.available || !canEditEntity(badge, program) || !canEditEntity(quest, program)}"
+                                       ng-click="canEditEntity(badge, program) && toggleQuest(badge, quest)">
+                                    <i class="fa"
+                                       ng-class="{'fa-square-o':!quest.selected,'fa-check-square-o':quest.selected}"></i>{{quest.title}}
+                                    <span ng-if="!quest.available" class="text-muted text-sm">(already assigned)</span>
+                                </label>
+                            </div>
+
+                        </div>
+
+                        <div class="col-xs-6" ng-if="levels.length > 0">
+                            <h4 style="margin-bottom: 15px;">Award by level</h4>
+
+                            <div class="badge-requirement-item" ng-repeat="level in levels">
+                                <label ng-class="{'text-muted':!level.available || !canEditEntity(badge, program) || levelHasLockedContent(level)}"
+                                       ng-click="canEditEntity(badge, program) && toggleLevel(badge, level)">
+                                    <i class="fa"
+                                       ng-class="{'fa-square-o':!level.selected,'fa-check-square-o':level.selected}"></i>{{level.title}}
+                                    <span ng-if="!level.available" class="text-muted text-sm">(already assigned)</span>
+                                </label>
+
+                                <div ng-repeat="quest in level.quests">
+                                    <div class="text-muted text-sm" style="margin-left:20px;">- {{quest.title}}</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-4 col-lg-3">
+            <%- partial('manage/views/authoringSuite/badges/sidebar') %>
+        </div>
+    </div>
+</div>

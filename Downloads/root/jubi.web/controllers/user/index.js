@@ -1,0 +1,10 @@
+exports.activity = require('./activity');
+exports.dashboard = require('./dashboard');
+exports.discussion = require('./discussion');
+exports.leaderBoard = require('./leaderBoard');
+exports.network = require('./network');
+exports.profile = require('./profile');
+exports.program = require('./program');
+exports.quests = require('./quests');
+exports.resources = require('./resources');
+exports.session = require('../common/session');

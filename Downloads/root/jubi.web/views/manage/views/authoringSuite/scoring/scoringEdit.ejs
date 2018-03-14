@@ -1,0 +1,146 @@
+<div class="panel-heading">
+    <div class="row">
+        <div class="col-xs-6">
+            <h3>{{quest.title}}</h3>
+        </div>
+        <ng-container ng-if="quest.type == 'L'">
+            <div class="col-xs-6 text-right text-sm" ng-if="quest.challenges.length>0">
+                <label ng-attr-for="d{{$index}}">Distribute Points:</label>
+                <input number-mask allow-decimal="false"
+                       ng-disabled="!canEditEntity(quest, program)"
+                       ng-attr-id="d{{$index}}" type="text"
+                       title="Invalid Numeric Value.Please enter a number between 1 and 1000."
+                       class="form-control input-sm"
+                       ng-model="quest.distributePoints"
+                       ng-change="distributePointsChange($index)">
+                <button ng-disabled="!canEditEntity(quest, program)" type="button" class="btn btn-primary btn-sm" ng-click="distributePoints(quest,$index)">Go</button>
+            </div>
+        </ng-container>
+
+    </div>
+</div>
+<div class="panel-body">
+
+    <ng-container ng-if="quest.type == 'L'">
+        <div ng-if="quest.challenges.length<=0">
+            No challenges.
+        </div>
+
+        <table class="table table-striped" ng-if="quest.challenges.length>0">
+            <thead>
+                <tr>
+                    <th class="challenge-title">Challenge</th>
+                    <th class="challenge-type">Question Type</th>
+                    <th class="challenge-points">Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat-start="challenge in quest.challenges | filter:{type:'general'}">
+                    <td class="challenge-title">{{challenge.title}}</td>
+                    <td class="challenge-type">
+                        {{ (challenge.questions.length > 0 ? challenge.questions[0].type.name : '')}}
+                    </td>
+                    <td class="challenge-points">
+                        <button ng-disabled="!canEditEntity(quest, program)" type="button" class="btn btn-primary"
+                                ng-click="decreasePoints(challenge)">
+                            <i class="fa fa-chevron-left"></i>
+                        </button>
+                        <div>{{challenge.points}}</div>
+                        <button ng-disabled="!canEditEntity(quest, program)" type="button" class="btn btn-primary"
+                                ng-click="increasePoints(challenge)">
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </td>
+                </tr>
+
+                <tr class="hints" ng-repeat-end ng-repeat="hint in challenge.questions[0].hints">
+                    <td class="hint challenge-title"></td>
+                    <td class="hint challenge-type">Hint {{$index + 1}}</td>
+                    <td class="hint challenge-points">
+                        <button ng-disabled="!canEditEntity(quest, program)" type="button" class="btn btn-primary"
+                                ng-click="decreaseHintPoints(hint)">
+                            <i class="fa fa-chevron-left"></i>
+                        </button>
+                        <div class="scoreHint">{{hint.points}}</div>
+                        <button ng-disabled="!canEditEntity(quest, program)" type="button" class="btn btn-primary"
+                                ng-click="increaseHintPoints(hint, challenge)">
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </ng-container>
+
+    <ng-container ng-if="quest.type == 'I'">
+        <div class="inspirePoint">
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <td>Inspire Activity</td>
+                        <td></td>
+                        <td>Points</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <!--<ng-container ng-repeat="level in program.levels">
+                            <ng-container ng-if="level.questId == quest.id">
+
+                            </ng-container>
+                        </ng-container>-->
+                        <td class="challenge-points">
+                            <!--<button ng-disabled="!canEditEntity(quest, program)" type="button" class="btn btn-primary"
+                                    ng-click="decreaseInspirePoints(quest)">
+                                <i class="fa fa-chevron-left"></i>
+                            </button>-->
+
+                            <input ng-disabled="!canEditEntity(quest, program)" ng-model="quest.inspirePoints"
+                                   ng-init="quest.inspirePoints=inspireActivityPoints(quest)" ng-change="setInspirePoints(quest.inspirePoints, quest)"
+                                   placeholder="0" type="number" min="0" onkeypress="return event.charCode >= 48" />
+                            <!--<div>{{quest.inspirePoints}}</div>-->
+                            <!--<button ng-disabled="!canEditEntity(quest, program)" type="button" class="btn btn-primary"
+                                    ng-click="increaseInspirePoints(quest)">
+                                <i class="fa fa-chevron-right"></i>
+                            </button>-->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </ng-container>
+
+    <ng-container ng-if="quest.type == 'T'">
+        <div class="inspirePoint">
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <td>Do Activity</td>
+                        <td></td>
+                        <td>Points</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <ng-container ng-repeat="todo in program.todos">
+                            <ng-container ng-if="todo.questId == quest.id">
+                                <td class="challenge-points">
+                                    <!--<input name="todoPointSet" id="todoPointSet" ng-disabled="!canEditEntity(quest, program)" ng-model="tdo.points" />-->
+
+                                    <input name="todoPointSet" ng-disabled="!canEditEntity(quest, program)"
+                                           ng-model="todo.points" ng-init="todo.points=getTododpoints(todo, quest.id)"
+                                           placeholder="0" type="number" min="0" onkeypress="return event.charCode >= 48"
+                                           ng-change="setTodoPoints(todo.points, quest.id)" />
+                                </td>
+                            </ng-container>
+                        </ng-container>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </ng-container>
+
+</div>
+<!--ng-model="todo.points" ng-init="todo.points=getTododpoints(quest.id)" -->

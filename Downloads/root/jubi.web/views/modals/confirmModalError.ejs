@@ -1,0 +1,15 @@
+<script type="text/ng-template" id="confirmModalError.html">
+    <form>
+        <div class="modal-header" style="background:#a94442;color:white;opacity:1;border-color:#a94442">
+            <button type="button" class="close" aria-label="Close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">{{title}}</h4>
+        </div>
+        <div class="modal-body">
+            <p ng-bind-html="text">{{text}}</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-default red btn-sm" ng-click="cancel()">{{cancelLabel}}</button>
+            <button class="btn btn-primary btn-sm" ng-enter="ok()" ng-click="ok()">{{okLabel}}</button>
+        </div>
+    </form>
+</script>

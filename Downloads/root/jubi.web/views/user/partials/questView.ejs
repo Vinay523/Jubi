@@ -1,0 +1,31 @@
+<div ng-mouseup="questClick($index,quest)" class="tile-content animated bounceInUp"
+     ng-class="{'complete':quest.challengesComplete==quest.challengeCount}"
+     ng-style="{'background-image':'url( {{ (quest.featuredImageUrl ? (quest.featuredImageUrl + '/600x600') : '/img/no-picture.jpg') }} )' }">
+    <div class="content">
+        <div class="tile-badge">
+            <div class="row">
+                <div class="col-xs-6 text-left">
+                    <h5>Challenges</h5>
+
+                    <div>{{quest.challengesComplete}} / {{quest.challengeCount}}</div>
+                </div>
+                <div class="col-xs-6 text-right">
+                    <h5>Points</h5>
+
+                    <div>{{quest.score.points.earned}} / {{quest.score.points.total}}</div>
+                </div>
+            </div>
+            <div ng-if="quest.awardedBadge" class="badge-image tile-pie-bg">
+                <img alt="" ng-src="{{quest.awardedBadge.imageUrl + '/100x100'}}">
+            </div>
+            <div ng-if="!quest.awardedBadge">
+                <highchart class="tile-pie" id="tilePie{{$index+1}}" config="quest.chart"></highchart>
+                <div class="tile-pie-bg">
+                    <i ng-if="!quest.awardedBadge" style="display:inline" class="fa"
+                       ng-class="{'fa-rocket':quest.challengesComplete<quest.challengeCount && !quest.isLocked,'fa-trophy':quest.challengesComplete>=quest.challengeCount && !quest.isLocked, 'fa-lock' : quest.isLocked }"></i>
+                </div>
+            </div>
+        </div>
+        <h4 class="tile-title">{{quest.title}}</h4>
+    </div>
+</div>

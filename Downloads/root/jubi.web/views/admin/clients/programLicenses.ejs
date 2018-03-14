@@ -1,0 +1,142 @@
+<div ng-controller="ProgramLicensesController as ctl" ng-cloak
+     ng-init="ctl.init(<%- model.programId %>,  <%- model.clientId %>)">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div ng-show="isLoading" class="loading">
+                <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+
+                <div>One moment please...</div>
+            </div>
+
+            <div ng-show="!isLoading">
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3 class="color-header">{{program.title + ' V' + version}} Licenses</h3>
+                    </div>
+                </div>
+                <br>
+
+                <div ng-if="licenses.length<=0">
+                    <p class="text-xl text-muted text-center" style="padding:50px 0;">
+                        No licenses defined.<br>Click the Add License button below to get started.
+                    </p>
+                </div>
+
+                <div ng-show="licenses.length>0" class="row">
+                    <div class="col-xs-6" ng-repeat="license in licenses">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+
+                                <div ng-show="license.isSaving"
+                                     style="position:absolute;width:100%;height:100%;top:0;left:0;z-index:1"
+                                     class="loading loading-sm">
+                                    <span us-spinner="{radius:20, width:6, length: 12, color: '#b0b0b7'}"></span>
+
+                                    <div>One moment please...</div>
+                                </div>
+
+
+                                <div class="form-group"
+                                     ng-class="{'has-error':license.val.client.req }">
+                                    <label>License to Client</label>
+                                    <select ng-disabled="license.id" type="select" class="form-control"
+                                            ng-model="license.clientId"
+                                            ng-options="client.id as client.name for client in contentConsumers"
+                                            ng-if="!license.readOnly"></select>
+                                    <select ng-disabled="license.id" type="select" class="form-control"
+                                            ng-model="license.clientId"
+                                            ng-options="client.id as client.name for client in requiredClients"
+                                            ng-if="license.readOnly"></select>
+
+                                    <div class="text-sm text-danger" ng-if="license.val.client.req">Must select
+                                        a client.
+                                    </div>
+                                </div>
+
+                                <div class="form-group"
+                                     ng-class="{'has-error':license.val.seats.req }">
+                                    <label>Seats</label>
+
+                                    <input ng-disabled="license.readOnly || !isSystemAdmin" number-mask allow-decimal="false" type="text"
+                                           class="form-control" ng-model="license.seats"
+                                           placeholder="License Seats." style="max-width: 150px;">
+
+                                    <div class="text-sm text-danger" ng-if="license.val.seats.req">Must assign
+                                        seats.
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Type</label>
+
+                                    <!--temporarily removing need to be system admin to set license to edit-->
+                                    <select type="select" class="form-control" style="max-width: 150px;"
+                                            ng-model="license.type"
+                                            ng-disabled="license.readOnly">
+                                        <option value="readOnly">Read Only</option>
+                                        <option value="edit">Edit</option>
+                                    </select>
+
+                                    <!--<select type="select" class="form-control" style="max-width: 150px;"-->
+                                            <!--ng-model="license.type"-->
+                                            <!--ng-disabled="license.readOnly || !isSystemAdmin">-->
+                                        <!--<option value="readOnly">Read Only</option>-->
+                                        <!--<option value="edit">Edit</option>-->
+                                    <!--</select>-->
+                                </div>
+
+                                <div class="btn-group btn-group-justified" role="group">
+                                    <button ng-disabled="license.readOnly"
+                                            ng-click="saveLicense($event, license)"
+                                            type="button"
+                                            class="btn btn-primary"
+                                            style="width:100%">
+                                        <span class="fa fa-save"></span>
+                                        <span><br/>Save License</span>
+                                    </button>
+                                </div>
+
+
+                                <div style="position:absolute;top:0;right:15px">
+                                    <div style="position: relative;">
+                                        <button type="button" class="manage-dropdown btn btn-primary"
+                                                ng-click="toggleMenu($event,license)" tabindex="-1" onfocus="blur()"
+                                                style="height:33px;"
+                                                ng-disabled="license.readOnly">
+                                            <span class="fa fa-ellipsis-h"></span>
+                                        </button>
+                                        <div class="dropdown" ng-show="!busy && license.menuOpen">
+                                            <ul class="dropdown-menu"
+                                                style="display:block;margin-left:-120px">
+                                                <li><a href="javascript:void(0)"
+                                                       ng-click="removeLicense($event, license)" tabindex="-1"
+                                                       onfocus="blur()"><i class="fa fa-trash-o"></i> delete</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <br><br>
+
+                <div class="btn-group btn-group-justified" role="group" style="padding-bottom:20px;">
+                    <a href="javascript:void(0)" ng-click="addLicense($event)" class="btn btn-primary btn-lg">
+                        <span class="fa fa-wrench"></span>
+                        <span><br/>Add License</span>
+                    </a>
+                </div>
+                <div class="text-sm clearfix" style="padding-top:5px;">
+                    <a href="javascript:void(0)" ng-click="back()" class="pull-right">Back to client</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

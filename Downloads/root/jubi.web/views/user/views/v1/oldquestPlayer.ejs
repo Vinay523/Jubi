@@ -1,0 +1,144 @@
+<div class="container" ng-controller="QuestPlayerController as c" ng-cloak>
+
+    <div class="quest-player-start" ng-show="inState=='start'" ng-controller="QuestPlayerStartController" ng-cloak>
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Quest: {{quest.title}}</h1>
+            </div>
+        </div>
+
+        <div class="row quest-player-objective">
+            <div class="col-xs-12 col-sm-offset-2 col-sm-8">
+                <h2>Objective</h2>
+                <p>{{quest.objective}}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-offset-2 col-sm-8">
+                <hr>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-offset-2 col-sm-8 text-center">
+                <button type="button" class="btn btn-success btn-lg" ng-click="start()">Start</button>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="inState=='challenge'" ng-controller="QuestPlayerChallengeController" ng-cloak>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-5 quest-player-challenge">
+                <div class="step-title">
+                    <h1>Quest: {{quest.title}}</h1>
+                    <h2>Challenge: {{challenge.title}} </h2>
+                    <div ng-if="challenge.instructions" style="padding-top:20px;">
+                        <p class="instructions" ng-bind-html="toHtml(challenge.instructions)"></p>
+                    </div>
+                </div>
+                <form action="" method="post" ng-submit="submit($event,challenge)">
+                    <div ng-if="challenge.questions.length > 0">
+                        <div ng-if="challenge.questions.length > 0">
+                            <div ng-repeat="question in challenge.questions">
+                                <%- partial('user/partials/challengeQuestion') %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step-action" style="margin-bottom:20px">
+                        <div class="check-wrong animated" ng-class="{ 'pulse' : val.wrong }"  ng-if="val.wrong">Oops! Try again!</div>
+                        <div class="check-correct animated" ng-class="{ 'pulse' : val.correct }" ng-if="val.correct">{{(challenge.finishText ? challenge.finishText : 'Correct!')}}</div>
+                        <button type="submit" class="btn btn-success" ng-show="!canContinue">{{checkLabel(challenge)}}</button>
+                        <button type="button" class="btn btn-success" ng-click="continue(challenge)" ng-show="canContinue">Continue</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-xs-12 col-sm-7 quest-player-media">
+                <div ng-if="challenge.media.length > 0">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <%- partial('user/partials/challengeMedia') %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="quest-player-finish" ng-show="inState=='finish'" ng-controller="QuestPlayerFinishController" ng-cloak>
+
+        <div class="row score-panel">
+            <div class="col-xs-12 col-sm-offset-3 col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-body text-center">
+
+                        <h1>{{challenge.finishText ? challenge.finishText : 'Congratulations'}}</h1>
+                        <div class="lead">{{challenge.instructions ? challenge.instructions : 'You have successfully completed quest ' + quest.title + '.'}}</div>
+
+                        <div class="row">
+                            <div ng-class="{'col-xs-5':badge,'col-xs-12':!badge}">
+                                <div class="score">
+                                    <div>You earned</div>
+                                    <div class="points">
+                                        <span>{{quest.score.points.earned}}</span>
+                                    </div>
+                                    <div>points!</div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 the-and" ng-if="badge">
+                                <i class="fa fa-angle-double-right"></i> AND <i class="fa fa-angle-double-left"></i>
+                            </div>
+                            <div class="col-xs-5" ng-if="badge">
+                                <div class="quest-badge">
+                                    <div>You earned</div>
+                                    <div class="badge-image">
+                                        <span><img alt="" ng-src="{{badge.badge.imageUrl + '/100x100'}}"></span>
+                                    </div>
+                                    <div> {{getAOrAnPlusBadgeLabel()}}!</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-repeat="media in challenge.media">
+
+                            <div ng-if="media.type==='link' && media.link" class="finish-item">
+                                {{challenge.finishLinkText ? challenge.finishLinkText : 'You can learn more by visiting the following website...'}}<br>
+                                <a ng-href="{{media.link}}" target="_blank">{{media.link}}</a>
+                            </div>
+                            <div ng-if="media.type==='resource' && media.url" class="finish-item">
+                                {{challenge.finishDownloadText ? challenge.finishDownloadText : 'Here is some additional reading material for you...'}}<br>
+                                <a ng-href="{{media.url}}" target="_blank">{{media.description ? media.description : media.url}}</a>
+                            </div>
+                        </div>
+
+                        <div ng-if="challenge.canUploadContent" class="finish-item">
+                            {{challenge.finishUploadText ? challenge.finishUploadText : 'Would you like to upload some material others might find helpful?'}}<br>
+                            <div class="btn btn-primary outline" ng-file-select ng-file-change="uploadFile($files)" ng-accept="'.pdf'" ng-disabled="upload.active">
+                                <span ng-if="upload.active">
+                                    <i class="fa fa-spinner fa-spin"></i>
+                                    Uploading Your Material...
+                                </span>
+                                <span ng-if="!upload.active">Upload Material From Your Computer</span>
+                            </div>
+                            <div class="text-xs text-muted">Max File Size: 8MB (PDF)</div>
+                            <div class="text-sm text-danger" ng-if="val.upload.type">Unsupported file type.</div>
+                            <div class="text-sm text-danger" ng-if="val.upload.size">File is too large.</div>
+                            <div class="text-sm text-success animated" ng-if="upload.status=='ok'" ng-class="{'fadeOut':upload.fade}">
+                                <i class="fa fa-thumbs-o-up"></i> Thank you, your material has been uploaded.</div>
+                            <div class="text-sm text-danger animated" ng-if="upload.status=='err'" ng-class="{'fadeOut':upload.fade}">
+                                <i class="fa fa-times"></i> Sorry, cannot upload your material at this time.</div>
+                        </div>
+
+                        <div class="return">
+                            <button type="button" class="btn btn-success" ng-click="close()">Return to Quest Board</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

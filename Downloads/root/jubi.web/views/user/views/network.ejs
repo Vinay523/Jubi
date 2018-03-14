@@ -1,0 +1,107 @@
+<div ng-controller="NetworkController" class="network">
+
+    <div ng-show="isLoading" style="position: relative;" ng-cloak  ng-style="getBackgroundFontStyle()">
+        <div class="loading">
+            <span us-spinner="{radius:30, width:8, length: 16, color: getBackgroundFontColor()}"></span>
+            <div ng-style="getBackgroundFontStyle()"><p style="font-style:italic">We are busy crunching some numbers and gathering your information.</p> <p style="font-style:italic">   This may take a minute but it's worth the wait...</p></div>
+        </div>
+    </div>
+
+    <div ng-show="!isLoading" class="network-list">
+        <section class="intro">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <h1 ng-style="getBackgroundFontStyle()">Network</h1>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="btn-group justified" style="width:100%" role="toolbar">
+                        <div class="input-group">
+                            <input type="text" ng-model="searchString" style="padding:6px 6px;" name="q"
+                                   placeholder="Search"
+                                   class="form-control" />
+
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-success network-search">
+                                    <span class="icon icon-search"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="btn-group justified" role="toolbar">-->
+                    <!--<div class="btn-group">-->
+                    <!--<button type="button" class="btn btn-success active"><span class="icon icon-user4"></span> Colleagues</button>-->
+                    <!--</div>-->
+                    <!--<div class="btn-group">-->
+                    <!--<button type="button" class="btn btn-success"><span class="icon fa fa-group"></span> Groups</button>-->
+                    <!--</div>-->
+                    <!--<div class="btn-group">-->
+                    <!--<button type="button" class="btn btn-success"><span class="icon icon-users"></span> Buddies</button>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                </div>
+            </div>
+            <div class="row">
+                
+            </div>
+        </section>
+        <section class="colleagues">
+            <div class="row">
+                <div ng-show="programUsers.length==1" class="lead" style="margin-top:40px;margin-left: 15px;color:#fff;">
+                    No data found.
+                </div>
+                <div ng-click="goToUserProfile(programUser)" style="cursor:pointer"
+                     ng-repeat="programUser in programUsers | filter:searchFilter"
+                     class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-hide="programUser.user.id == ownUserId">
+                  
+                    <div class="profile">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <div class="header clearfix">
+                                    <div class="avatar">
+                                        <img ng-src="{{(programUser.avatarUrl ? (programUser.avatarUrl + '/100x100') : '/img/avatar.jpg')}}"
+                                             class="large circle" alt="{{user.firstName + ' ' + user.lastName }}"/>
+
+                                        <div style="height:30px" class="name">
+                                            <h4>{{programUser.user.firstName}} {{programUser.user.lastName}}</h4>
+                                            <!--<span>{{programUser.level}}</span>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="points row">
+                                    <div class="col-xs-6">
+                                        <div class="value"><span class="icon  icon-bars2 "></span>
+                                            {{programUser.points}}
+                                        </div>
+                                    </div>
+                                    <!--<div class="col-xs-3">-->
+                                    <!--&lt;!&ndash;<div class="value"><span class="icon icon-diamonds"></span> 0</div>&ndash;&gt;-->
+                                    <!--&lt;!&ndash; <div class="meta">Jubi Jems</div> &ndash;&gt;-->
+                                    <!--</div>-->
+                                    <div class="col-xs-6">
+                                        <div class="value pull-right"><span class="icon icon-globe"></span>
+                                            {{programUser.user.badges.length}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <button ng-show="isUserBuddy(programUser)" ng-click="removeBuddy($event, programUser)" class="btn btn-block btn-success">REMOVE {{getBuddyLabel().toUpperCase()}}</button>
+                                <button ng-show="!isUserBuddy(programUser)"  ng-click="addBuddy($event, programUser)" class="btn btn-block btn-secondary addCoach">
+                                    <span class="icon icon-plus"></span><span class="coach">ADD {{getBuddyLabel().toUpperCase()}} </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                
+                   
+                
+                
+                </div>
+                <div ng-show="(programUsers | filter:searchFilter).length == 0 " class="lead" style="margin-top:40px;margin-left: 15px;color:#fff;">
+                    No data found.
+                </div>
+
+            </div>
+        </section>
+    </div>
+</div>
+
+

@@ -1,0 +1,107 @@
+<div ng-controller="SystemConfigurationController as c" ng-cloak>
+
+    <div ng-if="isLoading" class="loading">
+        <span us-spinner="{radius:30, width:8, length: 16, color: '#c1c1c1'}"></span>
+
+        <div>One moment please...</div>
+    </div>
+    <form ng-submit="saveConfigurations()">
+        <div ng-if="!isLoading">
+            <div class="row">
+                <div class="col-xs-6">
+                </div>
+                <div class="col-xs-6 text-right">
+                    <button type="submit" class="btn btn-primary btn-sm">Save Configuration</button>
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title">Todo Verification Questions (Templates)</div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div ng-repeat="question in todoVerificationQuestions">
+                                        <div class="row">
+                                            <div class="col-xs-11">
+                                                <input required type="text" ng-model="question.value"
+                                                       style="width:100%"/>
+                                            </div>
+                                            <div class="col-xs-1">
+                                                <a href="javascript:void(0)" style="color:black"
+                                                   ng-click="removeVerification(question)"><span
+                                                            class="fa fa-close"></span></a>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="btn-group btn-group-justified" role="group">
+                                        <a href="javascript:void(0)" ng-click="addTodoVerificationQuestion($event)"
+                                           class="btn btn-primary btn-sm"><span
+                                                    class="icon fa fa-bookmark"></span><span
+                                                    class="hidden-xs hidden-sm"><br/>Add Question</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title">Inspiration Station Help Text</div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <label>Encourage</label>
+                                            <input required type="text" ng-model="model.inspiration.encourageDescription.value"
+                                                   style="width:100%"/>
+                                        </div>
+                                    </div>
+                                    <br/>
+
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <label>Appreciate</label>
+                                            <input required type="text" ng-model="model.inspiration.appreciateDescription.value"
+                                                   style="width:100%"/>
+                                        </div>
+                                    </div>
+                                    <br/>
+
+
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <label>Story</label>
+                                            <input required type="text" ng-model="model.inspiration.storyDescription.value"
+                                                   style="width:100%"/>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<%- partial('modals/confirmModal') %>

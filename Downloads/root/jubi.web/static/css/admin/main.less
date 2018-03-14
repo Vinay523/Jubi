@@ -1,0 +1,253 @@
+@import "bootstrap/bootstrap";
+@import "../lib/font-awesome/font-awesome";
+
+@black: #000000;
+@grey: #f3f3f4;
+@green: darken(#42b978, 10%);
+@red: #ef5864;
+@blue: #14b9c0;
+@orange: #f9b447;
+@purple: #564f8a;
+@teal: #00b5ad;
+@white: #ffffff;
+
+@primary: #14b9c0;
+@secondary: #001c33;
+
+@brand-default: #e7eaec;
+@brand-primary: @blue;
+@brand-success: @green;
+@brand-info: @teal;
+@brand-warning: @orange;
+@brand-danger: @red;
+
+@positive: #52a954;
+@negative: #a95252;
+@muted: #7d868f;
+@inverse: #222222;
+
+@gray-darker: darken(#25292f, 10%);
+@gray-dark: darken(#25292f, 3%);
+@gray: #25292f;
+@gray-light: lighten(#25292f, 5%);
+@gray-lighter: lighten(#25292f, 10%);
+
+@link-color: @green;
+@link-color-hover: darken(@link-color, 10%);
+
+@inverse-link-color: @grey;
+@inverse-link-color-hover: lighten(@inverse-link-color, 10%);
+
+@background: #e5e5e5;
+@light-background: #f3f3f4;
+
+@large-text: 36px;
+@medium-text: 28px;
+@small-text: 18px;
+
+@input-bg-disabled: #d3d3d3;
+
+
+@highlight: lighten(@brand-primary, 50%);
+
+html {
+  -ms-overflow-style: scrollbar;
+}
+
+body { padding-top: 70px; }
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
+.ng-cloak, .x-ng-cloak,
+.ng-hide {
+  display: none !important;
+}
+
+.text-xs {
+  font-size: 9px;
+  font-weight: 300;
+}
+.text-sm {
+  font-size: 11px;
+  font-weight: 300;
+}
+.text-lg {
+  font-size: 16px;
+  font-weight: 300;
+}
+.text-xl {
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.loading {
+  min-height: 300px;
+  &.overlay {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.loading > div {
+  color: #b0b0b7;
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  top: 50%;
+  margin-top: 70px;
+}
+
+.loading-overlay {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100%;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.5);
+  &.tall {
+    height: 150%;
+  }
+  &.neg-margin {
+    left: -15px;
+    right: -15px;
+  }
+}
+
+
+.loading-sm {
+  min-height: 100px;
+  > div {
+    font-size: 13px;
+    font-weight: 400;
+    margin-top: 45px;
+  }
+}
+
+.dataTables_wrapper {
+  .row {
+    margin: 0;
+    >div {
+      padding: 0;
+    }
+  }
+  label {
+    margin: 0;
+  }
+  table.dataTable {
+    margin:5px 0;
+    thead > tr > th {
+      padding-left: 8px;
+      &.sorting, &.sorting_asc, &.sorting_desc {
+        cursor: pointer;
+      }
+      &:focus {
+        border:none !important;
+      }
+    }
+  }
+  .dataTables_paginate, .dataTables_info, .dataTables_length, .dataTables_filter {
+    font-size:11px;
+    label {
+      font-weight: normal;
+    }
+    input {
+      font-size:11px;
+      height: 25px;
+    }
+    select {
+      font-size:11px;
+      height: 25px;
+    }
+  }
+  .dataTables_filter {
+    text-align: right;
+    input {
+      margin-left:5px;
+    }
+  }
+  .dataTables_paginate {
+    text-align: right;
+    .pagination {
+      margin:0;
+    }
+  }
+  .dataTables_info {
+    padding-top:10px;
+  }
+
+  thead .sorting:before,
+  thead .sorting_asc:before,
+  thead .sorting_desc:before {
+    content: '' !important;
+    padding-right: 0 !important;
+  }
+
+  table.table thead .sorting_desc:after {
+    content: "\25BE";
+    padding-left: 5px;
+  }
+  table.table thead .sorting_asc:after {
+    content: "\25B4";
+    padding-left: 5px;
+  }
+}
+
+.clients {
+  .logo {
+    img {
+      width: 100%;
+    }
+  }
+}
+.client-edit {
+  .slug {
+    margin-top:3px;
+    .form-control {
+      display: inline-block;
+      width: 150px;
+      padding: 3px;
+      height: auto;
+    }
+  }
+  .import-users {
+    cursor: pointer;
+    color: @link-color;
+    &:hover {
+      color: @link-hover-color;
+    }
+  }
+}
+
+.dataTable {
+  ::-ms-clear {
+    display: none;
+  }
+}
+
+.profile-avatar {
+  min-width:110px;
+  margin-bottom: 0;
+}
+
+.program-img {
+  background: url('../../img/no-picture.jpg') #f1f1f1;
+  background-size: cover;
+  overflow: hidden;
+  text-align: center;
+  position: relative;
+  .manage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+    .btn {
+      padding: 5px;
+      font-size: 12px;
+    }
+  }
+  &:hover {
+    .manage {
+      display: block;
+    }
+  }
+}

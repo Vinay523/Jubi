@@ -1,0 +1,50 @@
+<div style="left:-15px;right:-15px" ng-show="isSaving">
+    <div class="loading">
+        <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+        <div>One moment please...</div>
+    </div>
+</div>
+
+<div ng-show="!isSaving">
+    <!--Level Quests-->
+    <div ng-hide="level.quests.length == 0" ng-if="program.levels.length > 0" ng-repeat="level in program.levels" class="levelRepeater">
+        {{ level.title }}
+        <div class="levelContainer">
+            <ul dnd-list="level.quests"
+                dnd-drop="levelQuestDrop(event, index, item, external, type, level)"
+                dnd-allowed-types="['quest']">
+                <li ng-repeat="quest in level.quests"
+                    dnd-type="'quest'"
+                    dnd-draggable="quest"
+                    dnd-selected="selectQuest(quest)"
+                    dnd-effect-allowed="move"
+                    ng-class="{'selected': selectedQuest===quest}"
+                    id="levelQuest{{$index}}"
+                    dnd-disable-if="!questCanDrag">
+                    <%- partial('manage/views/authoringSuite/program/questView') %>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--Program Quests-->
+    <div>
+        <ul dnd-list="program.quests"
+            dnd-drop="questDrop(event, index, item, external, type, 'quest')"
+            dnd-allowed-types="['quest']">
+            <li ng-if="!programHasQuests(program)">
+                <p class="text-xl text-muted text-center" style="padding:50px 0;">No quests defined.<br>Click the Add Quest
+                    button below to get started.</p>
+            </li>
+            <li>
+                <%- partial('manage/views/authoringSuite/program/questView') %>
+            </li>
+        </ul>
+    </div>
+    <div id="endQuestList"></div>
+    <div class="btn-group btn-group-justified" role="group" style="padding-bottom:20px;">
+        <a href="#" ng-click="addQuest($event)" class="btn btn-primary btn-lg"><span
+                    class="fa fa-rocket"></span><span class="hidden-xs hidden-sm"><br/>Add Quest</span></a>
+    </div>
+</div>
+

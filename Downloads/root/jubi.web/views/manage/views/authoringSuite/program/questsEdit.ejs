@@ -1,0 +1,122 @@
+<div style="left:-15px;right:-15px" ng-show="isSaving">
+    <div class="loading">
+        <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+        <div>One moment please...</div>
+    </div>
+</div>
+
+<div ng-show="!isSaving" class="activitiesMain">
+    <!--Container to hold Activity Template-->
+    <div class="program-tiles-left col-lg-3 col-md-3 col-sm-3 col-xs-3 zeropadding">
+        <div class="drag-drop-heading">Drag and Drop Activity Types</div>
+        <ul  ng-repeat="quest in activityTemplates">
+            <li dnd-draggable="quest" dnd-effect-allowed="move" ng-if="quest.type == 'L'" dnd-type="'newQuest'" dnd-dragstart="dragStartScrollBottom($event)" class="learn" ng-click=" addQuest($event,'L')">
+                <p>LEARN</p>
+                <p class="text-center">
+                    <span>
+                        <img src="<%-config.web.contentUrl%>/img/learn-blue-tile.svg">
+                    </span>
+                </p>
+            </li>
+            <li dnd-draggable="quest" dnd-effect-allowed="move" ng-if="quest.type == 'T'" dnd-type="'newQuest'" dnd-dragstart="dragStartScrollBottom($event)" class="do" ng-click="addQuest($event,'T')">
+                <p>DO</p>
+                <p class="text-center">
+                    <span>
+                        <img src="<%-config.web.contentUrl%>/img/do-green-tile.svg">
+                    </span>
+                </p>
+            </li>
+            <li dnd-draggable="quest" dnd-effect-allowed="move" ng-if="quest.type == 'I'" dnd-type="'newQuest'" dnd-dragstart="dragStartScrollBottom($event)" class="inspire" ng-click="addQuest($event,'I')">
+                <p>INSPIRE</p>
+                <p class="text-center">
+                    <span>
+                        <img src="<%-config.web.contentUrl %>/img/orange-inspire-icon.png">
+                    </span>
+                </p>
+            </li>
+        </ul>
+    </div>
+    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 zeropadding authoring-container" id="authoring-container">
+        <!--Level Quests-->
+        <div ng-hide="level.quests.length == 0" ng-if="program.levels.length > 0" ng-repeat="level in program.levels" class="levelRepeater">
+            {{ level.title }}
+            <div class="levelContainer">
+
+                <div class="authoring-wrapper">
+                    <div class="authoring-content col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding">
+                        <div class="program-tiles-right zeropadding" ng-class="{'quest-error' : quest.hasError, 'lastQuestInLevel' : $last, 'questInLevel' : !$last }">
+
+                            <ul dnd-list="level.quests"
+                                dnd-drop="levelQuestDrop(event, index, item, external, type, level)"
+                                dnd-allowed-types="['quest']">
+                                <li class="col-lg-3 col-md-3 col-sm-3 col-xs-3 zeropadding program-tile1" ng-repeat="quest in  level.quests"
+                                    dnd-type="'quest'"
+                                    dnd-draggable="quest"
+                                    dnd-selected="selectQuest(quest)"
+                                    dnd-horizontal-list="true"
+                                    dnd-effect-allowed="move"
+                                    ng-class="{'selected': selectedQuest===quest}"
+                                    id="levelQuest{{$index}}"
+                                    dnd-disable-if="!questCanDrag">
+                                    <%- partial('manage/views/authoringSuite/program/questView') %>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!--Program Quests-->
+        <div>
+            <div class="authoring-wrapper">
+
+                <div class="authoring-content col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding">
+                    <div class="program-tiles-right zeropadding" ng-class="{'quest-error' : quest.hasError, 'lastQuestInLevel' : $last, 'questInLevel' : !$last }">
+                        <ul dnd-list="program.quests"
+                            dnd-drop="questDrop(event, index, item, external, type, 'quest')"
+                            dnd-allowed-types="['quest','newQuest']">
+                            <li ng-if="!programHasQuests(program)">
+                                <p class="text-xl text-muted text-center" style="padding:50px 0;line-height: 1;">
+                                    No activities defined. Drag or Click the Activity Type to get started.
+                                </p>
+                            </li>
+                            <li class="col-lg-6 col-md-6 col-sm-6 col-xs-6 zeropadding program-tile1" ng-repeat="quest in program.quests"
+                                dnd-type="'quest'"
+                                dnd-draggable="quest"
+                                dnd-selected="selectQuest(quest)"
+                                dnd-horizontal-list="true"
+                                dnd-effect-allowed="move"
+                                dnd-moved="questMoved()"
+                                ng-class="{'selected': selectedQuest===quest}"
+                                id="quest{{$index}}">
+                                <%- partial('manage/views/authoringSuite/program/questView') %>
+
+                            </li>
+                            <li class="col-lg-6 col-md-6 col-sm-6 col-xs-6 zeropadding program-tile-add">
+                                <div class="add-new">
+                                    <p>Add a new activity type from the menu</p>
+                                </div>
+                                <div class="program-text">
+                                    <input type="text" value="" style="display:none;">
+                                    <label></label>
+                                </div>
+
+                            </li>
+                        </ul>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <!--<div id="endQuestList"></div>-->
+    <!--<div class="btn-group btn-group-justified" role="group" style="padding-bottom:20px;">
+        <a href="#" ng-click="addQuest($event)" class="btn btn-primary btn-lg"><span
+                    class="fa fa-rocket"></span><span class="hidden-xs hidden-sm"><br/>Add Quest</span></a>
+    </div>-->
+</div>
+

@@ -1,0 +1,100 @@
+<div class="program-menu col-lg-12 col-md-12 col-sm-12 col-xs-12" data-ng-controller="TopNavController" ng-style="getSubHeaderCustomStyle()">
+  <ul ng-style="getSubNavDrop()">
+    <li ng-class="{'active':isActive('quests')}">
+      <a ng-click="navToPage($event, 'quests')" ng-href="javascript:void(0)">
+         Quest
+      </a>
+    </li>
+      
+    <li id="actionDrop" class="drop" ng-class="{'active':isActive('network')}" ng-mouseenter="dropdownNavopen()" ng-mouseleave="dropdownNavclose()">
+      <a ng-click="navToPage($event, 'network')" ng-href="javascript:void(0)">
+        Network
+      </a>
+        <ul class="drop-menu" ng-style="getSubHeaderCustomStyle()" style="padding:10px 0 25px;">
+            <li ng-class="{'active':isActive('todo-management')}">
+                <a ng-click="navToPage($event, 'todo-management')" ng-href="javascript:void(0)">
+                    Actions
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li ng-class="{'active':isActive('discussion')}">
+      <a ng-click="navToPage($event, 'discussion')" ng-href="javascript:void(0)">
+         Discussion
+      </a>
+    </li>
+    <li ng-class="{'active':isActive('leaderboard')}">
+      <a ng-click="navToPage($event, 'leaderboard')" ng-href="javascript:void(0)">
+         Leaderboard
+      </a>
+    </li>
+    <li ng-class="{'active':isActive('resources')}">
+      <a ng-click="navToPage($event, 'resources')" ng-href="javascript:void(0)">
+         Resources
+      </a>
+    </li>
+    <li ng-class="{'active':isActive('dashboard')}">
+      <a ng-click="navToPage($event, 'dashboard')" ng-href="javascript:void(0)">
+         Dashboard
+      </a>
+    </li>
+    <li ng-if="canManage() && program.editable" class="pull-right linkes">
+      <a ng-href="/manage/authoring-suite/program/{{program.slug}}/edit" ng-click="goToManage($event)">
+         Edit
+      </a>
+    </li>
+
+  </ul>
+  <ul class="quest_mobile_menu" ng-style="getSubNavDrop()">
+    <li id="mobDropSubNav">
+      <a ng-click="toggleSubNav()">
+        <span style="text-transform: capitalize;color: #404040;font-size: 12px;">{{currentPage}}</span>
+        <i class="fa fa-caret-down text-right" aria-hidden="true" style="color: #404040;"></i>
+      </a>
+      <ul class="dropdown" ng-style="getSubNavDrop()">
+        <li ng-class="{'active':isActive('quest')}">
+          <a ng-click="navToPage($event, 'quests')" ng-href="javascript:void(0)">
+             Activity
+          </a>
+        </li>
+        <li ng-class="{'active':isActive('network')}" id="actionDrop" class="drop" ng-mouseenter="dropdownNavopen()">
+          <a ng-click="navToPage($event, 'network')" ng-href="javascript:void(0)">
+             Network
+          </a>
+        </li>
+        <li ng-class="{'active':isActive('todo-management')}">
+            <a ng-click="navToPage($event, 'todo-management')" ng-href="javascript:void(0)">
+                Actions
+            </a>
+        </li>
+        <li ng-class="{'active':isActive('discussion')}">
+          <a ng-click="navToPage($event, 'discussion')" ng-href="javascript:void(0)">
+             Discussion
+          </a>
+        </li>
+        <li ng-class="{'active':isActive('leaderboard')}">
+          <a ng-click="navToPage($event, 'leaderboard')" ng-href="javascript:void(0)">
+             Leaderboard
+          </a>
+        </li>
+        <li ng-class="{'active':isActive('resources')}">
+          <a ng-click="navToPage($event, 'resources')" ng-href="javascript:void(0)">
+             Resources
+          </a>
+        </li>
+        <li ng-class="{'active':isActive('dashboard')}">
+          <a ng-click="navToPage($event, 'dashboard')" ng-href="javascript:void(0)">
+             Dashboard
+          </a>
+        </li>
+        <li ng-if="canManage() && program.editable" class="pull-right">
+          <a ng-href="/manage/authoring-suite/program/{{program.slug}}/edit" ng-click="goToManage($event)">
+             Edit
+          </a>
+        </li>
+      </ul>
+    </li>
+
+
+  </ul>
+</div>

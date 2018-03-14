@@ -1,0 +1,62 @@
+<div ng-controller="NetworkController">
+
+    <div ng-show="isLoading" style="position: relative;" ng-cloak  ng-style="getBackgroundFontStyle()">
+        <div class="loading">
+            <span us-spinner="{radius:30, width:8, length: 16, color: getBackgroundFontColor()}"></span>
+            <div ng-style="getBackgroundFontStyle()">One moment please...</div>
+        </div>
+    </div>
+
+    <div ng-hide="isLoading">
+        <div class="content">
+            <h1 ng-style="getBackgroundFontStyle()">Leaderboard</h1>
+            <hr/>
+            <div class="panel panel-primary filterable" style="color:white">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Top Performers</h3>
+
+                    <div class="pull-right">
+                        <button ng-click="filters.showCustomFilters = !filters.showCustomFilters;"
+                                style="background:#d9dee1;color:black"
+                                class="btn btn-default btn-xs btn-filter"><span
+                                    class="glyphicon glyphicon-filter"></span>
+                            Filter
+                        </button>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead ng-switch on="filters.showCustomFilters">
+                    <tr ng-switch-when="false" class="filters">
+                        <th width="70"><input type="text" class="form-control" placeholder="#" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="First Name" disabled>
+                        </th>
+                        <th><input type="text" class="form-control" placeholder="Last Name" disabled>
+                        </th>
+                        <th><input type="text" class="form-control" placeholder="Points" disabled>
+                        </th>
+                    </tr>
+                    <tr ng-switch-when="true" class="filters">
+                        <th width="70"><input ng-model="filters.index" type="text" class="form-control" placeholder="#">
+                        </th>
+                        <th><input ng-model="filters.firstName" type="text" class="form-control"
+                                   placeholder="First Name"></th>
+                        <th><input ng-model="filters.lastName" type="text" class="form-control" placeholder="Last Name">
+                        </th>
+                        <th><input ng-model="filters.points" type="text" class="form-control" placeholder="Points"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-click="goToUserProfile(programUser)" style="cursor:pointer"
+                        ng-repeat="programUser in sortedProgramUsers | filter:customSearchFilter">
+                        <td>{{getRank(programUser)}}</td>
+                        <td>{{programUser.user.firstName}}</td>
+                        <td>{{programUser.user.lastName}}</td>
+                        <td>{{programUser.points}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- /MESSAGES -->
+</div>

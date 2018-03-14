@@ -1,0 +1,402 @@
+<div ng-show="!loading.isLoading" class="todo-item">
+    <div style="left:-15px;right:-15px" ng-show="isSaving">
+        <div class="loading">
+            <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+            <div>One moment please...</div>
+        </div>
+    </div>
+
+
+    <div ng-show="!isSaving"  ng-controller="AuthoringSuiteDoEditController" ng-init="doInitStart()"><!--ng-click="addTodo($event)"-->
+        <div>
+            <div ng-show="challenge.isLoading" class="loading-overlay">
+                <div class="loading" ng-cloak>
+                    <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+                    <div>One moment please...</div>
+                </div>
+            </div>
+
+            <div class="panel-group " ng-click="offMenuClick($event)">
+                <label>Do Activity Setup</label>
+                <div class="panel panel-default activitySetup">
+
+                    <div class="panel-body" style="padding-left:10px;">
+                        <div class="form-group row">
+                            <div class="col-xs-12 col-sm-2 text-right">
+                                <label class="control-label" style="padding-top:0;">Activity Type</label>
+                            </div>
+                            <div class="col-xs-12 col-sm-10 input-group">
+                                <label class="control-label col-xs-12 " style="padding-top:0;">
+                                    <input class="activityType form-control" type="radio" name="baseBonus" ng-model="quest.baseOrBonus" ng-checked="quest.baseOrBonus == 'B'" ng-click="quest.baseOrBonus = 'B'" />
+                                    Base Activity - must be completed for full Program requirements
+                                </label>
+                                <label class="control-label col-xs-12 " style="padding-top:0;">
+                                    <input class="activityType form-control" type="radio" name="baseBonus" ng-model="quest.baseOrBonus" ng-checked="quest.baseOrBonus == 'O'" ng-click="quest.baseOrBonus = 'O'" />
+                                    Bonus Activity - can be left incomplete and skipped over
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <div class="row form-group" ng-class="{'has-error':quest.val.objective.req}">
+                            <div class="col-xs-12 col-sm-2 text-right">
+                                <label for="obj" class="control-label" style="padding-top:0;">Objective</label>
+                            </div>
+                            <div class="col-xs-12 col-sm-10" ng-class="{'has-error':quest.val.objective.req}">
+                                <!--<textarea class="form-control"
+                                  id="obj"
+                                  placeholder="Activity objective."
+                                  title="Activity objective."
+                                  ng-model="quest.objective"
+                                  dnd-no-drop></textarea>-->
+                                <ng-quill-editor ng-model="quest.objective" placeholder="Activity objective."></ng-quill-editor>
+                                <span class="text-sm text-danger" ng-if="quest.val.objective.req">Activity objective cannot be empty.</span>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-xs-12 col-sm-2 text-right">
+                                <label for="tile-img" class="control-label" style="padding-top:0;">
+                                    Tile Image
+                                </label>
+
+                                <div class="text-xs text-muted">
+                                    Max File Size: 4MB<br>(JPG, JPEG, GIF, PNG)<br>Dimensions: 348px by 206 px
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-5 ">
+                                <div class="quest-edit thumbnail prevTile">
+                                    <div class="program-img">
+                                        <div ng-show="quest.uploading.tile">
+                                            <div class="loading loading-sm">
+                                                <img src="<%- config.web.contentUrl %>/img/empty.png" />
+                                                <span us-spinner="{radius:15, width:4, length: 9, color: '#b0b0b7'}"></span>
+                                            </div>
+                                        </div>
+
+                                        <div ng-show="!quest.uploading.tile">
+                                            <div class="manage manage-photo btn-sm">
+                                                <a ng-if="quest.featuredImageUrl" href="#"
+                                                   class="btn btn-default red pull-right"
+                                                   ng-click="removeQuestImage($event, quest, 'tile')">
+                                                    <span class="fa fa-trash-o" title="Remove Image"></span>
+                                                </a>
+
+                                                <div class="btn btn-default blue pull-left"
+                                                     ng-file-select
+                                                     ng-file-change="uploadQuestImage($files, quest, 'tile')">
+                                                    upload
+                                                </div>
+                                            </div>
+
+                                            <div ng-if="quest.featuredImageUrl">
+                                                <img ng-src="{{quest.featuredImageUrl}}" alt="" />
+                                            </div>
+                                            <div ng-if="!quest.featuredImageUrl">
+                                                <!--<img src="<%- config.web.contentUrl %>/img/empty.png" />-->
+                                                <img src="<%- config.web.contentUrl %>/img/Group 9.png" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-sm text-danger" ng-if="quest.val.featuredImage.type"
+                                         style="padding-top:5px;">
+                                        Unsupported image type.
+                                    </div>
+                                    <div class="text-sm text-danger" ng-if="quest.val.featuredImage.size"
+                                         style="padding-top:5px;">
+                                        Image is too large.
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-xs-12 col-sm-2 text-right">
+                                <label for="tile-img" class="control-label" style="padding-top:0;">
+                                    Background Image
+                                </label>
+
+                                <div class="text-xs text-muted">
+                                    Max File Size: 4MB<br>(JPG, JPEG, GIF, PNG)
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-5 ">
+                                <div class="quest-edit thumbnail"
+                                     ng-class="{'auto-height':quest.backgroundImageUrl}">
+                                    <div class="program-img">
+                                        <div ng-show="quest.uploading.bg">
+                                            <div class="loading loading-sm">
+                                                <img src="<%- config.web.contentUrl %>/img/empty.png" />
+                                                <span us-spinner="{radius:15, width:4, length: 9, color: '#b0b0b7'}"></span>
+                                            </div>
+                                        </div>
+
+                                        <div ng-show="!quest.uploading.bg">
+                                            <div class="manage manage-photo btn-sm">
+                                                <a ng-if="quest.backgroundImageUrl" href="#"
+                                                   class="btn btn-default red pull-right"
+                                                   ng-click="removeQuestImage($event, quest, 'bg')">
+                                                    <span class="fa fa-trash-o" title="Remove Image"></span>
+                                                </a>
+
+                                                <div class="btn btn-default blue pull-left"
+                                                     ng-file-select
+                                                     ng-file-change="uploadQuestImage($files, quest, 'bg')">
+                                                    upload
+                                                </div>
+                                            </div>
+
+                                            <div ng-if="quest.backgroundImageUrl">
+                                                <img ng-src="{{quest.backgroundImageUrl}}" alt="" />
+                                            </div>
+                                            <div ng-if="!quest.backgroundImageUrl">
+                                                <img src="<%- config.web.contentUrl %>/img/empty.png" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-sm text-danger" ng-if="quest.val.backgroundImage.type"
+                                         style="padding-top:5px;">
+                                        Unsupported image type.
+                                    </div>
+                                    <div class="text-sm text-danger" ng-if="quest.val.backgroundImage.size"
+                                         style="padding-top:5px;">
+                                        Image is too large.
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <!--<div class="panel-heading" ng-class="{'has-error':todo.val.title.req}">
+                <input type="text" class="form-control" ng-model="todo.title" placeholder="To-do title.">
+
+                <div class="text-sm text-danger" ng-if="todo.val.title.req">
+                    Please enter a title.
+                </div>
+            </div>-->
+                    <div class="panel-body form-horizontal">
+
+                        <div class="form-group">
+                            <label class="col-xs-2 control-label">Instructions</label>
+
+                            <div class="col-xs-10">
+                                <!--<textarea class="form-control" rows="2" ng-model="todo.instructions"
+                                  placeholder="To-do instructions."></textarea>-->
+                                <ng-quill-editor ng-model="todo.instructions" placeholder="Do activity instructions."></ng-quill-editor>
+                            </div>
+                        </div>
+
+
+                        <!--<div class="form-group" ng-class="{'has-error':todo.val.points.fmt || todo.val.points.range}">
+                     <label class="col-xs-2 control-label">Points</label>
+
+                     <div class="col-xs-10">
+                         <input allow-decimal="false" number-mask type="text" class="form-control"
+                                ng-model="todo.points"
+                                placeholder="To-do points." style="max-width: 150px;">
+
+                         <div class="text-sm text-danger" ng-if="todo.val.points.fmt">
+                             Please enter a valid
+                             number.
+                         </div>
+                         <div class="text-sm text-danger" ng-if="todo.val.points.range">
+                             Please enter a number
+                             between 1 and 1000.
+                         </div>
+                     </div>
+                 </div>-->
+
+                        <div class="form-group" ng-class="{'has-error':todo.val.dueDate.req}">
+                            <label class="col-xs-2 control-label">Due Date</label>
+
+                            <div class="col-xs-3 todo-due-date" style="padding-top:7px;">
+                                <label ng-click="selectByUser(todo)">
+                                    <i class="fa"
+                                       ng-class="{'fa-square-o':!todo.due.byUser,'fa-check-square-o':todo.due.byUser}"></i>
+                                    Specified by user.
+                                </label>
+                            </div>
+                            <div class="col-xs-3 todo-due-date" style="padding-top:7px;">
+                                <label ng-click="selectByAuthor(todo)">
+                                    <i class="fa"
+                                       ng-class="{'fa-square-o':!todo.due.byAuthor,'fa-check-square-o':todo.due.byAuthor}"></i>
+                                    Specified by author.
+                                </label>
+
+                                <div class="input-group todo-datepicker">
+                                    <input type="text" id="triggerInput" class="form-control" ng-model="todo.due.date"
+                                           is-open="todo.due.open"
+                                           datepicker-popup="MM/dd/yyyy" readonly ng-disabled="!todo.due.byAuthor"
+                                           ng-click="todo.due.open=true"
+                                           datepicker-options="{showWeeks:false}" min-date="today" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-primary" ng-disabled="!todo.due.byAuthor"
+                                                ng-click="triggerClick()">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <div class="text-sm text-danger" ng-if="todo.val.dueDate.req">
+                                    Please select a due date.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-xs-12 col-sm-2 text-right">
+                                <label for="exLink" class="control-label" style="padding-top:0;">
+                                    Download
+                                    Content
+                                </label>
+                            </div>
+                            <div class="col-xs-10">
+                                <div ng-if="todo.resource.url">
+                                    <div class="row">
+                                        <div class="col-xs-1 resourceImage">
+                                            <a ng-href="{{todo.resource.url}}" target="_blank"><i class="fa fa-file fa-4x text-muted"></i><br></a>
+                                            <i class="fa fa-times-circle remove pull-right" title="Remove Content"
+                                               ng-click="removeDownloadContent($event, todo)"></i>
+                                        </div>
+                                        <div class="col-xs-11">
+                                            <div class="form-group" style="margin:0 0 15px;">
+                                                <input type="text" ng-model="todo.resource.name"
+                                                       placeholder="Content name." class="form-control">
+                                            </div>
+                                            <textarea ng-model="todo.resource.description"
+                                                      placeholder="Content description." class="form-control"
+                                                      rows="1"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-if="!todo.resource.url">
+                                    <div ng-if="todo.resource.uploading">
+                                        <i class="fa fa-spinner fa-spin"></i>
+                                        Uploading content...
+                                    </div>
+                                    <div ng-if="!todo.resource.uploading">
+                                        <div class="btn btn-primary" ng-file-select
+                                             ng-file-change="uploadDownloadContent($files, todo)">
+                                            Choose Content
+                                        </div>
+                                        <div class="text-sm text-danger" ng-if="todo.val.resource.type ">
+                                            Unsupported file
+                                            type.
+                                        </div>
+                                        <div class="text-sm text-danger" ng-if="todo.val.resource.size ">
+                                            File is too
+                                            large.
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Do Activity Verifications
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-xs-2 control-label">Verification Instructions</label>
+
+                                <div class="col-xs-10">
+                                    <!--<textarea class="form-control" rows="2" ng-model="todo.verificationInstructions"
+                                      placeholder="To-do verification instructions."></textarea>-->
+                                    <ng-quill-editor ng-model="todo.verificationInstructions" placeholder="Do activity verification instructions."></ng-quill-editor>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <label ng-click="todo.validate = !canEditEntity(quest, program) ? todo.validate : !todo.validate; programEditFrm.$setDirty();"
+                                           ng-class="{'text-muted': !canEditEntity(quest, program)}">
+                                        <i class="fa"
+                                           ng-class="{'fa-square-o':!todo.validate,'fa-check-square-o':todo.validate}"></i>
+                                        {{getBuddyLabel(true)}} Validated
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <label ng-click="canEditEntity(quest, program) && toggleUserMedia()"
+                                           ng-class="{'text-muted': !canEditEntity(quest, program)}">
+                                        <i class="fa"
+                                           ng-class="{'fa-square-o':!quest.userAllowedMediaUpload,'fa-check-square-o':quest.userAllowedMediaUpload}"></i>
+                                        Enable user media upload
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div><label>Reflection Questions:</label></div>
+                                <div ng-repeat="verification in todo.verifications">
+                                    <div class="col-xs-11" ng-class="{'customerr': verification.customErr}">
+                                        <select ng-if="!verification.custom"
+                                                ng-model="verification.predefinedQuestionId"
+                                                ng-change="predefinedQuestionSelected(verification)"
+                                                style="width:100%"
+                                                ng-disabled="!canEditEntity(quest, program)"
+                                                ng-options="question.id as question.value for question in predefinedVerificationQuestions"></select>
+                                        <input ng-if="verification.custom"
+                                               placeholder="Question..."
+                                               type="text"
+                                               ng-disabled="!canEditEntity(quest, program)"
+                                               ng-model="verification.challenge.questions[0].question"
+                                               ng-change="customQuestionValid()"
+                                               style="width:100%" />
+                                        <div class="text-sm text-danger " ng-if="verification.customErr" ng-class="{'has-error': verification.customErr }">
+                                            Question Cannot be Empty.
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <a href="javascript:void(0)" style="color:black"
+                                           ng-if="canEditEntity(quest, program)"
+                                           ng-click="removeVerification(verification)"><span class="fa fa-close"></span></a>
+                                    </div>
+                                    <!--<p>The Question Cannot be empty</p>-->
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="btn-group btn-group-justified" role="group">
+                                    <a href="javascript:void(0)"
+                                       ng-click="canEditEntity(quest, program) && addVerification($event)"
+                                       ng-disabled="!canEditEntity(quest, program)"
+                                       class="btn btn-primary btn-sm">
+                                        <span class="icon fa fa-bookmark"></span><span class="hidden-xs hidden-sm"><br />Add Question</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+</div>
+<!--ng-click="canEditEntity(quest, program) && addVerificationQuestion()"
+                                       ng-disabled="!canEditEntity(quest, program)"-->

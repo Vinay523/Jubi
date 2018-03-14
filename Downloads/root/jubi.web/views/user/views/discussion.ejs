@@ -1,0 +1,11 @@
+
+    <div ng-controller="TopicsController">
+       
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding" ng-show="inState == 'forum'" >
+            <%- partial('user/views/forum') %>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding" ng-show="inState == 'forumTopic'">
+            <%- partial('user/views/forumTopic') %>
+        </div>
+       
+    </div>

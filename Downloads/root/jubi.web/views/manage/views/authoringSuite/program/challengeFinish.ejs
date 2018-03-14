@@ -1,0 +1,104 @@
+<div class="form-group row">
+    <div class="col-xs-12 col-sm-2 text-right" style="padding-top:6px;">
+        <label for="exLink" class="control-label">Header 1</label>
+    </div>
+    <div class="col-xs-12 col-sm-10">
+        
+        <ng-quill-editor placeholder="Finish Challenge Header" title="Finish Challenge Header" ng-model="challenge.finishText"></ng-quill-editor>
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-xs-12 col-sm-2 text-right" style="padding-top:6px;">
+        <label for="exLink" class="control-label">Header 2</label>
+    </div>
+    <div class="col-xs-12 col-sm-10">
+        
+        <ng-quill-editor placeholder="Finish Challenge Sub Header" title="Finish Challenge Sub Header" ng-model="challenge.instructions"></ng-quill-editor>
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-xs-12 col-sm-2 text-right" style="padding-top:6px;">
+        <label for="exLink" class="control-label">External Link</label>
+    </div>
+    <div class="col-xs-12 col-sm-10">
+        <input type="text" id="exLink" class="form-control" placeholder="External link." title="External link." ng-model="challenge.media[0].link">
+        <div class="text-sm text-danger" ng-if="challenge.media[0].val.link.fmt">External URL is not valid.</div>
+    </div>
+</div>
+
+<div class="form-group row" ng-if="challenge.media[0].link">
+    <div class="col-xs-12 col-sm-2 text-right" style="padding-top:6px;">
+        <label for="exLink" class="control-label">Link Header</label>
+    </div>
+    <div class="col-xs-12 col-sm-10">
+        <input type="text" class="form-control" placeholder="Finish Challenge Link Header" title="Finish Challenge Sub Header" ng-model="challenge.finishLinkText">
+        <ng-quill-editor placeholder="Finish Challenge Link Header" title="Finish Challenge Sub Header" ng-model="challenge.finishLinkText"></ng-quill-editor>
+    </div>
+</div>
+
+<div class="form-group row" ng-class="{'has-error':challenge.val.downloadContent.type ||challenge.val.downloadContent.size}">
+    <div class="col-xs-12 col-sm-2 text-right" style="padding-top:6px;">
+        <label for="exLink" class="control-label">Download Content</label>
+        <span class="small text-muted text-sm" style="margin-left:15px; display:block; margin-top:-7px;">Max File Size: 8MB (PDF)</span>
+    </div>
+    <div class="col-xs-12 col-sm-10">
+        <div ng-if="challenge.media[1].url">
+            <div class="row">
+                <div class="col-xs-1 resourceImage">
+                    <i class="fa fa-file-pdf-o fa-4x text-muted"></i>
+                    <i class="fa fa-times-circle remove" title="Remove Content" ng-click="removeDownloadContent($event, challenge)"></i>
+                </div>
+                <div class="col-xs-11">
+                    <div class="form-group">
+                        <input type="text" ng-model="challenge.media[1].name" placeholder="Content name." title="Content name." class="form-control">
+                    </div>
+                    <textarea ng-model="challenge.media[1].description" placeholder="Content description." title="Content description." class="form-control" rows="1"></textarea>
+                </div>
+            </div>
+        </div>
+        <div ng-if="!challenge.media[1].url">
+            <div ng-if="challenge.uploadingDownloadContent">
+                <i class="fa fa-spinner fa-spin"></i>
+                Uploading content...
+            </div>
+            <div ng-if="!challenge.uploadingDownloadContent">
+                <div class="btn btn-primary" ng-file-select ng-accept="'.pdf'" ng-file-change="uploadDownloadContent($files, challenge)">Choose Content</div>
+                <div class="text-sm text-danger" ng-if="challenge.val.downloadContent.type">Unsupported file type.</div>
+                <div class="text-sm text-danger" ng-if="challenge.val.downloadContent.size">File is too large.</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group row" ng-if="challenge.media[1].url">
+    <div class="col-xs-12 col-sm-2 text-right" style="padding-top:6px;">
+        <label for="exLink" class="control-label">Download Content Header</label>
+    </div>
+    <div class="col-xs-12 col-sm-10">
+        <input type="text" class="form-control" placeholder="Finish Challenge Upload Content Header" title="Finish Challenge Sub Header" ng-model="challenge.finishDownloadText">
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-xs-12 col-sm-2 text-right" style="padding-top:6px;">
+        <label for="exLink" class="control-label"></label>
+    </div>
+    <div class="col-xs-12 col-sm-10">
+        <label class="control-label" ng-click="challenge.canUploadContent=!challenge.canUploadContent; programEditFrm.$setDirty();">
+            <i class="fa " ng-class="{'fa-square-o':!challenge.canUploadContent,'fa-check-square-o':challenge.canUploadContent}" style="width:20px;"></i>
+            User can upload content.
+        </label>
+
+    </div>
+</div>
+
+
+<div class="form-group row" ng-if="challenge.canUploadContent">
+    <div class="col-xs-12 col-sm-2 text-right" style="padding-top:6px;">
+        <label for="exLink" class="control-label">Upload Content Header</label>
+    </div>
+    <div class="col-xs-12 col-sm-10">
+        <input type="text" class="form-control" placeholder="Finish Challenge Download Content Header" title="Finish Challenge Sub Header" ng-model="challenge.finishUploadText">
+    </div>
+</div>

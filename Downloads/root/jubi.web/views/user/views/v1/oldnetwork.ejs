@@ -1,0 +1,93 @@
+<div ng-controller="NetworkController">
+
+    <div ng-show="isLoading" style="position: relative;" ng-cloak  ng-style="getBackgroundFontStyle()">
+        <div class="loading">
+            <span us-spinner="{radius:30, width:8, length: 16, color: getBackgroundFontColor()}"></span>
+            <div ng-style="getBackgroundFontStyle()">One moment please...</div>
+        </div>
+    </div>
+
+    <div ng-hide="isLoading">
+        <section class="intro">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1 ng-style="getBackgroundFontStyle()">Network</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="btn-group justified" style="width:100%" role="toolbar">
+                        <div class="input-group">
+                            <input type="text" ng-model="searchString" style="padding:6px 6px;" name="q"
+                                   placeholder="Search"
+                                   class="form-control">
+
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-success"><span class="icon icon-search"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="btn-group justified" role="toolbar">-->
+                    <!--<div class="btn-group">-->
+                    <!--<button type="button" class="btn btn-success active"><span class="icon icon-user4"></span> Colleagues</button>-->
+                    <!--</div>-->
+                    <!--<div class="btn-group">-->
+                    <!--<button type="button" class="btn btn-success"><span class="icon fa fa-group"></span> Groups</button>-->
+                    <!--</div>-->
+                    <!--<div class="btn-group">-->
+                    <!--<button type="button" class="btn btn-success"><span class="icon icon-users"></span> Buddies</button>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </section>
+        <section class="colleagues">
+            <div class="row">
+                <div ng-click="goToUserProfile(programUser)" style="cursor:pointer"
+                     ng-repeat="programUser in programUsers | filter:searchFilter"
+                     class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+                        ng-hide="programUser.user.id == ownUserId">
+                    <div class="profile">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <div class="header clearfix">
+                                    <div class="avatar">
+                                        <img ng-src="{{(programUser.avatarUrl ? (programUser.avatarUrl + '/100x100') : '/img/avatar.jpg')}}"
+                                             class="large circle" alt="{{user.firstName + ' ' + user.lastName }}"/>
+
+                                        <div style="height:30px" class="name">
+                                            <h4>{{programUser.user.firstName}} {{programUser.user.lastName}}</h4>
+                                            <span>{{programUser.level}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="points row">
+                                    <div class="col-xs-6">
+                                        <div class="value"><span class="icon  icon-bars2 "></span>
+                                            {{programUser.points}}
+                                        </div>
+                                    </div>
+                                    <!--<div class="col-xs-3">-->
+                                    <!--&lt;!&ndash;<div class="value"><span class="icon icon-diamonds"></span> 0</div>&ndash;&gt;-->
+                                    <!--&lt;!&ndash; <div class="meta">Jubi Jems</div> &ndash;&gt;-->
+                                    <!--</div>-->
+                                    <div class="col-xs-6">
+                                        <div class="value pull-right"><span class="icon icon-globe"></span>
+                                            {{programUser.user.badges.length}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <button ng-show="isUserBuddy(programUser)" ng-click="removeBuddy($event, programUser)" class="btn btn-block btn-success">REMOVE {{getBuddyLabel().toUpperCase()}}</button>
+                                <button ng-show="!isUserBuddy(programUser)"  ng-click="addBuddy($event, programUser)" class="btn btn-block btn-secondary"><span class="icon icon-plus"></span>ADD {{getBuddyLabel().toUpperCase()}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</div>
+
+

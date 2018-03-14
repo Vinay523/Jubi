@@ -1,0 +1,187 @@
+<div ng-controller="AuthoringSuiteProgramEditController as c" ng-init="c.init(<%- req.params.id %>)">
+    <div class="loading" ng-show="loading.isLoading">
+        <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+        <div>One moment please...</div>
+    </div>
+
+    <div ng-show="!loading.isLoading">
+
+        <form action="" method="post" ng-submit="submit($event)">
+            <div class="row page-heading panel">
+                <div class="col-xs-12">
+                    <div style="padding:0 0 15px;">
+                        <div class="form-group" ng-class="{'has-error':val.title.req}">
+                            <h2 style="margin-bottom:0;"><input type="text" class="form-control input-lg" id="program-title" placeholder="Program Title" ng-model="program.title"></h2>
+                            <div class="text-sm text-danger" ng-if="val.title.req">Program title cannot be empty.</div>
+                        </div>
+                        <textarea class="form-control" id="program-desc" placeholder="Description" ng-model="program.description" rows="1"></textarea>
+                    </div>
+                    <ol class="breadcrumb text-sm">
+                        <li><a ng-href="/manage">Dashboard</a></li>
+                        <li><a ng-href="/manage/authoring-suite">Authoring Suite</a></li>
+                        <li class="active">{{(program.title ? program.title : 'Program Title')}}</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-9">
+                    <div class="panel-group accordion" id="accordion">
+                        <div class="panel panel-default" ng-repeat="quest in program.quests" ng-class="{'quest-error' : quest.hasError}">
+                            <div class="panel-heading">
+                                <div class="panel-title" ng-class="{'has-error':quest.val.title.req}">
+                                    <input type="text" class="form-control" placeholder="Activity Title" ng-model="quest.title">
+                                    <div class="text-sm text-danger" ng-if="quest.val.title.req">Activity title cannot be empty.</div>
+                                </div>
+
+                                <div class="manage manage-program btn-group">
+                                    <button type="button" class="manage-dropdown btn btn-primary dropdown-toggle" bs-dropdown="dropdown">
+                                        <span class="icon fa fa-ellipsis-h"></span>
+                                    </button>
+                                    <% /*
+                                     <ul class="dropdown-menu" role="menu">
+                                     <li><a href="#"><span class="icon fa fa-pencil"></span> edit</a></li>
+                                     <li><a href="#"><span class="icon fa fa-arrows"></span> sort</a></li>
+                                     <li><a href="#"><span class="icon fa fa-remove"></span> delete</a></li>
+                                     </ul>*/ %>
+                                    <button type="button" class="manage-expand btn btn-primary" ng-click="toggleQuest(quest)">
+                                        <span class="icon fa" ng-class="{'fa-chevron-down':!quest.expanded, 'fa-chevron-up':quest.expanded}"></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="panel-collapse collapse" ng-class="{'in':quest.expanded}">
+                                <div class="panel-body">
+                                    <form class="form-horizontal" role="form">
+                                        <div class="form-group">
+                                            <label for="obj" class="col-xs-12 col-sm-2 control-label" style="padding-top:0;">Objective</label>
+                                            <div class="col-xs-12 col-sm-10" ng-class="{'has-error':quest.val.objective.req}">
+                                                <textarea class="form-control" id="obj" placeholder="Activity Objective" ng-model="quest.objective"></textarea>
+                                                <span class="text-sm text-danger" ng-if="quest.val.objective.req">Activity objective cannot be empty.</span>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="form-group" style="padding-top:20px;">
+                                            <label for="tile-img" class="col-xs-12 col-sm-2 control-label">Tile Image</label>
+                                            <div class="col-xs-12 col-sm-10">
+
+                                                <div ng-if="quest.featuredImageUrl">
+                                                    <img alt="" ng-src="{{quest.featuredImageUrl}}" >
+                                                </div>
+                                                <div ng-if="!quest.featuredImageUrl">
+                                                    <span class="btn btn-primary choose-file-btn" title="Upload Picture from Disk">
+                                                        <input type="file" onChange="angular.element(this).scope().uploadPicture(this, quest, 'quest')">
+                                                        Choose File
+                                                    </span>
+                                                    <span class="small text-muted text-sm" style="margin-left:15px;">Max File Size: 4MB (JPG, JPEG, GIF, PNG)</span>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <div class="panel-footer">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-success outline"><span class="icon fa fa-edit" title="Edit Quest Details"></span> Edit</button>
+                                        <button type="submit" class="btn btn-danger outline"><span class="icon fa fa-trash" title="Delete Quest"></span> Delete</button>
+                                    </div>
+                                    <ul class="program-meta list-inline">
+                                        <li><strong>Activities: </strong>5</li>
+                                        <li><strong>Challenges: </strong>8</li>
+                                        <li><strong>Media: </strong>3</li>
+                                        <li><strong>To-Do's: </strong>2</li>
+                                        <li><strong>Last edited: </strong>Tyler Berry, 09:18 - 10-29-2014</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="panel panel-default" style="height:100px;">
+                            <div class="quest-cover cover">
+                                <a href="#" ng-click="addQuest($event)">
+                                    <h3><i class="fa fa-plus"></i> Add New Quest</h3>
+                                </a>
+                            </div>
+                            <script>
+                                $(".cover a").click(function(e) {
+                                    e.preventDefault();
+                                    $(this).closest('.panel').clone().appendTo(".accordion");
+                                    $(this).closest('.cover').fadeOut();
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-3">
+                    <section id="secondary">
+                        <div class="panel panel-default program-status">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    Status: <strong>{{(program.published ? 'Published' : 'Draft')}}</strong>
+                                    <a href="#" class="btn btn-xs btn-primary outline pull-right">Preview</a>
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <button type="submit" class="btn btn-block btn-primary">Save Draft</button>
+                                <button type="button" class="btn btn-block btn-secondary">Publish</button>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default program-details">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Program Details</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="program-img">
+                                    <div class="manage manage-photo">
+                                        <a href="#" class="btn btn-default red pull-right" ng-click="removeImage($event)" >
+                                            <span class="fa fa-trash-o" title="Remove Image"></span>
+                                        </a>
+                                    <span class="btn btn-default choose-file-btn blue pull-left" title="Upload Picture from Disk">
+                                        <input type="file" onChange="angular.element(this).scope().uploadPicture(this, 'program')">
+                                        upload
+                                    </span>
+                                    </div>
+                                    <p><img ng-src="{{program.imageUrl ? program.imageUrl : '/img/habitudes/00.jpg'}}" alt="title" /></p>
+                                </div>
+                                <div class="caption">
+                                    <p><input type="input" class="form-control" id="program-author" placeholder="Program Author"></p>
+                                    <p><textarea class="form-control" rows="3" placeholder="Program Description">Product Description Product Description Product Description Product Description Product Description Product Description</textarea></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default program-version">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Version Notes</h3>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <h4 class="list-group-item-heading">v1.0</h4>
+                                        <p class="list-group-item-text">
+                                            - Porta ac consectetur ac<br />
+                                            - Porta ac consectetur ac<br />
+                                            - Porta ac consectetur ac<br />
+                                            - Porta ac consectetur ac<br />
+                                        </p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <h4 class="list-group-item-heading">v0.1</h4>
+                                        <p class="list-group-item-text">Porta ac consectetur ac</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+        </form>
+
+    </div>
+</div>
+

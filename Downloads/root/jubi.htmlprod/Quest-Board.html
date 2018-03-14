@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quest Board</title>
+    
+<link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="./bootstrap/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="./css/styles.css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+<script src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="./js/bootstrap.min.js"></script>
+
+    </head>
+    <body>
+         
+        
+    <div class="row questboard-wrapper">
+        <div class="program-topbar col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            
+            <ul class="profile-info">
+                <li class="logo"><img src="./images/Jubi Logo.png"/></li>
+                <li class="program-name">
+                Lead to Inspire
+            
+            </li>
+            <li class="right-profiledetails">
+                <ul>
+                    <li> 
+                      
+                <p class="notification-ring">3</p>
+                <span class="fa fa-bell-o"></span>
+                
+                </li>
+                <li>
+                    <a href="#" class="profile-image"><img src="./images/ej.png" /></a>
+                                <ul class="dropdown">
+                                    <span class=" arrow-up "></span>
+                
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Settings</a></li>
+                <li class="My-Programs">My Programs
+                    <ul>
+                        <li>
+                            <img src="./images/climbimgimage.png"/><span class="program1">Lead to Inspire</span>
+                        </li>
+                        <li>
+                            <img src="./images/leadership-thumbnail.png"/><span class="program2">Leadership Mastery</span>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+                </li>
+                
+                
+                <li>
+                    <span class="name">Emily Jordan</span>
+                    <span class="designation">Business Analyst</span>
+                    <span class="points-count">Points 80/1440 Badges 1/4</span>
+             
+                </li> 
+                </ul>
+      </li>
+              
+            </ul>
+        </div>
+        <div class="program-menu col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <ul>
+            <li class="active">Quest</li>
+            <li>Network</li>
+            <li>Discussion</li>
+            <li>Leaderboard</li>
+            <li>Resources</li>
+            <li>Dashboard</li>
+             
+                </ul>
+                <ul class="quest_mobile_menu">
+            <li><a href="#"><span>Quest</span><i class="fa fa-caret-down text-right" aria-hidden="true"></i></a>
+                <ul class="dropdown">
+                    <li>Network</li>
+            <li>Discussion</li>
+            <li>Leaderboard</li>
+            <li>Resources</li>
+            <li>Dashboard</li>
+                </ul>
+            </li>
+            
+             
+                </ul>
+        </div>
+
+        <div class="program-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
+             <p class="mobile-quest-heading">Quest Board </p>
+<div class="desktop_view">
+    <div class="levels">
+        <p class="level1">Level 1</p>
+          <div class="row1">
+         
+           <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 Learn_tile">
+              <div class="front">
+                          
+                   <div class="status">
+                       
+                              
+            
+                <div class="tile-top">
+               <div class="heading">LEARN</div>
+               <div class="completed">Completed</div>
+                  <span class="corner" onclick="$('.row1 .Learn_tile').toggleClass('flipped');"></span>
+           </div> 
+           <div class="badge-img"><img src="./images/Badge Copy.png"/></div>
+                              </div>
+              
+             
+              <div class="info">
+                  <div class="activity-name">Jubi Newbie</div>
+                  <div class="points_challenges"><div class="points"><span>40</span>/40 Points</div> | <div class="challenges"><span>8</span>/8 Challenges</div></div>
+              
+              </div>
+              </div>
+              <div class="back">
+                   <div class="status">
+               <div class="tile-top">
+               <div class="heading">LEARN</div>
+               
+                  <span class="corner" onclick="$('.row1 .Learn_tile').toggleClass('flipped');"></span>
+           </div> 
+           <div class="content">Learn how to cast a vision for all your upcoming projects. This is a reverse tile mockup showing what could be on the flipside of
+any given tile.</div>
+<div class="BASE">BASE</div>
+              </div>
+              <div class="info">
+                  <div class="activity-name">Jubi Newbie</div>
+                  <div class="points_challenges"><div class="points"><span>40</span>/40 Points</div> | <div class="challenges"><span>8</span>/8 Challenges</div></div>
+              </div>
+              </div>
+          
+          </div>
+          <div class="col-lg-1 col-md-0 col-sm-0 col-xs-0"></div>
+          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 Do_tile">
+             <div class="front">
+          <div class="status">
+              
+              
+                  <div class="tile-top">
+               <div class="heading">DO</div>
+<div class="locked"><img src="./images/locked-shape.png" /></div>
+                  <span class="corner" onclick="$('.row1 .Do_tile').toggleClass('flipped');"></span>
+                  </div>
+              <div class="badge-img"></div>
+              
+              </div>
+              <div class="info">
+                   <div class="activity-name">Purpose Power</div>
+                  <div class="points"><span>40</span>/40 Points</div>
+              </div>
+             </div>
+             <div class="back">
+          <div class="status">
+              <div class="tile-top">
+               <div class="heading">DO</div>
+
+                  <span class="corner" onclick="$('.row1 .Do_tile').toggleClass('flipped');"></span></div>
+                   <div class="content">Learn how to cast a vision for all your upcoming projects. This is a reverse tile mockup showing what could be on the flipside of
+any given tile.</div>
+<div class="BASE">BASE</div>
+              </div>
+              <div class="info">
+                   <div class="activity-name">Purpose Power</div>
+                  <div class="points"><span>40</span>/40 Points</div>
+              </div>
+             </div>
+          </div>
+          <div class="col-lg-1 col-md-0 col-sm-0 col-xs-0"></div>
+          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 Inspire_tile">
+                <div class="front">
+              <div class="status">
+                 
+              
+                  <div class="tile-top">
+                  <div class="heading">INSPIRE</div>
+                  <div class="completed">In Progress</div>
+                  <span class="corner" onclick="$('.row1 .Inspire_tile').toggleClass('flipped');"></span>
+                  </div>
+                  <div class="badge-img"></div>
+              
+              </div>
+              <div class="info">
+                   <div class="activity-name">Ready, Set, Inspire</div>
+                  <div class="points"><span>40</span>/40 Points</div>
+              </div>
+              </div>
+              <div class="back">
+              <div class="status">
+                  <div class="tile-top">
+                  <div class="heading">INSPIRE</div>
+                 
+                  <span class="corner" onclick="$('.row1 .Inspire_tile').toggleClass('flipped');"></span>
+                  </div>
+                   <div class="content">Learn how to cast a vision for all your upcoming projects. This is a reverse tile mockup showing what could be on the flipside of
+any given tile.</div>
+<div class="BASE">BASE</div>
+              </div>
+              <div class="info">
+                   <div class="activity-name">Ready, Set, Inspire</div>
+                  <div class="points"><span>40</span>/40 Points</div>
+              </div>
+              </div>
+          </div>
+          <div class="col-lg-1 col-md-0 col-sm-0 col-xs-0"></div>  
+            </div>
+            </div>
+              <div class="levels">
+                  <p class="level2">Level 2</p>
+            <div class="row2">
+                
+          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 Learn_tile">
+               <div class="front">
+           <div class="status">
+               <div class="tile-top">
+               <div class="heading">LEARN</div>
+               <div class="completed">Completed</div>
+                  <span class="corner" onclick="$('.row2 .Learn_tile').toggleClass('flipped');"></span>
+           </div> 
+           <div class="badge-img"></div>
+              </div>
+              <div class="info">
+                  <div class="activity-name">Authenticity Advantage</div>
+                  <div class="points_challenges">
+                      <div class="points"><span>40</span>/40 Points</div> | <div class="challenges"><span>8</span>/8 Challenges</div></div>
+              </div>
+              </div>
+               <div class="back">
+           <div class="status">
+               <div class="tile-top">
+               <div class="heading">LEARN</div>
+               
+                  <span class="corner" onclick="$('.row2 .Learn_tile').toggleClass('flipped');"></span>
+           </div> 
+            <div class="content">Learn how to cast a vision for all your upcoming projects. This is a reverse tile mockup showing what could be on the flipside of
+any given tile.</div>
+<div class="BASE">BASE</div>
+              </div>
+              <div class="info">
+                  <div class="activity-name">Authenticity Advantage</div>
+                  <div class="points_challenges">
+                      <div class="points"><span>40</span>/40 Points</div> | <div class="challenges"><span>8</span>/8 Challenges</div></div>
+              </div>
+              </div>
+          </div>
+          <div class="col-lg-1 col-md-0 col-sm-0 col-xs-0"></div>
+          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 Do_tile">
+             <div class="front">
+          <div class="status">
+              <div class="tile-top">
+               <div class="heading">DO</div>
+<div class="available-activity"></div>
+                  <span class="corner" onclick="$('.row2 .Do_tile').toggleClass('flipped');"></span></div>
+                      <div class="badge-img"></div>
+              </div>
+              <div class="info">
+                   <div class="activity-name">Cast Vision</div>
+                  <div class="points"><span>40</span>/40 Points</div>
+              </div>
+             </div>
+             <div class="back">
+          <div class="status">
+              <div class="tile-top">
+               <div class="heading">DO</div>
+
+                  <span class="corner" onclick="$('.row2 .Do_tile').toggleClass('flipped');">
+                      </span>
+                      </div>
+                   <div class="content">Learn how to cast a vision for all your upcoming projects. This is a reverse tile mockup showing what could be on the flipside of
+any given tile.</div>
+<div class="BASE">BASE</div>
+              </div>
+              <div class="info">
+                   <div class="activity-name">Cast Vision</div>
+                  <div class="points"><span>40</span>/40 Points</div>
+              </div>
+             </div>
+
+          </div>
+          <div class="col-lg-1 col-md-0 col-sm-0 col-xs-0"></div>
+          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 Inspire_tile">
+                 
+              <div class="front">
+              <div class="status">
+                  <div class="tile-top">
+                  <div class="heading">INSPIRE</div>
+                  <div class="locked"><img src="./images/locked-shape.png" /></div>
+                  <span class="corner" onclick="$('.row2 .Inspire_tile').toggleClass('flipped');"></span>
+                  </div>
+                     <div class="badge-img"></div>
+              </div>
+              <div class="info">
+                   <div class="activity-name">The Science of Inspiration</div>
+                  <div class="points"><span>40</span>/40 Points</div>
+              </div>
+               </div>
+               <div class="back">
+              <div class="status">
+                  <div class="tile-top">
+                  <div class="heading">INSPIRE</div>
+                 
+                  <span class="corner" onclick="$('.row2 .Inspire_tile').toggleClass('flipped');"></span>
+                  </div>
+                  <div class="content">Learn how to cast a vision for all your upcoming projects. This is a reverse tile mockup showing what could be on the flipside of
+any given tile.</div>
+<div class="BASE">BASE</div>
+              </div>
+              <div class="info">
+                   <div class="activity-name">The Science of Inspiration</div>
+                  <div class="points"><span>40</span>/40 Points</div>
+              </div>
+               </div>
+          </div>
+          <div class="col-lg-1 col-md-0 col-sm-0 col-xs-0"></div>  
+            </div>
+            </div>
+            <div class="levels">
+                  <p class="level3">Level 3</p>
+            <div class="row3">
+                
+          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 Learn_tile">
+               <div class="front">
+           <div class="status-image">
+               <div class="tile-top">
+               <div class="heading">LEARN</div>
+               <div class="completed">Completed</div>
+                  <span class="corner" onclick="$('.row3 .Learn_tile').toggleClass('flipped');"></span>
+           </div> 
+           <div class="badge-img"><img src="./images/Badge Copy.png"/></div>
+              </div>
+              <div class="info">
+                  <div class="activity-name">Authenticity Advantage</div>
+                  <div class="points_challenges">
+                      <div class="points"><span>40</span>/40 Points</div> | <div class="challenges"><span>8</span>/8 Challenges</div></div>
+              </div>
+              </div>
+               <div class="back">
+           <div class="status-image">
+               <div class="tile-top">
+               <div class="heading">LEARN</div>
+               
+                  <span class="corner" onclick="$('.row3 .Learn_tile').toggleClass('flipped');"></span>
+           </div> 
+            <div class="content">Learn how to cast a vision for all your upcoming projects. This is a reverse tile mockup showing what could be on the flipside of
+any given tile.</div>
+<div class="BASE">BASE</div>
+              </div>
+              <div class="info">
+                  <div class="activity-name">Authenticity Advantage</div>
+                  <div class="points_challenges">
+                      <div class="points"><span>40</span>/40 Points</div> | <div class="challenges"><span>8</span>/8 Challenges</div></div>
+              </div>
+              </div>
+          </div>
+          <div class="col-lg-1 col-md-0 col-sm-0 col-xs-0"></div>
+          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 Do_tile">
+             <div class="front">
+          <div class="status-image">
+              <div class="tile-top">
+               <div class="heading">DO</div>
+<div class="available-activity"></div>
+                  <span class="corner" onclick="$('.row3 .Do_tile').toggleClass('flipped');"></span></div>
+                  <div class="badge-img"></div>
+              </div>
+              <div class="info">
+                   <div class="activity-name">Cast Vision</div>
+                  <div class="points"><span>40</span>/40 Points</div>
+              </div>
+             </div>
+             <div class="back">
+          <div class="status-image">
+              <div class="tile-top">
+               <div class="heading">DO</div>
+
+                  <span class="corner" onclick="$('.row3 .Do_tile').toggleClass('flipped');">
+                      </span>
+                      </div>
+                   <div class="content">Learn how to cast a vision for all your upcoming projects. This is a reverse tile mockup showing what could be on the flipside of
+any given tile.</div>
+<div class="BASE">BASE</div>
+              </div>
+              <div class="info">
+                   <div class="activity-name">Cast Vision</div>
+                  <div class="points"><span>40</span>/40 Points</div>
+              </div>
+             </div>
+
+          </div>
+          <div class="col-lg-1 col-md-0 col-sm-0 col-xs-0"></div>
+          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 Inspire_tile">
+                 
+              <div class="front">
+              <div class="status-image">
+                  <div class="tile-top">
+                  <div class="heading">INSPIRE</div>
+                  <div class="locked"><img src="./images/locked-shape.png" /></div>
+                  <span class="corner" onclick="$('.row3 .Inspire_tile').toggleClass('flipped');"></span>
+                  </div>
+                  <div class="badge-img"></div>
+              </div>
+              <div class="info">
+                   <div class="activity-name">The Science of Inspiration</div>
+                  <div class="points"><span>40</span>/40 Points</div>
+              </div>
+               </div>
+               <div class="back">
+              <div class="status-image">
+                  <div class="tile-top">
+                  <div class="heading">INSPIRE</div>
+                 
+                  <span class="corner" onclick="$('.row3 .Inspire_tile').toggleClass('flipped');"></span>
+                  </div>
+                  <div class="content">Learn how to cast a vision for all your upcoming projects. This is a reverse tile mockup showing what could be on the flipside of
+any given tile.</div>
+<div class="BASE">BASE</div>
+              </div>
+              <div class="info">
+                   <div class="activity-name">The Science of Inspiration</div>
+                  <div class="points"><span>40</span>/40 Points</div>
+              </div>
+               </div>
+          </div>
+          <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>  
+            </div>
+            </div>
+            </div>
+            
+             <footer class="col-lg-12 col-md-12 col-sm-12 col-xs-12 powered-by">
+    <span>Powered by </span><span><img src="./images/jubi-logo-white-2.png"></span>
+</footer> 
+        </div>
+        
+         
+       </div>
+     
+    </body>
+    
+        
+</html>

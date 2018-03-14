@@ -1,0 +1,494 @@
+<script type="text/ng-template" id="todoModal.html">
+    <div class="" id="Buddy-verification-modal" ng-controller="TodoController" ng-init="todoOpened()" ng-click="todoClick()">
+        <div class="modal-content">
+            <div class="text-center modal-header Do-Activity-Name">
+
+                {{selectedUserTodo.todo.title}}
+
+            </div>
+            <div class="modal-body buddy-padding">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="Verification-Require col-lg-6 col-md-6 col-sm-6 col-xs-6 zeropadding">
+
+                        {{selectedUserTodo.todo.validate ? 'Verification Required' : 'Honor System'}}
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 zeropadding">
+                        <div class="points" ng-if="selectedUserTodo.todo.points" style="float:right;">{{selectedUserTodo.todo.points}} Points</div>
+                        <!--<div ng-if="pointsRecord.points &&  pointsRecord.points > 0" ng-repeat="pointsRecord in selectedUserTodo.bonusPoints" style="clear:both;float:right;">
+                            <div class="forum-avatar" style="float:none;display:inline-block;">
+                                <img ng-if="pointsRecord.user.avatarUrl" alt="" ng-src="{{pointsRecord.user.avatarUrl + '/100x100'}}">
+                                <img ng-if="!pointsRecord.user.avatarUrl" alt="" src="/img/avatar.jpg">
+                            </div>
+                            <div class="points" style="float:none;display:inline-block;">+ {{pointsRecord.points + ' Bonus Points!'}}</div>
+                        </div>-->
+                        <div ng-if="pointsRecord.points &&  pointsRecord.points > 0" ng-repeat="pointsRecord in bonusArray" style="clear:both;float:right;">
+                            <div class="forum-avatar" style="float:none;display:inline-block;">
+                                <img ng-if="pointsRecord.user.avatarUrl" alt="" ng-src="{{pointsRecord.user.avatarUrl + '/100x100'}}">
+                                <img ng-if="!pointsRecord.user.avatarUrl" alt="" src="/img/avatar.jpg">
+                            </div>
+                            <div class="points" style="float:none;display:inline-block;">+ {{pointsRecord.points + ' Bonus Points!'}}</div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding Please-review-the-en"><!--{{selectedUserTodo.todo.instructions}}-->
+                        <ng-quill-editor ng-model="selectedUserTodo.todo.instructions" read-only="true"></ng-quill-editor>
+                    </div>
+
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom:20px;">
+                        <div class="duedate-calendar col-lg-5 col-md-5 col-sm-12 col-xs-12 zeropadding">
+
+                            <div ng-if="!selectedUserTodo.todo.dueDate">
+                                <div class="input-group todo-datepicker">
+                                    <p>Due Date</p>
+                                    <input type="text" class="form-control" ng-model="selectedUserTodo.dueDate" is-open="selectedUserTodo.datePickerOpen" datepicker-popup="MM/dd/yyyy"
+                                           ng-click="selectedUserTodo.datePickerOpen = true; focusMe($event);" datepicker-options="{showWeeks:false}" min-date="today" />
+                                    <span class="input-group-btn" style="float:left;">
+                                        <button type="button" class="btn calendar-btn btn-primary" ng-click="selectedUserTodo.datePickerOpen = !selectedUserTodo.datePickerOpen;$event.preventDefault();$event.stopPropagation();">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <div class="text-sm text-danger text-val" ng-if="selectedUserTodo.todo.val.dueDate.min">
+                                    Due date cannot be in the past
+                                </div>
+                            </div>
+                            <div ng-if="selectedUserTodo.todo.dueDate">
+                                <div class="input-group todo-datepicker">
+                                    <p>Due Date</p>
+                                    <input type="text" class="form-control" ng-disabled="selectedUserTodo.todo.dueDate" ng-model="selectedUserTodo.todo.dueDate" is-open="selectedUserTodo.datePickerOpen" datepicker-popup="MM/dd/yyyy"
+                                           ng-click="selectedUserTodo.datePickerOpen = true; focusMe($event);" datepicker-options="{showWeeks:false}" min-date="today" />
+                                    <span class="input-group-btn" style="float:left;">
+                                        <button type="button" class="btn calendar-btn btn-primary" ng-disabled="selectedUserTodo.todo.dueDate" ng-click="selectedUserTodo.datePickerOpen = !selectedUserTodo.datePickerOpen;$event.preventDefault();$event.stopPropagation();">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <!--<p> {{ selectedUserTodo.todo.dueDate | date : 'MM/dd/yyyy' }} </p>-->
+                            </div>
+                        </div>
+                        <!--<div class="col-xs-4">
+                    <div class="resourceImage">
+                        <div style="float:left">Due Date &nbsp;</div>
+                        <i class="fa fa-calendar fa-4x text-muted"></i><br>
+                    </div>
+                    <div ng-if="!selectedUserTodo.todo.dueDate" style="margin-top:10px">
+                        <div class="input-group todo-datepicker">
+                            <input type="text" class="form-control" ng-model="selectedUserTodo.dueDate"
+                                   is-open="selectedUserTodo.datePickerOpen"
+                                   datepicker-popup="MM/dd/yyyy"
+                                   ng-click="selectedUserTodo.datePickerOpen = true; focusMe($event);"
+                                   datepicker-options="{showWeeks:false}" min-date="today" />
+                            <span class="input-group-btn">
+                                <button type="button" style="color:white" class="btn btn-primary"
+                                        ng-click="selectedUserTodo.datePickerOpen = !selectedUserTodo.datePickerOpen;$event.preventDefault();$event.stopPropagation();">
+                                    <i class="fa fa-calendar"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="text-sm text-danger text-val"
+                             ng-if="selectedUserTodo.todo.val.dueDate.min">
+                            Due date cannot be in the past
+                        </div>
+                    </div>
+                    <div style="margin-left:55px" ng-if="selectedUserTodo.todo.dueDate">
+                        {{
+                    selectedUserTodo.todo.dueDate |
+                    date :
+                    'MM/dd/yyyy'
+                        }}
+                    </div>
+                </div>-->
+                        <div class="Activity-Rectangle col-lg-7 col-md-7 col-sm-12 col-xs-12 zeropadding" ng-if="selectedUserTodo.todo.resourceUrl">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 zeropadding">
+                                <!--<div style="float:left">Download &nbsp;</div>-->
+                                <img src="<%- config.web.contentUrl %>/img/activiy-guidance-icon.png">
+
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 zeropadding link-wrap">
+                                <p class="Activity-Guidance">Activity Guidance</p>
+                                <a ng-href="{{selectedUserTodo.todo.resourceUrl}}" target="_blank" class="links">
+                                    {{ selectedUserTodo.todo.resourceName ? selectedUserTodo.todo.resourceName : selectedUserTodo.todo.resourceUrl }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding add-feedback">
+                        <!--<p>Verification</p>
+                    <div class="buddy-info">
+                        <div clas="row" style="white-space:pre-line" ng-if="selectedUserTodo.todo.verificationInstructions">
+                            {{selectedUserTodo.todo.verificationInstructions}}
+                        </div>
+                </div>-->
+                        <!--<p>Provide general feedback</p>-->
+                    
+
+                            <div class="add-media" ng-if="selectedUserTodo.todo.mediaChallenge">
+                                
+                                <button type="button" class="btn btn-primary btn-block" ng-click="addMedia($event, selectedUserTodo.todo.mediaChallenge)">
+                                    <img src="<%- config.web.contentUrl %>/img/media-button-icon.png" />
+                                    {{ !todosModel.isBuddyValidating ? 'Add Verification' : 'Add Feedback' }}
+                                </button>
+                                <!--todo buddy modal-->
+                                <div class="">
+                                    <div>
+                                        <div ng-show="selectedUserTodo.todo.mediaChallenge.isLoading"
+                                             class="loading-overlay" style="background:rgba(0,0,0,0.8);">
+                                            <div class="loading" ng-cloak>
+                                                <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+
+                                                <div>One moment please...</div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-dialog modal-lg addModal" ng-show="addModal">
+                                            <div class="modal-content add-modal">
+                                                <div class="addverification">{{ !todosModel.isBuddyValidating ? 'Add Verification' :'Add Feedback' }}</div>
+                                                <div class="Upload-button upload-from-computer" ng-file-select ng-file-change="uploadMedia($files, selectedUserTodo.todo.mediaChallenge)">
+                                                    <a href="" type="button" style="z-index: 1;position: relative;">
+                                                        UPLOAD FROM YOUR COMPUTER
+                                                    </a>
+                                                </div>
+                                                
+                                              
+                                                <p class="text-sm text-danger text-val" ng-if="selectedUserTodo.todo.mediaChallenge.val.media.type">
+                                                    Format not supported.
+                                                </p>
+                                                <p class="text-sm text-danger text-val" ng-if="selectedUserTodo.todo.mediaChallenge.val.media.size">
+                                                    File too large.
+                                                </p>
+                                                <hr>
+                                                <div class="embed-media" ng-class="{'has-error': selectedUserTodo.todo.mediaChallenge.addMedia.val.req || selectedUserTodo.todo.mediaChallenge.addMedia.val.fmt}">
+                                                    <div>
+                                                        <p>Embed Media</p>
+                                                        <textarea id="doEmbedMediaLink" ng-click="$event.stopPropagation()" ng-model="selectedUserTodo.todo.mediaChallenge.addMedia.link"></textarea>
+                                                        <p class="text-sm text-danger text-val" ng-if="selectedUserTodo.todo.mediaChallenge.addMedia.val.req">
+                                                            Valid embed link
+                                                        </p>
+                                                        <p class="text-sm text-danger text-val" ng-if="selectedUserTodo.todo.mediaChallenge.addMedia.val.fmt">
+                                                            Invalid embed link.
+                                                        </p>
+                                                    </div>
+
+                                                    <div class="float-left text-left"><a href="#" class="cancelbutton" ng-click="closeAddMediaModal()">CANCEL</a></div>
+                                                    <div class="float-right text-right">
+                                                        <a href="#" class="addbutton" type="button" ng-click="selectMediaLink($event,'YouTube',selectedUserTodo.todo.mediaChallenge);$event.stopPropagation()">ADD</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="add-media-popup" ng-class="{'open': selectedUserTodo.todo.mediaChallenge.addMedia.in}">
+                                    <div ng-show="selectedUserTodo.todo.mediaChallenge.isLoading" class="loading-overlay">
+                                        <div class="loading" ng-cloak>
+                                            <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+                                            <div>One moment please...</div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default no-margin-bottom" ng-click="$event.stopPropagation()">
+                                        <div class="panel-heading">
+                                            {{ !todosModel.isBuddyValidating ? 'Add Verification' :'Add Feedback' }}
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="btn outline btn-block" ng-file-select ng-file-change="uploadMedia($files, selectedUserTodo.todo.mediaChallenge)">
+                                                        Upload From Your Computer
+                                                    </div>
+                                                    <div class="text-sm text-danger text-val" ng-if="selectedUserTodo.todo.mediaChallenge.val.media.type">
+                                                        Format not supported.
+                                                    </div>
+                                                    <div class="text-sm text-danger text-val" ng-if="selectedUserTodo.todo.mediaChallenge.val.media.size">
+                                                        File too large.
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-xs-12" ng-class="{'has-error': selectedUserTodo.todo.mediaChallenge.addMedia.val.req || selectedUserTodo.todo.mediaChallenge.addMedia.val.fmt}">
+                                                    <div>Embed Media</div>
+                                                    <textarea rows="2" class="form-control" placeholder="Embed Text" ng-click="$event.stopPropagation()" ng-model="selectedUserTodo.todo.mediaChallenge.addMedia.link"></textarea>
+
+                                                    <div class="text-sm text-danger text-val" ng-if="selectedUserTodo.todo.mediaChallenge.addMedia.val.req">
+                                                        Video embed text cannot be empty.
+                                                    </div>
+                                                    <div class="text-sm text-danger text-val" ng-if="selectedUserTodo.todo.mediaChallenge.addMedia.val.fmt">
+                                                        Invalid embed text.
+                                                    </div>
+                                                    <button type="button" class="btn outline btn-block" style="margin-top:10px;" ng-click="selectMediaLink($event,'YouTube',selectedUserTodo.todo.mediaChallenge);$event.stopPropagation()">
+                                                        OK
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>-->
+                            </div>
+                       
+                            <div class="" ng-if="selectedUserTodo.todo.mediaChallenge && selectedUserTodo.todo.mediaChallenge.userMedia.length > 0">
+
+                                <div ng-repeat="media in selectedUserTodo.todo.mediaChallenge.userMedia" class="">
+                                    <div style="padding-left:10px;" ng-class="{'quest-error':mediaHasError(media)}">
+
+
+
+                                        <div class="row media-uploaded col-lg-6 col-md-6 col-sm-12 col-xs-12 image-media" ng-if="media.type=='image'">
+                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 media-image">
+                                                <a ng-href="{{media.url}}" target="_blank">
+                                                    <img class="thumbnail media" alt="" ng-src="{{media.url}}" />
+                                                </a>
+                                            </div>
+
+                                            <div class="media-info col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                                <textarea class="media-link form-control" placeholder="Media file" ng-model="media.name">{{media.name}}</textarea>
+                                                <textarea class="media-desc form-control" placeholder="Description" ng-model="media.description">{{media.description}}</textarea>
+                                            </div>
+                                            <div class="close col-lg-1 col-md-1 col-sm-1 col-xs-1"><img ng-if="media.userId == userId" ng-click="removeMedia($event, media)" src="<%-config.web.contentUrl%>/img/x.svg" /></div>
+
+                                        </div>
+
+                                        <div class="row media-uploaded col-lg-6 col-md-6 col-sm-12 col-xs-12 video-media" ng-if="media.type=='video' && media.source=='system'">
+                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 media-image">
+                                                <img ng-if="!media.url" class="media-icon" src="<%-config.web.contentUrl%>/img/media-placeholder.svg" />
+                                                <img ng-if="media.url" class="media-icon" src="" ng-src="{{media.url}}" />
+                                                <div class="video-play" ng-show="media.encodings.length > 0">
+                                                    <i class="fa fa-play-circle-o" ng-click="playVideo(media)"></i>
+                                                </div>
+                                                <div class="loading-overlay" ng-show="media.encodings.length <= 0" style="left:15px;right:15px;">
+                                                    <div class="loading loading-sm">
+                                                        <span us-spinner="{radius:9, width:4, length: 6, color: '#b0b0b7'}"></span>
+
+                                                        <div>encoding...</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="media-info col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                                <textarea class="media-link form-control" placeholder="Media file" ng-model="media.name">{{media.name}}</textarea>
+                                                <textarea class="media-desc form-control" placeholder="Description" ng-model="media.description">{{media.description}}</textarea>
+                                            </div>
+                                            <div class="close col-lg-1 col-md-1 col-sm-1 col-xs-1"><img ng-if="media.userId == userId" ng-click="removeMedia($event, media)" src="<%-config.web.contentUrl%>/img/x.svg" /></div>
+
+
+                                        </div>
+
+                                        <div class="row video-media media-uploaded col-lg-6 col-md-6 col-sm-12 col-xs-12" ng-if="media.type=='video' && media.source=='youtube'">
+                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 media-image">
+                                                <img ng-if="!media.coverUrl" class="media-icon" src="<%-config.web.contentUrl%>/img/media-placeholder.svg" />
+                                                <img ng-if="media.coverUrl" class="media-icon" src="" ng-src="{{media.coverUrl}}" />
+
+                                                <div class="video-play">
+                                                    <i class="fa fa-play-circle-o" ng-click="playVideo(media)"></i>
+                                                </div>
+                                                <div class="loading-overlay" ng-show="media.encodings.length <= 0" style="left:15px;right:15px;">
+                                                    <div class="loading loading-sm">
+                                                        <span us-spinner="{radius:9, width:4, length: 6, color: '#b0b0b7'}"></span>
+
+                                                        <div>encoding...</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="media-info col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                                <textarea class="media-link form-control" placeholder="Media file" ng-model="media.name">{{media.name}}</textarea>
+                                                <textarea class="media-desc form-control" placeholder="Description" ng-model="media.description">{{media.description}}</textarea>
+                                            </div>
+                                            <div class="close col-lg-1 col-md-1 col-sm-1 col-xs-1"><img ng-if="media.userId == userId" ng-click="removeMedia($event, media)" src="<%-config.web.contentUrl%>/img/x.svg" /></div>
+
+                                        </div>
+
+                                        <div class="row audio-media media-uploaded col-lg-6 col-md-6 col-sm-12 col-xs-12" ng-if="media.type=='audio'">
+                                            <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 media-image audio-wrapper">
+                                                <videogular vg-player-ready="playerReady(media, $API)" vg-plays-inline="'true'">
+                                                    <vg-media vg-type="audio" vg-src="media.sources" vg-native-controls="true"></vg-media>
+                                                </videogular>
+                                            </div>
+                                            <div class="media-info col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                <textarea class="media-link form-control" placeholder="Media file" ng-model="media.name">{{media.name}}</textarea>
+                                                <textarea class="media-desc form-control" placeholder="Description" ng-model="media.description">{{media.description}}</textarea>
+                                            </div>
+                                            <div class="close col-lg-1 col-md-1 col-sm-1 col-xs-1"><img ng-if="media.userId == userId" ng-click="removeMedia($event, media)" src="<%-config.web.contentUrl%>/img/x.svg" /></div>
+
+                                        </div>
+                                        <!--<div class="row audio-media media-uploaded col-lg-6 col-md-6 col-sm-12 col-xs-12" ng-if="media.type=='audio'">
+
+                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 media-image">
+                                                <img class="media-icon" src="<%-config.web.contentUrl %>/img/audio.jpg" />
+
+                                                <div class="audio-play">
+                                                    <i class="fa"
+                                                       ng-class="{'fa-play-circle-o':(!media.audio || media.audio.paused),'fa-pause':(media.audio && !media.audio.paused)}"
+                                                       ng-click="playPauseAudio(media)"></i>
+                                                </div>
+                                            </div>
+
+                                            <div class="media-info col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                                <textarea class="media-link form-control" placeholder="Media file" ng-model="media.name">{{media.name}}</textarea>
+                                                <textarea class="media-desc form-control" placeholder="Description" ng-model="media.description">{{media.description}}</textarea>
+                                            </div>
+                                            <div class="close col-lg-1 col-md-1 col-sm-1 col-xs-1"><img ng-if="media.userId == userId" ng-click="removeMedia($event, media)" src="<%-config.web.contentUrl%>/img/x.svg" /></div>
+
+                                        </div>-->
+
+                                        <div ng-if="media.type=='text'" class="row media-uploaded col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <div text-angular ng-model="media.text" ng-click="anchorTarget(media)" ta-toolbar="taToolbar"></div>
+                                            </div>
+                                            <textarea class="media-desc form-control" placeholder="Description" ng-model="media.description">{{media.description}}</textarea>
+                                        </div>
+
+                                        <div ng-if="media.type=='link'" class="row media-uploaded col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 media-image">
+                                                <a ng-href="{{media.url}}" target="_blank">
+                                                    <img class="thumbnail media" alt="" ng-src="{{media.url}}" />
+                                                </a>
+                                            </div>
+
+
+                                            <div class="media-info col-lg-9 col-md-9 col-sm-9 col-xs-9 form-group" ng-class="{'has-error':media.val.link.req || media.val.link.fmt}">
+                                                <input id="link{{$index}}" type="text" ng-model="media.link" class="form-control media-link" placeholder="Link">
+                                                <p class="text-xs text-danger text-val" ng-if="media.val.link.req">
+                                                    Link cannot be empty.
+                                                </p>
+                                                <p class="text-xs text-danger text-val" ng-if="media.val.link.fmt">
+                                                    URL is not properly formatted.
+                                                </p>
+                                                <textarea class="media-desc form-control" placeholder="Description" ng-model="media.description">{{media.description}}</textarea>
+
+                                            </div>
+                                            <div class="close col-lg-1 col-md-1 col-sm-1 col-xs-1"><img ng-if="media.userId == userId" ng-click="removeMedia($event, media)" src="<%-config.web.contentUrl%>/img/x.svg" /></div>
+
+                                        </div>
+                                        <div ng-if="media.type=='resource'" class="row media-uploaded col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 media-image">
+                                                <a ng-href="{{media.url}}" target="_blank">
+                                                    <img style="cursor:pointer" class="media-icon" src="<%-config.web.contentUrl%>/img/document-Icon.png">
+                                                </a>
+                                            </div>
+                                            <div class="media-info col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                                <!--<textarea class="media-link form-control" placeholder="Media file" ng-model="media.name">{{media.name}}</textarea>-->
+                                                <a ng-href="{{media.url}}" target="_blank"><p>{{media.name}}</p></a>
+                                                <textarea class="media-desc form-control" placeholder="Description" ng-model="media.description">{{media.description}}</textarea>
+                                            </div>
+                                            <div class="close col-lg-1 col-md-1 col-sm-1 col-xs-1"><img ng-if="media.userId == userId" ng-click="removeMedia($event, media)" src="<%-config.web.contentUrl%>/img/x.svg" /></div>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                      
+                        <div class="" ng-if="selectedUserTodo.todo.feedbackChallenge">
+
+                            <div class="forum-comments users-comments" ng-if="selectedUserTodo.todo.feedbackChallenge.results.length>0">
+                                <div class="toggleClick" ng-if="selectedUserTodo.todo.feedbackChallenge.results.length > 2 && selectedUserTodo.todo.feedbackChallenge.displayLimit == 2"
+                                     ng-click="selectedUserTodo.todo.feedbackChallenge.displayLimit = selectedUserTodo.todo.feedbackChallenge.results.length">
+                                    {{selectedUserTodo.todo.feedbackChallenge.results.length - 2}} hidden, click to expand
+                                </div>
+                                <div class="toggleClick "
+                                     ng-if="selectedUserTodo.todo.feedbackChallenge.results.length > 2 && selectedUserTodo.todo.feedbackChallenge.displayLimit == selectedUserTodo.todo.feedbackChallenge.results.length"
+                                     ng-click="selectedUserTodo.todo.feedbackChallenge.displayLimit = 2">
+                                    collapse
+                                </div>
+                                <div class="forum-comment user-info" ng-repeat="result in selectedUserTodo.todo.feedbackChallenge.results | limitTo: -selectedUserTodo.todo.feedbackChallenge.displayLimit">
+                                    <div class="forum-avatar user-image" style="margin-top:3px">
+                                        <img ng-if="result.user.avatarUrl" alt="" ng-src="{{result.user.avatarUrl + '/100x100'}}">
+                                        <img ng-if="!result.user.avatarUrl" alt="" src="/img/avatar.jpg">
+                                    </div>
+                                    <div class="forum-content  user-info-desc" style="margin-bottom:0px">
+                                        <p class="user-namedate">By: <span class="name">{{result.user.firstName}} {{result.user.lastName}}</span> - <span class="date">{{formatTime(result.createdAt)}}</span></p>
+
+                                        <button class="badge" ng-if="result.user.id == userId" ng-click="deleteTodoVerificationComment($event, result, selectedUserTodo.todo.feedbackChallenge)"
+                                                onfocus="blur()" tabindex="-1" title="Delete Comment">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                        <div>
+                                            <p>{{ result.items[0].data }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="provide-comments col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <textarea placeholder="Respond to General Comments here" ng-model="selectedUserTodo.todo.feedbackChallenge.answer"></textarea>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 question_answer_response" ng-if="selectedUserTodo.todo.challenges.length > 1">
+                        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding isBuddyValHead">
+                            {{ !todosModel.isBuddyValidating ? 'Please reflect and answer the questions below' : 'Please provide feedback on the answered questions below'  }}
+                        </div>
+
+                        <section ng-repeat="challenge in selectedUserTodo.todo.challenges" ng-if="challenge.title == 'Todo Verification'">
+                            <p class="question">
+                                Question: {{challenge.questions[0].question}}
+                            </p>
+                            <div class="forum-comments users-comments">
+                                <div class="toggleClick" ng-if="challenge.results.length > 2 && challenge.displayLimit == 2"
+                                     ng-click="challenge.displayLimit = challenge.results.length">
+                                    {{ challenge.results.length - 2 }} hidden, click to expand
+                                </div>
+                                <div class="toggleClick" ng-if="challenge.results.length > 2 && challenge.displayLimit == challenge.results.length" ng-click="challenge.displayLimit = 2">
+                                    collapse
+                                </div>
+                                <div class="forum-comment user-info" ng-repeat="result in challenge.results | limitTo: -challenge.displayLimit">
+                                    <div class="forum-avatar user-image" style="margin-top:3px">
+                                        <img ng-if="result.user.avatarUrl" alt="" ng-src="{{result.user.avatarUrl + '/100x100'}}">
+                                        <img ng-if="!result.user.avatarUrl" alt="" src="/img/avatar.jpg">
+                                    </div>
+                                    <div class="forum-content user-info-desc" style="margin-bottom:0px">
+                                        <p class="user-namedate">By: <span class="name">{{result.user.firstName}} {{result.user.lastName}}</span> - <span class="date">{{formatTime(result.createdAt)}}</span></p>
+                                        <button class="badge" ng-if="result.user.id == userId" ng-click="deleteTodoVerificationComment($event, result, challenge)"
+                                                onfocus="blur()" tabindex="-1" title="Delete Comment" style="background:rgba(0,0,0,0.5);border:none">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                        
+                                            <p>"{{result.items[0].data}}"</p>
+                                        
+                                    </div>
+                                </div>
+                                <div class="provide-comments">
+                                    <textarea placeholder="Respond here" type="text" ng-model="challenge.answer"></textarea>
+                                </div>
+                            </div>
+
+                        </section>
+                    </div>
+
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding text-right" ng-class="{'has-error': selectedUserTodo.todo.val.bonusPoints.max }" ng-if="getCurrentBonusPointsAvailable() > 0">
+
+
+                        <div class="text-xs text-danger text-val" ng-if="selectedUserTodo.todo.val.bonusPoints.max">
+                            Only {{getCurrentBonusPointsAvailable()}} bonus points available to assign.
+                        </div>
+
+
+                        <input class="award-bonus" ng-if="todosModel.isBuddyValidating" type="text" ng-model="selectedUserTodo.addedBonusPoints" number-mask allow-decimal="false" placeholder="Award Bonus Points">
+
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding text-right">
+                        <button class="btn close-modal" ng-click="closeTodoModal()" data-dismiss="modal">Close</button>
+                        <button data-ng-if="!todosModel.isBuddyValidating" class="btn btn-primary" ng-click="completeTodo($event, selectedUserTodo, 'submitted')">
+                            Submit
+                        </button>
+                        <button data-ng-if="todosModel.isBuddyValidating && selectedUserTodo.status != 'completed'" class="btn coach-button" ng-click="completeTodo($event, selectedUserTodo, 'verified')">
+                            {{ !selectedUserTodo.hasBeenCompleted ? 'Coach' : 'Submit' }}
+                        </button>
+                        <button ng-if="todosModel.isBuddyValidating && !selectedUserTodo.hasBeenCompleted" class="btn mark-complete" ng-click="completeTodo($event, selectedUserTodo, 'completed')">
+                            {{ selectedUserTodo.status != 'completed' ? 'Mark as Complete' : 'Submit' }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+       
+</script>

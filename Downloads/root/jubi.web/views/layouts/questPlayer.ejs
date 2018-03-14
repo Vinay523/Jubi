@@ -1,0 +1,549 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="Jubi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=0">
+    <link href="<%- config.web.contentUrl %>/img/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    <title><%- title %></title>
+
+    <link href="<%- config.web.contentUrl %>/css/app/main.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="<%- config.web.contentUrl %>/js/lib/jquery.min.js"></script>
+    <link rel="stylesheet" href="<%- config.web.contentUrl %>/css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%- config.web.contentUrl %>/css/bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="<%- config.web.contentUrl %>/css/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="<%- config.web.contentUrl %>/css/lib/1.12.0/jquery-ui.css">
+    <link rel="stylesheet" href="<%- config.web.contentUrl %>/css/bootstrap/css/bootstrap-multiselect.css">
+    <!--<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">-->
+    <link rel="stylesheet" href="<%- config.web.contentUrl %>/css/lib/angular_material/1.1.2/angular-material.min.css">
+    <link rel="stylesheet" href="<%- config.web.contentUrl %>/css/lib/quill/1.3.4/quill.snow.css">
+    <link rel="stylesheet" href="<%- config.web.contentUrl %>/css/lib/quill/1.2.0/quill.bubble.css">
+    <link rel="stylesheet" href="<%- config.web.contentUrl %>/css/app/styles.css">
+    <script src="<%- config.web.contentUrl %>/js/lib/jquery-3.1.0.min.js"></script>
+    <script src="<%- config.web.contentUrl %>/js/lib/jquery-1.12.4.js"></script>
+    <script src="<%- config.web.contentUrl %>/js/lib/1.12.0/jquery-ui.js"></script>
+    <script src="<%- config.web.contentUrl %>/js/app/bootstrap.min.js"></script>
+    <script src="<%- config.web.contentUrl %>/js/lib/angular/1.5.11/angular.min.js"></script>
+    <script type="text/javascript" src="<%- config.web.contentUrl %>/js/app/bootstrap-datetimepicker.min.js"></script>
+
+    <script>
+        var _jubi_clientData = <%- JSON.stringify(clientInitData()) %>;
+    </script>
+
+</head>
+<body id="body" ng-controller="RootController as c" ng-init="c.init('<%- model.slug %>', <%- model.id %>)" ng-click="bodyClick()" ng-class="{ 'showOverLayPoint' : toggle.showPointsAwarded}" ng-style="getMainCanvasStyle()">
+
+    <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+        your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div ng-show="loading.isLoading > 0" style="position: relative;" ng-cloak ng-style="getBackgroundFontStyle()">
+        <div class="loading">
+            <span us-spinner="{radius:30, width:8, length: 16, color: getBackgroundFontColor()}"></span>
+            <div ng-style="getBackgroundFontStyle()">One moment please...</div>
+        </div>
+    </div>
+
+
+    <!--<div ng-show="toggle.showPointsAwarded" ng-class="{ 'toMiddleFromLeft' : toggle.showPointsAwarded}"
+         class="points-overlay badge animated-slow points" ng-cloak>
+        +{{pointsAwarded}} points!
+    </div>-->
+    <!-- Right Aside -->
+    <aside ng-show="loading.isLoading <= 0"
+           style="position: fixed;z-index: 100;padding:0;background: #6a7a8a;transition: all 0.15s ease-out;height: 100%;overflow-y: auto;overflow-x: hidden;box-shadow: 6px 0px 5px rgba(34, 23, 23, 0.50);"
+           id="discussionSlideout"
+           ng-class="{'hide-left' : (toggle.asideDiscussion || !toggle), 'no-left' : (toggle && !toggle.asideDiscussion) }"
+           class="asideDiscussion action-nav offcanvas left col-xs-12 col-sm-12 col-md-12 col-lg-9 hide-left" ng-controller="TopicsController">
+        <div ng-if="!discussion.topic" class="notdiscussionTopic" >
+            <%- partial('user/views/questPlayerForum') %>
+        </div>
+        <div ng-if="discussion.topic" class="discussionTopic">
+            <%- partial('user/views/questPlayerForumTopic') %>
+        </div>
+        <i ng-show="!toggle.asideDiscussion" ng-click="toggle.asideDiscussion = !toggle.asideDiscussion"
+           style="position:absolute;right:0;" ng-style="getTopStyleForDiscussionCollapseButton()"
+           class="fa fa-chevron-left fa-5x discussion-expand-icon"></i>
+    </aside>
+
+    <div class="challenge-wrapper objective-wrapper congratulations-wrapper template-wrapper inspire-wrapper col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-show="loading.isLoading <= 0" ng-controller="QuestPlayerController as c" ng-cloak>
+        <div class="program-body" ng-style="getQuestPlayerStyle()">
+            <form></form>
+            <div class="topbar row">
+                <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2 quest-section" ng-click="close()">
+                    <a class="questboard-icon" href="">
+                        <i class="fa fa-square" aria-hidden="true"></i>
+                        <i class="fa fa-square" aria-hidden="true"></i>
+                        <i class="fa fa-square" aria-hidden="true"></i>
+                        <i class="fa fa-square" aria-hidden="true"></i>
+                    </a>
+                    <p class="heading" ng-if="!preview">Quest</p>
+                    <p class="heading" ng-if="preview">Authoring Suite</p>
+                </div><!-- Questboard icon -->
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 zeropadding">
+                    <div class="greenbutton" ng-show="canNavigateToPreviousChallenge()" ng-click="navigateToPreviousChallenge()" style="cursor:pointer">
+                        <ng-container ng-if="getQuestPlayerHeaderCustomStyle()">
+                            <img src="<%-config.web.contentUrl%>/img/Grey Left Arrow.png">
+                        </ng-container>
+                        <ng-container ng-if="!getQuestPlayerHeaderCustomStyle()">
+                            <img src="<%-config.web.contentUrl%>/img/Green Left Arrow.png">
+                        </ng-container>
+                    </div><!--previous challenge -->
+                    <div class="greenbutton-mobile" ng-show="canNavigateToPreviousChallenge()" ng-click="navigateToPreviousChallenge()">
+                        <ng-container ng-if="getQuestPlayerHeaderCustomStyle()">
+                            <img src="<%-config.web.contentUrl%>/img/Grey Left Arrow mobile.png">
+                        </ng-container>
+                        <ng-container ng-if="!getQuestPlayerHeaderCustomStyle()">
+                            <img src="<%-config.web.contentUrl%>/img/mobileleftgreenarrow.png">
+                        </ng-container>
+                    </div><!--previous challenge mobile -->
+
+                    <div class="objective-section">
+                        <p class="objective-title" ng-style="getQuestPlayerActivityHeaderCustomStyle()">
+                            <span class="activity-name" ng-show="inState=='start'">{{quest.title}}</span>
+                            <span class="activity-name" style="cursor:pointer" ng-show="inState=='challenge' || inState=='finish'" ng-click="gotoObjectivepage()">{{quest.title}}</span>
+                            <span class="activity" ng-show="inState=='start'">LEARN</span> 
+                            <span class="baseOrBonus fa fa-asterisk" ng-show="inState=='start' && quest.baseOrBonus == 'B'"></span> 
+                            <span class="baseopen">BASE</span>
+                            <span class="baseOrBonus fa fa-star-o" ng-show="inState=='start' && quest.baseOrBonus == 'O'"></span> 
+                            <span class="bonusopen">BONUS</span>
+                            <span class="skipactivity" ng-show="inState=='start' && questChecker()" ng-click="skipBonusActivity()">SKIP</span>
+                            <span class="activity-name" ng-show="inState=='do'">Current Activity</span>
+                            <span class="activity" ng-show="inState=='do'">DO</span>
+                            <span class="baseOrBonus fa fa-asterisk" ng-show="inState=='do' && quest.baseOrBonus == 'B'"></span>
+                            <span class="baseopen">BASE</span>
+                            <span class="baseOrBonus fa fa-star-o" ng-show="inState=='do' && quest.baseOrBonus == 'O'"></span>
+                            <span class="bonusopen">BONUS</span>
+                            <span class="skipactivity" ng-show="inState=='do' && questChecker()" ng-click="skipBonusActivity()">SKIP</span>
+                            <span class="activity-name" ng-show="inState=='inspire'">Current Activity</span>
+                            <span class="activity" ng-show="inState=='inspire'">INSPIRE</span>
+                            <span class="baseOrBonus fa fa-asterisk" ng-show="inState=='inspire' && quest.baseOrBonus == 'B'"></span>
+                            <span class="baseopen">BASE</span>
+                            <span class="baseOrBonus fa fa-star-o" ng-show="inState=='inspire' && quest.baseOrBonus == 'O'"></span>
+                            <span class="bonusopen">BONUS</span>
+                            <span class="skipactivity" ng-show="inState=='inspire' && questChecker()" ng-click="skipBonusActivity()">SKIP</span>
+
+                        </p>
+                        <p class="challenge-title" ng-show="inState=='start'" ng-style="getQuestPlayerActivityHeaderCustomStyle()">
+                            Objective
+                        </p>
+                        <p class="challenge-title" ng-show="inState=='challenge'" ng-style="getQuestPlayerActivityHeaderCustomStyle()">
+                            {{currentChallenge.title}}
+                        </p>
+                        <p class="challenge-title" ng-show="inState=='finish'" ng-style="getQuestPlayerActivityHeaderCustomStyle()">
+                            Congratulations
+                        </p>
+                        <p class="challenge-title" ng-show="inState=='do'" ng-style="getQuestPlayerActivityHeaderCustomStyle()">
+                            {{currentDoChallengetitle}}
+                        </p>
+                        <p class="challenge-title" ng-show="inState=='inspire'" ng-style="getQuestPlayerActivityHeaderCustomStyle()">
+                            {{currentInspireChallengetitle}}
+                        </p>
+
+                    </div>
+                </div><!-- navigation bar current-->
+
+                <div class="col-lg-6 col-md-6 col-sm-5 col-xs-5 zeropadding" ng-show="inState=='start'">
+                    <div class="nextchallenge">
+                        <p class="nextchallenge-heading">Next Challenge</p>
+                        <p class="nextchallenge-desc">
+                            {{objUpcomTitle}}
+                        </p>
+                    </div>
+                    <div class="graybutton" ng-show="canNavigateToNextChallenge()" ng-click="navigateToNextChallenge()">
+                        <img src="<%-config.web.contentUrl%>/img/Rightgrayarrow.png" />
+                    </div><!--next challenge mobile -->
+                    <div class="graybutton-mobile" ng-show="canNavigateToNextChallenge()" ng-click="navigateToNextChallenge()">
+                        <img src="<%-config.web.contentUrl%>/img/Mobilerightgrayarrow.png" />
+                    </div><!--next challenge mobile -->
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-5 col-xs-5 zeropadding" ng-show="inState=='challenge'">
+                    <div class="nextchallenge">
+                        <p class="nextchallenge-heading">Next Challenge</p>
+                        <p class="nextchallenge-desc" ng-if="upcomingChallenge">
+                            {{upcomingChallenge.title}}
+                        </p>
+                        <p class="nextchallenge-desc" ng-if="!upcomingChallenge">
+                            Congratulations
+                        </p>
+                    </div>
+                    <div class="graybutton" ng-show="canNavigateToNextChallenge()" ng-click="navigateToNextChallenge()" style="cursor:pointer">
+                        <img src="<%-config.web.contentUrl%>/img/Rightgrayarrow.png" />
+                    </div><!--next challenge -->
+                    <div class="graybutton-mobile" ng-show="canNavigateToNextChallenge()" ng-click="navigateToNextChallenge()">
+                        <img src="<%-config.web.contentUrl%>/img/Mobilerightgrayarrow.png" />
+                    </div><!--next challenge mobile -->
+                </div><!-- navigation bar forward -->
+                <div class="col-lg-6 col-md-6 col-sm-5 col-xs-5 zeropadding" ng-show="inState=='finish'">
+                    <div class="nextactivity">
+                        <p class="nextactivity-heading">
+                            <span class="activity-name">Next Activity</span>
+                            <span class="activity" ng-show="nextActivity.type=='L'">LEARN</span>
+                            <span class="activity" ng-show="nextActivity.type=='T'">DO</span>
+                            <span class="activity" ng-show="nextActivity.type=='I'">INSPIRE</span>
+
+                        </p>
+                        <p class="nextactivity-desc">{{nextActivity.title}}</p>
+                    </div>
+                    <div class="yellowbutton" ng-show="canNavigateToNextChallenge()" ng-click="navigateToNextChallenge()" style="cursor:pointer">
+                        <img src="<%-config.web.contentUrl%>/img/top-navigation-arrow.svg" />
+                    </div><!--next challenge -->
+                    <div class="yellowbutton-mobile" ng-show="canNavigateToNextChallenge()" ng-click="navigateToNextChallenge()">
+                        <img src="<%-config.web.contentUrl%>/img/yellow_mobile.PNG" />
+                    </div><!--next challenge mobile -->
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-5 col-xs-5 zeropadding" ng-show="inState=='do' || inState=='inspire'">
+                    <div class="nextactivity">
+                        <p class="nextactivity-heading">
+                            <span class="activity-name">Next Activity</span>
+                            <span class="activity" ng-show="nextActivity.type=='L'">LEARN</span>
+                            <span class="activity" ng-show="nextActivity.type=='T'">DO</span>
+                            <span class="activity" ng-show="nextActivity.type=='I'">INSPIRE</span>
+
+                        </p>
+                        <p class="nextactivity-desc">{{nextActivity.title}}</p>
+                    </div>
+                    <div class="yellowbutton" ng-show="canNavigateToNextChallenge() && canContinue" ng-click="navigateToNextChallenge()" style="cursor:pointer">
+                        <img src="<%-config.web.contentUrl%>/img/top-navigation-arrow.svg" />
+                    </div><!--next challenge -->
+                    <div class="yellowbutton-mobile" ng-show="canNavigateToNextChallenge() && canContinue" ng-click="navigateToNextChallenge()">
+                        <img src="<%-config.web.contentUrl%>/img/yellow_mobile.PNG" />
+                    </div><!--next challenge mobile -->
+                </div>
+
+
+            </div>
+
+
+            <%- partial('user/views/questPlayer') %>
+
+            <div class="bottom-bar bottom-bar-next row col-lg-7 col-md-7 col-sm-9 col-xs-9" ng-show="inState!='finish'">
+
+                <div class="begin col-lg-4 col-md-4 col-sm-4 col-xs-4" style="cursor:pointer" ng-show="inState=='start' && isBegin" ng-click="start()">
+                    <a>Begin</a>
+                </div>
+                <div class="begin  col-lg-4 col-md-4 col-sm-4 col-xs-4" style="cursor:pointer" ng-show="inState=='start' && !isBegin" ng-click="start()">
+                    <a>Continue</a>
+                </div>
+
+                <!--<label for="challenge-formIsHandled" class="next col-lg-2 col-md-2 col-sm-3 col-xs-3" ng-show="inState=='challenge' && !userHandledChallenge" style="cursor:pointer">Submit not</label>-->
+                <label for="challenge-formSubmit" class="next col-lg-4 col-md-4 col-sm-4 col-xs-4" ng-show="inState=='challenge' && !canContinue" style="cursor:pointer">Submit</label>
+                <!--<div class="next col-lg-2 col-md-2 col-sm-3 col-xs-3" ng-show="inState=='challenge' && !canContinue"  ng-click="submit(challenge)">
+                    <label for="challenge-formSubmit" style="cursor:pointer" >Submit</label>
+                </div>-->
+                <div class="next col-lg-4 col-md-4 col-sm-4 col-xs-4" style="cursor:pointer" ng-show="inState=='challenge' && canContinue" ng-disabled="challengeChanging" ng-click="challengeChanging || navigateToNextChallenge()">
+                    <a id="challNext">Next</a>
+                </div>
+                <div class="challenge-description col-lg-5 col-md-5 col-sm-5 col-xs-5" style="background-color: #4c5f7e;" ng-show="inState=='challenge' || inState=='start'">
+                    <p>Challenges : <span class="challenge-completed">{{quest.challengesComplete}}</span><span class="out-of">/</span><span class="total-challenges">{{quest.challengeCount}}</span></p>
+                    <p class="max-points" ng-show="inState=='start'">
+                        Activity Points Earned :
+                        <span>{{quest.score.points.earned}}</span>
+                        <span class="outof">/</span>
+                        <span class="totalpoints">{{quest.score.points.total}}</span>
+                        <!--<span class="points" ng-show="inState=='start'">{{quest.score.points.total}}</span>-->
+                    </p>
+                    <p class="max-points" ng-show="inState=='challenge'">
+                        This Challenge :<span class="points"> {{availablePoints}} Points</span>
+                    </p>
+                    <p class="max-points" ng-show="inState=='challenge'">
+                        Activity Points Earned : <span>{{quest.score.points.earned ? quest.score.points.earned : 0}}</span><span class="outof">/</span><span class="totalpoints">{{quest.score.points.total ? quest.score.points.total : 0}}</span>
+                    </p>
+                </div>
+                <div class="discussion col-lg-3 col-md-3 col-sm-3 col-xs-3" ng-click="toggle.asideDiscussion = !toggle.asideDiscussion;refreshDiscussion()" style="cursor:pointer" ng-show="inState=='challenge' || inState=='start'">
+                    <img src="<%-config.web.contentUrl%>/img/Speechbubble.png" /><!--<span class="count">2</span>-->
+                    <p>Discussion</p>
+                </div>
+            </div>
+            <div class="bottom-bar row col-lg-7 col-md-7 col-sm-9 col-xs-9" ng-show="inState=='finish'">
+
+                <div class="next col-lg-4 col-md-4 col-sm-4 col-xs-4" style="cursor:pointer" ng-show="inState=='finish'" ng-click="navigateToNextChallenge()">
+                    <a id="finsihNext">{{nextActivityBtnText}}</a>
+                </div>
+                <div class="challenge-description col-lg-4 col-md-4 col-sm-5 col-xs-5" style="background-color: #4c5f7e;">
+                    <p>Challenges : <span class="challenge-completed">{{quest.challengesComplete}}</span><span class="out-of">/</span><span class="total-challenges">{{quest.challengeCount}}</span></p>
+                    <p class="points-earned">Activity Points Earned : <span>{{quest.score.points.earned}}</span><span class="outof">/</span><span class="totalpoints">{{quest.score.points.total}}</span></p>
+                </div>
+                <div class="discussion col-lg-4 col-md-4 col-sm-3 col-xs-3" ng-click="toggle.asideDiscussion = !toggle.asideDiscussion;refreshDiscussion()" style="cursor:pointer">
+                    <img src="<%-config.web.contentUrl%>/img/Speechbubble.png" /><!--<span class="count">2</span>-->
+                    <p>Discussion</p>
+                </div>
+            </div>
+
+            <div class="bottom-bar row col-lg-7 col-md-7 col-sm-9 col-xs-9" ng-show="inState=='do'">
+
+
+                <!--<div class="submit col-lg-3 col-md-3 col-sm-4 col-xs-4">
+                    <div class="next col-lg-2 col-md-2 col-sm-3 col-xs-3" style="cursor:pointer;width:100%;" ng-show="!>
+                        <label for="todoActivity-formSubmit" style="cursor:pointer">Submit</label>
+                    </div>
+
+                </div>-->
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></div>
+                <label for="todoActivity-formSubmit" class="next col-lg-4 col-md-4 col-sm-4 col-xs-4"
+                       ng-show="inState=='do' && !todoCanContinue"
+                       style="cursor:pointer"
+                       ng-disabled="toDoActivityQuestions.$pristine && !toDoActivityQuestions.$dirty"
+                       id="todoActivity-formSubmit">
+                    Submit
+                </label>
+
+                <div class="next col-lg-4 col-md-4 col-sm-4 col-xs-4" style="cursor:pointer" ng-show="inState=='do' && todoCanContinue" ng-click="navigateToNextChallenge()">
+                    <a id="doNext">{{nextActivityBtnText}}</a>
+                </div>
+                <div class="activity-points-earned col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                    <p>Activity Points Earned: <span class="points-earned">{{quest.score.points.earned ? quest.score.points.earned : 0 }}</span><span class="out-of">/</span><span class="total-activity-points">{{quest.userToDos[0].todo.points ? quest.userToDos[0].todo.points : 0}}</span></p>
+                    <!--<p><span class="add-sign">+ </span><span class="bonus-points">25</span> Bonus Points!</p>-->
+                </div>
+                <!--<div class="discussion col-lg-2 col-md-2 col-sm-3 col-xs-3" ng-click="toggle.asideDiscussion = !toggle.asideDiscussion" style="cursor:pointer">
+                    <img src="<%-config.web.contentUrl%>/img/Speechbubble.png"><span class="count">2</span>
+                    <p>Discussion</p>
+                </div>-->
+
+            </div>
+            <div class="bottom-bar row bottom-bar-inspire col-lg-7 col-md-7 col-sm-7 col-xs-7" ng-show="inState=='inspire'">
+                <!--<div class="col-lg-5 col-md-5 col-sm-2 col-xs-2"></div>-->
+                <!--<div class="submit col-lg-2 col-md-2 col-sm-3 col-xs-3" style="cursor:pointer" >
+
+                </div>-->
+
+                <label class="submit col-lg-4 col-md-4 col-sm-4 col-xs-4" for="inspireActivity-formSubmit" ng-show=" inState=='inspire' && !inspireCanContinue" style="cursor:pointer">Submit</label>
+
+                <div class="next col-lg-4 col-md-4 col-sm-4 col-xs-4" style="cursor:pointer" ng-show=" inState=='inspire' && inspireCanContinue" ng-click="navigateToNextChallenge()">
+                    <label for="inspireActivity-formSubmit" style="cursor:pointer" id="inspNext">{{nextActivityBtnText}}</label>
+                </div>
+
+                <div class="activity-points-earned col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                    <p style="text-align:center;">Activity Points Earned: <span class="points-earned">{{quest.score.points.earned ? quest.score.points.earned : 0}}</span><span class="out-of">/</span><span class="total-activity-points">{{quest.inspirePoints ? quest.inspirePoints: 0}}</span></p>
+
+                </div>
+
+                <div class="discussion col-lg-3 col-md-3 col-sm-3 col-xs-3" ng-click="toggle.asideDiscussion = !toggle.asideDiscussion;refreshDiscussion()" style="cursor:pointer">
+                    <img src="<%-config.web.contentUrl%>/img/Speechbubble.png"><!--<span class="count">2</span>-->
+                    <p>Discussion</p>
+                </div>
+
+            </div>
+
+
+            <!--Overlay point go here if in challenge area. -->
+            <div class="success-overlay-points" ng-show="toggle.showPointsAwarded" ng-class="{ 'showOverLayPoint' : toggle.showPointsAwarded}" ng-cloak>
+                <p>You Just Earned</p>
+                <div class="points-circle">
+                    <div class="inner-circle">
+                        <span class="points-number">{{pointsAwarded ? pointsAwarded : 0}}</span><span class="points-text">pts</span>
+                    </div>
+                </div>
+            </div>
+            <div class="overlay-points" ng-show="toggle.showHintPointsAwarded" ng-class="{ 'showOverLayPoint' : toggle.showPointsAwarded}" ng-cloak>
+                <p>Maximum Points possible now </p>
+                <div class="points-circle">
+                    <div class="inner-circle">
+                        <span class="points-number">{{hintPointsAwarded ? hintPointsAwarded : 0}}</span><span class="points-text">pts</span>
+                    </div>
+                </div>
+            </div>
+
+            <!---Do and inspire modal-->
+            <div class="overlay" ng-show="toggle.showDoAddMediaModal" ng-class="{ 'showDoAddMediaModal' : toggle.showDoAddMediaModal}" ng-cloak>
+                <div id="" class="">
+                    <div ng-show="modalLoading.isLoading > 0"
+                         class="loading-overlay">
+                        <div class="loading" ng-cloak>
+                            <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+
+                            <div>One moment please...</div>
+                        </div>
+                    </div>
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content add-modal">
+                            <div class="addverification">Add Verification</div>
+                            <div class="Upload-button upload-from-computer">
+                                <a href="" style="position: relative;"> UPLOAD FROM YOUR COMPUTER</a>
+                                <input type="file" title="" ng-file-select="" ng-file-change="inspireDoUploadFile($files)" />
+                            </div>
+                            <p class="haserror" ng-if="mediaFileError.fileMissing">File Missing</p>
+                            <hr>
+                            <div class="embed-media">
+                                <div>
+                                    <p>Embed Media</p>
+                                    <textarea id="doEmbedMediaLink" ng-model="doUpload.embedLink" ng-change="uploadFileEmbed()"></textarea>
+                                    <p class="haserror" ng-if="mediaFileError.embedHasNoFile">Add Embed Link</p>
+                                    <p class="haserror" ng-if="mediaFileError.embedInvalidLink">Invalid Embed Link</p>
+                                </div>
+
+                                <div class="float-left text-left"><a href="#" class="cancelbutton" ng-click="closeDoModal()">CANCEL</a></div>
+                                <div class="float-right text-right">
+                                    <a href="#" class="addbutton" type="button" ng-disabled="!doUpload.hasEmbed" ng-click=" !doUpload.hasEmbed || selectMediaLink()">ADD</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--this is Do upload-->
+            <div class="overlay" ng-show="toggle.showInspireAddMediaModal" ng-class="{ 'showInspireAddMediaModal' : toggle.showInspireAddMediaModal}" ng-cloak>
+                <div id="" class="">
+                    <div ng-show="modalLoading.isLoading > 0"
+                         class="loading-overlay">
+                        <div class="loading" ng-cloak>
+                            <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+
+                            <div>One moment please...</div>
+                        </div>
+                    </div>
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content add-modal frompc">
+                            <div class="addverification">Add Media</div>
+                            <div class="Upload-button upload-from-computer">
+                                <a href="" style="position: relative;"> UPLOAD FROM YOUR COMPUTER</a>
+                                <input type="file" title="" ng-file-select="" ng-file-change="inspireDoUploadFile($files)" />
+                            </div>
+                            <p class="haserror" ng-if="mediaFileError.fileSizeBig">File Size too large.</p>
+                            <p class="haserror" ng-if="mediaFileError.fileMissing">File Missing</p>
+
+
+                            <hr>
+                            <div class="embed-media">
+                                <div>
+                                    <p>Embed Media</p>
+                                    <textarea id="inspireEmbedMediaLink" ng-model="inspireUpload.embedLink" ng-change="uploadFileEmbed()"></textarea>
+                                    <p class="haserror" ng-if="mediaFileError.embedHasNoFile">Add Embed Link</p>
+                                    <p class="haserror" ng-if="mediaFileError.embedInvalidLink">Invalid Embed Link</p>
+                                </div>
+
+                                <div class="float-left text-left"><a href="#" class="cancelbutton" ng-click="closeInspireModal()">CANCEL</a></div>
+                                <div class="float-right text-right">
+                                    <a href="#" class="addbutton" type="button" ng-disabled="!inspireUpload.hasEmbed" ng-click=" !inspireUpload.hasEmbed || selectMediaLink()">ADD</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--this is Inspire upload-->
+            <div class="overlay" ng-show="showInspireAddGroup" ng-cloak>
+                <div id="" class="">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content add-modal">
+                            <div class="addGroupname">
+                                <form action="" method="post" id="addGroupName" name="addGroupName" ng-submit="submitGroup($event)">
+                                    <div class="confirmModal">
+                                        <p>Enter Group Name</p>
+                                        <input class="addGroup" type="text" ng-model="addGroupModel.name" />
+                                        <p class="haserror" ng-if="addGpModel.req">Must include name</p>
+                                        <p class="haserror" ng-if="addGpModel.unique">Name must be unique</p>
+                                        <p class="haserror" ng-if="addGpModel.length">Name cannot be greater than 25 characters</p>
+                                        <p class="haserror" ng-if="addGpModel.err">Sorry Error has Occured. Please Try Again Later.</p>
+                                        <!--<textarea id="groupName"  ng-model="model.name"></textarea>-->
+                                    </div>
+
+                                    <div class="float-left text-left"><a href="#" class="cancelbutton" ng-click="closeToggleGroupModal()">CANCEL</a></div>
+                                    <div class="float-right text-right"><button href="#" class="addbutton" type="submit" ng-click="submitGroup($event)">ADD</button></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--Inspire add group-->
+            <div class="overlay" ng-show="showInspireDelGroup" ng-cloak>
+                <div id="" class="">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content add-modal">
+                            <div class="addGroupname">
+                                <div class="confirmModal">
+                                    <p>Delete Group?</p>
+                                    <p>Are you sure you want to delete this user group?</p>
+                                </div>
+                                <div class="float-left text-left"><a href="#" class="cancelbutton" ng-click="closeToggleGroupModal()">NO</a></div>
+                                <div class="float-right text-right"><a href="#" class="addbutton" type="button" ng-click="removeGroup()">YES</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--Inspire del group-->
+
+
+
+        </div>
+    </div>
+
+
+
+    <%- partial('partials/videoPlayer') %>
+    <%- partial('partials/youTubePlayer') %>
+    <%- partial('modals/confirmModal') %>
+    <%- partial('modals/infoModal') %>
+    <%- partial('modals/createUserGroup') %>
+
+    <%- scripts({
+    name: 'qp',
+    /*forceMinify: true,*/
+    files: [
+    '/js/lib/jquery.min.js',
+    '/js/lib/jquery.browser.js',
+    '/js/lib/bootstrap.js',
+    '/js/lib/spin.min.js',
+    '/js/lib/moment.js',
+    '/js/lib/underscore-min.js',
+
+    '/js/lib/angular/angular.js',
+    '/js/lib/dnd-shim.js',
+    '/js/lib/angular/angular-animate.js',
+    '/js/lib/angular/angular-sanitize.js',
+    '/js/lib/angular/ui-bootstrap.min.js',
+    '/js/lib/angular/angular-spinner.js',
+    '/js/lib/angular/angular-drag-and-drop-lists.js',
+    '/js/lib/angular/angular-file-upload-all.min.js',
+    '/js/lib/angular/angularjs-dropdown-multiselect.min.js',
+    '/js/lib/videogular.min.js',
+    '/js/lib/angular/ng-video.js',
+    '/js/lib/angular/ng-audio.js',
+    
+    '/js/lib/angular/1.5.5/angular.min.js',
+    '/js/lib/angular/1.5.5/angular-animate.min.js',
+    '/js/lib/angular/1.5.5/angular-aria.min.js',
+    '/js/lib/angular/1.5.5/angular-messages.min.js',
+    
+    '/js/lib/angular-material/1.1.2/angular-material.min.js',
+   
+    '/js/lib/angular-ui-bootstrap/0.13.3/ui-bootstrap-tpls.js',
+    
+    '/js/lib/quill/1.2.0/quill.js',
+    '/js/lib/quill/2.2.1/ng-quill.js',
+    
+    '/js/lib/angular/1.5.8/angular-cookies.min.js',
+
+    '/js/common/services/helperService.js',
+    '/js/common/services/authService.js',
+    '/js/common/services/controllerState.js',
+    '/js/common/controllers/modals.js',
+
+    '/js/questPlayer/app.js',
+    '/js/user/controllers/userGroups.js',
+    '/js/user/controllers/discussion.js']
+    }) %>
+
+
+    <!-- Angular Material requires Angular.js Libraries -->
+    <!--<script src="<%- config.web.contentUrl %>/js/lib/angular/1.5.5/angular.min.js"></script>
+    <script src="<%- config.web.contentUrl %>/js/lib/angular/1.5.5/angular-animate.min.js"></script>
+    <script src="<%- config.web.contentUrl %>/js/lib/angular/1.5.5/angular-aria.min.js"></script>
+    <script src="<%- config.web.contentUrl %>/js/lib/angular/1.5.5/angular-messages.min.js"></script>-->
+
+    <!-- Angular Material Library -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>-->
+    <!--<script src="<%- config.web.contentUrl %>/js/lib/angular-material/1.1.2/angular-material.min.js"></script>-->
+
+    <!--Angular pagination-->
+    <!--<script src="<%- config.web.contentUrl %>/js/lib/angular-ui-bootstrap/0.13.3/ui-bootstrap-tpls.js"></script>-->
+
+    <!--Quill Js and Ng-Quill -->
+    <!--<script type="text/javascript" src="<%- config.web.contentUrl %>/js/lib/quill/1.2.0/quill.js"></script>
+    <script type="text/javascript" src="<%- config.web.contentUrl %>/js/lib/quill/2.2.1/ng-quill.js"></script>-->
+
+    <!--Angular cookies-->
+    <!--<script src="<%- config.web.contentUrl %>/js/lib/angular/1.5.8/angular-cookies.min.js"></script>-->
+
+
+</body>
+</html>

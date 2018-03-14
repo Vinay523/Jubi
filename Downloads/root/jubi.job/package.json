@@ -1,0 +1,22 @@
+{
+  "name": "jubi.job",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./app.js"
+  },
+  "dependencies": {
+    "log4js": "^0.6.21",
+    "async": "^0.9.0",
+    "mysql": "^2.4.1",
+    "sequelize": "~3.0.0",
+    "underscore": "^1.7.0",
+    "q": "^1.1.2",
+    "moment": "^2.9.0",
+    "aws-sdk": "~2.1.35",
+    "node-uuid": "^1.4.2",
+    "fluent-ffmpeg": "^2.0.0",
+    "mime": "^1.3.1",
+    "randomstring": "^1.1.5"
+  }
+}

@@ -1,0 +1,60 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <option name="myLocal" value="true" />
+    <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="38">
+            <item index="0" class="java.lang.String" itemvalue="ng-app" />
+            <item index="1" class="java.lang.String" itemvalue="ng-show" />
+            <item index="2" class="java.lang.String" itemvalue="ng-controller" />
+            <item index="3" class="java.lang.String" itemvalue="us-spinner" />
+            <item index="4" class="java.lang.String" itemvalue="ng-click" />
+            <item index="5" class="java.lang.String" itemvalue="ng-bind-html" />
+            <item index="6" class="java.lang.String" itemvalue="ng-repeat" />
+            <item index="7" class="java.lang.String" itemvalue="ng-submit" />
+            <item index="8" class="java.lang.String" itemvalue="ng-cloak" />
+            <item index="9" class="java.lang.String" itemvalue="ng-model" />
+            <item index="10" class="java.lang.String" itemvalue="ng-class" />
+            <item index="11" class="java.lang.String" itemvalue="datatable" />
+            <item index="12" class="java.lang.String" itemvalue="dt-options" />
+            <item index="13" class="java.lang.String" itemvalue="ng-if" />
+            <item index="14" class="java.lang.String" itemvalue="ng-change" />
+            <item index="15" class="java.lang.String" itemvalue="ng-init" />
+            <item index="16" class="java.lang.String" itemvalue="ng-options" />
+            <item index="17" class="java.lang.String" itemvalue="dnd-allowed-types" />
+            <item index="18" class="java.lang.String" itemvalue="dnd-drop" />
+            <item index="19" class="java.lang.String" itemvalue="dnd-list" />
+            <item index="20" class="java.lang.String" itemvalue="dnd-type" />
+            <item index="21" class="java.lang.String" itemvalue="dnd-draggable" />
+            <item index="22" class="java.lang.String" itemvalue="dnd-moved" />
+            <item index="23" class="java.lang.String" itemvalue="dnd-selected" />
+            <item index="24" class="java.lang.String" itemvalue="dnd-effect-allowed" />
+            <item index="25" class="java.lang.String" itemvalue="dnd-disable-if" />
+            <item index="26" class="java.lang.String" itemvalue="ng-mouseup" />
+            <item index="27" class="java.lang.String" itemvalue="ng-mousedown" />
+            <item index="28" class="java.lang.String" itemvalue="dnd-dragover" />
+            <item index="29" class="java.lang.String" itemvalue="ng-href" />
+            <item index="30" class="java.lang.String" itemvalue="ng-style" />
+            <item index="31" class="java.lang.String" itemvalue="ng-src" />
+            <item index="32" class="java.lang.String" itemvalue="ng-checked" />
+            <item index="33" class="java.lang.String" itemvalue="datepicker-popup" />
+            <item index="34" class="java.lang.String" itemvalue="is-open" />
+            <item index="35" class="java.lang.String" itemvalue="show-weeks" />
+            <item index="36" class="java.lang.String" itemvalue="min-date" />
+            <item index="37" class="java.lang.String" itemvalue="ng-hide" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="LoggerInitializedWithForeignClass" enabled="false" level="WARNING" enabled_by_default="false">
+      <option name="loggerClassName" value="org.apache.log4j.Logger,org.slf4j.LoggerFactory,org.apache.commons.logging.LogFactory,java.util.logging.Logger" />
+      <option name="loggerFactoryMethodName" value="getLogger,getLogger,getLog,getLogger" />
+    </inspection_tool>
+    <inspection_tool class="RequiredAttributes" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myAdditionalRequiredHtmlAttributes" value="src" />
+    </inspection_tool>
+  </profile>
+</component>

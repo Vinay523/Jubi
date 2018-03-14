@@ -1,0 +1,52 @@
+<div class="panel panel-default program-version">
+    <div style="height:37px" class="panel-heading">
+        <h3 style="float:left" class="panel-title">Versions</h3>
+        <a style="float:right" ng-click="promptCleanupVersions(program.linkId)"  href="javascript:void(0)" class="text-xs">cleanup</a>
+    </div>
+    <div class="panel-body">
+
+        <div class="panel-scroll">
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="history in program.history">
+                    <div class="row pad">
+                        <div class="col-xs-5 col-no-padding">
+                            <div style="display:flex">
+                                <section data-ng-if="history.status != 'autoSaved'">
+                                    <h4 ng-if="history.subVersion == null" class="list-group-item-heading"
+                                        style="padding:0;margin:0;display:inline;float:left">v{{history.version +
+                                        (history.subVersion != null ? '.' + history.subVersion : '')}}</h4>
+                                    <h6 ng-if="history.subVersion != null" class="list-group-item-heading"
+                                        style="padding:0;margin:0;display:inline;float:left">v{{history.version +
+                                        (history.subVersion != null ? '.' + history.subVersion : '')}}</h6>
+                                </section>
+                                <div ng-if="history.published && history.status != 'preview'" class="text-xs"
+                                     style="float:left;margin-left: 3px">
+                                    (Published)
+                                </div>
+                                <div ng-if="history.published && history.status == 'preview'" class="text-xs"
+                                     style="float:left;margin-left: 3px">
+                                    (Preview)
+                                </div>
+                                <div ng-if="!history.published && history.status == 'autoSaved'" class="text-xs"
+                                     style="float:left;">
+                                    (AutoSaved)
+                                </div>
+                            </div>
+                            <a ng-if="!(program.status == 'preview') && history.programId != program.id && $first"
+                               ng-href="javascript:void(0)" ng-click="revert($event)" class="text-sm">(revert)</a>
+                            <a ng-if="history.programId != program.id && !$first" href="javascrit:void(0)"
+                               ng-click="restore($event, history)" class="text-sm">(restore)</a>
+                        </div>
+                        <div class="col-xs-7 col-no-padding text-right text-xs">
+							{{history.by.firstName}} {{history.by.lastName}}<br>
+                            {{history.createdAt | date:'h:mm a - M/dd/yyyy'}}
+                            
+                        </div>
+                    </div>
+                    <p ng-if="history.comment" class="list-group-item-text text-sm"
+                       ng-bind-html="toHtml(history.comment)"></p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

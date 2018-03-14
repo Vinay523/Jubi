@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Jubi">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="<%- config.web.contentUrl %>/img/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    <title><%- title %></title>
+    <link href="<%- config.web.contentUrl %>/css/admin/main.css" rel="stylesheet" />
+    <link href="<%- config.web.contentUrl %>/js/lib/angular-datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" />
+    <script>
+        var _jubi_clientData = <%- JSON.stringify(clientInitData()) %>;
+    </script>
+</head>
+<body>
+
+<header class="container-fluid" style="text-align:center" ng-controller="HeaderController" ng-cloak>
+    <nav class="navbar navbar-default navbar-fixed-top" ng-style="getHeaderCustomStyle()">
+        <div ng-if="logoUrl && logoCenter" style="position:absolute;width:100%;z-index:-1;">
+            <img style="height:50px;" ng-src="{{logoUrl}}"/>
+        </div>
+        <div style="padding-right:15px">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img ng-if="logoUrl && logoLeft" style="height:50px;float:left;" ng-src="{{logoUrl}}"/>
+                <a ng-if="!logoUrl" ng-style="getHeaderCustomStyle()" class="navbar-brand" href="/admin/clients">Jubi Administration</a>
+                <a ng-if="logoUrl" ng-style="getHeaderCustomStyle()" class="navbar-brand" href="/admin/clients">Administration</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li ng-class="{'active':isActive('/admin/clients')}"><a ng-style="getButtonCustomStyle('Clients')"  ng-mouseover="setButtonHovered('Clients')" ng-mouseleave="setButtonNotHovered('Clients')" href="/admin/clients">Clients</a></li>
+                    <li ng-class="{'active':isActive('/admin/users')}"><a ng-style="getButtonCustomStyle('Users')"  ng-mouseover="setButtonHovered('Users')" ng-mouseleave="setButtonNotHovered('Users')" href="/admin/users">Users</a></li>
+                    <li ng-class="{'active':isActive('/admin/system-configuration')}"  ng-if="isSystemAdmin"><a  ng-style="getButtonCustomStyle('System Configuration')"  ng-mouseover="setButtonHovered('System Configuration')" ng-mouseleave="setButtonNotHovered('System Configuration')" href="/admin/system-configuration">System Configuration</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a ng-style="getButtonCustomStyle('Your Programs')"  ng-mouseover="setButtonHovered('Your Programs')" ng-mouseleave="setButtonNotHovered('Your Programs')" href="/user">Your Programs</a></li>
+                    <li><a ng-style="getButtonCustomStyle('Manage')" ng-mouseover="setButtonHovered('Manage')" ng-mouseleave="setButtonNotHovered('Manage')" href="/manage">Manage</a></li>
+                    <li class="dropdown">
+                        <a ng-style="getButtonCustomStyle('Welcome')" ng-mouseover="setButtonHovered('Welcome')" ng-mouseleave="setButtonNotHovered('Welcome')" href="#" data-toggle="dropdown" role="button">{{welcome}} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="/admin/users/<%-model.userIdForProfileNav%>">Account</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+</header>
+
+<main class="container-fluid">
+    <%- renderBody() %>
+</main>
+
+<%- partial('modals/confirmModal') %>
+<%- partial('modals/infoModal') %>
+
+    <%- scripts({
+        name: 'admin',
+        /*forceMinify: true,*/
+        files: [
+            '/js/lib/jquery.min.js',
+            '/js/lib/jquery.browser.js',
+            '/js/lib/bootstrap.js',
+            '/js/lib/spin.min.js',
+            '/js/lib/moment.js',
+            '/js/lib/underscore-min.js',
+
+            '/js/lib/angular/angular.js',
+            '/js/lib/angular/angular-animate.js',
+            '/js/lib/angular/angular-sanitize.js',
+            '/js/lib/angular/ui-bootstrap.min.js',
+            '/js/lib/angular/angular-spinner.js',
+            '/js/lib/angular/angularjs-dropdown-multiselect.min.js',
+            '/js/lib/angular/angular-drag-and-drop-lists.js',
+            '/js/lib/angular/angular-file-upload-all.min.js',
+            '/js/lib/angular/bootstrap-colorpicker-module.js',
+
+			'/js/lib/angular-datatables/jquery.dataTables.min.js',
+			'/js/lib/angular-datatables/angular-datatables.min.js',
+			'/js/lib/angular-datatables/plugins/bootstrap/angular-datatables.bootstrap.js',
+            '/js/lib/angular-datatables/plugins/light-columnfilter/angular-datatables.light-columnfilter.js',
+            '/js/lib/angular-datatables/plugins/light-columnfilter/jquery-datatables.light-columnfilter.js',
+
+            '/js/common/services/helperService.js',
+            '/js/common/services/authService.js',
+            '/js/common/controllers/modals.js',
+            '/js/common/services/dataService.js',
+            '/js/common/directives/numberMask.js',
+
+            '/js/admin/app.js',
+			'/js/admin/controllers/dashboard.js',
+            '/js/admin/controllers/programLicenses.js',
+			'/js/admin/controllers/users.js',
+		    '/js/admin/controllers/clients.js',
+            '/js/admin/controllers/systemConfiguration.js',
+            '/js/admin/controllers/sidebar.js']}) %>
+
+
+</body>
+</html>
+

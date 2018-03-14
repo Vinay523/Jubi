@@ -1,0 +1,30 @@
+[
+    {
+        "model": "Role",
+        "data": {
+            "id": 1,
+            "name": "System Admin"
+        }
+    },
+    {
+        "model": "Role",
+        "data": {
+            "id": 2,
+            "name": "Client Admin"
+        }
+    },
+    {
+        "model": "Role",
+        "data": {
+            "id": 3,
+            "name": "Client Author"
+        }
+    },
+    {
+        "model": "Role",
+        "data": {
+            "id": 4,
+            "name": "Client User"
+        }
+    }
+]

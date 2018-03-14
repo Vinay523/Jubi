@@ -1,0 +1,205 @@
+<div style="left:-15px;right:-15px" ng-show="isSaving">
+    <div class="loading">
+        <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+
+        <div>One moment please...</div>
+    </div>
+</div>
+<div class="panel panel-default program-details" ng-show="!isSaving">
+    <div class="panel-heading">
+        <h3 class="panel-title">Program Details</h3>
+    </div>
+    <div class="panel-body form-horizontal">
+
+        <div class="form-group">
+            <label for="sequencingTypeSelect" class="col-xs-3 control-label">Users can access activity...</label>
+
+            <div class="col-xs-9">
+                <select id="sequencingTypeSelect" ng-model="program.sequencingTypeId" required
+                        class="form-control"
+                        ng-change="sequencingTypeSet(program)"
+                        ng-options="sequenceType.id as sequenceType.title for sequenceType in program.sequencingTypes"
+                        ng-disabled="canEditProgram(program)"></select>
+
+                <div class="text-sm text-danger" ng-if="val.sequencing.type.req">
+                    Program must have sequencing type.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" ng-if="program.sequencingTypeId == sequencingTypes.interval.id">
+            <div class="col-xs-offset-3 col-xs-9">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Custom Access Settings
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group" ng-class="{'has-error':val.sequencing.intervalType.req}">
+                            <label for="intervalStartType" class="col-xs-4 control-label">Unlock activity
+                                starting...</label>
+
+                            <div class="col-xs-8">
+                                <select name="inervalStartType"
+                                        ng-model="program.sequencingParameters.intervalStartTypeId"
+                                        ng-options="type.id as type.name for type in intervalStartTypesForProgramSelect"
+                                        required
+                                        class="form-control">
+                                </select>
+
+                                <div class="text-sm text-danger" ng-if="val.sequencing.intervalType.req">
+                                    Interval start type must be set.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-offset-4 col-xs-8">
+                                <div ng-class="{'has-error':val.sequencing.startDate.req || val.sequencing.startDate.min}"
+                                     ng-if="program.sequencingParameters.intervalStartTypeId == intervalStartTypes.onSpecificDate.id"
+                                     class="input-group datepicker">
+                                    <input datepicker-popup="MM/dd/yyyy"
+                                           dnd-no-drop
+                                           min-date="today"
+                                           ng-change="setTimeToMidnight(program.sequencingParameters)"
+                                           datepicker-options="{showWeeks:false}"
+                                           is-open="programSequencingParametersIntervalStartTypeDatePickerOpened"
+                                           ng-focus="programSequencingParametersIntervalStartTypeDatePickerOpened = true; focusMe($event);"
+                                           ng-click="programSequencingParametersIntervalStartTypeDatePickerOpened = true; focusMe($event);"
+                                           type="text" class="form-control" id="interval-startdate"
+                                           placeholder="Start Date"
+                                           title="Start Date"
+                                           ng-model="program.sequencingParameters.startDate">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-primary"
+                                            ng-click="programSequencingParametersIntervalStartTypeDatePickerOpened = true">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
+                                </div>
+                                <div class="text-sm text-danger" ng-if="val.sequencing.startDate.req">Start date must be
+                                    set.
+                                </div>
+                                <div class="text-sm text-danger" ng-if="val.sequencing.startDate.min">
+                                    Start date cannot be in the past.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group"
+                             ng-if="program.sequencingParameters.startDate || program.sequencingParameters.intervalStartTypeId == intervalStartTypes.onStartDate.id">
+                            <label class="control-label col-xs-4">Every...</label>
+
+                            <div class="col-xs-8">
+                                <div class="row">
+                                    <div class="col-xs-6"
+                                         ng-class="{'has-error':val.sequencing.interval.req || val.sequencing.interval.min || val.sequencing.interval.fmt}"
+                                         style="padding-right:5px;">
+                                        <input type="text" number-mask style="text-align:right" class="form-control"
+                                               dnd-no-drop
+                                               id="interval" placeholder="amount"
+                                               ng-model="program.sequencingParameters.interval">
+
+                                        <div class="text-sm text-danger" ng-if="val.sequencing.interval.req">Interval
+                                            must beset.
+                                        </div>
+                                        <div class="text-sm text-danger" ng-if="val.sequencing.interval.min">
+                                            Interval must be at least .5
+                                        </div>
+                                        <div class="text-sm text-danger" ng-if="val.sequencing.interval.fmt">
+                                            Interval must be a valid number
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6" style="padding-left:5px;">
+                                        <select name="sequencingIntervalPeriodSelect"
+                                                ng-model="program.sequencingParameters.intervalPeriod"
+                                                required
+                                                class="form-control">
+                                            <option value="Hour">Hours</option>
+                                            <option value="Day">Days</option>
+                                            <option value="Week">Weeks</option>
+                                            <option value="Month">Months</option>
+                                        </select>
+
+                                        <div class="text-sm text-danger" ng-if="val.sequencing.period.req">Interval
+                                            period must
+                                            be set.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="ca" class="control-label col-xs-3">Content Author</label>
+
+            <div class="col-xs-9">
+                <input id="ca" type="text" class="form-control" placeholder="Program content author."
+                       ng-model="program.contentAuthor" dnd-no-drop>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="cd" class="control-label col-xs-3">Content Description</label>
+
+            <div class="col-xs-9">
+                <textarea id="cd" class="form-control" rows="3"
+                          placeholder="General description of the programs content."
+                          ng-model="program.contentDescription" dnd-no-drop></textarea>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">
+                Program Tile Image<br>
+                <span class="small text-muted text-xs" style="margin-left:15px;">Max File Size: 4MB<br>(JPG, JPEG, GIF, PNG)<br>Dimension: 600px by 600px</span>
+            </label>
+
+            <div class="col-xs-3">
+                <div class="program-img thumbnail">
+                    <div ng-show="imageLoading=='program'">
+                        <div class="loading loading-sm">
+                            <img src="<%- config.web.contentUrl %>/img/empty.png"/>
+                            <span us-spinner="{radius:10, width:4, length: 8, color: '#b0b0b7'}"></span>
+
+                            <div>One moment please...</div>
+                        </div>
+                    </div>
+
+                    <div ng-show="imageLoading!='program'">
+                        <div class="manage manage-photo">
+                            <a ng-if="program.imageUrl" href="#" class="btn btn-default red pull-right"
+                               ng-click="removeProgramImage($event)">
+                                <span class="fa fa-trash-o" title="Remove Image"></span>
+                            </a>
+
+                            <div class="btn btn-default blue pull-left" ng-file-select
+                                 ng-file-change="uploadProgramImage($files)">upload
+                            </div>
+                        </div>
+                        <div ng-if="program.imageUrl">
+                            <img ng-src="{{program.imageUrl}}/250x250" alt="" style="width: 100%;"/>
+                        </div>
+                        <div ng-if="!program.imageUrl">
+                            <img src="<%- config.web.contentUrl %>/img/empty.png" style="width: 100%;"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-sm text-danger" ng-if="programImageVal.type">Unsupported image type.</div>
+                <div class="text-sm text-danger" ng-if="programImageVal.size">Image is too large.</div>
+            </div>
+        </div>
+        <!--<div class="form-group">
+            <label for="cd" class="control-label col-xs-3">User assignable bonus point bucket</label>
+
+            <div class="col-xs-9">
+                <input class="form-control"
+                       placeholder="Number of bonus points a user has to give out"
+                       ng-model="program.userBonusPointsBucket" allow-decimal="false" number-mask dnd-no-drop/>
+            </div>
+
+        </div>-->
+    </div>
+</div>

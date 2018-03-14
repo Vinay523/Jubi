@@ -1,0 +1,214 @@
+<div class="panel panel-default"
+     ng-class="{'quest-error' : quest.hasError, 'lastQuestInLevel' : $last, 'questInLevel' : !$last }">
+    <div class="panel-heading" style="padding-left:10px;">
+        <div class="panel-title" ng-class="{'has-error':quest.val.title.req}">
+            <div class="text-muted handle"
+                 ng-mousedown="questDragHandleDown($event,quest,level)"
+                 ng-mouseup="questDragHandleUp($event,quest,level)">
+                <span style="margin-left:4px"
+                      ng-style="{ color: getEntityHandleColor(quest, program) }"
+                      class="fa fa-ellipsis-v">
+                </span>
+            </div>
+            <div class="content" ng-style="{{ level ? '{ \'margin-left\' : \'10px\' }' : '' }}">
+                <input dnd-no-drop type="text" class="form-control" placeholder="Quest title." title="Quest title."
+                       ng-model="quest.title">
+
+                <div class="text-sm text-danger" ng-if="quest.val.title.req">Quest title cannot be empty.</div>
+                <div class="text-sm text-danger" ng-if="quest.val.challenges.req">
+                    All quests must have at least 1
+                    challenge to publish the program.
+                </div>
+            </div>
+        </div>
+
+        <div class="manage manage-program">
+            <div style="position: relative;">
+                <button type="button" class="manage-dropdown btn btn-primary"
+                        ng-click="toggleQuestMenu($event,quest)" tabindex="-1" onfocus="blur()">
+                    <span class="fa fa-ellipsis-h"></span>
+                </button>
+                <div class="dropdown" ng-show="!busy && quest.menuOpen">
+                    <ul class="dropdown-menu" style="display:block;margin-left:-30px;margin-top:28px;">
+                        <li>
+                            <a href="#" ng-click="editQuest($event, quest, level, $index)" tabindex="-1"
+                               onfocus="blur()"><i class="fa fa-edit"></i>edit</a>
+                        </li>
+                        <li>
+                            <a href="#" ng-click="preview($event, quest, null, level)" tabindex="-1" onfocus="blur()">
+                                <i class="fa fa-search"></i> preview
+                            </a>
+                        </li>
+                        <li>
+                        <li>
+                            <a href="#" ng-click="duplicateQuest($event, quest, level, program)" tabindex="-1"
+                               onfocus="blur()">
+                                <i class="fa fa-copy"></i> duplicate
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#" ng-click="removeQuest($event, quest, level)" tabindex="-1"
+                               onfocus="blur()"><i class="fa fa-trash-o"></i>delete</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <button type="button" class="manage-expand btn btn-primary"
+                    ng-click="toggleQuest($event,quest)" tabindex="-1" onfocus="blur()">
+                <span class="icon fa"
+                      ng-class="{'fa-chevron-down':!quest.expanded, 'fa-chevron-up':quest.expanded}"></span>
+            </button>
+        </div>
+    </div>
+
+    <div class="panel-collapse collapse" ng-class="{'in':quest.expanded}">
+        <div class="panel-body">
+            <div class="form-horizontal" role="form">
+                <div class="row form-group" ng-class="{'has-error':quest.val.objective.req}">
+                    <label for="obj" class="col-xs-12 col-sm-2 control-label" style="padding-top:0;">Objective</label>
+
+                    <div class="col-xs-12 col-sm-10" ng-class="{'has-error':quest.val.objective.req}">
+                        <textarea class="form-control"
+                                  id="obj"
+                                  placeholder="Quest objective."
+                                  title="Quest objective."
+                                  ng-model="quest.objective"
+                                  dnd-no-drop></textarea>
+                        <span class="text-sm text-danger" ng-if="quest.val.objective.req">Quest objective cannot be empty.</span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-xs-12 col-sm-2 control-label" style="padding-top:0;">
+                        <label for="tile-img" class="control-label" style="padding-top:0;">
+                            Tile
+                            Image
+                        </label>
+
+                        <div class="text-xs text-muted">
+                            Max File Size: 4MB<br>(JPG, JPEG, GIF, PNG)
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-5 ">
+                        <div class="quest-edit thumbnail">
+                            <div class="program-img">
+                                <div ng-show="quest.uploading.tile">
+                                    <div class="loading loading-sm">
+                                        <img src="<%- config.web.contentUrl %>/img/empty.png" />
+                                        <span us-spinner="{radius:15, width:4, length: 9, color: '#b0b0b7'}"></span>
+                                    </div>
+                                </div>
+
+                                <div ng-show="!quest.uploading.tile">
+                                    <div class="manage manage-photo btn-sm">
+                                        <a ng-if="quest.featuredImageUrl" href="#"
+                                           class="btn btn-default red pull-right"
+                                           ng-click="removeQuestImage($event, quest, 'tile')">
+                                            <span class="fa fa-trash-o" title="Remove Image"></span>
+                                        </a>
+
+                                        <div class="btn btn-default blue pull-left"
+                                             ng-file-select
+                                             ng-file-change="uploadQuestImage($files, quest, 'tile')">
+                                            upload
+                                        </div>
+                                    </div>
+
+                                    <div ng-if="quest.featuredImageUrl">
+                                        <img ng-src="{{quest.featuredImageUrl}}/250x250" alt="" />
+                                    </div>
+                                    <div ng-if="!quest.featuredImageUrl">
+                                        <img src="<%- config.web.contentUrl %>/img/empty.png" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-sm text-danger" ng-if="quest.val.featuredImage.type"
+                                 style="padding-top:5px;">
+                                Unsupported image type.
+                            </div>
+                            <div class="text-sm text-danger" ng-if="quest.val.featuredImage.size"
+                                 style="padding-top:5px;">
+                                Image is too large.
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-xs-12 col-sm-2 control-label" style="padding-top:0;">
+                        <label for="tile-img" class="control-label" style="padding-top:0;">
+                            Background
+                            Image
+                        </label>
+
+                        <div class="text-xs text-muted">
+                            Max File Size: 4MB<br>(JPG, JPEG, GIF, PNG)
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-5 ">
+                        <div class="quest-edit thumbnail"
+                             ng-class="{'auto-height':quest.backgroundImageUrl}">
+                            <div class="program-img">
+                                <div ng-show="quest.uploading.bg">
+                                    <div class="loading loading-sm">
+                                        <img src="<%- config.web.contentUrl %>/img/empty.png" />
+                                        <span us-spinner="{radius:15, width:4, length: 9, color: '#b0b0b7'}"></span>
+                                    </div>
+                                </div>
+
+                                <div ng-show="!quest.uploading.bg">
+                                    <div class="manage manage-photo btn-sm">
+                                        <a ng-if="quest.backgroundImageUrl" href="#"
+                                           class="btn btn-default red pull-right"
+                                           ng-click="removeQuestImage($event, quest, 'bg')">
+                                            <span class="fa fa-trash-o" title="Remove Image"></span>
+                                        </a>
+
+                                        <div class="btn btn-default blue pull-left"
+                                             ng-file-select
+                                             ng-file-change="uploadQuestImage($files, quest, 'bg')">
+                                            upload
+                                        </div>
+                                    </div>
+
+                                    <div ng-if="quest.backgroundImageUrl">
+                                        <img ng-src="{{quest.backgroundImageUrl}}" alt="" />
+                                    </div>
+                                    <div ng-if="!quest.backgroundImageUrl">
+                                        <img src="<%- config.web.contentUrl %>/img/empty.png" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-sm text-danger" ng-if="quest.val.backgroundImage.type"
+                                 style="padding-top:5px;">
+                                Unsupported image type.
+                            </div>
+                            <div class="text-sm text-danger" ng-if="quest.val.backgroundImage.size"
+                                 style="padding-top:5px;">
+                                Image is too large.
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer clearfix">
+            <div class="row">
+                <div class="col-xs-6">
+                    <ul class="program-meta list-inline text-sm">
+                        <li><strong>Challenges: </strong>{{ quest.challenges.length }}</li>
+                        <li><strong>Media: </strong>{{ getNumberOfMedia(quest) }}</li>
+                        <!--<li><strong>To-Do's: </strong>{{ getNumberOfTodos(quest) }}</li>-->
+                    </ul>
+                </div>
+                <!--<div class="col-xs-6 text-right text-sm"> -->
+                <!--<strong>Last edited: </strong>{{program.history[0].by.firstName}}-->
+                <!--{{program.history[0].by.lastName}}-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+</div>

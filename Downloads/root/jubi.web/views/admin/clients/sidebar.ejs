@@ -1,0 +1,26 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div>
+            <button type="submit" class="btn btn-primary" style="width:100%;">{{client.id > 0 ? 'Save' : 'Create'}} Client</button>
+            <div class="text-sm clearfix" style="padding-top:5px;">
+                <a href="/admin/clients" class="pull-right">Cancel</a>
+            </div>
+        </div>
+
+        <div ng-if="client.createdAt">
+            <hr>
+
+            <div class="text-sm">
+                <div class="row">
+                    <div class="col-xs-3">Created:</div>
+                    <div class="col-xs-9 text-right">{{client.createdAt | date:'MMM dd, yyyy @ hh:mm a'}}</div>
+                </div>
+                <div class="row" style="padding-top:5px;">
+                    <div class="col-xs-3">Updated:</div>
+                    <div class="col-xs-9 text-right">{{client.updatedAt | date:'MMM dd, yyyy @ hh:mm a'}}</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

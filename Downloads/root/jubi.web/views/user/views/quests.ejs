@@ -1,0 +1,343 @@
+<div class="program-body col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-controller="QuestsController" ng-style="getMainCanvasStyle()">
+  <p class="mobile-quest-heading"></p>
+  <div class="desktop_view" style="padding-bottom:62px;">
+
+    <ng-container ng-repeat="level in program.levels">
+      <div class="levels">
+        <p class="level1" >{{level.title}}</p>
+        <div class="row1">
+          <ng-container ng-repeat="quest in level.quests">
+            <ng-container ng-if="quest.type == 'L'">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 Learn_tile anim l{{level.sequence}} L{{$index}}">
+                <div class="front" style="cursor: pointer;" ng-click="questClick($index,quest)" >
+                  <div class="status-image" ng-style="{'background-image':'url( {{ (quest.featuredImageUrl ? (quest.featuredImageUrl) : '/img/Group 8 Copy 2.png') }} )', 'background-color':'{{(quest.featuredImageUrl ? 'rgba(0,0,0,0.3)' : 'inherit')}}'}">
+                    <div class="tile-top" >
+                        <div class="heading">LEARN</div>
+                        <div class="completed" ng-if="quest.challengeCount != 0 &&  quest.challengesComplete === quest.challengeCount">Completed</div>
+                        <div class="completed" ng-if="quest.challengesComplete > 0 && quest.challengesComplete < quest.challengeCount">In Progress</div>
+                        <span class="corner" ng-click="flipLevelPanel($event, $index,'L',level.sequence)"></span>
+                    </div>
+                    <div class="badge-img" ng-if="quest.awardedBadge">
+                        <div>
+                            <img ng-src="{{(quest.awardedBadge.imageUrl ? (quest.awardedBadge.imageUrl + '/100x100') : '/img/Badge Copy.png')}}" />
+                        </div>
+                    </div>
+                    <div class="locked" ng-if="quest.isLocked">
+                      <img src="<%-config.web.contentUrl%>/img/locked-shape.png" />
+                    </div>
+                  </div>
+                  <div class="info">
+                    <div class="activity-name">{{quest.title}}</div>
+                    <div class="points_challenges">
+                      <div class="points">
+                        <span>{{quest.score.points.earned}}</span>/{{quest.score.points.total}} Points
+                      </div> | <div class="challenges">
+                        <span>{{quest.challengesComplete}}</span>/{{quest.challengeCount}} Challenges
+                      </div>
+                       
+                    </div>
+                      <div class="basequesticon" ng-show="quest.baseOrBonus == 'B'"><span class="fa fa-asterisk"></span><span class="topbaseopen">BASE (required)</span></div>
+                      <div class="basequesticon" ng-show="quest.baseOrBonus == 'O'"><span class="fa fa-star-o"></span><span class="topbonusopen">BONUS</span></div>
+                  </div>
+                </div>
+                <div class="back" style="cursor: pointer;">
+                  <div class="status-image" ng-style="{'background-image':'url( {{ (quest.featuredImageUrl ? (quest.featuredImageUrl) : '/img/Group 8 Copy 2.png') }} )', 'background-color':'rgba(0,0,0,0.5)'}">
+                    <div class="tile-top">
+                      <div class="heading">LEARN</div>
+                      <span class="corner" ng-click="flipLevelPanel($event, $index,'L', level.sequence)"></span>
+                    </div>
+                    <div class="content">
+                        <ng-quill-editor ng-model="quest.objective" read-only="true"></ng-quill-editor>
+                      <!--{{quest.objective}}-->
+                    </div>
+                      <div class="BASE" ng-if="quest.baseOrBonus == 'B'">BASE</div>
+                      <div class="BASE" ng-if="quest.baseOrBonus == 'O'">BONUS</div>
+                  </div>
+                  <div class="info">
+                    <div class="activity-name">{{quest.title}}</div>
+                    <div class="points_challenges">
+                      <div class="points">
+                        <span>{{quest.score.points.earned}}</span>/{{quest.score.points.total}} Points
+                      </div> | <div class="challenges">
+                        <span>{{quest.challengesComplete}}</span>/{{quest.challengeCount}} Challenges
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container ng-if="quest.type == 'T'">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 Do_tile anim l{{level.sequence}} T{{$index}}">
+                <div class="front" style="cursor: pointer;" ng-click="questClick($index,quest)">
+                  <div class="status" ng-style="{'background-image':'url( {{ (quest.featuredImageUrl ? (quest.featuredImageUrl) : '/img/Group 9 Copy 2.png') }} )', 'background-color':'{{(quest.featuredImageUrl ? 'rgba(0,0,0,0.3)' : 'inherit')}}' }">
+                    <div class="tile-top">
+                        <div class="heading">DO</div>
+                        <div class="completed" ng-if="quest.todos[0].userTodos[0].status == 'completed' && quest.todos[0].userTodos[0].hasBeenCompleted != 'False'">Completed</div>
+                        <div class="completed" ng-if="quest.todos[0].userTodos[0].status == 'verified' && quest.todos[0].userTodos[0].hasBeenCompleted != 'True'">New Post</div>
+                        <ng-container ng-if="quest.todos.length > 0 && quest.todos[0].userTodos.length > 0">
+                            <div class="completed" ng-if="quest.todos[0].userTodos[0].status == 'submitted' || quest.todos[0].userTodos[0].status == 'verified'">In Progress</div>
+                        </ng-container>
+                        
+                      <span class="corner" ng-click="flipLevelPanel($event, $index,'T',level.sequence)"></span>
+                    </div>
+                    <div class="badge-img" ng-if="quest.awardedBadge">
+                        <img ng-src="{{(quest.awardedBadge.imageUrl ? (quest.awardedBadge.imageUrl) : '/img/Badge Copy.png')}}" />
+                    </div>
+                      <div class="locked" ng-if="quest.isLocked">
+                          <img src="<%-config.web.contentUrl%>/img/locked-shape.png" />
+                      </div>
+                  </div>
+                  <div class="info">
+                    <div class="activity-name">{{quest.title}}</div>
+                    <div class="points">
+                        <span>{{quest.score.points.earned}}</span>/{{quest.todos[0].points? quest.todos[0].points : 0}} Points
+                    </div>
+                      <div class="basequesticon" ng-show="quest.baseOrBonus == 'B'"><span class="fa fa-asterisk"></span><span class="topbaseopen">BASE (required)</span></div>
+                      <div class="basequesticon" ng-show="quest.baseOrBonus == 'O'"><span class="fa fa-star-o"></span><span class="topbonusopen">BONUS</span></div>
+                  </div>
+                </div>
+                <div class="back" style="cursor: pointer;">
+                  <div class="status" ng-style="{'background-image':'url( {{ (quest.featuredImageUrl ? (quest.featuredImageUrl) : '/img/Group 9 Copy 2.png') }} )' , 'background-color':'rgba(0,0,0,0.5)'}">
+                    <div class="tile-top">
+                      <div class="heading">DO</div>
+                      <span class="corner" ng-click="flipLevelPanel($event, $index,'T',level.sequence)"></span>
+                    </div>
+                    <div class="content">
+                        <ng-quill-editor ng-model="quest.objective" read-only="true"></ng-quill-editor>
+                        <!--{{quest.objective}}-->
+                    </div>
+                      <div class="BASE" ng-if="quest.baseOrBonus == 'B'">BASE</div>
+                      <div class="BASE" ng-if="quest.baseOrBonus == 'O'">BONUS</div>
+                  </div>
+                  <div class="info">
+                    <div class="activity-name">{{quest.title}}</div>
+                    <div class="points">
+                        <span>{{quest.score.points.earned}}</span>/{{quest.todos[0].points? quest.todos[0].points : 0}} Points
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container ng-if="quest.type == 'I'">
+              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 Inspire_tile anim l{{level.sequence}} I{{$index}}">
+                <div class="front" style="cursor: pointer;" ng-click="questClick($index,quest)">
+                  <div class="status" ng-style="{'background-image':'url( {{ (quest.featuredImageUrl ? (quest.featuredImageUrl) : '/img/Group 15 Copy 2.png') }} )' , 'background-color':'{{(quest.featuredImageUrl ? 'rgba(0,0,0,0.3)' : 'inherit')}}'}">
+                    <div class="tile-top">
+                        <div class="heading">INSPIRE</div>
+                        <div class="completed" ng-if="quest.complete">Completed</div>
+                        <span class="corner" ng-click="flipLevelPanel($event, $index,'I',level.sequence)"></span>
+                    </div>
+                    <div class="badge-img" ng-if="quest.awardedBadge">
+                        <img ng-src="{{(quest.awardedBadge.imageUrl ? (quest.awardedBadge.imageUrl) : '/img/Badge Copy.png')}}" />
+                    </div>
+                    <div class="locked" ng-if="quest.isLocked">
+                        <img src="<%-config.web.contentUrl%>/img/locked-shape.png" />
+                    </div>
+                  </div>
+                  <div class="info">
+                    <div class="activity-name">{{quest.title}}</div>
+                    <div class="points">
+                        <span>{{quest.score.points.earned}}</span>/<span>{{quest.inspirePoints ? quest.inspirePoints : 0}}</span> Points
+                    </div>
+                      <div class="basequesticon" ng-show="quest.baseOrBonus == 'B'"><span class="fa fa-asterisk"></span><span class="topbaseopen">BASE (required)</span></div>
+                      <div class="basequesticon" ng-show="quest.baseOrBonus == 'O'"><span class="fa fa-star-o"></span><span class="topbonusopen">BONUS</span></div>
+                  </div>
+                </div>
+                <div class="back" style="cursor: pointer;">
+                  <div class="status" ng-style="{'background-image':'url( {{ (quest.featuredImageUrl ? (quest.featuredImageUrl) : '/img/Group 15 Copy 2.png') }} )' , 'background-color':'rgba(0,0,0,0.5)'}">
+                    <div class="tile-top">
+                      <div class="heading">INSPIRE</div>
+                      <span class="corner" ng-click="flipLevelPanel($event, $index,'I',level.sequence)"></span>
+                    </div>
+                    <div class="content">
+                        <ng-quill-editor ng-model="quest.objective" read-only="true"></ng-quill-editor>
+                        <!--{{quest.objective}}-->
+                    </div>
+                      <div class="BASE" ng-if="quest.baseOrBonus == 'B'">BASE</div>
+                      <div class="BASE" ng-if="quest.baseOrBonus == 'O'">BONUS</div>
+                  </div>
+                  <div class="info">
+                    <div class="activity-name">{{quest.title}}</div>
+                    <div class="points">
+                        <span>{{quest.score.points.earned}}</span>/<span>{{quest.inspirePoints ? quest.inspirePoints : 0}}</span> Points
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+    
+    
+    <div class="rowNoLevel" ng-if="program.quests.length > 0">
+      <ng-container ng-repeat="quest in program.quests">
+          
+        <ng-container ng-if="quest.type == 'L'">
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 Learn_tile anim L{{$index}}">
+          <div class="front" style="cursor: pointer;" ng-click="questClick($index,quest)">
+            <div class="status-image" ng-style="{'background-image':'url( {{ (quest.featuredImageUrl ? (quest.featuredImageUrl) : '/img/Group 8 Copy 2.png') }} )', 'background-color':'{{(quest.featuredImageUrl ? 'rgba(0,0,0,0.3)' : 'inherit')}}'}">
+                <div class="tile-top" >
+                    <div class="heading">LEARN</div>
+                    <div class="completed" ng-if="quest.challengeCount != 0 &&  quest.challengesComplete === quest.challengeCount">Completed</div>
+                    <div class="completed" ng-if="quest.challengesComplete > 0 && quest.challengesComplete < quest.challengeCount">In Progress</div>
+                    <span class="corner" ng-click="flipPanel($event, $index, 'L')"></span>
+                </div>
+                <div class="badge-img" ng-if="quest.awardedBadge">
+                    <span>
+                        <img ng-src="{{(quest.awardedBadge.imageUrl ? (quest.awardedBadge.imageUrl) : '/img/Badge Copy.png')}}" />
+                    </span>
+                </div>
+                <div class="locked" ng-if="quest.isLocked">
+                    <img src="<%-config.web.contentUrl%>/img/locked-shape.png" />
+                </div>
+            </div>
+            <div class="info" style="cursor: pointer;">
+              <div class="activity-name">{{quest.title}}</div>
+              <div class="points_challenges">
+                <div class="points">
+                  <span>{{quest.score.points.earned}}</span>/{{quest.score.points.total}} Points
+                </div> | <div class="challenges">
+                  <span>{{quest.challengesComplete}}</span>/{{quest.challengeCount}} Challenges
+                </div>
+              </div>
+                <div class="basequesticon" ng-show="quest.baseOrBonus == 'B'"><span class="fa fa-asterisk"></span><span class="topbaseopen">BASE (required)</span></div>
+                <div class="basequesticon" ng-show="quest.baseOrBonus == 'O'"><span class="fa fa-star-o"></span><span class="topbonusopen">BONUS</span></div>
+            </div>
+          </div>
+          <div class="back" style="cursor: pointer;">
+            <div class="status-image" ng-style="{'background-image':'url( {{ (quest.featuredImageUrl ? (quest.featuredImageUrl) : '/img/learn blank box.png') }} )', 'background-color':'rgba(0,0,0,0.5)' }">
+              <div class="tile-top">
+                <div class="heading">LEARN</div>
+                <span class="corner" ng-click="flipPanel($event, $index, 'L')"></span>
+              </div>
+              <div class="content">
+                  <ng-quill-editor ng-model="quest.objective" read-only="true"></ng-quill-editor>
+                  <!--{{quest.objective}}-->
+              </div>
+                <div class="BASE" ng-if="quest.baseOrBonus == 'B'">BASE</div>
+                <div class="BASE" ng-if="quest.baseOrBonus == 'O'">BONUS</div>
+            </div>
+            <div class="info">
+              <div class="activity-name">{{quest.title}}</div>
+              <div class="points_challenges">
+                <div class="points">
+                  <span>{{quest.score.points.earned}}</span>/{{quest.score.points.total}} Points
+                </div> | <div class="challenges">
+                  <span>{{quest.challengesComplete}}</span>/{{quest.challengeCount}} Challenges
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </ng-container>
+        <ng-container ng-if="quest.type == 'T'">
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 Do_tile anim T{{$index}}">
+            <div class="front" style="cursor: pointer;" ng-click="questClick($index,quest)">
+              <div class="status" ng-style="{'background-image':'url( {{ (quest.featuredImageUrl ? (quest.featuredImageUrl) : '/img/Group 9 Copy 2.png') }} )', 'background-color':'{{(quest.featuredImageUrl ? 'rgba(0,0,0,0.3)' : 'inherit')}}' }">
+                <div class="tile-top">
+                    <div class="heading">DO</div>
+                    <div class="completed" ng-if="quest.todos[0].userTodos[0].status == 'completed' && quest.todos[0].userTodos[0].hasBeenCompleted != 'False'">Completed</div>
+                    <div class="completed" ng-if="quest.todos[0].userTodos[0].status == 'verified' && quest.todos[0].userTodos[0].hasBeenCompleted != 'True'">New Post</div>
+                    <ng-container ng-if="quest.todos.length > 0 && quest.todos[0].userTodos.length > 0">
+                        <div class="completed" ng-if="quest.todos[0].userTodos[0].status == 'submitted' || quest.todos[0].userTodos[0].status == 'verified'">In Progress</div>
+                    </ng-container>
+                    <span class="corner" ng-click="flipPanel($event, $index, 'T')"></span>
+                </div>
+                  <div class="badge-img" ng-if="quest.awardedBadge">
+                      <span>
+                          <img ng-src="{{(quest.awardedBadge.imageUrl ? (quest.awardedBadge.imageUrl) : '/img/Badge Copy.png')}}" />
+                      </span>
+                  </div>
+                  
+                  <div class="locked" ng-if="quest.isLocked">
+                      <img src="<%-config.web.contentUrl%>/img/locked-shape.png" />
+                  </div>
+              </div>
+              <div class="info">
+                <div class="activity-name">{{quest.title}}</div>
+                <div class="points">
+                    <span>{{quest.score.points.earned}}</span>/{{quest.todos[0].points? quest.todos[0].points : 0}} Points
+                </div>
+                  <div class="basequesticon" ng-show="quest.baseOrBonus == 'B'"><span class="fa fa-asterisk"></span><span class="topbaseopen">BASE (required)</span></div>
+                  <div class="basequesticon" ng-show="quest.baseOrBonus == 'O'"><span class="fa fa-star-o"></span><span class="topbonusopen">BONUS</span></div>
+              </div>
+            </div>
+            <div class="back" style="cursor: pointer;">
+              <div class="status" ng-style="{'background-image':'url( {{ (quest.featuredImageUrl ? (quest.featuredImageUrl) : '/img/Group 9 Copy 2.png') }} )', 'background-color':'rgba(0,0,0,0.5)' }">
+                <div class="tile-top">
+                  <div class="heading">DO</div>
+                  <span class="corner" ng-click="flipPanel($event, $index, 'T')"></span>
+                </div>
+                <div class="content">
+                    <ng-quill-editor ng-model="quest.objective" read-only="true"></ng-quill-editor>
+                    <!--{{quest.objective}}-->
+                </div>
+                  <div class="BASE" ng-if="quest.baseOrBonus == 'B'">BASE</div>
+                  <div class="BASE" ng-if="quest.baseOrBonus == 'O'">BONUS</div>
+              </div>
+              <div class="info">
+                <div class="activity-name">{{quest.title}}</div>
+                <div class="points">
+                    <span>{{quest.score.points.earned }}</span>/{{quest.todos[0].points? quest.todos[0].points : 0}} Points
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container ng-if="quest.type == 'I'">
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 Inspire_tile anim I{{$index}}">
+            <div class="front" style="cursor: pointer;" ng-click="questClick($index,quest)">
+              <div class="status" ng-style="{'background-image':'url( {{ (quest.featuredImageUrl ? (quest.featuredImageUrl) : '/img/Group 15 Copy 2.png') }} )' , 'background-color':'{{(quest.featuredImageUrl ? 'rgba(0,0,0,0.3)' : 'inherit')}}'}">
+                <div class="tile-top">
+                    <div class="heading">INSPIRE</div>
+                    <div class="completed" ng-if="quest.complete">Completed</div>
+                    <span class="corner" ng-click="flipPanel($event, $index, 'I')"></span>
+                </div>
+                  <div class="badge-img" ng-if="quest.awardedBadge">
+                      <span>
+                          <img ng-src="{{(quest.awardedBadge.imageUrl ? (quest.awardedBadge.imageUrl) : '/img/Badge Copy.png')}}" />
+                      </span>
+                  </div>
+                <div class="locked" ng-if="quest.isLocked">
+                    <img src="<%-config.web.contentUrl%>/img/locked-shape.png" />
+                </div>
+              </div>
+              <div class="info">
+                <div class="activity-name">{{quest.title}}</div>
+                <div class="points">
+                    <span>{{quest.score.points.earned}}</span>/<span>{{quest.inspirePoints ? quest.inspirePoints : 0}}</span> Points
+                </div>
+                  <div class="basequesticon" ng-show="quest.baseOrBonus == 'B'"><span class="fa fa-asterisk"></span><span class="topbaseopen">BASE (required)</span></div>
+                  <div class="basequesticon" ng-show="quest.baseOrBonus == 'O'"><span class="fa fa-star-o"></span><span class="topbonusopen">BONUS</span></div>
+              </div>
+            </div>
+            <div class="back" style="cursor: pointer;">
+              <div class="status" ng-style="{'background-image':'url( {{ (quest.featuredImageUrl ? (quest.featuredImageUrl) : '/img/Group 15 Copy 2.png') }} )', 'background-color':'rgba(0,0,0,0.5)' }">
+                <div class="tile-top">
+                  <div class="heading">INSPIRE</div>
+                  <span class="corner" ng-click="flipPanel($event, $index, 'I')"></span>
+                </div>
+                <div class="content">
+                    <ng-quill-editor ng-model="quest.objective" read-only="true"></ng-quill-editor>
+                    <!--{{quest.objective}}-->
+                </div>
+                  <div class="BASE" ng-if="quest.baseOrBonus == 'B'">BASE</div>
+                  <div class="BASE" ng-if="quest.baseOrBonus == 'O'">BONUS</div>
+              </div>
+              <div class="info" style="cursor: pointer;">
+                <div class="activity-name">{{quest.title}}</div>
+                <div class="points">
+                    <span>{{quest.score.points.earned}}</span>/<span>{{quest.inspirePoints ? quest.inspirePoints : 0}}</span> Points
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+ 
+</div>

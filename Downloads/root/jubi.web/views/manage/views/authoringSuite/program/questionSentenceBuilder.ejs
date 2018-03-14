@@ -1,0 +1,41 @@
+<ul dnd-list="question.workAnswers.sentenceBuilder.answers"
+    dnd-drop="answerDrop(event, index, item, external, type, 'sentenceBuilder', question)"
+    dnd-allowed-types="['sentenceBuilderAnswer']">
+    <li ng-repeat="answer in question.workAnswers.sentenceBuilder.answers"
+        dnd-type="'sentenceBuilderAnswer'"
+        dnd-draggable="answer"
+        dnd-moved="question.workAnswers.sentenceBuilder.answers.splice($index, 1)"
+        dnd-selected="question.workAnswers.sentenceBuilder.selectedAnswer=answer"
+        dnd-effect-allowed="move"
+        dnd-disable-if="!question.workAnswers.sentenceBuilder.canDrag || !canEditEntity(quest, program)"
+        ng-class="{'selected':question.workAnswers.sentenceBuilder.selectedAnswer===answer}">
+
+        <div class="panel-group accordion">
+            <div class="panel panel-default" ng-class="{'quest-error':answer.hasError}">
+                <div class="panel-heading" style="padding-left:10px;">
+                    <div class="panel-title" ng-class="{'has-error':answer.val.answer.req}">
+                        <div class="text-muted handle"
+                             ng-mousedown="canEditEntity(quest, program) && answerDragHandleDown($event,question,answer,'sentenceBuilder')"
+                             ng-mouseup="canEditEntity(quest, program) && answerDragHandleUp($event,question,answer,'sentenceBuilder')">
+                            <span ng-style="{ color: getEntityHandleColor(quest, program) }"
+                                  style="margin-left:4px"
+                                  class="fa fa-ellipsis-v"></span>
+                        </div>
+                        <div class="content">
+                            <input type="text" class="form-control" placeholder="Fragment" ng-model="answer.answer">
+                            <div class="text-xs">
+                                <a href="#" ng-click="!quest.publishedAt && sentenceBuilderRemoveAnswer($event,answer,$index,question)">Remove
+                                    Fragment</a>
+                            </div>
+                            <div class="text-sm text-danger" ng-if="answer.val.answer.req">Fragment cannot be empty.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+<button ng-disabled="!canEditEntity(quest, program)" type="button" class="btn btn-primary outline btn-block" ng-click="addAnswer('sentenceBuilder',question)">
+    <span class="icon fa fa-plus" title="Add New Fragment"></span> Add New Fragment
+</button>

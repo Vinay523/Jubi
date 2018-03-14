@@ -1,0 +1,80 @@
+{
+  "common":{
+    "appName": "JubiJob",
+    "version": "1.0.0",
+    "log4js": {},
+    "database": {},
+    "videoEncodeJob": {
+        "interval": 1000
+    },
+    "emailJob": {
+      "interval": 10000
+    },
+    "aws": {
+      "accessKeyId": "AKIAJKDKCD5TVXV4GW6Q",
+      "secretAccessKey": "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",
+      "region": "us-east-1",
+      "buckets": {
+        "assets": "jubi-assets",
+        "userAssets": "jubi-user-assets"
+      },
+      "paths": {
+        "images": "images",
+        "videos": "videos",
+        "audio": "audio",
+        "encode": "encode"
+      },
+      "urls": {
+        "assets": "https://jubi-assets.s3.amazonaws.com",
+        "userAssets": "https://jubi-user-assets.s3.amazonaws.com"
+      }
+    }
+  },
+
+  "local":{
+    "log4js": {
+      "level": "DEBUG",
+      "appenders":[{
+        "type": "console"
+      }, {
+        "type": "file",
+        "filename": "logs/jubi.job.log",
+        "maxLogSize": 102400,
+        "backups": 5,
+        "category": "JubiJob"
+      }
+      ]
+    }
+  },
+
+  "qa":{
+    "log4js": {
+      "level": "INFO",
+      "appenders":[
+        {
+          "type": "console"
+        }, {
+          "type": "file",
+          "filename": "/var/log/jubi/jubi.job.log",
+          "maxLogSize": 102400,
+          "backups": 5,
+          "category": "JubiJob"
+        }
+      ]
+    }
+  },
+
+  "production": {
+    "log4js": {
+      "level": "ALL",
+      "appenders":[ { "type": "console" }, {
+          "type": "file",
+          "filename": "/var/log/jubi.job.log",
+          "maxLogSize": 102400,
+          "backups": 5,
+          "category": "JubiJob"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,114 @@
+[
+  {
+    "model": "ChallengeQuestionType",
+    "data": {
+      "id": 1,
+      "name": "Single Select",
+      "sequence":"1"
+    }
+  },
+  {
+    "model": "ChallengeQuestionType",
+    "data": {
+      "id": 2,
+      "name": "Multi Select",
+      "sequence":"2"
+    }
+  },
+  {
+    "model": "ChallengeQuestionType",
+    "data": {
+      "id": 3,
+      "name": "Poll",
+      "sequence":"3"
+    }
+  },
+  {
+    "model": "ChallengeQuestionType",
+    "data": {
+      "id": 4,
+      "name": "Free Response",
+      "sequence":"5"
+    }
+  },
+  {
+    "model": "ChallengeQuestionType",
+    "data": {
+      "id": 5,
+      "name": "Fill In The Blank",
+      "sequence":"6"
+    }
+  },
+  {
+    "model": "ChallengeQuestionType",
+    "data": {
+      "id": 6,
+      "name": "Item Matching",
+      "sequence":"8"
+    }
+  },
+  {
+    "model": "ChallengeQuestionType",
+    "data": {
+      "id": 7,
+      "name": "Short Answer",
+      "sequence":"7"
+    }
+  },
+  {
+    "model": "ChallengeQuestionType",
+    "data": {
+      "id": 8,
+      "name": "Contrasting",
+      "sequence":"9"
+    }
+  },
+  {
+    "model": "ChallengeQuestionType",
+    "data": {
+      "id": 9,
+      "name": "Sentence / Phrase Builder",
+      "sequence":"11"
+    }
+  },
+  {
+    "model": "ChallengeQuestionType",
+    "data": {
+      "id": 10,
+      "name": "Free Contrasting",
+      "sequence":"10"
+    }
+  },
+  {
+    "model": "ChallengeQuestionType",
+    "data": {
+      "id": 11,
+      "name": "Sequencing",
+      "sequence":"12"
+    }
+  },
+  {
+    "model": "ChallengeQuestionType",
+    "data": {
+      "id": 12,
+      "name": "Free Contrasting'",
+      "sequence":"14"
+    }
+  },
+  {
+    "model": "ChallengeQuestionType",
+    "data": {
+      "id": 13,
+      "name": "Grouping",
+      "sequence":"13"
+    }
+  },
+  {
+    "model": "ChallengeQuestionType",
+    "data": {
+      "id": 14,
+      "name": "Poll Multi Select",
+      "sequence":"4"
+    }
+  }
+]

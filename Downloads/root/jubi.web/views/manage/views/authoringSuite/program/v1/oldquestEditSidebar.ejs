@@ -1,0 +1,52 @@
+<section id="secondary">
+
+    <%- partial('manage/partials/saveWidget', {hidePublish:true, cancel:true}) %>
+
+    <div class="panel panel-default program-details">
+        <div class="panel-heading">
+            <h3 class="panel-title">Quest Details</h3>
+        </div>
+        <div class="panel-body">
+            <div class="program-img">
+                <div ng-show="quest.uploadingImage">
+                    <div class="loading loading-sm">
+                        <img src="<%- config.web.contentUrl %>/img/empty.png" />
+                        <span us-spinner="{radius:20, width:6, length: 12, color: '#b0b0b7'}"></span>
+                        <div>One moment please...</div>
+                    </div>
+                </div>
+                <div ng-show="!quest.uploadingImage">
+                    <div class="manage manage-photo">
+                        <a ng-if="quest.featuredImageUrl" href="#" class="btn btn-default red pull-right" ng-click="removeQuestImage($event, quest, 'tile')" >
+                            <span class="fa fa-trash-o" title="Remove Image"></span>
+                        </a>
+                        <div class="btn btn-default blue pull-left" ng-file-select ng-file-change="uploadQuestImage($files, quest, 'tile')">upload</div>
+                    </div>
+
+                    <div ng-if="quest.featuredImageUrl">
+                        <img ng-src="{{quest.featuredImageUrl}}/600x600" alt="" />
+                    </div>
+                    <div ng-if="!quest.featuredImageUrl">
+                        <img src="<%- config.web.contentUrl %>/img/empty.png" />
+                    </div>
+                </div>
+            </div>
+            <div class="text-sm text-danger" ng-if="quest.val.featuredImage.type">Unsupported image type.</div>
+            <div class="text-sm text-danger" ng-if="quest.val.featuredImage.size">Image is too large.</div>
+        </div>
+    </div>
+
+
+    <div class="panel panel-default program-status">
+        <div class="panel-heading">
+            <h3 class="panel-title">Navigation</h3>
+        </div>
+        <div class="panel-body">
+            <button type="button" class="btn btn-block btn-secondary" ng-disabled="busy || !hasPrevious()" ng-click="previous($event)">Previous Quest</button>
+            <button type="button" class="btn btn-block btn-secondary" ng-disabled="busy || !hasNext()" ng-click="next($event)">Next Quest</button>
+            <br>
+            <button type="button" class="btn btn-block btn-secondary" ng-click="clearValues(); backToQuests($event);" ng-disabled="busy">Back to Quests</button>
+        </div>
+    </div>
+
+</section>

@@ -1,0 +1,206 @@
+<div class="col-xs-7 col-sm-4 col-lg-3" style="padding-left:10px;" ng-if="media.type=='image'
+|| (media.type=='video' && media.source=='system')
+|| (media.type=='video' && media.source=='youtube')
+|| (media.type=='audio')
+|| (media.type=='link')
+|| (media.type=='resource' && media.url)">
+
+    <div class="panel-heading animated bounceInUp"
+         style="padding-left:10px;">
+        <div class="panel-title">
+            <div class="content">
+
+                <div class="thumbnail" ng-style="getHeightStyle()"
+                     ng-if="media.type=='image'"
+                     ng-attr-auto-resizer="true"
+                     resizeType="width">
+                    <a href="{{media.url}}" target="_blank">
+                        <img ng-src="{{media.url}}"
+                             class="pull-left" ng-style="getHeightStyleDividedBy(1.8)" alt="">
+                    </a>
+
+                    <div>
+                        <a title="{{media.name}}" href="{{media.url}}"
+                           target="_blank">
+                            <h4 style="clear:both">
+                                <span style="overflow-wrap:break-word; width:100%; display:inline-block;overflow-y:hidden"
+                                      ng-if="media.name" ng-style="getHeightStyleDividedBy(5)"
+                                      ng-bind-html="'&nbsp;' + media.name"
+                                      title="{{media.name}}" class="fa fa-picture-o">
+                                </span>
+                            </h4>
+                        </a>
+                        {{media.description}}
+                        <p><br>
+                            <span class="badge badge-category">Image</span>
+                            <span title="{{quest.title}}" class="badge badge-quest">{{quest.title}}</span>
+                            <span title="{{challenge.title}}" class="badge badge-challenge">{{challenge.title}}</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div ng-if="media.type=='video' && media.source=='system'"
+                     class="thumbnail video-media" ng-style="getHeightStyle()"
+                     ng-attr-auto-resizer="true"
+                     resizeType="width">
+                    <a href="javascript:void(0)">
+                        <img class="thumbnail media" alt="" ng-src="{{media.url}}">
+
+                        <div class="video-play" ng-click="playVideo(media)">
+                            <i class="fa fa-play-circle-o"></i>
+                        </div>
+                        <div class="loading-overlay"
+                             ng-show="media.encodings.length <= 0"
+                             style="left:15px;right:15px;">
+                            <div class="loading loading-sm">
+                                <span us-spinner="{radius:9, width:4, length: 6, color: '#b0b0b7'}"></span>
+
+                                <div>encoding...</div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <a title="{{media.name}}" href="javascript:void(0)" ng-click="playVideo(media)"><h4><span
+                                            class="fa fa-film"></span>
+                                    {{media.name}}</h4></a>
+                            {{media.description}}
+                            <p><br/>
+                                <span class="badge badge-category">Video</span>
+                                <span title="{{quest.title}}" class="badge badge-quest">{{quest.title}}</span>
+                                <span title="{{challenge.title}}" class="badge badge-challenge">{{challenge.title}}</span>
+                            </p>
+                        </div>
+                    </a>
+                </div>
+
+
+                <div ng-if="media.type=='video' && media.source=='youtube'"
+                     class="thumbnail video-media" ng-style="getHeightStyle()"
+                     ng-attr-auto-resizer="true"
+                     resizeType="width">
+                    <a href="javascript:void(0)"
+                       ng-click="playVideo(media)">
+                        <img src="{{media.coverUrl}}"
+                             alt="{{media.coverUrl}}" style="width:100%">
+
+                        <div class="video-play">
+                            <i class="fa fa-play-circle-o"></i>
+                        </div>
+                        <div>
+                            <a ng-if="isUrl(media.name)"
+                               href="{{media.name}}"
+                               title="{{media.name}}"
+                               target="_blank">
+                                <h4>
+                                    <span style="overflow-wrap:break-word;overflow-y:hidden; width:100%; display:inline-block"
+                                          ng-style="getHeightStyleDividedBy(8)"
+                                          class="fa fa-film">&nbsp;{{media.name}}</span>
+                                </h4>
+                            </a>
+                            <a ng-if="!isUrl(media.name) && media.name"
+                               ng-click="playVideo(media)"
+                               href="javascript:void(0)"
+                               title="{{media.name}}">
+                                <h4>
+                                    <span style="overflow-wrap:break-word;overflow-y:hidden; width:100%; display:inline-block"
+                                          ng-style="getHeightStyleDividedBy(8)"
+                                          class="fa fa-film">&nbsp;{{media.name}}</span>
+                                </h4>
+                            </a>
+
+                            <p><br/>
+                                <span class="badge badge-category">Video</span>
+                                <span title="{{quest.title}}" class="badge badge-quest">{{quest.title}}</span>
+                                <span title="{{challenge.title}}" class="badge badge-challenge">{{challenge.title}}</span>
+                            </p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="thumbnail video-media" ng-style="getHeightStyle()"
+                     ng-if="media.type=='audio'"
+                     ng-attr-auto-resizer="true"
+                     resizeType="width">
+                    <a href="javascript:void(0)" ng-click="playPauseAudio(media)">
+                        <img alt="" src="<%- config.web.contentUrl %>/img/audio.jpg">
+
+                        <div class="video-play" ng-if="!media.isPlaying">
+                            <i class="fa fa-play-circle-o"></i>
+                        </div>
+                        <div class="video-play" ng-if="media.isPlaying">
+                            <i class="fa fa-pause"></i>
+                        </div>
+                    </a>
+
+                    <div>
+                        <a title="{{media.name}}" href="{{media.url}}" target="_blank"><h4><span
+                                        class="fa fa-volume-up"></span>
+                                {{media.name}} </h4></a>
+                        <span class="badge badge-category">Audio</span>
+                        <span title="{{quest.title}}" class="badge badge-quest">{{quest.title}}</span>
+                        <span title="{{challenge.title}}" class="badge badge-challenge">{{challenge.title}}</span>
+
+                    </div>
+                </div>
+
+                <div class="thumbnail" ng-style="getHeightStyle()"
+                     ng-if="media.type=='link'"
+                     ng-attr-auto-resizer="true"
+                     resizeType="width">
+                    <div>
+                        <h4>
+                            <a title="{{media.link}}" href="{{media.link}}" target="_blank">
+                                <span ng-bind-html="'&nbsp;' + media.link"
+                                      style="overflow-wrap:break-word; width:100%; display:inline-block;overflow-y:hidden"
+                                      class="fa fa-link" ng-style="getHeightStyleDividedBy(3)"></span>
+                            </a>
+                            <a title="{{media.name}}" href="{{media.link}}" target="_blank">
+                                <span ng-bind-html="'<br/><br/>' + media.name"
+                                      style="overflow-wrap:break-word; width:100%; display:inline-block;overflow-y:hidden"
+                                      ng-if="media.name" ng-style="getHeightStyleDividedBy(3)"></span>
+                            </a>
+                            <a title="{{media.description}}" href="{{media.link}}" target="_blank">
+                                <span ng-bind-html="'<br/><br/>' + media.description" ng-if="media.description"
+                                      style="overflow-wrap:break-word;overflow-y:hidden; width:100%; display:inline-block"
+                                      ng-style="getHeightStyleDividedBy(3)"></span>
+                            </a>
+                        </h4>
+
+
+                        <p><br/>
+                            <span class="badge badge-category">Link</span>
+                            <span title="{{quest.title}}" class="badge badge-quest">{{quest.title}}</span>
+                            <span title="{{challenge.title}}" class="badge badge-challenge">{{challenge.title}}</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="thumbnail" ng-style="getHeightStyle()"
+                     ng-if="media.type=='resource' && media.url"
+                     ng-attr-auto-resizer="true"
+                     resizeType="width">
+                    <div>
+                        <a href="{{media.url}}"
+                           target="_blank"
+                           title="{{media.name}}">
+                            <h4>
+                                <span style="overflow-wrap:break-word; width:100%; display:inline-block;overflow-y:hidden"
+                                      ng-if="media.name" ng-style="getHeightStyleDividedBy(1.8)"
+                                      ng-bind-html="'&nbsp;' + media.name"
+                                      class="fa fa-file">
+                                </span>
+                            </h4>
+                        </a>
+
+                        <p><br>
+                            <span class="badge badge-category">Document</span>
+                            <span title="{{quest.title}}" class="badge badge-quest">{{quest.title}}</span>
+                            <span title="{{challenge.title}}" class="badge badge-challenge">{{challenge.title}}</span>
+                        </p>
+                        {{media.description}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

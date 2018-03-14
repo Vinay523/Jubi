@@ -1,0 +1,142 @@
+{
+  "common":{
+    "appName": "JubiApi",
+    "version": "1.0.0",
+    "web": {},
+    "log4js": {},
+    "database": {},
+    "password": {
+      "salt": "542435234987fa98759827598fa8d7fa987",
+      "resetTimeout": 30
+    },
+    "runtime": {
+      "mode": "cluster",
+      "forks": "all",
+      "restartFailed": true
+    },
+    "session": {
+      "secret":"542435234987fa98759827598fa8d7fa987",
+      "name":".sid"
+    },
+    "email":{
+      "to":"Jubi Support <inspire@getjubi.com>",
+      "from":"Jubi Support <inspire@getjubi.com>"
+    },
+    "aws": {
+      "accessKeyId": "AKIAJKDKCD5TVXV4GW6Q",
+      "secretAccessKey": "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",
+      "region": "us-east-1",
+      "buckets": {
+        "assets": "jubi-assets",
+        "userAssets": "jubi-user-assets"
+      },
+      "paths": {
+        "images": "images",
+        "videos": "videos",
+        "audio": "audio",
+        "encode": "encode",
+        "resources": "resources"
+      },
+      "urls": {
+        "assets": "https://jubi-assets.s3.amazonaws.com",
+        "userAssets": "https://jubi-user-assets.s3.amazonaws.com"
+      }
+    },
+    "systemCredentials": {
+      "userName": "x1x2x3x4",
+      "password": "$2a$10$QEEbhyofMCD54w6F1zP9.ufF2JDTSQV3WmX5VdKbrwfmk1inxCkEW"
+    },
+    "ssl": {},
+    "tmp": "/tmp"
+  },
+
+  "local":{
+    "web": {
+      "port": 8102,
+      "appUrl": "http://jubi.local",
+      "mediaHandlerUrl": "https://as.jubiplatform.com"
+    },
+    "runtime": {
+      "mode": "worker"
+    },
+    "log4js": {
+      "level": "ALL",
+      "appenders":[{ "type": "console" }, {
+        "type": "file",
+        "filename": "logs/jubi.api.log",
+        "maxLogSize": 102400,
+        "backups": 5,
+        "category": "JubiApi"
+      }
+      ]
+    }
+  },
+
+  "localWithPorts": {
+    "web": {
+      "port": 8102,
+      "appUrl": "http://jubi.local:8101",
+      "mediaHandlerUrl": "https://as.jubiplatform.com",
+      "usePortInRedirect":  true
+    },
+    "runtime": {
+      "mode": "worker"
+    },
+    "log4js": {
+      "level": "ALL",
+      "appenders": [
+        {
+          "type": "console"
+        },
+        {
+          "type": "file",
+          "filename": "logs/jubi.api.log",
+          "maxLogSize": 102400,
+          "backups": 5,
+          "category": "JubiApi"
+        }
+      ]
+    }
+  },
+
+  "qa":{
+    "web": {
+      "port": 8202,
+      "appUrl": "https://jubiplatform-qa.com",
+      "mediaHandlerUrl": "https://as.jubiplatform-qa.com"
+    },
+    "runtime": {
+      "mode": "worker"
+    },
+    "log4js": {
+      "level": "ALL",
+      "appenders":[{ "type": "console" },{
+          "type": "file",
+          "filename": "/var/log/jubi/jubi.api.log",
+          "maxLogSize": 102400,
+          "backups": 5,
+          "category": "JubiApi"
+        }
+      ]
+    }
+  },
+
+  "production": {
+    "web": {
+      "port": 80,
+      "appUrl": "https://jubiplatform2.com",
+      "mediaHandlerUrl": "https://as.jubiplatform2.com"
+    },
+    "log4js": {
+      "level": "INFO",
+      "appenders":[{ "type": "console" }, {
+          "type": "file",
+          "filename": "/var/log/jubi.api.log",
+          "maxLogSize": 102400,
+          "backups": 5,
+          "category": "JubiApi"
+        }
+      ]
+    }
+  }
+}

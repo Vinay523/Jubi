@@ -1,0 +1,22 @@
+<section id="secondary">
+
+    <div class="panel panel-default program-status">
+        <div class="panel-body">
+            <button class="btn btn-block btn-primary" ng-click="submit($event, null, false, quest)" ng-disabled="busy || (programEditFrm.$pristine && program.status != 'autoSaved' && program.status != 'preview' && !restoreId)" onfocus="blur()">Save</button>
+
+            <hr>
+            <div class="row text-sm">
+                <div class="col-xs-6">
+                    Topic Count: {{forum.topicCount | number: 0}}<br>
+                    Comment Count: {{forum.commentCount | number: 0}}
+                </div>
+                <div class="col-xs-6">
+                    Like Count: {{forum.likeCount | number: 0}}
+                    <!--<br>
+                    Dislike Count: {{forum.dislikeCount | number: 0}}-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

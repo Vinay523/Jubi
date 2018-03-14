@@ -1,0 +1,123 @@
+<div ng-controller="AuthoringSuiteHomeController" ng-cloak class="authoring-manage-program">
+    <div class="row page-heading panel">
+        <div class="col-xs-12">
+            <h2>Authoring Suite</h2>
+            <ol class="breadcrumb">
+                <li><a ng-href="/manage">Dashboard</a></li>
+                <li class="active">Authoring Suite</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="loading loading-overlay tall neg-margin" ng-show="programLoading">
+        <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+        <div>One moment please...</div>
+    </div>
+
+
+    <div>
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="program in programs">
+                <div class="thumbnail program">
+                    <div class="manage">
+                        <a href="#" ng-if="!program.programLicenseId" ng-click="duplicateProgram($event,program)">
+                            <div class="btn btn-default pull-right"><i class="fa fa-files-o" title="Duplicate Program"></i></div>
+                        </a>
+                        <a href="#" ng-click="removeProgram($event,program)" >
+                            <div class="btn btn-default red pull-right"><i class="fa fa-trash-o" title="Remove Program"></i></div>
+                        </a>
+                        <div ng-if="program.version.publishedVersion == 0" class="btn btn-warning"><i class="status fa fa-pencil-square-o" title="Draft"></i> Draft</div>
+                        <div ng-if="program.version.publishedVersion > 0" class="btn btn-success"><i class="status fa fa-check" title="Published"></i> {{program.status != 'preview' ? 'V' + program.version.publishedVersion + ' Published' : 'V' + program.version.publishedVersion.toFixed(0) + ' Published (Preview)'}}</div>
+                    </div>
+                    <a ng-href="/manage/authoring-suite/program/{{program.slug}}/edit" style="display:block;">
+                        <div class="program-img">
+                            <img ng-src="{{(program.imageUrl ? (program.imageUrl+'-600x600') : '<%- config.web.contentUrl %>/img/no-picture.jpg')}}" alt="{{program.title}}" />
+                        </div>
+                        <div class="caption">
+                            <h3 class="program">{{program.title}}</h3>
+                            <p class="author"><span class="program-author">By: {{program.content.author}} </span><span class="version small pull-right">v{{program.version.version}}</span></p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail program">
+
+                    <div ng-show="!inAddProgram">
+                        <div class="program-cover cover">
+                            <a href="#" ng-click="addProgram($event)">
+                                <h3 class="program"><span class="icon fa fa-plus"></span><br/>Create New Program</h3>
+                            </a>
+                        </div>
+                        <div class="program-img">
+                            <img src="<%- config.web.contentUrl %>/img/empty.png"/>
+                        </div>
+                        <div class="caption">
+                            <h3 class="program">&nbsp;</h3>
+                            <p class="author">&nbsp;</p>
+                        </div>
+                    </div>
+
+                    <div ng-show="inAddProgram">
+
+                        <form ng-submit="submitAddProgram($event)">
+                            <div class="program-img">
+                                <div ng-show="imageLoading=='program'">
+                                    <div class="loading loading-sm">
+                                        <img src="<%- config.web.contentUrl %>/img/empty.png" />
+                                        <span us-spinner="{radius:20, width:6, length: 12, color: '#b0b0b7'}"></span>
+                                        <div>One moment please...</div>
+                                    </div>
+                                </div>
+                                <div ng-show="imageLoading!='program'">
+                                    <div class="manage manage-photo">
+                                        <a ng-if="model.imageUrl" href="#" class="btn btn-default red pull-right" ng-click="removeNewProgramImage($event)" style="margin-top:0;" >
+                                            <span class="fa fa-trash-o" title="Remove Image"></span>
+                                        </a>
+                                        <div class="btn btn-default blue pull-left" ng-file-select ng-file-change="uploadProgramImage($files)">upload</div>
+                                    </div>
+                                    <div ng-if="model.imageUrl">
+                                        <img ng-src="{{model.imageUrl}}/600x600" alt="" />
+                                    </div>
+                                    <div ng-if="!model.imageUrl">
+                                        <img src="<%- config.web.contentUrl %>/img/empty.png" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-sm text-danger" ng-if="val.image.type">Unsupported image type.</div>
+                            <div class="text-sm text-danger" ng-if="val.image.size">Image is too large.</div>
+
+                            <div style="padding:15px 15px 0;">
+                                <div class="form-group" ng-class="{'has-error':val.title.req || val.title.dup}">
+                                    <input type="text" class="form-control" placeholder="Program Title" ng-model="model.title" ng-change="titleChange()">
+                                    <div class="text-sm text-danger" ng-if="val.title.req">Title cannot be empty.</div>
+                                    <div class="text-sm text-danger" ng-if="val.title.dup">Title must be unique.</div>
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="form-control" placeholder="Program Description" rows="2" ng-model="model.description"></textarea>
+                                </div>
+                                <div class="form-group program-slug" ng-class="{'has-error':val.title.req}">
+                                    <label>Program Link <i ng-show="slug.checking" class="fa fa-spinner fa-spin"></i></label><br>
+                                    <div ng-if="!slug.edit" ng-click="editSlug($event)">{{slug.server}}/{{model.slug}}</div>
+                                    <div ng-if="slug.edit">
+                                        <span>{{slug.server}}/</span>
+                                        <input id="slugInput" type="text" class="form-control"
+                                               placeholder="Program Slug" ng-model="slug.value" tabindex="-1"
+                                               ng-change="slugChange()" ng-disabled="slug.checking" ng-blur="slug.edit=false">
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <button type="submit" class="btn btn-primary col-xs-6 col-sm-6 col-md-7 col-lg-8" ng-disabled="busy || slug.checking">Create Program</button>
+                                    <button type="button" class="btn btn-default col-xs-6 col-sm-6 col-md-5 col-lg-4" style="white-space: normal;"  ng-click="cancelAddProgram()">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

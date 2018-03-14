@@ -1,0 +1,54 @@
+<section id="secondary">
+
+    <%- partial('manage/partials/saveWidget', {hidePublish:true, cancel:true}) %>
+
+    <div class="panel panel-default program-details">
+        <div class="panel-heading">
+            <h3 class="panel-title">Activities</h3>
+        </div>
+        <div class="panel-body">
+
+            <div ng-if="!programHasQuests(program)">
+                <p>Program does not have any Activities.</p>
+            </div>
+
+            <div ng-if="program.quests.length <= 0 && programHasQuests(program)">
+                <p>All Activities have been assigned to a level.</p>
+            </div>
+
+            <div class="dnd-sidebar">
+                <ul dnd-list="program.quests"
+                    dnd-drop="questListDrop(event, index, item)"
+                        dnd-allowed-types="['quest']">
+                    <li ng-repeat="quest in program.quests"
+                        dnd-type="'quest'"
+                        dnd-draggable="quest"
+                        dnd-selected="selectQuest(quest)"
+                        dnd-moved="questMoved()"
+                        dnd-effect-allowed="move"
+                        dnd-disable-if="!questCanDrag"
+                        ng-class="{'selected': selectedQuest===quest}">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="padding-left:10px;">
+                                <div class="panel-title">
+                                    <div class="text-muted handle"
+                                         ng-mousedown="canEditEntity(quest, program) && questDragHandleDown($event,quest)"
+                                         ng-mouseup="canEditEntity(quest, program) && questDragHandleUp($event,quest)">
+                                        <span style="margin-left:4px"
+                                              ng-style="{ color: getEntityHandleColor(quest, program) }"
+                                              class="fa fa-ellipsis-v"></span>
+                                    </div>
+                                    <div class="content">{{quest.title}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <%- partial('manage/partials/versionWidget') %>
+
+</section>

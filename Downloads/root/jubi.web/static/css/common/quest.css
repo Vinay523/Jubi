@@ -1,0 +1,93 @@
+
+
+
+.canvas{position: relative;}
+/*
+ * Cards
+ * --------------------------------------------------
+ */
+
+
+.tile .tile-content {
+  display: table-cell;
+  overflow: hidden;
+  padding: 30px 10px;
+  position: relative;
+  text-align: center;
+  height: 100%;
+  vertical-align: middle;
+  width: 100%;
+  z-index: 1;
+}
+.tile h4 {
+  background: transparent;
+  bottom: -50px;
+  color: transparent;
+  left: 1px;
+  margin: 0;
+  padding: 10px;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+
+  -webkit-transition: all .25s ease-out;
+       -moz-transition: all .25s ease-out;
+            transition: all .25s ease-out;
+}
+.tile.active h4, .tile:hover h4 {
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
+  color: #fff;
+  vertical-align: middle;
+  display: table-cell;
+}
+
+  .tile .icon, .pie .icon {
+    /*display: table-cell;
+    margin: 0 auto;
+    position: absolute;
+    text-align: center;*/
+    font-size: 50px;
+    /*line-height: 87px;
+    vertical-align: middle;
+    width: 100%;*/
+  }
+
+.tile-tab { border: 1px solid #fff; background: none; }
+.tile-tab  > li { border-right: 1px solid #fff; margin-left: -1px; }
+.tile-tab  > li a { padding: 5px; }
+.tile-tab  > li.active a, .tile-tab  > li.active a:focus, .tile-tab  > li.active a:hover { background: #fff; color: #2B3E50; }
+
+/*.tile:after, .overlay:after { 
+  background-size: cover; 
+  content: "";
+  opacity: 0.3;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: 0;
+}
+
+.tile.active:after, .tile.unlocked:hover { opacity: 1!important; }
+.overlay { background-position: fixed; }
+*/
+
+
+@media screen and (max-width: 767px) {
+
+  /* CARDS */
+  .tile { width: 100%; }
+  .tile.active {
+    -webkit-transform: none;
+     -moz-transform: none;
+  }
+  .tile .stats, .tile.active .details { display: inline-block; }
+  .tile.active .stats { opacity: 0;  left: 0; }
+  .tile.active .details { bottom: 0; left: 0; }
+
+  .tile figure .glyphicon, .cover .content .fa {
+
+    font-size: 24px;
+  }
+}

@@ -1,0 +1,15 @@
+<div style="padding:0 0 15px;">
+    <div class="form-group" ng-class="{'has-error':val.title.req}">
+        <h2 style="margin-bottom:0;"><input type="text" class="form-control input-lg" id="program-title" placeholder="Program title." title="Program title." ng-model="program.title"></h2>
+        <div class="text-sm text-danger" ng-if="val.title.req">Program title cannot be empty.</div>
+        <div class="text-sm text-danger" ng-if="val.title.dup">Program title must be unique.</div>
+    </div>
+    <div class="slug">
+    </div>
+    <textarea dnd-no-drop class="form-control" id="program-desc" placeholder="Program description." title="Program description." ng-model="program.description" rows="1"></textarea>
+</div>
+<ol class="breadcrumb text-sm">
+    <li><a ng-href="/manage/dashboard">Dashboard</a></li>
+    <li><a ng-href="/manage/authoring-suite/programs">Authoring Suite</a></li>
+    <li class="active">{{orgTitle}}</li>
+</ol>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="159965e6-7fec-466d-af31-6627277e6d5b" name="Jubi Production API #1" url="http://ubuntu@52.45.160.60">
+        <fileTransfer host="ubuntu@52.45.160.60" port="22" privateKey="$USER_HOME$/.ssh/jubi.pem" rootFolder="/var/www" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="06323611-b544-4c21-b5f8-77df75d4b941" name="Jubi Production Jobs" url="http://ubuntu@54.172.40.49">
+        <fileTransfer host="ubuntu@54.172.40.49" port="22" privateKey="$USER_HOME$/.ssh/jubi.pem" rootFolder="/var/www" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="8ca5faa6-55c0-4c7a-a673-9984a6df2e2d" name="Jubi Production Web" url="http://ubuntu@52.45.166.6">
+        <fileTransfer host="ubuntu@52.45.166.6" port="22" privateKey="$USER_HOME$/.ssh/jubi.pem" rootFolder="/var/www" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="72553f3a-0d96-409b-9add-fec323861e89" name="Jubi QA" url="http://ubuntu@52.6.76.103">
+        <fileTransfer host="ubuntu@52.6.76.103" port="22" privateKey="$USER_HOME$/.ssh/jubi.pem" rootFolder="/var/www" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="40d2dfef-68c8-45be-b28e-764c15aa6a99" name="Jubi Production API #2" url="http://ubuntu@52.45.177.183">
+        <fileTransfer host="ubuntu@52.45.177.183" port="22" privateKey="$USER_HOME$/.ssh/jubi.pem" rootFolder="/var/www" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

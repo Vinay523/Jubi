@@ -1,0 +1,12 @@
+<section class="sub-nav" data-ng-controller="TopNavController">
+    <ul class="nav nav-pills" role="tablist">
+        <li ng-class="{'active':isActive('quests')}"><a ng-click="navToPage($event, 'quests')" ng-href="javascript:void(0)"><span class="fa fa-th-large"></span> Quests</a></li>
+        <li ng-class="{'active':isActive('todo-management')}"><a ng-click="navToPage($event, 'todo-management')" ng-href="javascript:void(0)"><span class="icon icon-users"></span> To-Do's</a></li>
+        <li ng-class="{'active':isActive('network')}"><a ng-click="navToPage($event, 'network')" ng-href="javascript:void(0)"><span class="icon icon-users"></span> Network</a></li>
+        <li ng-class="{'active':isActive('discussion')}"><a ng-click="navToPage($event, 'discussion')" ng-href="javascript:void(0)"><span class="icon icon-bubbles3"></span> Discussion</a></li>
+        <li ng-class="{'active':isActive('leaderboard')}"><a ng-click="navToPage($event, 'leaderboard')" ng-href="javascript:void(0)"><span class="icon icon-trophy"></span> Leaderboard</a></li>
+        <li ng-class="{'active':isActive('resources')}"><a ng-click="navToPage($event, 'resources')" ng-href="javascript:void(0)"><span class="icon icon-trophy"></span> Resources</a></li>
+        <li ng-class="{'active':isActive('dashboard')}"><a ng-click="navToPage($event, 'dashboard')" ng-href="javascript:void(0)"><span class="fa fa-briefcase"></span> Dashboard</a></li>
+        <li ng-if="canManage() && program.editable" class="pull-right"><a ng-href="/manage/authoring-suite/program/{{program.slug}}/edit" ng-click="goToManage($event)"><i class="fa fa-pencil-square-o"></i> Edit</a></li>
+    </ul>
+</section>

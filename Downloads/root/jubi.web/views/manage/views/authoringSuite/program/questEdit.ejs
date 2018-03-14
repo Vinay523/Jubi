@@ -1,0 +1,438 @@
+<div style="left:-15px;right:-15px" ng-show="isSaving">
+    <div class="loading">
+        <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+        <div>One moment please...</div>
+    </div>
+</div>
+
+<div ng-show="!isSaving">
+   
+
+   <div class="panel-group " ng-click="offMenuClick($event)">
+        <label>Learn Activity Setup</label>
+        <div class="panel panel-default activitySetup">
+
+            <div class="panel-body" style="padding-left:10px;">
+                <div class="form-group row">
+                    <div class="col-xs-12 col-sm-2 text-right">
+                        <label class="control-label" style="padding-top:0;">Activity Type</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-10 input-group">
+                        <label class="control-label col-xs-12 " style="padding-top:0;">
+                            <input class="activityType form-control" type="radio" name="baseBonus" ng-model="quest.baseOrBonus" ng-checked="quest.baseOrBonus == 'B'" ng-click="quest.baseOrBonus = 'B'" />
+                            Base Activity - must be completed for full Program requirements
+                        </label>
+                        <label class="control-label col-xs-12 " style="padding-top:0;">
+                            <input class="activityType form-control" type="radio" name="baseBonus" ng-model="quest.baseOrBonus" ng-checked="quest.baseOrBonus == 'O'" ng-click="quest.baseOrBonus = 'O'" />
+                            Bonus Activity - can be left incomplete and skipped over
+                        </label>
+                    </div>
+                </div>
+
+
+                <div class="row form-group" ng-class="{'has-error':quest.val.objective.req}">
+                    <div class="col-xs-12 col-sm-2 text-right">
+                        <label for="obj" class="control-label" style="padding-top:0;">Objective</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-10" ng-class="{'has-error':quest.val.objective.req}">
+                        <!--<textarea class="form-control"
+                                  id="obj"
+                                  placeholder="Activity objective."
+                                  title="Activity objective."
+                                  ng-model="quest.objective"
+                                  dnd-no-drop></textarea>-->
+                        <ng-quill-editor ng-model="quest.objective" placeholder="Activity objective."></ng-quill-editor>
+                        <span class="text-sm text-danger" ng-if="quest.val.objective.req">Activity objective cannot be empty.</span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-xs-12 col-sm-2 text-right">
+                        <label for="tile-img" class="control-label" style="padding-top:0;">
+                            Tile
+                            Image
+                        </label>
+
+                        <div class="text-xs text-muted">
+                            Max File Size: 4MB<br>(JPG, JPEG, GIF, PNG)<br>Dimensions: 348px by 206 px
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-5 ">
+                        <div class="quest-edit thumbnail prevTile">
+                            <div class="program-img">
+                                <div ng-show="quest.uploading.tile">
+                                    <div class="loading loading-sm">
+                                        <img src="<%- config.web.contentUrl %>/img/empty.png" />
+                                        <!--<img src="<%- config.web.contentUrl %>/img/learn blank box.png" />-->
+                                        <span us-spinner="{radius:15, width:4, length: 9, color: '#b0b0b7'}"></span>
+                                    </div>
+                                </div>
+
+                                <div ng-show="!quest.uploading.tile">
+                                    <div class="manage manage-photo btn-sm">
+                                        <a ng-if="quest.featuredImageUrl" href="#"
+                                           class="btn btn-default red pull-right"
+                                           ng-click="removeQuestImage($event, quest, 'tile')">
+                                            <span class="fa fa-trash-o" title="Remove Image"></span>
+                                        </a>
+
+                                        <div class="btn btn-default blue pull-left"
+                                             ng-file-select
+                                             ng-file-change="uploadQuestImage($files, quest, 'tile')">
+                                            upload
+                                        </div>
+                                    </div>
+
+                                    <div ng-if="quest.featuredImageUrl">
+                                        <img ng-src="{{quest.featuredImageUrl}}" alt="" />
+                                    </div>
+                                    <div ng-if="!quest.featuredImageUrl">
+                                        <!--<img src="<%- config.web.contentUrl %>/img/empty.png" />-->
+                                        <img src="<%- config.web.contentUrl %>/img/Group 8.png" />
+                                        <!--<img style="width: 71.2px;height: 38.6px;margin-top: 50px;" src="<%-config.web.contentUrl%>/img/learn-blue-tile.svg">-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-sm text-danger" ng-if="quest.val.featuredImage.type"
+                                 style="padding-top:5px;">
+                                Unsupported image type.
+                            </div>
+                            <div class="text-sm text-danger" ng-if="quest.val.featuredImage.size"
+                                 style="padding-top:5px;">
+                                Image is too large.
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-xs-12 col-sm-2 text-right">
+                        <label for="tile-img" class="control-label" style="padding-top:0;">
+                            Background
+                            Image
+                        </label>
+
+                        <div class="text-xs text-muted">
+                            Max File Size: 4MB<br>(JPG, JPEG, GIF, PNG)
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-5 ">
+                        <div class="quest-edit thumbnail"
+                             ng-class="{'auto-height':quest.backgroundImageUrl}">
+                            <div class="program-img">
+                                <div ng-show="quest.uploading.bg">
+                                    <div class="loading loading-sm">
+                                        <img src="<%- config.web.contentUrl %>/img/empty.png" />
+                                        <span us-spinner="{radius:15, width:4, length: 9, color: '#b0b0b7'}"></span>
+                                    </div>
+                                </div>
+
+                                <div ng-show="!quest.uploading.bg">
+                                    <div class="manage manage-photo btn-sm">
+                                        <a ng-if="quest.backgroundImageUrl" href="#"
+                                           class="btn btn-default red pull-right"
+                                           ng-click="removeQuestImage($event, quest, 'bg')">
+                                            <span class="fa fa-trash-o" title="Remove Image"></span>
+                                        </a>
+
+                                        <div class="btn btn-default blue pull-left"
+                                             ng-file-select
+                                             ng-file-change="uploadQuestImage($files, quest, 'bg')">
+                                            upload
+                                        </div>
+                                    </div>
+
+                                    <div ng-if="quest.backgroundImageUrl">
+                                        <img ng-src="{{quest.backgroundImageUrl}}" alt="" />
+                                    </div>
+                                    <div ng-if="!quest.backgroundImageUrl">
+                                        <img src="<%- config.web.contentUrl %>/img/empty.png" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-sm text-danger" ng-if="quest.val.backgroundImage.type"
+                                 style="padding-top:5px;">
+                                Unsupported image type.
+                            </div>
+                            <div class="text-sm text-danger" ng-if="quest.val.backgroundImage.size"
+                                 style="padding-top:5px;">
+                                Image is too large.
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+    <div>
+        <ul dnd-list="quest.challenges"
+            dnd-drop="challengeDrop(event, index, item, quest)"
+            dnd-allowed-types="['challenge']">
+            <li ng-if="quest.challenges.length <= 0">
+                <p class="text-xl text-muted text-center" style="padding:50px 0;">
+                    No challenges defined.<br>Click the
+                    Challenge
+                    button below to get started.
+                </p>
+            </li>
+            <li ng-repeat="challenge in quest.challenges"
+                dnd-type="'challenge'"
+                dnd-draggable="challenge"
+                dnd-selected="selectChallenge(challenge)"
+                dnd-effect-allowed="move"
+                dnd-moved="challengeMoved()"
+                dnd-disable-if="!challengeCanDrag(challenge)"
+                ng-class="{'selected':selectedChallenge===challenge}"
+                id="{{'challenge' + $index + 'quest' + (quest.levelId ? getQuestIndexInLevel(quest, program) : getQuestIndexInProgram(quest, program)) + 'level' + (quest.levelId ? quest.levelId : 0) }}">
+
+                <div ng-show="challenge.isLoading" class="loading-overlay">
+                    <div class="loading" ng-cloak>
+                        <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+                        <div>One moment please...</div>
+                    </div>
+                </div>
+
+                <div class="panel-group accordion" ng-click="offMenuClick($event)">
+                    <div class="panel panel-default" ng-class="{'quest-error':challenge.hasError}">
+
+                        <div class="panel-heading" style="padding-left:10px;"  ng-if="challenge.type!='finish'"
+                                     ng-mousedown="challengeDragHandleDown($event,challenge)"
+                                     ng-mouseup="challengeDragHandleUp($event,challenge)">
+                            <div class="panel-title" ng-class="{'has-error':challenge.val.title.req}">
+                                <div class="text-muted handle" ng-if="challenge.type!='finish'"
+                                     ng-mousedown="challengeDragHandleDown($event,challenge)"
+                                     ng-mouseup="challengeDragHandleUp($event,challenge)">
+                                    <span style="margin-left:4px"
+                                          ng-style="{ color: getEntityHandleColor(quest, program) }"
+                                          class="fa fa-ellipsis-v"></span>
+                                </div>
+                               
+
+                                <div class="content">
+                                    <input dnd-no-drop type="text"
+                                           class="form-control" placeholder="Challenge title."
+                                           title="Challenge title." ng-model="challenge.title">
+
+                                    <div class="text-sm text-danger" ng-if="challenge.val.title.req">
+                                        Challenge Title cannot be empty.
+                                    </div>
+                                    <div class="text-sm text-danger" ng-if="challenge.val.title.length">
+                                        Cannot enter more then 45 Characters.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="manage manage-program">
+                                <div style="position: relative;">
+                                    <button type="button" class="manage-dropdown btn btn-primary"
+                                            ng-click="toggleChallengeMenu($event,challenge)" tabindex="-1"
+                                            onfocus="blur()">
+                                        <span class="fa fa-ellipsis-h"></span>
+                                    </button>
+                                    <div class="dropdown" ng-show="challenge.menuOpen">
+                                        <ul class="dropdown-menu" style="display: block;margin-top:33px;">
+                                            <li>
+                                                <a href="#" ng-click="preview($event, quest, challenge, level)"
+                                                   tabindex="-1" onfocus="blur()">
+                                                    <i class="fa fa-search"></i>
+                                                    preview
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#"
+                                                   ng-click="duplicateChallenge($event, quest, challenge)"
+                                                   tabindex="-1" onfocus="blur()">
+                                                    <i class="fa fa-copy"></i>
+                                                    duplicate
+                                                </a>
+                                            </li>
+                                            <li class="divider"></li>
+                                            <li>
+                                                <a href="#"
+                                                   ng-click="removeChallenge($event,$index)"
+                                                   tabindex="-1"
+                                                   onfocus="blur()"><i class="fa fa-trash-o"></i>delete</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <button type="button" class="manage-expand btn btn-primary"
+                                        ng-click="toggleChallenge($event,challenge)" tabindex="-1" onfocus="blur()">
+                                    <span class="icon fa"
+                                          ng-class="{'fa-chevron-down':!challenge.expanded, 'fa-chevron-up':challenge.expanded}"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="panel-heading" style="padding-left:10px;" ng-if="challenge.type=='finish'">
+                            <div class="panel-title">
+                                
+                                <div class="text-muted handle">
+                                    <span class="fa fa-trophy"></span>
+                                </div>
+
+                                <div class="content">
+                                    <input dnd-no-drop type="text"
+                                           class="form-control" placeholder="Challenge title."
+                                           title="Challenge title." ng-model="challenge.title">
+
+                                  
+                                </div>
+                            </div>
+
+                            <div class="manage manage-program">
+                                <div style="position: relative;">
+                                    <button type="button" class="manage-dropdown btn btn-primary"
+                                            ng-click="toggleChallengeMenu($event,challenge)" tabindex="-1"
+                                            onfocus="blur()">
+                                        <span class="fa fa-ellipsis-h"></span>
+                                    </button>
+                                    <div class="dropdown" ng-show="challenge.menuOpen">
+                                        <ul class="dropdown-menu" style="display: block;margin-top:33px;">
+                                            <li>
+                                                <a href="#" ng-click="preview($event, quest, challenge, level)"
+                                                   tabindex="-1" onfocus="blur()">
+                                                    <i class="fa fa-search"></i>
+                                                    preview
+                                                </a>
+                                            </li>
+                                           
+                                            <li class="divider"></li>
+                                            <li>
+                                                <a href="#"
+                                                   ng-click="removeChallenge($event,$index)"
+                                                   tabindex="-1"
+                                                   onfocus="blur()"><i class="fa fa-trash-o"></i>delete</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <button type="button" class="manage-expand btn btn-primary"
+                                        ng-click="toggleChallenge($event,challenge)" tabindex="-1" onfocus="blur()">
+                                    <span class="icon fa"
+                                          ng-class="{'fa-chevron-down':!challenge.expanded, 'fa-chevron-up':challenge.expanded}"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="panel-collapse collapse" ng-class="{'in':challenge.expanded}">
+                            <div class="panel-body">
+
+                                <div ng-if="challenge.type=='general'">
+
+                                    <div class="form-group row">
+                                        <div class="col-xs-12 col-sm-2 text-right">
+                                            <label for="ins" class="control-label"
+                                                   style="padding-top:0;">Instructions</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-10">
+                                            <!--<textarea id="ins" class="form-control"
+                                                      placeholder="Challenge instructions."
+                                                      title="Challenge instructions."
+                                                      ng-model="challenge.instructions"
+                                                      dnd-no-drop></textarea>-->
+                                            <ng-quill-editor ng-model="challenge.instructions" placeholder="Challenge instructions." read-only=""></ng-quill-editor>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-xs-12 col-sm-2 text-right">
+                                            <label class="control-label">Content</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-10">
+                                            <%- partial('manage/views/authoringSuite/program/challenge') %>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row" style="margin-bottom:0;">
+                                        <div class="col-xs-12 col-sm-2 text-right">
+                                            <label class="control-label" style="padding-top:0;">Question</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-10">
+                                            <%- partial('manage/views/authoringSuite/program/challengeQuestions') %>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-xs-12 col-sm-2 text-right">
+                                            <label for="eoc" class="control-label" style="padding-top:0;">
+                                                End
+                                                Message
+                                            </label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-10">
+                                            <!--<textarea id="eoc" class="form-control"
+                                                      placeholder="End of challenge message."
+                                                      title="End of challenge message."
+                                                      ng-model="challenge.finishText"
+                                                      dnd-no-drop></textarea>-->
+                                            <ng-quill-editor ng-model="challenge.finishText" placeholder="End of challenge message." read-only=""></ng-quill-editor>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-xs-12 col-sm-2 text-right">
+                                            <label for="rem" class="control-label"
+                                                   style="padding-top:0;">
+                                                Reminder/
+                                                Notes
+                                            </label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-10">
+                                            <textarea id="rem" class="form-control"
+                                                      placeholder="Leave a reminder for later."
+                                                      title="Leave a reminder for later."
+                                                      ng-model="challenge.notes"
+                                                      dnd-no-drop></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div ng-show="challenge.type=='finish'">
+                                    <%- partial('manage/views/authoringSuite/program/challengeFinish') %>
+                                </div>
+                            
+
+                            </div>
+                            <div class="panel-footer clearfix">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <ul class="program-meta list-inline text-sm">
+                                            <li><strong>Media: </strong>{{getChallengeMediaCount(challenge)}}</li>
+                                            <!--<li><strong>To-Do's: </strong>0</li>-->
+                                        </ul>
+                                    </div>
+                                    <!--<div class="col-xs-6 text-right text-sm">-->
+                                    <!--<strong>Last edited: </strong>{{program.history[0].by.firstName}}-->
+                                    <!--{{program.history[0].by.lastName}}-->
+                                    <!--</div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div id="endChallengeList"></div>
+    <div class="btn-group btn-group-justified" role="group" style="padding-bottom:20px;">
+        <a href="#" ng-disabled="!canEditEntity(quest, program)"
+           ng-click="canEditEntity(quest, program) && addChallenge($event,'general')"
+           class="btn btn-primary btn-lg">
+            <span class="icon fa fa-bookmark"></span>
+            <span class="hidden-xs hidden-sm"><br />Challenge</span>
+        </a>
+        <a href="#" ng-disabled="!canEditEntity(quest, program) || hasFinishChallenge(quest)"
+           ng-click="canEditEntity(quest, program) && addChallenge($event,'finish')"
+           class="btn btn-primary btn-lg">
+            <span class="icon fa fa-trophy"></span>
+            <span class="hidden-xs hidden-sm"><br />Finish</span>
+        </a>
+    </div>
+</div>

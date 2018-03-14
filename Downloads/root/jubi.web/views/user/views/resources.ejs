@@ -1,0 +1,115 @@
+<div ng-controller="ResourcesController as c" ng-init="c.init('<%- model.slug %>')">
+
+    <div ng-show="isLoading" style="position: relative;" ng-cloak ng-style="getBackgroundFontStyle()">
+        <div class="loading">
+            <span us-spinner="{radius:30, width:8, length: 16, color: getBackgroundFontColor()}"></span>
+            <div ng-style="getBackgroundFontStyle()">One moment please...</div>
+        </div>
+    </div>
+
+    <div ng-show="!isLoading" class="resources_page">
+        <div class="content resources">
+                <div class="header clearfix">
+                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                    <h1 ng-style="getBackgroundFontStyle()">Resources</h1>
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 text-right right-top">
+                        <div class="input-group" style="display:inline-block;">
+                            <span ng-style="getBackgroundFontStyle()" class="hidden-sm">Filter by: </span>
+
+                            <div class="btn-group" style="margin-right:10px;">
+                                <div ng-dropdown-multiselect=""
+                                     style="float:left"
+                                     extra-settings="{'buttonClasses': 'button-type btn btn-default dropdown-toggle' }"
+                                     translation-texts="{'buttonDefaultText' : 'Type', 'dynamicButtonTextSuffix' : 'selected' }"
+                                     checkboxes="true" options="ui.mediaTypes"
+                                     selected-model="ui.filters.mediaTypes" class="button-type"></div>
+
+                                <div ng-dropdown-multiselect=""
+                                     style="float:left"
+                                     translation-texts="{'buttonDefaultText' : 'Activities',  'dynamicButtonTextSuffix' : 'selected'}"
+                                     extra-settings="{'buttonClasses': 'button-type btn btn-default dropdown-toggle', displayProp: 'title' }"
+                                     checkboxes="true" options="ui.quests"
+                                     selected-model="ui.filters.quests"  class="button-type"></div>
+                            </div>
+                        </div>
+                        <div class="btn-group justified" role="toolbar">
+                            <div class="input-group pull-right">
+                                <input type="text" ng-model="ui.filters.search" class="form-control" placeholder="Search" style="height:40px;">
+
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-success">
+                                        <span class="icon icon-search"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 
+                </div>
+               
+           
+
+            <section>
+                <div class="row" style="padding-left:10px;padding-right:10px">
+                    <div ng-if="!hasMedia()" class="lead" style="margin-top:40px;color:white;">
+                        No media available, as you complete Activities the media contained within will become available.
+                    </div>
+                   <div  class="lead" style="margin-top:40px;margin-left: 15px;color:#fff;">
+                        <div ng-show="(ui.filters.search || (ui.filters.mediaTypes.length>0) || (ui.filters.quests.length> 0)) && ((ui.quests.length == 0)|| (ui.mediaTypes.length == 0))">No data found.</div>
+                    </div>
+                  
+                    <!--The below elements are duplicate, except one has a autoResizer. We only want one autoResizer per page to calcuate the tile hieght-->
+                    <!--If there are program quests then we don't include the autoResizer on the level quests, if there are no program quests then the first level quest gets it-->
+                    <!--Then the rest of the tiles get the height set by the autoResizer which ensures all tiles end up with same height-->
+                    <!--<section ng-repeat="level in programWithResources.levels">
+                        <section ng-repeat="quest in level.quests">
+                            <section ng-repeat="challenge in quest.challenges">
+                               
+                                <section ng-if="media.type != 'text' && !(media.type == 'link' && !media.link)"
+                                            ng-repeat="media in  challenge.media | filter:filtered">
+                                    <%- partial('user/partials/libraryMediaTile') %>
+                                </section>
+                                
+                               
+                            </section>
+                        </section>
+                    </section>-->
+                   
+                    <!--The below elements are duplicate, except one has a autoResizer. We only want one autoResizer per page to calcuate the tile hieght-->
+                    <!--The first program quest gets the autoResizer, all the rest use the size calculated by the first-->
+                    <!--Then the rest of the tiles get the height set by the autoResizer which ensures all tiles end up with same height-->
+                    <!--<section ng-repeat="quest in programWithResources.quests">
+                        <section ng-repeat="challenge in quest.challenges">
+                               
+                            <section ng-if="media.type != 'text' && !(media.type == 'link' && !media.link)"
+                                        ng-repeat="media in  challenge.media | filter:filtered">
+                                <%- partial('user/partials/libraryMediaTile') %>
+                            </section>
+                                
+                        </section>
+                    </section>-->
+
+                    <!--<section ng-repeat="quest in allProgramMedia">
+                        <section ng-repeat="challenge in quest.challenges">
+
+                            <section ng-if="media.type != 'text' && !(media.type == 'link' && !media.link)"
+                            ng-repeat="media in  challenge.media | filter:filtered as res">
+                            <%- partial('user/partials/libraryMediaTile') %>
+                            </section>
+                        </section>
+                    </section>-->
+
+
+                    <section ng-repeat="media in allProgramMedia | filter:filtered as res">
+                        <section ng-if="media.type != 'text' && !(media.type == 'link' && !media.link)">
+                            <%- partial('user/partials/libraryMediaTile') %>
+                        </section>
+                    </section>
+                    <span ng-if="res.length == 0" style="font-size:20px;color:#fff"> No data found. </span>
+                  
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

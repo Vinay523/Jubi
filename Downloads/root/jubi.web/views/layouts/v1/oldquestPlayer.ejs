@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Jubi">
+<head>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="<%- config.web.contentUrl %>/img/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+
+    <title><%- title %></title>
+    <link href="<%- config.web.contentUrl %>/css/app/main.css" rel="stylesheet"/>
+    <script type="text/javascript" src="<%- config.web.contentUrl %>/js/lib/jquery.min.js"></script>
+
+    <script>
+        var _jubi_clientData = <%- JSON.stringify(clientInitData()) %>;
+    </script>
+</head>
+<body id="body" class="quest-player"
+      ng-controller="RootController as c" ng-init="c.init('<%- model.slug %>', <%- model.id %>)"
+      ng-click="bodyClick()">
+
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<div ng-show="loading.isLoading > 0" style="position: relative;" ng-cloak>
+    <div class="loading">
+        <span us-spinner="{radius:30, width:8, length: 16, color: '#ffffff'}"></span>
+
+        <div>One moment please...</div>
+    </div>
+</div>
+
+
+<div ng-show="toggle.showPointsAwarded" ng-class="{ 'toMiddleFromLeft' : toggle.showPointsAwarded}"
+     class="points-overlay badge animated-slow points" ng-cloak>+{{pointsAwarded}} points!
+</div>
+
+
+<!-- Right Aside -->
+<aside ng-show="loading.isLoading <= 0"
+       style="position:fixed;z-index:1;padding-top:15px;background-color:darkgray;-webkit-transition: all .25s ease-out;height:100%;overflow:auto"
+       id="discussionSlideout"
+       ng-class="{'hide-left' : (toggle.asideDiscussion || !toggle), 'no-left' : (toggle && !toggle.asideDiscussion) }"
+       class="action-nav offcanvas left col-xs-12 col-sm-8 col-md-6 hide-left">
+    <div ng-if="!discussion.topic">
+        <%- partial('user/views/questPlayerForum') %>
+    </div>
+    <div ng-if="discussion.topic">
+        <%- partial('user/views/questPlayerForumTopic') %>
+    </div>
+    <i ng-show="!toggle.asideDiscussion" ng-click="toggle.asideDiscussion = !toggle.asideDiscussion"
+       style="position:absolute;right:0;" ng-style="getTopStyleForDiscussionCollapseButton()"
+       class="fa fa-chevron-left fa-5x discussion-expand-icon"></i>
+</aside>
+
+<div class="quest-player-wrapper" ng-show="loading.isLoading <= 0" ng-cloak
+     ng-style="getQuestPlayerStyle()">
+    <div class="quest-player-bg"></div>
+    <div class="quest-player-view">
+        <div ng-if="toggle.asideDiscussion">
+            <button type="button"  class="quest-player-nav-left" ng-hide="!canNavToPreviousChallenge()"  ng-click="navToPreviousChallenge()"
+                    onfocus="blur()">
+                <i style="display:block;margin-bottom:-30px" class="fa fa-arrow-left"></i>
+                <span class="text-xs">Previous Challenge</span>
+            </button>
+            <button type="button"   class="quest-player-nav-right" ng-hide="!canNavToNextChallenge()"  ng-click="navToNextChallenge()"
+                    onfocus="blur()">
+                <i style="display:block;margin-bottom:-30px" class="fa fa-arrow-right"></i>
+                <span class="text-xs">Next Challenge</span>
+            </button>
+            <button  type="button"  class="quest-player-close" ng-click="close()"
+                    onfocus="blur()">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+         <span ng-show="toggle.asideDiscussion" ng-click="toggle.asideDiscussion = !toggle.asideDiscussion"
+               style="position:fixed;left:0;top:50%;font-size:3em"
+               class="icon icon-bubbles3 discussion-expand-icon"></span>
+        <%- partial('user/views/questPlayer') %>
+    </div>
+</div>
+
+<%- partial('modals/confirmModal') %>
+<%- partial('modals/infoModal') %>
+<%- partial('modals/createUserGroup') %>
+
+<%- scripts({
+    name: 'qp',
+    /*forceMinify: true,*/
+    files: [
+        '/js/lib/jquery.min.js',
+        '/js/lib/jquery.browser.js',
+        '/js/lib/bootstrap.js',
+        '/js/lib/spin.min.js',
+        '/js/lib/moment.js',
+        '/js/lib/underscore-min.js',
+
+        '/js/lib/angular/angular.js',
+        '/js/lib/dnd-shim.js',
+        '/js/lib/angular/angular-animate.js',
+        '/js/lib/angular/angular-sanitize.js',
+        '/js/lib/angular/ui-bootstrap.min.js',
+        '/js/lib/angular/angular-spinner.js',
+        '/js/lib/angular/angular-drag-and-drop-lists.js',
+        '/js/lib/angular/angular-file-upload-all.min.js',
+        '/js/lib/angular/angularjs-dropdown-multiselect.min.js',
+        '/js/lib/videogular.min.js',
+
+
+        '/js/common/services/helperService.js',
+        '/js/common/services/authService.js',
+        '/js/common/services/controllerState.js',
+        '/js/common/controllers/modals.js',
+
+        '/js/questPlayer/app.js',
+        '/js/user/controllers/userGroups.js',
+        '/js/user/controllers/discussion.js']
+}) %>
+
+</body>
+</html>
+

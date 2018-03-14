@@ -1,0 +1,12 @@
+<script type="text/ng-template" id="infoModal.html">
+    <div class="modal-header" ng-style="getHeaderCustomStyle()">
+        <button type="button" class="close" aria-label="Close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{title}}</h4>
+    </div>
+    <div class="modal-body">
+        <p>{{text}}</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success btn-sm" ng-enter="ok()" ng-click="ok()">{{okLabel}}</button>
+    </div>
+</script>

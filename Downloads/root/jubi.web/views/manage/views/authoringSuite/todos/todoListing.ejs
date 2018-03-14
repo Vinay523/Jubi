@@ -1,0 +1,93 @@
+<div ng-controller="AuthoringSuiteProgramTodosController" ng-show="!loading.isLoading">
+    <div class="row page-heading panel">
+        <div class="col-xs-12">
+            <%- partial('manage/views/authoringSuite/todos/todoListingHeader') %>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-8 col-lg-9">
+
+            <div class="loading" ng-show="isSaving">
+                <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+
+                <div>One moment please...</div>
+            </div>
+
+            <div ng-if="todos.length<=0">
+                <p class="text-xl text-muted text-center" style="padding:50px 0;">
+                    No to-dos defined.<br>Click the Add To-Do button below to get started.
+                </p>
+            </div>
+
+            <div ng-if="todos.length>0" ng-show="!isSaving" class="row">
+                <div class="col-xs-12 col-sm-4 todo-item" ng-repeat="todo in todos">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title" ng-class="{'has-error':todo.val.title.req}">
+                                <div class="content">
+                                    <input type="text" class="form-control" placeholder="To-do title."
+                                           title="To-do title." ng-model="todo.title">
+
+                                    <div class="text-sm text-danger" ng-if="todo.val.title.req">To-do title cannot be
+                                        empty.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="manage manage-program">
+                                <div style="position: relative;">
+                                    <button type="button" class="manage-dropdown btn btn-primary"
+                                            ng-click="toggleMenu($event,todo)" tabindex="-1" onfocus="blur()"
+                                            style="height:33px;">
+                                        <span class="fa fa-ellipsis-h"></span>
+                                    </button>
+                                    <div class="dropdown" ng-show="!busy && todo.menuOpen">
+                                        <ul class="dropdown-menu"
+                                            style="display:block;margin-left:-30px;margin-top:34px;">
+                                            <li><a href="#" ng-click="todoEdit($event, todo, $index)" tabindex="-1"
+                                                   onfocus="blur()"><i class="fa fa-edit"></i> edit</a></li>
+                                            <li><a href="#" ng-click="duplicateTodo($event, todo, $index)" tabindex="-1"
+                                                   onfocus="blur()"><i class="fa fa-copy"></i> duplicate</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#" ng-click="removeTodo($event, $index, todo)" tabindex="-1"
+                                                   onfocus="blur()"><i class="fa fa-trash-o"></i> delete</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-collapse collapse in">
+                            <div class="panel-body todo-info">
+                                <div class="form-group">
+                                    <textarea class="form-control" rows="2" ng-model="todo.instructions"
+                                              placeholder="To-do instructions."></textarea>
+                                </div>
+                                <div class="row text-sm text-muted">
+                                    <div class="col-xs-12 text-center">
+                                        <i class="fa fa-trophy"></i>
+                                        {{todoReqSummary(todo)}}<br>
+                                        {{todoPointSummary(todo)}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br><br>
+
+            <div class="btn-group btn-group-justified" role="group" style="padding-bottom:20px;">
+                <a href="#" ng-click="addTodo($event)" class="btn btn-primary btn-lg">
+                    <span class="fa fa-wrench"></span>
+                    <span class="hidden-xs hidden-sm"><br/>Add To-Do</span>
+                </a>
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-md-4 col-lg-3">
+            <%- partial('manage/views/authoringSuite/todos/sidebar', {hidePublish: true}) %>
+        </div>
+    </div>
+</div>

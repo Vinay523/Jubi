@@ -1,0 +1,1057 @@
+@import url(../lib/Roboto/css.css);
+@import url('../lib/Open Sans/css.css');
+@import url('../lib/Lato/css.css');
+
+
+@import url(../lib/font-awesome/css/font-awesome.css);
+/*Authoring suite*/
+
+.authoring_program-topbar {
+    max-height: 97px;
+    padding: 35px 38px 29px;
+    background-color: #3ab89c;
+    height: 100%;
+}
+
+    .authoring_program-topbar .authoring-info {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        -webkit-padding-start: 0;
+    }
+
+        .authoring_program-topbar .authoring-info li.authoring-suite {
+            font-family: Helvetica;
+            font-size: 32px;
+            color: #ffffff;
+            float: left;
+        }
+
+        .authoring_program-topbar .authoring-info li.all-programs {
+            color: #ffffff;
+            font-size: 25px;
+            margin-left: 59px;
+            float: left;
+        }
+
+        .authoring_program-topbar .authoring-info li.right-profilename {
+            float: right;
+            margin-top: -16px;
+        }
+
+            .authoring_program-topbar .authoring-info li.right-profilename .profile-image {
+                margin: 0;
+            }
+
+            .authoring_program-topbar .authoring-info li.right-profilename span.name {
+                font-family: Open Sans;
+                font-size: 24px;
+                letter-spacing: 0.3px;
+                color: #fefefe;
+                margin-left: 17px;
+            }
+
+.authoring-wrapper {
+    margin: 0;
+    min-height: 100%;
+    overflow-y: auto;
+    background-color: #e5e5e5;
+}
+
+    .authoring-wrapper ul li ul.dropdown {
+        width: 238px;
+        height: auto;
+        margin-top: 0px;
+        padding: 13px 20px;
+        opacity: 0.85;
+        border-radius: 6px;
+        background-color: #041f2f;
+        box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.5);
+        top: 90px;
+    }
+
+    .authoring-wrapper li.right-profilename ul li:hover ul.dropdown {
+        display: block;
+    }
+
+    .authoring-wrapper .arrow-up {
+        width: 0;
+        height: 0;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-bottom: 15px solid #041f2f !important;
+        top: -15px;
+        opacity: 0.88;
+        left: 65px;
+        position: absolute;
+    }
+
+    .authoring-wrapper ul li {
+        line-height: 10px;
+    }
+
+        .authoring-wrapper ul li ul.dropdown li a {
+            font-family: Helvetica;
+            font-size: 17px;
+        }
+
+    .authoring-wrapper .My-Programs span {
+        font-family: Roboto;
+        font-size: 15px;
+        line-height: 1.27;
+        color: #8198a3;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 69%;
+    }
+
+    .authoring-wrapper .My-Programs img {
+        width: 50px;
+        height: auto;
+        margin-right: 7px;
+    }
+
+    .authoring-wrapper ul li ul.dropdown li {
+        padding: 16px 0;
+        border-bottom: solid 0.5px #ffffff;
+    }
+
+        .authoring-wrapper ul li ul.dropdown li:last-child {
+            border-bottom: none;
+        }
+
+    .authoring-wrapper .authoring-content {
+        /*padding: 20px;*/
+        padding-top: 20px;
+        /*height: 100%;
+        overflow-y: auto;*/
+    }
+
+.levelRepeater .levelContainer {
+    border-radius: 0px 0px 0px 0px !important;
+    -moz-border-radius: 0px 0px 0px 0px !important;
+    -webkit-border-radius: 0px 0px 0px 0px !important;
+    border: 5px solid rgba(0,0,0,0.5) !important;
+    padding: 0px !important;
+    color: rgba(0,0,0,0.5) !important;
+}
+
+.authoring-content .view-authors, .authoring-content .programs, .authoring-content .search {
+    font-family: Helvetica;
+    font-size: 16px;
+    text-align: left;
+    color: #ffffff;
+    display: inline-block;
+}
+
+.active_inactive_tabs {
+    display: inline;
+    padding: 0;
+    margin-left: 10px;
+}
+
+    .active_inactive_tabs li.active {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: bold;
+        letter-spacing: 0.3px;
+        text-align: left;
+        color: #0e9bf1;
+        border-bottom-left-radius: 25px;
+        background-color: rgba(255, 255, 255, 0.79);
+        padding: 14px 29px;
+        border-top-left-radius: 25px;
+    }
+
+    .active_inactive_tabs li.inactive {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: bold;
+        letter-spacing: 0.3px;
+        text-align: left;
+        color: #ffffff;
+        border-top-right-radius: 25px;
+        background-color: rgba(255, 255, 255, 0.21);
+        border-bottom-right-radius: 25px;
+        padding: 14px 19px;
+    }
+
+.authoring-content .view-authors select {
+    width: 173px;
+    height: 45px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.21);
+    margin-left: 10px;
+    padding: 15px 20px;
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 0.3px;
+    text-align: left;
+    color: #ffffff;
+    background-position-x: 156px;
+    background-image: url(../images/dropdown.svg);
+    background-repeat: no-repeat;
+    background-position-y: 16px;
+}
+
+.authoring-content .search input {
+    width: 173px;
+    height: 45px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, .21);
+    border: none;
+    padding: 10px;
+    margin-left: 10px;
+}
+
+.authoring-content .program-title {
+    font-family: Helvetica;
+    font-size: 28px;
+    text-align: left;
+    color: #ffffff;
+    height: 80px;
+    display: table-cell;
+    vertical-align: bottom;
+    padding-bottom: 12px;
+}
+
+.authoring-content .program-image {
+    position: relative;
+}
+
+    .authoring-content .program-image:hover .tile-status {
+        display: block;
+    }
+
+    .authoring-content .program-image img {
+        object-fit: contain;
+        box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.26);
+        max-width: 100%;
+        height: auto;
+    }
+
+    .authoring-content .program-image .tile-status {
+        text-align: right;
+        position: absolute;
+        padding: 7px 12px 7px 20px;
+        width: 100%;
+        top: 7px;
+        height: 100%;
+        display: none;
+    }
+
+        .authoring-content .program-image .tile-status span.delete {
+            border-radius: 4px;
+            background-color: #fafbfc;
+            border: solid 1px #ff4e4e;
+            padding: 11px 8px;
+            margin-right: 5px;
+        }
+
+        .authoring-content .program-image .tile-status span.duplicate {
+            border-radius: 4px;
+            background-color: #fafbfc;
+            border: solid 1px #adadad;
+            padding: 11px 8px;
+        }
+
+        .authoring-content .program-image .tile-status span.publishing-status {
+            font-family: Helvetica;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            border-radius: 4px;
+            background-color: #0ccd04;
+            padding: 11px 15px;
+            float: left;
+            margin-top: -7px;
+        }
+
+            .authoring-content .program-image .tile-status span.publishing-status img {
+                height: 12px;
+                margin-right: 10px;
+            }
+
+        .authoring-content .program-image .tile-status span.toggle-switch {
+            display: block;
+            width: 104px;
+            height: 27px;
+            bottom: 25px;
+            float: right;
+            position: absolute;
+            right: 12px;
+        }
+
+.authoring-content .program-tiles, .authoring-content .program-tiles-left, .authoring-content .program-tiles-right {
+    height: 100%;
+}
+
+    .authoring-content .program-tiles .active-tiles {
+        width: 280px;
+        margin: 0 45px 0 0;
+        min-height: 400px;
+    }
+
+        .authoring-content .program-tiles .active-tiles .program-footer {
+            font-family: Helvetica;
+            font-size: 18px;
+            color: #ffffff;
+            margin-top: 12px;
+        }
+
+            .authoring-content .program-tiles .active-tiles .program-footer span:first-of-type {
+                float: left;
+            }
+
+            .authoring-content .program-tiles .active-tiles .program-footer span:nth-of-type(2) {
+                float: right;
+            }
+
+        .authoring-content .program-tiles .active-tiles .add-tile {
+            border-radius: 7px;
+            border: dotted 5px #626262;
+            height: 287px;
+            text-align: center;
+            padding-top: 30%;
+        }
+
+            .authoring-content .program-tiles .active-tiles .add-tile span {
+                font-family: Roboto;
+                font-size: 94px;
+                font-weight: 300;
+                color: #626262;
+            }
+
+            .authoring-content .program-tiles .active-tiles .add-tile:hover {
+                cursor: pointer;
+            }
+
+    .authoring-content .program-tiles-right .program-tile1,
+    .authoring-content .program-tiles-right .program-tile2,
+    .authoring-content .program-tiles-right .program-tile3,
+    .authoring-content .program-tiles-right .program-tile4 {
+        border-left: dashed 2px #ababab;
+        margin-bottom: 20px; /*Dinesh chgn to 20 from 44*/
+        /*width: 279px;
+        padding: 0 17.5px;*/ /*Dinsh chgn to bottom*/
+        width: 269px;
+        padding: 0 8.5px;
+    }
+
+    .authoring-content .program-tiles-right .program-tile-add {
+        border-left: none;
+        margin-bottom: 51.3px;
+        padding: 0 17.5px;
+    }
+
+    .authoring-content .program-tiles-right .add-new {
+        border-radius: 7px;
+        border: dotted 5px rgba(98, 98, 98, 0.8);
+        padding: 0 20px;
+        width: 242px;
+        height: 245.2px;
+    }
+
+        .authoring-content .program-tiles-right .add-new p {
+            font-family: Lato;
+            font-size: 21px;
+            font-weight: bold;
+            text-align: center;
+            color: #6a6a6a;
+            padding: 80px 0;
+            line-height: 1;
+        }
+
+    .authoring-content .program-tiles-right .program-front {
+        width: 242px;
+        height: 245.2px;
+        border-radius: 7px;
+        background-color: #ffffff;
+        border: solid 1px #cecece;
+    }
+
+        .authoring-content .program-tiles-right .program-front .fa-graduation-cap {
+            color: rgba(30, 52, 90, 0.29);
+            font-size: 39.4px;
+            margin: 0 auto;
+            margin-bottom: 85px;
+        }
+
+        .authoring-content .program-tiles-right .program-front .center-image-learn {
+            text-align: center;
+            margin-top: 46.8px;
+            margin-bottom: 0;
+        }
+
+            .authoring-content .program-tiles-right .program-front .center-image-learn img {
+                width: 60.2px;
+                height: 35.3px;
+            }
+
+        .authoring-content .program-tiles-right .program-front .center-image-do img {
+            width: 47.3px;
+            height: 43.9px;
+        }
+
+        .authoring-content .program-tiles-right .program-front .center-image-do {
+            margin-top: 46.8px;
+            text-align: center;
+        }
+
+        .authoring-content .program-tiles-right .program-front .center-image-inspire img {
+            width: 44.7px;
+            height: 54.2px;
+        }
+
+        .authoring-content .program-tiles-right .program-front .center-image-inspire {
+            margin-top: 46.8px;
+            text-align: center;
+        }
+
+/*****Dinesh added css to change the drag drop template tomain page. ********************************************************************************/
+.activitiesMain .program-tiles-left {
+    border-radius: 15px;
+    background-color: #ffffff;
+    box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.24);
+    font-family: Lato;
+    font-size: 21px;
+    font-weight: bold;
+    text-align: center;
+    color: #6a6a6a;
+    padding: 29px 13px; /*dinesh chng to 29px 13px from 13px 17px*/
+    height: auto;
+    max-width: 252.9px;
+}
+
+    .activitiesMain .program-tiles-left ul {
+        list-style-type: none;
+        padding-left: 0px;
+    }
+
+.activitiesMaint .program-tiles-left .drag-drop-heading {
+    padding: 0 10px;
+}
+
+.activitiesMain .program-tiles-left .learn,
+.activitiesMain .program-tiles-left .do,
+.activitiesMain .program-tiles-left .inspire {
+    border-radius: 7px;
+    border: solid 2px #ffffff;
+    font-family: Roboto;
+    font-weight: 300;
+    text-align: left;
+    color: #154454;
+    height: 218.4px;
+    font-size: 26px;
+    margin: 8.1px auto 0;
+    padding: 14px 17px;
+    position: relative;
+}
+
+.activitiesMain .program-tiles-left .learn {
+    background-color: #27c2f4;
+    margin-top: 15.6px;
+}
+
+.activitiesMain .program-tiles-left .do {
+    background-color: #30c76e;
+}
+
+.activitiesMain .program-tiles-left .inspire {
+    background-color: #ecac43;
+}
+
+.activitiesMain .program-tiles-left .learn img {
+    width: 71.2px;
+    height: 38.6px;
+}
+
+.activitiesMain .program-tiles-left .do img {
+    width: 56px;
+    height: 49px;
+}
+
+.activitiesMain .program-tiles-left .inspire img {
+    width: 57.6px;
+    height: 68.8px;
+}
+
+.activitiesMain .program-tiles-left span {
+    margin-top: 39px;
+    display: block;
+}
+
+ul[dnd-list] {
+    position: relative;
+    padding-left: 0;
+}
+
+.authoring-wrapper div.program-tiles-right > ul[dnd-list] > li {
+    border: none !important;
+    border-radius: 0 !important;
+    display: block !important;
+    padding: 0;
+    position: relative !important;
+    float: left;
+}
+
+ul[dnd-list] .selected {
+    border-color: #3e853e;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05), 0 0 8px #5bc0de;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px #5bc0de;
+}
+
+ul[dnd-list] .dndDraggingSource {
+    opacity: 0.5;
+    display: block !important;
+}
+
+ul[dnd-list] .dndDragging {
+    opacity: 0.7;
+    display: block !important;
+}
+
+
+
+/**
+ * Reduce opacity of elements during the drag operation. This allows the user
+ * to see where he is dropping his element, even if the element is huge. The
+ * .dndDragging class is automatically set during the drag operation.
+ */
+.authoring-wrapper .program-tiles-right .program-tile1 .dndDragging {
+    opacity: 0.7;
+    display: block;
+}
+
+/**
+ * The dndDraggingSource class will be applied to the source element of a drag
+ * operation.
+ */
+.authoring-wrapper .program-tiles-right .program-tile1 .dndDraggingSource {
+    opacity: 0.5;
+    display: block;
+}
+
+/**
+ * An element with .dndPlaceholder class will be added as child of the dnd-list
+ * while the user is dragging over it.
+ */
+.authoring-wrapper div.program-tiles-right > ul[dnd-list] .dndPlaceholder {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    display: block !important;
+    width: 242px;
+    height: 245.2px;
+    position: initial;
+    padding-right: 10px;
+}
+
+/***************************************************************************************/
+
+.authoring-content .program-tiles-left {
+    border-radius: 15px;
+    background-color: #ffffff;
+    box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.24);
+    font-family: Lato;
+    font-size: 21px;
+    font-weight: bold;
+    text-align: center;
+    color: #6a6a6a;
+    padding: 13px 17px;
+    height: auto;
+    max-width: 252.9px;
+}
+
+    .authoring-content .program-tiles-left .drag-drop-heading {
+        padding: 0 10px;
+    }
+
+    .authoring-content .program-tiles-left .learn,
+    .authoring-content .program-tiles-left .do,
+    .authoring-content .program-tiles-left .inspire {
+        border-radius: 7px;
+        border: solid 2px #ffffff;
+        font-family: Roboto;
+        font-weight: 300;
+        text-align: left;
+        color: #154454;
+        height: 218.4px;
+        font-size: 26px;
+        margin: 8.1px auto 0;
+        padding: 14px 17px;
+    }
+
+    .authoring-content .program-tiles-left .learn {
+        background-color: #27c2f4;
+        margin-top: 15.6px;
+    }
+
+    .authoring-content .program-tiles-left .do {
+        background-color: #30c76e;
+    }
+
+    .authoring-content .program-tiles-left .inspire {
+        background-color: #ecac43;
+    }
+
+    .authoring-content .program-tiles-left .learn img {
+        width: 71.2px;
+        height: 38.6px;
+    }
+
+    .authoring-content .program-tiles-left .do img {
+        width: 56px;
+        height: 49px;
+    }
+
+    .authoring-content .program-tiles-left .inspire img {
+        width: 57.6px;
+        height: 68.8px;
+    }
+
+    .authoring-content .program-tiles-left span {
+        margin-top: 39px;
+        display: block;
+    }
+
+.authoring-content .program-tiles-right {
+    /*padding: 0 27px; Dinesh chgn to below*/
+    padding: 0 11px;
+    /*height: 780px;*/
+    overflow-y: auto;
+}
+
+.activitiesMain .authoring-container {
+    padding: 0 11px;
+    height: 825px;
+    overflow-y: scroll;
+}
+
+.authoring-content .top-text {
+    left: 0;
+    right: 0;
+    padding: 11.4px 14.5px 0 17px;
+    width: 100%;
+    height: 42px;
+    margin-bottom: 0;
+}
+
+    .authoring-content .top-text .left-image {
+        float: left;
+        color: #afb8c9;
+        cursor: pointer;
+    }
+
+        .authoring-content .top-text .left-image img {
+            width: 28.9px;
+            height: 29.4px;
+        }
+
+    .authoring-content .top-text .right-image {
+        float: right;
+        font-size: 14px;
+        cursor: pointer;
+        width: 30.9px;
+        height: 21.5px;
+        background-color: #1bb9c0;
+        padding: 5px 10px;
+        color: #ffffff;
+    }
+
+.authoring-content .bottom-text span:first-of-type {
+    font-family: Helvetica;
+    font-size: 26px;
+    font-weight: bold;
+    float: left;
+    color: #afb8c9;
+    padding-bottom: 10px;
+}
+
+.authoring-content .bottom-text span:nth-of-type(2) {
+    font-family: Helvetica;
+    font-size: 16px;
+    color: #afb8c9;
+    float: right;
+    margin-top: 7px;
+}
+
+.authoring-content .bottom-text {
+    padding: 0 20px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+
+.authoring-content .program-text input {
+    width: 240.1px;
+    height: 40px;
+    /*background-color: rgba(255, 255, 255, 0.75);*/
+    background-color: none;
+    /*border: solid 1px #d1d1d1;*/
+    border: none;
+    font-family: Lato;
+    font-size: 20px;
+    color: #848484;
+    border-radius: 2px;
+    text-align: left;
+    padding: 6.6px 5.3px;
+    margin-top: 12.8px;
+}
+
+.authoring-content .program-text label {
+    width: 240.1px;
+    height: 40px;
+    font-family: Lato;
+    font-size: 20px;
+    color: #848484;
+    font-weight: normal;
+    margin-bottom: 0;
+    text-align: left;
+    padding: 6.6px 5.3px;
+    margin-top: 12.8px;
+}
+
+.authoring-content .program-text {
+    text-align: center;
+}
+
+ul.authoring-activities-dropdown {
+    width: 169.9px;
+    height: 157.7px;
+    background-color: #fbffff;
+    box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.5);
+    border: solid 1px #d4d4d4;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    top: 30px;
+    left: 112px;
+    z-index: 1;
+    -webkit-padding-start: 0;
+    padding: 26px 19px;
+    /*display: none;*/
+}
+
+li.preview img {
+    width: 15px;
+    height: 9px;
+}
+
+li.preview a {
+    margin-left: 8px !important;
+}
+
+li.edit img {
+    width: 11px;
+    height: 17px;
+}
+
+li.duplicate img,
+li.add-to-clipboard img {
+    width: 11px;
+    height: 13px;
+}
+
+li.delete img {
+    width: 9px;
+    height: 12.4px;
+}
+
+ul.authoring-activities-dropdown li a {
+    margin-left: 12.4px;
+}
+
+ul.authoring-activities-dropdown:before {
+    content: "";
+    position: absolute;
+    border-bottom: 10px solid white;
+    border-left: 10px solid transparent;
+    top: -10px;
+    border-right: 10px solid transparent;
+    left: 42%;
+    z-index: 1;
+}
+
+ul.authoring-activities-dropdown:after {
+    content: "";
+    position: absolute;
+    border-bottom: 10px solid gray;
+    border-left: 12px solid transparent;
+    top: -10px;
+    border-right: 12px solid transparent;
+    left: 41%;
+}
+
+ul.authoring-activities-dropdown li {
+    display: block;
+    font-family: Helvetica;
+    font-size: 14px;
+    line-height: 1.71;
+    text-align: left;
+    color: #4a4a4a;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+    ul.authoring-activities-dropdown li.delete {
+        color: #cb0101;
+    }
+
+/************************************Scoring Page:***********************************************************************************/
+
+.todo-scoring-quests {
+    margin-bottom: 20px;
+}
+
+    .todo-scoring-quests .todoBucket {
+        padding: 5px;
+    }
+
+        .todo-scoring-quests .todoBucket .bucketDiv {
+            background-color: whitesmoke;
+            padding: 10px;
+        }
+
+            .todo-scoring-quests .todoBucket .bucketDiv label {
+                padding: 5px;
+            }
+
+            .todo-scoring-quests .todoBucket .bucketDiv input.form-control {
+                border: 1px solid rgba(37,41,47,0.3);
+            }
+
+
+.inspirePoint table {
+    margin-bottom: 0px;
+}
+
+
+    .inspirePoint table > tbody > tr {
+        background-color: transparent !important;
+    }
+
+
+        .inspirePoint table > tbody > tr > td {
+            margin-bottom: 0px;
+            border-top: none;
+        }
+
+.inspirationType .activityType, .activitySetup .activityType,
+.inspirationType .inspireType,
+.inspirationType .mediaEnable {
+    margin-right: 15px;
+    border: none;
+    outline: none;
+    width: auto !important;
+    height: auto;
+}
+
+.inspirationType label {
+    display: block;
+    font-weight: normal;
+}
+
+
+.challenge-points input {
+    border-color: #14b9c0;
+    padding: 5px;
+    height: 25px;
+    width: 50px;
+    display: inline-block;
+}
+
+.challenge-points input[type="number"]::-webkit-outer-spin-button,
+.challenge-points input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.challenge-points input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+div.scoring-quests .table > tbody > tr.hints {
+    background-color: white;
+}
+
+div.scoring-quests .table > tbody > tr.hints > td.hint {
+    border-top: 1px solid lightgray;
+    font-style: italic;
+}
+
+div.scoring-quests .table > tbody > tr.hints > td.hint > div.scoreHint {
+    font-style: normal;
+}
+
+.scoring-quests .table .challenge-points > div {
+    /*width: 100%;
+    display: block;*/
+    margin-bottom: 6px;
+    text-align:center; /*chgn to center from left. */
+}
+.scoring-quests .table .challenge-points > div button {
+    padding: 1px 3px;
+}
+.scoring-quests .table .challenge-points > div span{
+    min-width: 35px;
+    text-align: center;
+    display: inline-block;
+}
+
+/*******************************;Out of Box Image *************************************************************************/
+/*.thumbnail .program-img {
+    background: url(../../img/learn blank box.png) #f1f1f1;
+    background-size: cover;
+    overflow: hidden;
+    text-align: center;
+    height:142px;
+}*/
+.authoring-manage-program .thumbnail .program-img img {
+    height: auto;
+}
+
+.thumbnail .program-img img {
+    height: 140px;
+}
+
+.authoring-manage-program .program-author {
+    float: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 75%;
+}
+
+.customErr {
+    visibility: visible;
+}
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+    background-color: #fff;
+}
+
+
+/********************************************************************Tile Image*********************************************************************/
+
+.quest-edit.thumbnail.prevTile {
+    height: 206px;
+    width: 348px;
+}
+
+    .quest-edit.thumbnail.prevTile .program-img img {
+        height: 206px;
+    }
+
+
+span.basequesticon {
+    display: inline-block;
+    color: #c9c9c9!important;
+    font-size: 21.4px!important;
+    float: right;
+    margin-top: -4px!important;
+    cursor: pointer;
+}
+.baseOrBonus.fa-star-o,
+.baseOrBonus.fa-asterisk {
+    font-size: 20.6px;
+    color: white;
+    right: 50px;
+    position: absolute;
+    cursor: pointer;
+}
+
+.bonusopen, .baseopen {
+    display: none;
+    position: relative;
+    box-sizing: border-box;
+    box-shadow: 2px -2px 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+    .bonusopen:after,
+    .baseopen:after {
+        content: '';
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 8px solid white;
+        top: -8px;
+        position: absolute;
+        left: 30px;
+    }
+
+.baseOrBonus.fa-star-o:hover + .bonusopen,
+.baseOrBonus.fa-asterisk:hover + .baseopen {
+    width: 75px;
+    height: 35px;
+    background-color: #eeeeee;
+    box-shadow: 2px -2px 4px 0 rgba(0, 0, 0, 0.5);
+    top: 40px;
+    right: 25px;
+    position: absolute;
+    display: block;
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.38;
+    letter-spacing: normal;
+    text-align: center;
+    color: #4a4a4a;
+    border-radius: 4px;
+    padding: 8px;
+}
+.basequesticon:hover {
+    color: #7b7b7b;
+}
+
+.topbaseopen,
+.topbonusopen {
+    display: none;
+    position: relative;
+    box-sizing: border-box;
+    box-shadow: 2px -2px 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+    .topbaseopen:after,
+    .topbonusopen:after {
+        content: '';
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid #eeeeee;
+        bottom: -10px;
+        position: absolute;
+        left: 35px;
+    }
+
+.basequesticon .fa-asterisk:hover + .topbaseopen,
+.basequesticon .fa-star-o:hover + .topbonusopen {
+    width: 88px;
+    height: auto;
+    background-color: #eeeeee;
+    box-shadow: 2px -2px 4px 0 rgba(0, 0, 0, 0.5);
+    top: -70px;
+    right: -13px;
+    position: absolute;
+    display: block;
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.38;
+    letter-spacing: normal;
+    text-align: center;
+    color: #4a4a4a;
+    border-radius: 4px;
+    padding: 8px;
+}
+
+.basequesticon .fa-star-o:hover + .topbonusopen {
+    top: -52px;
+}

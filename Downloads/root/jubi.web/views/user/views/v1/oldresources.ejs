@@ -1,0 +1,86 @@
+<div ng-controller="ResourcesController as c" ng-init="c.init('<%- model.slug %>')">
+
+    <div ng-show="isLoading" style="position: relative;" ng-cloak ng-style="getBackgroundFontStyle()">
+        <div class="loading">
+            <span us-spinner="{radius:30, width:8, length: 16, color: getBackgroundFontColor()}"></span>
+            <div ng-style="getBackgroundFontStyle()">One moment please...</div>
+        </div>
+    </div>
+
+    <div ng-show="!isLoading">
+        <div class="content resources">
+            <h1 ng-style="getBackgroundFontStyle()">Resources</h1>
+
+            <hr/>
+            <div class="header clearfix">
+                <div class="col-sm-6">
+                    <div class="input-group">
+                        <span ng-style="getBackgroundFontStyle()" class="hidden-sm">Filter by: </span>
+
+                        <div class="btn-group">
+                            <div ng-dropdown-multiselect=""
+                                 style="float:left"
+                                 extra-settings="{'buttonClasses': 'btn btn-default dropdown-toggle' }"
+                                 translation-texts="{'buttonDefaultText' : 'Type', 'dynamicButtonTextSuffix' : 'selected' }"
+                                 checkboxes="true" options="ui.mediaTypes"
+                                 selected-model="ui.filters.mediaTypes"></div>
+
+                            <div ng-dropdown-multiselect=""
+                                 style="float:left"
+                                 translation-texts="{'buttonDefaultText' : 'Quests',  'dynamicButtonTextSuffix' : 'selected'}"
+                                 extra-settings="{'buttonClasses': 'btn btn-default dropdown-toggle', displayProp: 'title' }"
+                                 checkboxes="true" options="ui.quests"
+                                 selected-model="ui.filters.quests"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="btn-group justified" style="width:100%" role="toolbar">
+                        <div class="input-group pull-right">
+                            <input type="text" ng-model="ui.filters.search" class="form-control" placeholder="Search">
+
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-success"><span class="icon icon-search"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section>
+                <div class="row" style="padding-left:10px;padding-right:10px">
+                    <div ng-if="!hasMedia()" class="lead" style="margin-top:40px;">
+                        No media available, as you complete quests the media contained within will become available.
+                    </div>
+                    <section ng-repeat="level in programWithResources.levels">
+                        <!--The below elements are duplicate, except one has a autoResizer. We only want one autoResizer per page to calcuate the tile hieght-->
+                        <!--If there are program quests then we don't include the autoResizer on the level quests, if there are no program quests then the first level quest gets it-->
+                        <!--Then the rest of the tiles get the height set by the autoResizer which ensures all tiles end up with same height-->
+                        <section ng-repeat="quest in level.quests">
+                            <section ng-repeat="challenge in quest.challenges">
+                                <section ng-if="media.type != 'text' && !(media.type == 'link' && !media.link)"
+                                         ng-repeat="media in challenge.media | filter:filtered">
+                                    <%- partial('user/partials/libraryMediaTile') %>
+                                </section>
+                            </section>
+                        </section>
+                    </section>
+                    <section>
+                        <!--The below elements are duplicate, except one has a autoResizer. We only want one autoResizer per page to calcuate the tile hieght-->
+                        <!--The first program quest gets the autoResizer, all the rest use the size calculated by the first-->
+                        <!--Then the rest of the tiles get the height set by the autoResizer which ensures all tiles end up with same height-->
+                        <section ng-repeat="quest in programWithResources.quests">
+                            <section ng-repeat="challenge in quest.challenges">
+                                <section ng-if="media.type != 'text' && !(media.type == 'link' && !media.link)"
+                                         ng-repeat="media in challenge.media | filter:filtered">
+                                    <%- partial('user/partials/libraryMediaTile') %>
+                                </section>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

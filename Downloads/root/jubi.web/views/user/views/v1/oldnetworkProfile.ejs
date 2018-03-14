@@ -1,0 +1,116 @@
+<div ng-controller="NetworkProfileController as c" class="network-profile"
+     ng-init="c.init('<%- model.userId %>', '<%- model.slug %>', '<%- model.ret %>')" ng-cloak>
+
+    <div ng-show="isLoading" style="position: relative;" ng-cloak  ng-style="getBackgroundFontStyle()">
+        <div class="loading">
+            <span us-spinner="{radius:30, width:8, length: 16, color: getBackgroundFontColor()}"></span>
+            <div ng-style="getBackgroundFontStyle()">One moment please...</div>
+        </div>
+    </div>
+
+    <div ng-hide="isLoading" ng-style="getBackgroundFontStyle()">
+        <br><br>
+        <div class="row">
+            <div class="col-xs-offset-1 col-xs-6">
+
+                <div class="text-lg">
+                    {{user.firstName}} {{user.lastName}} Profile
+                </div>
+
+                <br><br>
+
+                <div class="form-group">
+                    <label for="email" class="control-label">Email: </label>
+                    <span>{{user.email}}</span>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <label for="firstName" class="control-label">First Name: </label>
+                                    <span>{{user.firstName}}</span>
+                                </div>
+                                <div class="col-xs-6">
+                                    <label for="lastName" class="control-label">Last Name: </label>
+                                    <span>{{user.lastName}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="title" class="control-label">Job Title:</label>
+                            <span>{{user.title}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="title" class="control-label">My Why:</label>
+                            <span>{{user.why}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="title" class="control-label">My Destination:</label>
+                            <span>{{user.destination}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="title" class="control-label">Bonus Points available to spend:</label>
+                            <span class="text-center"
+                                  style="margin-top:20px">{{getCurrentBonusPointsAvailable()}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="title" class="control-label">Bonus Points Spent:</label>
+                            <span class="text-center" style="margin-top:20px">{{getBonusPointsBucket() - getCurrentBonusPointsAvailable()}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 clearfix">
+                        <div class="form-group">
+                            <label class="control-label">Picture:</label>
+
+                            <div class="thumbnail profile-avatar">
+                                <div class="program-img">
+                                    <div ng-if="user.avatarUrl">
+                                        <img ng-src="{{user.avatarUrl}}/100x100" alt=""/>
+                                    </div>
+                                    <div ng-if="!user.avatarUrl">
+                                        <img src="<%- config.web.contentUrl %>/img/empty.png"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="button" ng-if="ret == 'network'" ng-click="backToNetwork()"
+                                class="btn btn-primary">
+                            Back to Network
+                        </button>
+                        <button type="button" ng-if="ret == 'leaderboard'" ng-click="backToLeaderboard()"
+                                class="btn btn-primary">Back to Leaderboard
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-5" ng-if="user.badges.length > 0">
+                <div class="text-lg">
+                    {{getBadgeLabel(true) + 's'}} Earned
+                </div>
+                <br><br>
+
+                <div style="text-align:center;margin-left:-50px" ng-repeat="badge in user.badges" class="col-xs-5">
+                    <div class="quest-badge">
+                        <div class="badge-image">
+                            <span><img alt="" ng-src="{{badge.badge.imageUrl + '/100x100'}}"></span>
+                        </div>
+                    </div>
+                    {{badge.badge.title}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <br>
+
+</div>

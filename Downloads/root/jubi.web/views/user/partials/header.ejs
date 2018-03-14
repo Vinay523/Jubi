@@ -1,0 +1,81 @@
+
+<div class="program-topbar col-lg-12 col-md-12 col-sm-12 col-xs-12" data-ng-controller="MainNavController" ng-style="getHeaderCustomStyle()">
+
+  <ul class="profile-info">
+    <li class="logo">
+      <img  ng-if="logoUrl" ng-src="{{logoUrl}}" />
+    </li>
+    <li class="program-name">
+      <!--Lead to Inspire-->
+      {{(program ? program.title : 'My Programs')}}
+    </li>
+    <li class="right-profiledetails">
+      <ul>
+        <!--<li>
+
+          <p class="notification-ring">3</p>
+          <span class="fa fa-bell-o"></span>
+
+        </li>-->
+        <li id="profileDropNav">
+          <a href="#" class="profile-image" ng-click="navToggle()">
+            <img ng-src="{{(user.avatarUrl ? (user.avatarUrl + '/100x100') : '/img/avatar.jpg')}}" 
+                 class="medium circle left" alt="{{user.firstName}} {{user.lastName}}"/>
+          </a>
+          <ul class="dropdown">
+            <span class=" arrow-up "></span>
+            
+            <li ng-show="program">
+              <a href="" ng-click="goToUserProfile()">Profile</a>
+            </li>
+            <li>
+              <a href="/user/profile">Settings</a>
+            </li>
+            <!--<li ng-if="canManage()" class="divider hidden-xs"></li>-->
+            <li ng-if="canManage()">
+              <a href="/manage" ng-mouseleave="setButtonNotHovered('Manage')"
+                 ng-mouseover="setButtonHovered('Manage')">
+                <span>
+                  <!--<i class="fa fa-table"></i>--> Manage Your Programs
+                </span>
+              </a>
+            </li>
+            <li ng-if="canAdmin()">
+              <a href="/admin/clients">Administration</a>
+            </li>
+            <li>
+              <a href="/logout" ng-click="logout()">Logout</a>
+            </li>
+            
+            <li class="My-Programs">
+              <a href="/user"> My Programs</a>
+              <ul style="z-index:100000" ng-if="programs.length>0">
+              <li ng-repeat="program in programs">
+                <a href="javascript:void(0)" ng-click="goToProgram(program)" style="display:block;">
+                    <span>
+                    <img alt="" ng-src="{{(program.imageUrl ? (program.imageUrl + '/100x100') : '/img/no-picture.jpg')}}" />
+                            &nbsp;&nbsp;
+                    </span>
+                  <span>{{program.title}}</span>
+                  
+                </a>
+              </li>
+              
+            </ul>
+              
+            </li>
+          </ul>
+        </li>
+
+
+        <li>
+          <span class="name">{{user.firstName}} {{user.lastName}}</span>
+          <span class="designation" ng-model="user.title">{{user.title}}</span>
+          <span class="points-count" ng-if="program">Points {{program.score.points.earned}}/{{program.score.points.total}} Badges {{ result.badges.earned}}/{{program.badges.length}}</span>
+
+        </li>
+      </ul>
+    </li>
+
+  </ul>
+</div>

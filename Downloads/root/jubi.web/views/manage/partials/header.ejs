@@ -1,0 +1,31 @@
+<nav class="navbar navbar-default" style="text-align:center"  ng-style="getHeaderCustomStyle()">
+    <div ng-if="logoUrl && logoCenter" style="position:absolute;width:100%">
+        <img style="height:50px;" ng-src="{{logoUrl}}"/>
+    </div>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapseNavBar" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse no-navbar-brand" id="collapseNavBar">
+            <ul class="nav navbar-nav" ng-style="getHeaderCustomStyle()">
+                <li>
+                    <a href="#" ng-click="toggle.asideNav=!toggle.asideNav" ng-style="getButtonCustomStyle('Expand')" ng-mouseover="setButtonHovered('Expand')" ng-mouseleave="setButtonNotHovered('Expand')" >
+                        <i class="fa fa-bars"></i>
+                    </a>
+                </li>
+                <li ng-if="!logoUrl" class="dead nabvar-title" ng-style="getHeaderCustomStyle()">Powered by Jubi</li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" ng-style="getHeaderCustomStyle()">
+                <li><a href="/user" ng-style="getButtonCustomStyle('Your Programs')" ng-mouseover="setButtonHovered('Your Programs')" ng-mouseleave="setButtonNotHovered('Your Programs')" >Your Programs</a></li>
+                <li><a href="#" ng-click="previewProgramTiles($event)" ng-style="getButtonCustomStyle('Preview All')" ng-mouseover="setButtonHovered('Preview All')" ng-mouseleave="setButtonNotHovered('Preview All')" >Preview All</a></li>
+            </ul>
+            <img ng-if="logoUrl && logoLeft" style="height:51px;float:left;" ng-src="{{logoUrl}}"/>
+        </div>
+    </div>
+</nav>

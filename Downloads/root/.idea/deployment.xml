@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="Jubi QA">
+    <serverData>
+      <paths name="Jubi Production API #1">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$/jubi.api" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.api/logs" />
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.api/tmp" />
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.api/node_modules" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+      <paths name="Jubi Production API #2">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$/jubi.api" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.api/logs" />
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.api/tmp" />
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.api/node_modules" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+      <paths name="Jubi Production Jobs">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/jubi.job" local="$PROJECT_DIR$/jubi.job" web="/" />
+            <mapping deploy="/jubi.api" local="$PROJECT_DIR$/jubi.api" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.api/node_modules" />
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.api/logs" />
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.api/tmp" />
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.api/jubi.api.iml" />
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.job/logs" />
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.job/node_modules" />
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.job/work" />
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.job/jubi.job.iml" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+      <paths name="Jubi Production Web">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$/jubi.web" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.web/logs" />
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.web/tmp" />
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.web/node_modules" />
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.web/logs" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+      <paths name="Jubi QA">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/jubi.api" local="$PROJECT_DIR$/jubi.api" web="/" />
+            <mapping deploy="/jubi.web" local="$PROJECT_DIR$/jubi.web" web="/" />
+            <mapping deploy="/jubi.job" local="$PROJECT_DIR$/jubi.job" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.web/logs" />
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.api/tmp" />
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.web/node_modules" />
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.api/logs" />
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.api/node_modules" />
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.job/node_modules" />
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.job/logs" />
+            <excludedPath local="true" path="$PROJECT_DIR$/jubi.job/work" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

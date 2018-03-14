@@ -1,0 +1,24 @@
+<div ng-controller="AuthoringSuiteProgramTodoManagementController as c"
+     ng-init="c.init('<%- model.slug %>','<%- model.restore %>')" ng-cloak ng-click="offClick($event)">
+
+    <div class="loading-overlay" style="left:-15px;right:-15px" ng-show="loading.isLoading">
+        <div class="loading">
+            <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+            <div>One moment please...</div>
+        </div>
+    </div>
+
+    <form action="" method="post" novalidate name="programEditFrm">
+        <div ng-show="inState=='todos'">
+            <%- partial('manage/views/authoringSuite/todos/todoListing') %>
+        </div>
+        <div ng-show="inState=='todoEdit'">
+            <%- partial('manage/views/authoringSuite/todos/todoEdit') %>
+        </div>
+    </form>
+</div>
+<%- partial('modals/confirmModal') %>
+
+
+
+

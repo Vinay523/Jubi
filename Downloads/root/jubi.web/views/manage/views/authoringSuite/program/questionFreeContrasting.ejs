@@ -1,0 +1,60 @@
+<ul dnd-list="question.workAnswers.freeContrasting.answers"
+    dnd-drop="answerDrop(event, index, item, external, type, 'freeContrasting', question)"
+    dnd-allowed-types="['freeContrasting']">
+    <li ng-repeat="answer in question.workAnswers.freeContrasting.answers"
+        dnd-type="'freeContrastingAnswer'"
+        dnd-draggable="answer"
+        dnd-moved="question.workAnswers.freeContrasting.answers.splice($index, 1)"
+        dnd-selected="question.workAnswers.freeContrasting.selectedAnswer=answer"
+        dnd-effect-allowed="move"
+        dnd-disable-if="!question.workAnswers.freeContrasting.canDrag || quest.publishedAt"
+        ng-class="{'selected':question.workAnswers.freeContrasting.selectedAnswer===answer}">
+
+        <div class="panel-group accordion">
+            <div class="panel panel-default" ng-class="{'quest-error':answer.hasError}">
+                <div class="panel-heading" style="padding-left:10px;">
+                    <div class="panel-title">
+                        <div class="text-muted handle"
+                             ng-mousedown="canEditEntity(quest, program) && answerDragHandleDown($event,question,answer,'freeContrasting')"
+                             ng-mouseup="canEditEntity(quest, program) && answerDragHandleUp($event,question,answer,'freeContrasting')">
+                            <span ng-style="{ color: getEntityHandleColor(quest, program) }"
+                                  style="margin-left:4px"
+                                  class="fa fa-ellipsis-v"></span>
+                        </div>
+                        <div class="content">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6" ng-class="{'has-error':answer.val.answer.req}">
+                                    <input type="text"
+                                           class="form-control"
+                                           placeholder="Contrast"
+                                           title="Contrast Item"
+                                           ng-model="answer.answer">
+                                    <div class="text-sm text-danger" ng-if="answer.val.answer.req">Item cannot be
+                                        empty.
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6" ng-class="{'has-error':answer.val.match.req}">
+                                    <input type="text"
+                                           class="form-control"
+                                           placeholder="The contrast is similar."
+                                           title="The contrast is similar."
+                                           ng-model="answer.match">
+                                    <div class="text-sm text-danger" ng-if="answer.val.match.req">Contrast Item match
+                                        cannot be empty.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-xs">
+                                <a href="#" ng-click="canEditEntity(quest, program) && freeContrastingRemoveAnswer($event,answer,$index,question)">Remove
+                                    Answer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+<button ng-disabled="!canEditEntity(quest, program)" type="button" class="btn btn-primary outline btn-block" ng-click="addAnswer('freeContrasting',question)">
+    <span class="icon fa fa-plus" title="Add New Answer"></span> Add New Answer
+</button>

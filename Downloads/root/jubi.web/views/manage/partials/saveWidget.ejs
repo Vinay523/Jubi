@@ -1,0 +1,66 @@
+<div class="panel panel-default program-status">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <div class="row">
+                <div class="col-xs-12">
+                    Status: <strong>{{(program.published ? (program.status == 'preview' ? 'Preview' : 'Published') : 'Draft')}}</strong>
+                      <button type="button" ng-click="preview($event, quest, challenge, level, todo, badge)"
+                            class="btn btn-xs btn-primary outline pull-right" ng-disabled="busy" onfocus="blur()">Preview
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <span ng-style="{'cursor' : canPromptUnlock(program) ? 'pointer' : 'default'}"
+                          ng-click="promptUnlockProgram(program, programEditFrm)">Mode: <strong style="margin-left:3px">{{program.cancelMigrateResultsOnPublish ? 'Reset' : 'Add-On'}}</strong></span>
+                    <i ng-click="promptUnlockProgram(program, programEditFrm)"
+                       style="margin-left:5px"
+                       ng-style="{'cursor' : canPromptUnlock(program) ? 'pointer' : 'default'}"
+                       ng-class="{ 'fa-lock': !program.cancelMigrateResultsOnPublish, 'fa-unlock': program.cancelMigrateResultsOnPublish }"
+                       class="icon fa fa-lock"></i>
+                </div>
+            </div>
+
+        </h3>
+    </div>
+    <div class="panel-body">
+        <button class="btn btn-block btn-primary"  
+                ng-click="submit($event, null, false, quest)" 
+                ng-disabled="busy || (programEditFrm.$pristine && program.status != 'autoSaved' && program.status != 'preview' && !restoreId)" 
+                onfocus="blur()">
+                Save
+        </button>
+        <!--<button class="btn btn-block btn-primary" ng-if="quest.type == 'T'"
+                ng-click="submitTODO($event, null, false)"
+                ng-disabled="busy || (programEditFrm.$pristine && program.status != 'autoSaved' && program.status != 'preview' && !restoreId)"
+                onfocus="blur()">
+            Save Todo Activity
+        </button>-->
+
+        <% if (!model.hidePublish) { %>
+        <button ng-show="programHasQuests(program)" type="button" class="btn btn-block btn-secondary" style="white-space: normal" ng-disabled="busy" ng-click="togglePublished($event)"
+                onfocus="blur()">Publish
+            <div class="text-xs" ng-show="hasPublishedProgram(program)">
+                This will replace your currently published program!
+            </div>
+        </button>
+        <% } %>
+        <% if (model.cancel) { %>
+        <div class="clearfix text-right" ng-if="program.status == 'autoSaved'">
+            <a href="" ng-click="cancel($event)" class="text-sm">Cancel</a>
+        </div>
+        <% } %>
+        <div style="padding:10px 0;">
+            <div class="text-sm">
+                {{program.status != 'autoSaved' ? 'Last Saved:' : 'AutoSaved:'}}
+                {{program.version.by.firstName || program.version.by.lastName ? (program.version.by.firstName + ' ' +
+                program.version.by.lastName + ', ') : '' }}
+                {{program.createdAt | date:'h:mm a - M/dd/yyyy' }}
+            </div>
+        </div>
+        <div>
+            <textarea dnd-no-drop class="form-control" rows="3" placeholder="Version notes." title="Version notes."
+                      ng-model="program.comment"></textarea>
+        </div>
+    </div>
+</div>

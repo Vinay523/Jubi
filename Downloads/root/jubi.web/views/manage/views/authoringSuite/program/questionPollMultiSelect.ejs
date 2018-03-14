@@ -1,0 +1,48 @@
+<div class="row form-group" ng-class="{'has-error':question.workAnswers.pollMultiSelect.val.selectCount.fmt || question.workAnswers.pollMultiSelect.val.selectCount.max}">
+    <label class="col-xs-2 control-label" style="padding-top:7px;">Select Count</label>
+    <div class="col-xs-10">
+        <input ng-disabled="!canEditEntity(quest, program)" type="text" class="form-control" placeholder="Required select count." ng-model="question.workAnswers.pollMultiSelect.selectCount">
+        <div class="text-sm text-danger" ng-if="question.workAnswers.pollMultiSelect.val.selectCount.fmt">Please enter a number.</div>
+        <div class="text-sm text-danger" ng-if="question.workAnswers.pollMultiSelect.val.selectCount.max">Please enter a number between 1 and the number of answers.</div>
+    </div>
+</div>
+
+<ul dnd-list="question.workAnswers.pollMultiSelect.answers"
+    dnd-drop="answerDrop(event, index, item, external, type, 'pollMultiSelect', question)"
+    dnd-allowed-types="['pollMultiSelect']">
+    <li ng-repeat="answer in question.workAnswers.pollMultiSelect.answers"
+        dnd-type="'pollMultiSelect'"
+        dnd-draggable="answer"
+        dnd-moved="question.workAnswers.pollMultiSelect.answers.splice($index, 1)"
+        dnd-selected="question.workAnswers.pollMultiSelect.selectedAnswer=answer"
+        dnd-effect-allowed="move"
+        dnd-disable-if="!question.workAnswers.pollMultiSelect.canDrag || quest.publishedAt"
+        ng-class="{'selected':question.workAnswers.pollMultiSelect.selectedAnswer===answer}">
+
+        <div class="panel-group accordion">
+            <div class="panel panel-default" ng-class="{'quest-error':answer.hasError}">
+                <div class="panel-heading" style="padding-left:10px;">
+                    <div class="panel-title" ng-class="{'has-error':answer.val.answer.req}">
+                        <div class="text-muted handle"
+                             ng-mousedown="canEditEntity(quest, program) && answerDragHandleDown($event,question,answer,'pollMultiSelect')"
+                             ng-mouseup="canEditEntity(quest, program) && answerDragHandleUp($event,question,answer,'pollMultiSelect')">
+                            <span ng-style="{ color: getEntityHandleColor(quest, program) }"
+                                  style="margin-left:4px"
+                                  class="fa fa-ellipsis-v"></span>
+                        </div>
+                        <div class="content">
+                            <input type="text" class="form-control" placeholder="Answer" ng-model="answer.answer">
+                            <div class="text-xs">
+                                <a href="#" ng-click="canEditEntity(quest, program) && pollMultiSelectRemoveAnswer($event,answer,$index,question)">Remove Answer</a>
+                            </div>
+                            <div class="text-sm text-danger" ng-if="answer.val.answer.req">Answer cannot be empty.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+<button ng-disabled="!canEditEntity(quest, program)" type="button" class="btn btn-primary outline btn-block" ng-click="addAnswer('pollMultiSelect',question)">
+    <span class="icon fa fa-plus" title="Add New Answer"></span> Add New Answer
+</button>

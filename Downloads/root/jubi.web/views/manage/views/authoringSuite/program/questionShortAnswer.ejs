@@ -1,0 +1,46 @@
+<ul dnd-list="question.workAnswers.shortAnswer.answers"
+    dnd-drop="answerDrop(event, index, item, external, type, 'shortAnswer', question)"
+    dnd-allowed-types="['shortAnswerAnswer']">
+    <li ng-repeat="answer in question.workAnswers.shortAnswer.answers"
+        dnd-type="'shortAnswerAnswer'"
+        dnd-draggable="answer"
+        dnd-moved="question.workAnswers.shortAnswer.answers.splice($index, 1)"
+        dnd-selected="question.workAnswers.shortAnswer.selectedAnswer=answer"
+        dnd-effect-allowed="move"
+        dnd-disable-if="!question.workAnswers.shortAnswer.canDrag || !canEditEntity(quest, program)"
+        ng-class="{'selected':question.workAnswers.shortAnswer.selectedAnswer===answer}">
+
+        <div class="panel-group accordion">
+            <div class="panel panel-default" ng-class="{'quest-error':answer.hasError}">
+                <div class="panel-heading" style="padding-left:10px;">
+                    <div class="panel-title" ng-class="{'has-error':answer.val.answer.req}">
+                        <div class="text-muted handle"
+                             ng-mousedown="canEditEntity(quest, program) && answerDragHandleDown($event,question,answer,'shortAnswer')"
+                             ng-mouseup="canEditEntity(quest, program) && answerDragHandleUp($event,question,answer,'shortAnswer')">
+                            <span ng-style="{ color: getEntityHandleColor(quest, program) }"
+                                  style="margin-left:4px"
+                                  class="fa fa-ellipsis-v"></span>
+                        </div>
+                        <div class="content">
+                            <input type="text"
+                                   class="form-control"
+                                   ng-attr-placeholder="{{$first ? 'Primary Answer' : 'Alternate Answer'}}"
+                                   ng-model="answer.answer">
+                            <div class="text-xs">
+                                <a href="#" ng-click="canEditEntity(quest, program) && shortAnswerRemoveAnswer($event,answer,$index,question)">Remove
+                                    Answer</a>
+                            </div>
+                            <div class="text-sm text-danger" ng-if="answer.val.answer.req">Answer cannot be empty.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+<div class="text-sm text-danger" ng-if="question.workAnswers.shortAnswer.val.correct.req" style="padding-bottom:10px;">
+    Please select the correct answer.
+</div>
+<button ng-disabled="!canEditEntity(quest, program)" type="button" class="btn btn-primary outline btn-block" ng-click="addAnswer('shortAnswer',question)">
+    <span class="icon fa fa-plus" title="Add New Answer"></span> Add New Answer
+</button>

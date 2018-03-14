@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-offset-1 col-sm-4">
+        <div class="home-intro">
+            <h2>learn. do. inspire.</h2>
+            <h3>The Ultimate Engagement Platform</h3>
+            <p class="lead">Jubi is designed to transform learning from an event to a process that inspires individuals and organizations to reach for higher levels of achievement.</p>
+        </div>
+        <br>
+
+        <% if (user) { %>
+
+        <h3>Welcome back, <%- user.firstName %>!</h3>
+        <br>
+        <div class="lead">
+            <div class="form-group"><a href="/user"><i class="fa fa-rocket"></i>&nbsp;&nbsp;&nbsp;Go questing!</a></div>
+            <% if (user.roles[0].id < 4) { %>
+            <div class="form-group"><a href="/manage"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;&nbsp;Manage your programs.</a></div>
+            <% } %>
+            <% if (user.roles[0].id < 2) { %>
+            <div><a href="/admin"><i class="fa fa-key"></i>&nbsp;&nbsp;&nbsp;Administer the system.</a></div>
+            <% } %>
+        </div>
+        <div class="text-sm"><a href="/logout"><i class="icon icon-exit"></i>&nbsp;&nbsp;Logout</a></div>
+
+        <% } else { %>
+        <form action="/login" method="post">
+            <div class="form-group form-group-sm">
+                <label for="emailInput">Email:</label>
+                <input type="email" name="email" id="emailInput" class="form-control" />
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="passwordInput">Password:</label>
+                <input type="password" name="password" id="passwordInput" class="form-control" />
+                <div class="text-sm"><a href="/forgot-password">Forgot your password?</a></div>
+            </div>
+            <div class="form-group form-group-sm text-right">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </form>
+        <% } %>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <img src="<%- config.web.contentUrl %>/img/landing/jubi-teaser.png" class="hero" width="100%" alt="Jubi Teaser - Coming Soon" />
+    </div>
+</div>

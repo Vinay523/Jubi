@@ -1,0 +1,40 @@
+<div ng-controller="UsersController as c" ng-init="c.init(<%- model.trash %>)" ng-cloak>
+
+    <div ng-if="isLoading" class="loading">
+        <span us-spinner="{radius:30, width:8, length: 16, color: '#c1c1c1'}"></span>
+
+        <div>One moment please...</div>
+    </div>
+
+    <div ng-if="!isLoading">
+
+        <div class="row">
+            <div class="col-xs-6">
+                <h3 style="margin:0;">{{trash ? 'User Trash' : 'Users'}}</h3>
+
+                <div class="text-sm" ng-if="!trash && trashCount>0"><a href="/admin/users/trash">Trash
+                        ({{trashCount}})</a></div>
+                <div class="text-sm" ng-if="trash"><a href="/admin/users">Back to Users</a></div>
+            </div>
+            <div class="col-xs-6 text-right" ng-if="!trash">
+                <a class="btn btn-primary btn-sm" href="/admin/users/new">Add Users <span
+                            class="badge">{{totalNumberOfUsers}}</span></a>
+            </div>
+        </div>
+        <br>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table datatable=""
+                           dt-options="dtOptions"
+                           dt-instance="dtInstanceCallback"
+                           class="table table-striped table-bordered row-border hover"
+                           dt-columns="dtColumns"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- partial('modals/confirmModal') %>

@@ -1,0 +1,77 @@
+<div class="media col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-repeat="media in challenge.media">
+    <div ng-if="media.type=='image'">
+        <img alt="" ng-src="{{media.url}}">
+        <div class="image-description" ng-if="media.description">{{media.description}}</div>
+    </div>
+    <div ng-if="media.type=='audio'">
+        <div class="audio-wrapper">
+            <videogular vg-player-ready="playerReady(media, $API)" vg-plays-inline="'true'">
+                <vg-media vg-type="audio" vg-src="media.sources" vg-native-controls="true"></vg-media>
+            </videogular>
+            <div class="audio-description" ng-if="media.description">{{media.description}}</div>
+        </div>
+    </div>
+
+    <div ng-if="media.type=='video' && media.source=='system'" class="videogular-container">
+        <div class="video-wrapper">
+            <div ng-show="!media.playing">
+                <a href="" ng-click="playVideo(media)">
+                    <img alt="" ng-src="{{media.url}}" />
+                    <i class="video-play fa fa-play"></i>
+                </a>
+            </div>
+            <div ng-if="!media.sources || media.sources.length == 0" ng-cloak>
+                <div class="loading-overlay" style="z-index:99;">
+                    <span us-spinner="{radius:30, width:8, length: 16, color: '#ffffff'}"></span>
+                </div>
+            </div>
+            <videogular ng-if="media.formatsLoaded" ng-show="media.playing" vg-player-ready="playerReady(media, $API)" vg-plays-inline="'true'">
+                <vg-media vg-type="video" vg-src="media.sources" vg-native-controls="true"></vg-media>
+            </videogular>
+            <div class="video-description" ng-if="media.description">{{media.description}}</div>
+        </div>
+
+    </div>
+    <div ng-if="media.type=='video' && media.source=='youtube'">
+        <div class="video-wrapper">
+            <div ng-bind-html="media.iframe" style="margin-bottom:20px;"></div>
+            <div class="video-description" ng-if="media.description">{{media.description}}</div>
+        </div>
+    </div>
+
+    <div id="target-anchor" ng-if="media.type=='text'" style="text-align:left;line-height:1.2;">
+        <!--<div ng-bind-html="media.description"></div>-->
+        <ng-quill-editor ng-model="media.text" read-only="true" placeholder=" "></ng-quill-editor>
+        <div ng-bind-html="media.description"></div>
+    </div>
+
+    <div ng-if="media.type=='link'" style="text-align:left;">
+        <!--<div>{{media.description}}</div>-->
+        <ng-quill-editor ng-model="media.description" read-only="true" placeholder=" "></ng-quill-editor>
+        <a ng-href="{{media.link}}" target="_blank">{{media.link}}</a>
+    </div>
+    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 zeropadding" ng-if="media.type=='resource'" style="text-align: left;background-color: #6a7a8a;">
+        <div class="media-uploaded col-lg-3 col-md-3 col-sm-3 col-xs-3 media-image">
+            <div class="" style="padding-top: 5px;">
+                <a ng-href="{{media.url}}" target="_blank">
+                    <img style="cursor:pointer;width: 100px;max-width: none;" class="media-icon" src="<%-config.web.contentUrl%>/img/document-Icon.png">
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="padding:35px">
+            <p class="links" style="padding-top: 5px;">
+                <a ng-href="{{media.url}}" target="_blank">{{media.name}}</a>
+            </p>
+        </div>
+
+        
+        <!--<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 media-image">
+            <a ng-href="{{media.url}}" target="_blank">
+                <img style="cursor:pointer" class="media-icon" src="<%-config.web.contentUrl%>/img/document-Icon.png">
+            </a>
+        </div>
+        <p class="links"><a ng-href="{{media.url}}" target="_blank">{{media.name}}</a></p>-->
+
+    </div>
+    
+</div>

@@ -1,0 +1,535 @@
+<div ng-controller="ForumController as c" ng-click="topicsClick()" ng-init="c.init('<%- model.slug %>')" ng-cloak>
+
+    <div ng-show="isLoading" style="position: relative;" ng-cloak ng-style="getBackgroundFontStyle()">
+        <div class="loading">
+            <span us-spinner="{radius:30, width:8, length: 16, color: getBackgroundFontColor()}"></span>
+            <div ng-style="getBackgroundFontStyle()">One moment please...</div>
+        </div>
+    </div>
+
+    <section ng-if="!isLoading" class="forum-topic-list" ng-show="!ui.inCreate">
+        <div class="row form-group">
+            <div class="col-xs-6">
+                <button type="button" class="btn btn-primary" ng-click="newTopic()">New Discussion</button>
+            </div>
+            <div class="col-xs-6 text-right">
+                <label ng-style="getBackgroundFontStyle()" for="cat" class="control-label text-sm" style="display:inline;">Categories</label>
+                &nbsp;&nbsp;
+                <select id="cat" ng-model="ui.selectedCategoryFilter" class="form-control input-sm"
+                        ng-options="c.id as (c.name + ' ('+c.topicCount+')') for c in categories"
+                        style="display:inline;width:auto;">
+                    <option value="">All ({{forum.items.length}})</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+
+                <div ng-if="topics.length<=0" class="lead" style="margin-top:40px;">
+                    No topics found.
+                </div>
+
+
+                <div ng-if="topics.length>0" ng-repeat="topic in topics | filter: isInSelectedCategory"
+                     class="forum-topic clearfix"
+                     ng-click="clickTopic(topic)">
+                    <div class="row">
+                        <div ng-class="{  'col-xs-6' : topic.users.length>0, 'col-xs-12':  topic.users.length==0}"
+                             style="float:left">
+                            <div class="row">
+                                <div class="col-xs-12" style="width:auto">
+                                    <div class="forum-avatar">
+                                        <img ng-if="topic.createdBy.avatarUrl" alt=""
+                                             ng-src="{{topic.createdBy.avatarUrl + '/100x100'}}">
+                                        <img ng-if="!topic.createdBy.avatarUrl" alt="" src="/img/avatar.jpg">
+                                    </div>
+                                    <div class="forum-content" style="float:right">
+                                        <h1>{{topic.title}}</h1>
+                                        <span ng-if="topic.quest"
+                                              class="badge badge-quest">{{topic.quest.title}}</span>
+                                        <span ng-if="topic.challenge" class="badge badge-challenge">{{topic.challenge.title}}</span>
+                                        <span class="badge badge-category" style="margin-top:10px"
+                                              ng-if="topic.category">{{topic.category.name}}</span><br />
+                                        <span class="text-xs" ng-if="topic.category">By: {{topic.createdBy.firstName}} {{topic.createdBy.lastName}} - {{formatTime(topic.createdAt)}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 forum-content" ng-if="topic.users.length > 0" style="float:right">
+                            <div class="row" style="height:67px;overflow:auto">
+                                <div ng-repeat="networkUser in topic.users"
+                                     ng-if="networkUser.user.id != ownNetworkUser.user.id"
+                                     class="pull-right col-xs-8 col-sm-4 col-lg-3 network-user">
+                                    <span style="margin-right:10px;margin-top:3px"
+                                          class="badge pull-right col-xs-12">{{ networkUser.user.firstName + ' ' + networkUser.user.lastName }}</span>
+
+                                    <div class="forum-avatar pull-right">
+                                        <img ng-if="networkUser.user.avatarUrl" alt=""
+                                             ng-src="{{networkUser.user.avatarUrl + '/100x100'}}">
+                                        <img ng-if="!networkUser.user.avatarUrl" alt="" src="/img/avatar.jpg">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br />
+
+                            <div class="row">
+                                <div class=col-xs-12">
+                                    <span class="badge pull-right" style="margin-right:10px">{{topic.children.length}} comments</span>
+                                    <button class="badge pull-right"
+                                            ng-if="(topic.createdBy.id == userId || isClientAdmin) && topic.children.length == 0 && topic.categoryId != null"
+                                            ng-click="deleteForumItem($event, topic, true)"
+                                            onfocus="blur()" tabindex="-1" title="Delete Discussion"
+                                            style="background:rgba(0,0,0,0.5);border:none">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 forum-content" ng-if="topic.users.length == 0">
+                                <span class="badge pull-right"
+                                      style="margin-right:10px">{{topic.children.length}}comments</span>
+                                <button class="badge pull-right"
+                                        ng-if="topic.createdBy.id == userId && topic.children.length == 0 && topic.categoryId != null"
+                                        ng-click="deleteForumItem($event, topic, true)"
+                                        onfocus="blur()" tabindex="-1" title="Delete Discussion"
+                                        style="background:rgba(0,0,0,0.5);border:none">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+    </section>
+
+    <section ng-if="!isLoading" class="forum-create-topic" ng-show="ui.inCreate">
+        <form ng-style="getBackgroundFontStyle()" action="" method="post" ng-submit="submitTopic($event)">
+            <div class="form-group">
+                <h3 style="margin:0;">New Discussion</h3>
+
+                <div class="text-sm">Program: {{program.title}}</div>
+            </div>
+
+            <div class="form-group" ng-class="{'has-error':ui.val.title.req}">
+                <label for="title" class="control-label">Title *</label>
+                <input id="title" type="text" ng-model="model.title" class="form-control">
+
+                <div class="text-sm text-danger text-val" ng-if="ui.val.title.req">Title cannot be empty.</div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-xs-6" ng-class="{'has-error':ui.val.category.req}">
+                        <label for="cat" class="control-label">Category *</label>
+                        <select id="cat" ng-model="model.category" class="form-control"
+                                ng-options="c.name for c in categories"></select>
+                    </div>
+                    <div class="col-xs-6" ng-if="allCompletedQuests().length > 0">
+                        <label for="quest" class="control-label">Quest</label>
+                        <select id="quest" ng-model="model.quest" class="form-control"
+                                ng-options="q.title for q in allCompletedQuests()">
+                            <option value="">-- quest --</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-offset-6 col-xs-6" ng-if="model.quest">
+                        <label for="challenge" class="control-label">Challenge</label>
+                        <select id="challenge" ng-model="model.challenge" class="form-control"
+                                ng-options="c.title for c in getCompletedChallenges(model.quest)">
+                            <option value="">-- challenge --</option>
+                        </select>
+
+                        <div class="text-sm text-danger text-val" ng-if="ui.val.challenge.req">
+                            Please select a
+                            challenge. Quest only discussion will be enabled when you complete all of the quest's
+                            challenges.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label for="users" class="control-label">Share with</label>
+
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" ng-click="removeAllUsers()" ng-model="model.sharing"
+                                               value="all" name="optradio">All
+                                        Members
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" ng-model="model.sharing" value="select" name="optradio">Selected
+                                        Members
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 big-tooltips" ng-if="model.sharing == 'select'">
+                                <label for="users" class="control-label">Add Users</label>
+
+                                <div ng-dropdown-multiselect=""
+                                     extra-settings="{'enableSearch': true }"
+                                     translation-texts="{'buttonDefaultText' : 'Click to add users'}"
+                                     events="{ onItemSelect: userSelected, onRemoveGroup: removeGroup, onGroupSelect: groupSelected }"
+                                     checkboxes="true" options="ui.networkUsers"
+                                     selected-model="selectedNetworkUsers"
+                                     group-by="type"></div>
+
+
+                                <button type="button"
+                                        class="btn btn-primary btn-block"
+                                        class="row" ng-if="model.networkUsers.length > 2"
+                                        ng-click="createUserGroup($event)">
+                                    Save users to group
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group forum-user-list" ng-if="model.networkUsers.length>0">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12"
+                         ng-if="networkUser.user.id != ownNetworkUser.user.id"
+                         ng-repeat="networkUser in model.networkUsers">
+                        <div class="forum-user clearfix forum-user-rounded"
+                             ng-click="clickNetworkUser(topic)">
+                            <div class="forum-user-avatar">
+                                <img ng-if="networkUser.user.avatarUrl" alt=""
+                                     ng-src="{{networkUser.user.avatarUrl + '/100x100'}}">
+                                <img ng-if="!networkUser.user.avatarUrl" alt="" src="/img/avatar.jpg">
+                            </div>
+                            <div class="forum-user-content" style="margin-top:15px">
+                                <h4 class="pull-left">
+                                    {{
+ networkUser.user.firstName + ' ' +
+                                    networkUser.user.lastName
+                                    }}
+                                </h4>
+                                <button class="badge pull-right"
+                                        type="button"
+                                        ng-click="removeNetworkUser(networkUser)"
+                                        onfocus="blur()" tabindex="-1" title="Remove User"
+                                        style="background:rgba(0,0,0,0.5);border:none">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="height:auto">
+                <div class="col-xs-3">
+                    <div class="row" style="height:auto">
+                        <div class="col-xs-12 add-media">
+                            <button type="button"
+                                    class="btn btn-primary btn-block"
+                                    ng-click="addMedia($event)">
+                                Add Media
+                            </button>
+                            <div class="add-media-popup"
+                                 ng-class="{'open': ui.addMedia.in}">
+                                <div ng-show="ui.addMedia.isLoading"
+                                     class="loading-overlay">
+                                    <div class="loading" ng-cloak>
+                                        <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+
+                                        <div>One moment please...</div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default no-margin-bottom"
+                                     ng-click="$event.stopPropagation()">
+                                    <div ng-style="getHeaderCustomStyle()" class="panel-heading">Add Media</div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="btn outline btn-block"
+                                                     ng-file-select
+                                                     ng-file-change="uploadMedia($files)">
+                                                    Upload From Your Computer
+                                                </div>
+                                                <div class="text-sm text-danger"
+                                                     ng-if="ui.val.addMedia.type">
+                                                    Format not supported.
+                                                </div>
+                                                <div class="text-sm text-danger"
+                                                     ng-if="ui.val.addMedia.size">
+                                                    File too large.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row" style="height:auto">
+                                            <div class="col-xs-12"
+                                                 ng-class="{'has-error': ui.val.addMedia.req || ui.val.addMedia.fmt}">
+                                                <div>Embed Media</div>
+                                                <textarea rows="2" class="form-control"
+                                                          placeholder="Embed Text"
+                                                          ng-click="$event.stopPropagation()"
+                                                          ng-model="ui.addMedia.link"></textarea>
+
+                                                <div class="text-sm text-danger"
+                                                     ng-if="ui.val.addMedia.req">
+                                                    Video
+                                                    embed
+                                                    text cannot be
+                                                    empty.
+                                                </div>
+                                                <div class="text-sm text-danger"
+                                                     ng-if="ui.val.addMedia.fmt">
+                                                    Invalid
+                                                    embed
+                                                    text.
+                                                </div>
+                                                <button type="button"
+                                                        class="btn outline btn-block"
+                                                        style="margin-top:10px;"
+                                                        ng-click="selectMediaLink($event,'YouTube');$event.stopPropagation()">
+                                                    OK
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br ng-if="model.media" />
+
+            <div class="row" style="height:auto">
+                <div class="col-xs-12 col-sm-6 col-lg-4"
+                     ng-repeat="media in model.media">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="padding-left:10px;"
+                             ng-class="{'quest-error':mediaHasError(media)}">
+                            <div style="height:20px;margin-top:-10px">
+                                <button class="removeMedia"
+                                        ng-click="removeMedia($event,media)"
+                                        onfocus="blur()" tabindex="-1"
+                                        title="Remove Media">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="panel-title">
+                                <div class="content">
+                                    <div class="row image-media" style="height:auto"
+                                         ng-if="media.type=='image'">
+                                        <div class="col-xs-3">
+                                            <a ng-href="{{media.url}}"
+                                               target="_blank">
+                                                <img class="thumbnail media"
+                                                     alt=""
+                                                     ng-src="{{media.url}}">
+                                            </a>
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div class="form-group">
+                                                <input type="text" ng-model="media.name"
+                                                       placeholder="Media name."
+                                                       title="Media name."
+                                                       class="form-control">
+                                            </div>
+                                            <textarea ng-model="media.description"
+                                                      placeholder="Media description."
+                                                      title="Media description."
+                                                      class="form-control"
+                                                      rows="2"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row video-media"
+                                         style="height:auto"
+                                         ng-if="media.type=='video' && media.source=='system'">
+                                        <div class="col-xs-3">
+                                            <img class="thumbnail media" alt=""
+                                                 ng-src="{{media.url}}">
+
+                                            <div class="video-play"
+                                                 ng-show="media.encodings.length > 0">
+                                                <i class="fa fa-play-circle-o"
+                                                   ng-click="playVideo(media)"></i>
+                                            </div>
+                                            <div class="loading-overlay"
+                                                 ng-show="media.encodings.length <= 0"
+                                                 style="left:15px;right:15px;">
+                                                <div class="loading loading-sm">
+                                                    <span us-spinner="{radius:9, width:4, length: 6, color: '#b0b0b7'}"></span>
+
+                                                    <div>encoding...</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div class="form-group">
+                                                <input type="text" ng-model="media.name"
+                                                       placeholder="Name"
+                                                       class="form-control">
+                                            </div>
+                                            <textarea ng-model="media.description" placeholder="Description"
+                                                      class="form-control" rows="2"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row video-media"
+                                         style="height:auto"
+                                         ng-if="media.type=='video' && media.source=='youtube'">
+                                        <div class="col-xs-3">
+                                            <img class="thumbnail media" alt=""
+                                                 ng-src="{{media.coverUrl}}">
+
+                                            <div class="video-play">
+                                                <i class="fa fa-play-circle-o"
+                                                   ng-click="playVideo(media)"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div class="form-group">
+                                                <input type="text" ng-model="media.name"
+                                                       placeholder="Name"
+                                                       class="form-control">
+                                            </div>
+                                            <textarea ng-model="media.description" placeholder="Description"
+                                                      class="form-control" rows="2"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row audio-media"
+                                         style="height:auto"
+                                         ng-if="media.type=='audio'">
+                                        <div class="col-xs-3">
+                                            <div class="form-group">
+                                                <img class="thumbnail media" alt=""
+                                                     src="<%- config.web.contentUrl %>/img/audio.jpg">
+                                            </div>
+                                            <div class="audio-play">
+                                                <i class="fa"
+                                                   ng-class="{'fa-play-circle-o':(!media.audio || media.audio.paused),'fa-pause':(media.audio && !media.audio.paused)}"
+                                                   ng-click="playPauseAudio(media)"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <input type="text" ng-model="media.name"
+                                                   placeholder="Name"
+                                                   class="form-control">
+                                            <textarea ng-model="media.description" placeholder="Description"
+                                                      class="form-control" rows="2"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div ng-if="media.type=='text'">
+                                        <div class="form-group">
+                                            <div text-angular ng-model="media.text"
+                                                 ng-model="anchorTarget(media)"
+                                                 ta-toolbar="taToolbar"></div>
+                                        </div>
+                                        <input type="text" ng-model="media.description"
+                                               placeholder="Description"
+                                               class="form-control">
+                                    </div>
+
+                                    <div ng-if="media.type=='link'">
+                                        <div class="form-group"
+                                             ng-class="{'has-error':media.val.link.req || media.val.link.fmt}">
+                                            <input id="link{{$index}}" type="text"
+                                                   ng-model="media.link"
+                                                   class="form-control"
+                                                   placeholder="Link">
+
+                                            <div class="text-xs text-danger"
+                                                 ng-if="media.val.link.req">
+                                                Link
+                                                cannot
+                                                be empty.
+                                            </div>
+                                            <div class="text-xs text-danger"
+                                                 ng-if="media.val.link.fmt">
+                                                URL
+                                                is
+                                                not
+                                                properly formatted.
+                                            </div>
+                                        </div>
+                                        <input type="text" ng-model="media.description"
+                                               placeholder="Description"
+                                               class="form-control">
+                                    </div>
+                                    <div ng-if="media.type=='resource'">
+                                        <div class="resourceImage">
+                                            <div style="float:left">
+                                                Download
+                                                &nbsp;
+                                            </div>
+                                            <i class="fa fa-file fa-4x text-muted"></i><br>
+                                        </div>
+                                        <div style="margin-left:77px" class="link-wrap">
+                                            <a ng-href="{{media.url}}" target="_blank">{{media.name}}</a>
+                                        </div>
+                                        <input type="text" ng-model="media.description"
+                                               placeholder="Description"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error':ui.val.content.req}">
+                <label for="content" class="control-label">Content *</label>
+                <textarea rows="5" id="content" type="text" ng-model="model.content"
+                          class="form-control"></textarea>
+
+                <div class="text-sm text-danger text-val" ng-if="ui.val.content.req">
+                    Content cannot be empty.
+                </div>
+            </div>
+
+            <div class="text-sm text-danger text-val" ng-if="submitError">{{submitError}}</div>
+            <div class="form-group">
+                <button type="submit" ng-disabled="topicSubmitting" class="btn btn-primary">
+                    Create Discussion
+                </button>
+                <button type="button" ng-disabled="topicSubmitting" ng-click="cancelTopicCreate()"
+                        class="btn btn-default gray">
+                    Cancel
+                </button>
+            </div>
+
+            <div ng-if="matchingTopics.length > 0">
+                The discussion {{matchingTopics.length > 1 ? 's' : ''}} below looks similar to yours, please consider
+                clicking
+                {{matchingTopics.length > 1 ? 'one of them' : 'it'}} to comment there instead. Otherwise
+                {{matchingItemWithSameTitle ? 'change the title and' : ''}} click 'Create Discussion' again to post
+                your
+                discussion.
+            </div>
+            <section ng-if="!isLoading" class="forum-topic-list">
+                <div ng-if="topics.length>0" ng-repeat="topic in matchingTopics" class="forum-topic clearfix"
+                     ng-click="clickTopic(topic)">
+                    <div class="forum-avatar">
+                        <img ng-if="topic.createdBy.avatarUrl" alt="" ng-src="{{topic.createdBy.avatarUrl}}">
+                        <img ng-if="!topic.createdBy.avatarUrl" alt="" src="/img/avatar.jpg">
+                    </div>
+                    <div class="forum-content">
+                        <h1>{{topic.title}}</h1>
+                        <span ng-if="topic.quest" class="badge badge-quest">{{topic.quest.title}}</span>
+                        <span ng-if="topic.challenge"
+                              class="badge badge-challenge">{{topic.challenge.title}}</span>
+                        <span class="badge badge-category">{{topic.category.name}}</span>
+                        <span class="text-xs">By: {{topic.createdBy.firstName}} {{topic.createdBy.lastName}} - {{formatTime(topic.createdAt)}}</span>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </section>
+</div>

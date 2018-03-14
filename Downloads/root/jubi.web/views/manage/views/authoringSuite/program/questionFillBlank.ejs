@@ -1,0 +1,56 @@
+<ul dnd-list="question.workAnswers.fillBlank.answers"
+    dnd-drop="answerDrop(event, index, item, external, type, 'fillBlank', question)"
+    dnd-allowed-types="['fillBlank']">
+    <li ng-repeat="answer in question.workAnswers.fillBlank.answers"
+        dnd-type="'fillBlank'"
+        dnd-draggable="answer"
+        dnd-moved="question.workAnswers.fillBlank.answers.splice($index, 1)"
+        dnd-selected="question.workAnswers.fillBlank.selectedAnswer=answer"
+        dnd-effect-allowed="move"
+        dnd-disable-if="!question.workAnswers.fillBlank.canDrag || quest.publishedAt"
+        ng-class="{'selected':question.workAnswers.fillBlank.selectedAnswer===answer}">
+
+        <div class="panel-group accordion">
+            <div class="panel panel-default" ng-class="{'quest-error':answer.hasError}">
+                <div class="panel-heading" style="padding-left:10px;">
+                    <div class="panel-title" ng-class="{'has-error':answer.val.answer.req}">
+                        <div class="text-muted handle"
+                             ng-mousedown="canEditEntity(quest, program) && answerDragHandleDown($event,question,answer,'fillBlank')"
+                             ng-mouseup="canEditEntity(quest, program) && answerDragHandleUp($event,question,answer,'fillBlank')">
+                            <span ng-style="{ color: getEntityHandleColor(quest, program) }"
+                                  style="margin-left:4px"
+                                  class="fa fa-ellipsis-v"></span>
+                        </div>
+                        <div class="content">
+                            <input type="text" class="form-control" placeholder="Sentence Fragment"
+                                   ng-model="answer.answer">
+                            <div class="text-xs">
+                                <a href="#" ng-click="canEditEntity(quest, program) && fillBlankSetBlank($event,answer,question)"><i
+                                            class="fa fa-check-circle-o"
+                                            ng-class="{'text-muted':!answer.correct,'text-success':answer.correct}"></i>
+                                    Present Blank</a>
+                                |
+                                <a href="#" ng-click="canEditEntity(quest, program) && fillBlankRemoveAnswer($event,answer,$index,question)">Remove
+                                    Fragment</a>
+                            </div>
+                            <div class="text-sm text-danger" ng-if="answer.val.answer.req">Fragment cannot be empty.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+<div style="padding-bottom:10px;"
+     ng-if="question.workAnswers.fillBlank.val.blank.req || question.workAnswers.fillBlank.val.blank.all">
+    <div class="text-sm text-danger" ng-if="question.workAnswers.fillBlank.val.blank.req">Please select at least one
+        blank answer.
+    </div>
+    <div class="text-sm text-danger" ng-if="question.workAnswers.fillBlank.val.blank.all">You cannot mark all answers as
+        blank.
+    </div>
+</div>
+<button ng-disabled="!canEditEntity(quest, program)" type="button" class="btn btn-primary outline btn-block" ng-click="addAnswer('fillBlank',question)">
+    <span class="icon fa fa-plus" title="Add New Fragment"></span> Add New Fragment
+</button>

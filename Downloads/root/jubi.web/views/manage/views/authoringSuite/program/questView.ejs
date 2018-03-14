@@ -1,0 +1,79 @@
+<div class="program-front">
+  <div class="top-text">
+    <span class="left-image" ng-mousedown="questDragHandleDown($event,quest,level)" ng-mouseup="questDragHandleUp($event,quest,level)">
+      <img src="<%- config.web.contentUrl %>/img/drag-icon.svg">
+    </span>
+    <span class="manage-dropdown right-image"
+          ng-click="toggleQuestMenu($event,quest)" tabindex="-1" onfocus="blur()">
+      <span class="fa fa-ellipsis-h"></span>
+    </span>
+    <div class="dropdown" ng-show="!busy && quest.menuOpen">
+      <ul class="authoring-activities-dropdown">
+        <span class="white-arrow"></span>
+        <li class="preview">
+          <img src="<%- config.web.contentUrl %>/img/preview-icon.svg">
+            <a href="#" ng-click="preview($event, quest, null, level)" tabindex="-1" onfocus="blur()">Preview</a>
+        </li>
+        <li class="edit">
+          <img src="<%- config.web.contentUrl %>/img/edit-icon.svg">
+            <a href="#" ng-click="editQuest($event, quest, level, $index)" tabindex="-1" onfocus="blur()">Edit</a>
+          </li>
+        <li class="duplicate">
+          <img src="<%- config.web.contentUrl%>/img/duplicate-icon.svg">
+            <a href="#" ng-click="duplicateQuest($event, quest, level, program)" tabindex="-1" onfocus="blur()">Duplicate</a>
+          </li>
+        <!--<li class="add-to-clipboard">
+          <img src="<%- config.web.contentUrl%>/img/clipboard-icon.svg">
+            <a href="#">Add to clipboard</a>
+          </li>-->
+        <li class="delete">
+          <img src="<%- config.web.contentUrl%>/img/delete-icon.svg">
+            <a href="#" ng-click="removeQuest($event, quest, level)" tabindex="-1" onfocus="blur()">Delete</a>
+          </li>
+      </ul>
+    </div>
+  </div>
+
+  <p></p>
+  <p class="center-image-learn" ng-if="quest.type=='L'">
+    <span>
+      <img src="<%- config.web.contentUrl%>/img/learn-white-tile-icon.svg">
+        
+    </span>
+  </p>
+  <p class="center-image-do" ng-if="quest.type=='T'">
+    <span>
+      <img src="<%- config.web.contentUrl %>/img/do-white-tile-icon.svg">
+        
+    </span>
+  </p>
+  <p class="center-image-inspire" ng-if="quest.type=='I'">
+    <span>
+      <img src="<%-config.web.contentUrl %>/img/inspire-white-tile-icon.png">
+        
+    </span>
+  </p>
+  <p class="bottom-text">
+    <span ng-if="quest.type=='L'">Learn</span>
+    <span ng-if="quest.type=='T'">Do</span>
+    <span ng-if="quest.type=='I'">Inspire</span>
+      <span class="basequesticon" ng-show="quest.baseOrBonus == 'B'">
+      <i class="fa fa-asterisk"></i>
+     <span class="topbaseopen">BASE (required)</span>
+      </span>
+  
+      <span class="basequesticon" ng-show="quest.baseOrBonus == 'O'">
+          <i class="fa fa-star-o"></i>
+          <span class="topbonusopen">BONUS</span>
+     </span>
+  </p>
+</div>
+<div class="program-text" ng-class="{'has-error':quest.val.title.req}">
+  <input dnd-no-drop="" type="text" class="form-control" placeholder="Activity title." title="Activity title." ng-model="quest.title" ng-change="questTitleChanged(quest)">
+    <div class="text-sm text-danger" ng-if="quest.val.title.req">Activity title cannot be empty.</div>
+    <div class="text-sm text-danger" ng-if="quest.val.program.save">Activity Not saved.</div>
+    <div class="text-sm text-danger" ng-if="quest.val.challenges.req && quest.type=='L'">
+      All Activities must have at least 1
+      challenge to publish the program.
+    </div>
+  </div>

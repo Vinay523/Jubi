@@ -1,0 +1,95 @@
+<div ng-controller="AuthoringSuiteProgramBadgesController" ng-show="!loading.isLoading" ng-click="offClick($event)">
+    <div class="row page-heading panel">
+        <div class="col-xs-12">
+            <%- partial('manage/views/authoringSuite/badges/badgeListingHeader') %>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-8 col-lg-9">
+
+            <div class="loading" ng-show="isSaving">
+                <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+
+                <div>One moment please...</div>
+            </div>
+
+            <div ng-show="!isSaving">
+
+                <div ng-if="program.badges.length<=0">
+                    <p class="text-xl text-muted text-center" style="padding:50px 0;">
+                        No badges defined.<br>Click the Add {{getBadgeLabel(true)}} button below to get started.
+                    </p>
+                </div>
+
+                <div ng-if="program.badges.length>0" class="row">
+                    <div class="col-xs-12 col-sm-4 badge-tile" ng-repeat="badge in program.badges">
+                        <div class="badge-actions">
+                            <button type="button" class="manage-dropdown btn btn-primary"
+                                    ng-click="toggleBadgeMenu($event,badge)" tabindex="-1" onfocus="blur()">
+                                <span class="fa fa-ellipsis-h"></span>
+                            </button>
+                            <div class="dropdown" ng-show="badge.menuOpen">
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#" ng-click="badgeEdit($event,badge,$index)" tabindex="-1"
+                                           onfocus="blur()">
+                                            <i class="fa fa-pencil-square-o"></i> edit
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" ng-click="duplicateBadge($event,badge,$index)" tabindex="-1"
+                                           onfocus="blur()">
+                                            <i class="fa fa-copy"></i> duplicate
+                                        </a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="#" ng-click="removeBadge($event,$index,badge)" tabindex="-1"
+                                           onfocus="blur()">
+                                            <i class="fa fa-trash-o"></i> delete
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="badge-image">
+                            <img ng-if="!badge.imageUrl" alt="" ng-src="<%- config.web.contentUrl %>/img/empty.png">
+                            <img ng-if="badge.imageUrl" alt="" ng-src="{{badge.imageUrl}}/250x250">
+                        </div>
+                        <div class="badge-info" ng-class="{'badge-info-error':badge.val.title.req}">
+                            <div class="form-group" ng-class="{'has-error':badge.val.title.req}">
+                                <input type="text" class="form-control" ng-model="badge.title"
+                                       placeholder="{{getBadgeLabel(true)}} title.">
+
+                                <div class="text-xs text-danger text-no-height" ng-if="badge.val.title.req">Badge title
+                                    cannot be empty.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <textarea rows="2" class="form-control" ng-model="badge.description"
+                                          placeholder="{{getBadgeLabel(true)}} description."></textarea>
+                            </div>
+                            <div class="form-group text-sm text-muted">
+                                <i class="fa fa-trophy"></i>
+                                {{badgeReqSummary(badge)}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br><br>
+
+                <div class="btn-group btn-group-justified" role="group" style="padding-bottom:20px;">
+                    <a href="#" ng-click="addBadge($event)" class="btn btn-primary btn-lg">
+                        <span class="fa fa-trophy"></span>
+                        <span class="hidden-xs hidden-sm"><br/>Add {{getBadgeLabel(true)}}</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-4 col-lg-3">
+            <%- partial('manage/views/authoringSuite/badges/sidebar', {hidePublish: true}) %>
+        </div>
+    </div>
+</div>

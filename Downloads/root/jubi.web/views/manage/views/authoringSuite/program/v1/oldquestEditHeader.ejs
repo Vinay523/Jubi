@@ -1,0 +1,16 @@
+<div style="padding:0 0 15px;">
+    <div class="form-group" ng-class="{'has-error':quest.val.title.req}">
+        <h2 style="margin-bottom:0;"><input type="text" class="form-control input-lg" id="program-title" placeholder="Quest title." title="Quest title." ng-model="quest.title"></h2>
+        <div class="text-sm text-danger" ng-if="quest.val.title.req">Quest title cannot be empty.</div>
+    </div>
+    <div ng-class="{'has-error':quest.val.objective.req}">
+        <textarea id="quest-desc" class="form-control" placeholder="Quest objective." title="Quest objective." ng-model="quest.objective" rows="1"></textarea>
+        <div class="text-sm text-danger" ng-if="quest.val.objective.req">Quest objective cannot be empty.</div>
+    </div>
+</div>
+<ol class="breadcrumb text-sm">
+    <li><a ng-href="/manage/dashboard">Dashboard</a></li>
+    <li><a ng-href="/manage/authoring-suite/programs">Authoring Suite</a></li>
+    <li><a href="#" ng-click="cancel($event, 'program')">{{(program.title ? program.title : 'Program Title')}}</a></li>
+    <li class="active">{{(quest.title ? quest.title : 'Quest Title')}}</li>
+</ol>

@@ -1,0 +1,223 @@
+<div style="left:-15px;right:-15px" ng-show="isSaving">
+    <div class="loading">
+        <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+        <div>One moment please...</div>
+    </div>
+</div>
+
+<div ng-show="!isSaving">
+    <div>
+              <div ng-show="challenge.isLoading" class="loading-overlay">
+                    <div class="loading" ng-cloak>
+                        <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+                        <div>One moment please...</div>
+                    </div>
+                </div>
+
+                <div class="panel-group " ng-click="offMenuClick($event)">
+                    <label>Inspiration Activity Setup</label>
+                    <div class="panel panel-default activitySetup">
+                        
+                        <div class="panel-body" style="padding-left:10px;"> 
+                            <div class="form-group row">
+                                <div class="col-xs-12 col-sm-2 text-right">
+                                    <label class="control-label" style="padding-top:0;">Activity Type</label>
+                                </div>
+                                <div class="col-xs-12 col-sm-10 input-group">
+                                    <label class="control-label col-xs-12 " style="padding-top:0;">
+                                        <input class="activityType form-control" type="radio" name="baseBonus" ng-disabled="!canEditEntity(quest, program)" ng-model="quest.baseOrBonus" ng-checked="quest.baseOrBonus == 'B'" ng-click="quest.baseOrBonus = 'B'"/>
+                                    Base Activity - must be completed for full Program requirements</label>
+                                    <label class="control-label col-xs-12 " style="padding-top:0;">
+                                        <input class="activityType form-control" type="radio" name="baseBonus" ng-disabled="!canEditEntity(quest, program)" ng-model="quest.baseOrBonus" ng-checked="quest.baseOrBonus == 'O'" ng-click="quest.baseOrBonus = 'O'" />
+                                    Bonus Activity - can be left incomplete and skipped over</label>
+                                </div>
+                            </div>
+
+                          
+                                <div class="row form-group" ng-class="{'has-error':quest.val.objective.req}">
+                                    <div class="col-xs-12 col-sm-2 text-right">
+                                        <label for="obj" class="control-label" style="padding-top:0;">Objective</label>
+                                    </div>
+                                        <div class="col-xs-12 col-sm-10" ng-class="{'has-error':quest.val.objective.req}">
+                                            <!--<textarea class="form-control"
+                                                      id="obj"
+                                                      placeholder="Activity objective."
+                                                      title="Activity objective."
+                                                      ng-model="quest.objective"
+                                                      dnd-no-drop></textarea>-->
+                                            <ng-quill-editor placeholder="Activity objective." title="Activity objective." ng-model="quest.objective"></ng-quill-editor>
+                                            <span class="text-sm text-danger" ng-if="quest.val.objective.req">Activity objective cannot be empty.</span>
+                                        </div>
+                                    </div>
+
+                                <div class="row form-group">
+                                    <div class="col-xs-12 col-sm-2 text-right">
+                                        <label for="tile-img" class="control-label" style="padding-top:0;">
+                                            Tile
+                                            Image
+                                        </label>
+
+                                        <div class="text-xs text-muted">
+                                            Max File Size: 4MB<br>(JPG, JPEG, GIF, PNG)<br>Dimensions: 348px by 206 px
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-5 ">
+                                        <div class="quest-edit thumbnail prevTile">
+                                            <div class="program-img">
+                                                <div ng-show="quest.uploading.tile">
+                                                    <div class="loading loading-sm">
+                                                        <img src="<%- config.web.contentUrl %>/img/empty.png" />
+                                                        <span us-spinner="{radius:15, width:4, length: 9, color: '#b0b0b7'}"></span>
+                                                    </div>
+                                                </div>
+
+                                                <div ng-show="!quest.uploading.tile">
+                                                    <div class="manage manage-photo btn-sm">
+                                                        <a ng-if="quest.featuredImageUrl" href="#"
+                                                           class="btn btn-default red pull-right"
+                                                           ng-click="removeQuestImage($event, quest, 'tile')">
+                                                            <span class="fa fa-trash-o" title="Remove Image"></span>
+                                                        </a>
+
+                                                        <div class="btn btn-default blue pull-left"
+                                                             ng-file-select
+                                                             ng-file-change="uploadQuestImage($files, quest, 'tile')">
+                                                            upload
+                                                        </div>
+                                                    </div>
+
+                                                    <div ng-if="quest.featuredImageUrl">
+                                                        <img ng-src="{{quest.featuredImageUrl}}" alt="" />
+                                                    </div>
+                                                    <div ng-if="!quest.featuredImageUrl">
+                                                        <!--<img src="<%- config.web.contentUrl %>/img/empty.png" />-->
+                                                        <img src="<%- config.web.contentUrl %>/img/Group 15.png" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-sm text-danger" ng-if="quest.val.featuredImage.type"
+                                                 style="padding-top:5px;">
+                                                Unsupported image type.
+                                            </div>
+                                            <div class="text-sm text-danger" ng-if="quest.val.featuredImage.size"
+                                                 style="padding-top:5px;">
+                                                Image is too large.
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-xs-12 col-sm-2 text-right">
+                                        <label for="tile-img" class="control-label" style="padding-top:0;">
+                                            Background
+                                            Image
+                                        </label>
+
+                                        <div class="text-xs text-muted">
+                                            Max File Size: 4MB<br>(JPG, JPEG, GIF, PNG)
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-5 ">
+                                        <div class="quest-edit thumbnail"
+                                             ng-class="{'auto-height':quest.backgroundImageUrl}">
+                                            <div class="program-img">
+                                                <div ng-show="quest.uploading.bg">
+                                                    <div class="loading loading-sm">
+                                                        <img src="<%- config.web.contentUrl %>/img/empty.png" />
+                                                        <span us-spinner="{radius:15, width:4, length: 9, color: '#b0b0b7'}"></span>
+                                                    </div>
+                                                </div>
+
+                                                <div ng-show="!quest.uploading.bg">
+                                                    <div class="manage manage-photo btn-sm">
+                                                        <a ng-if="quest.backgroundImageUrl" href="#"
+                                                           class="btn btn-default red pull-right"
+                                                           ng-click="removeQuestImage($event, quest, 'bg')">
+                                                            <span class="fa fa-trash-o" title="Remove Image"></span>
+                                                        </a>
+
+                                                        <div class="btn btn-default blue pull-left"
+                                                             ng-file-select
+                                                             ng-file-change="uploadQuestImage($files, quest, 'bg')">
+                                                            upload
+                                                        </div>
+                                                    </div>
+
+                                                    <div ng-if="quest.backgroundImageUrl">
+                                                        <img ng-src="{{quest.backgroundImageUrl}}" alt="" />
+                                                    </div>
+                                                    <div ng-if="!quest.backgroundImageUrl">
+                                                        <img src="<%- config.web.contentUrl %>/img/empty.png" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-sm text-danger" ng-if="quest.val.backgroundImage.type"
+                                                 style="padding-top:5px;">
+                                                Unsupported image type.
+                                            </div>
+                                            <div class="text-sm text-danger" ng-if="quest.val.backgroundImage.size"
+                                                 style="padding-top:5px;">
+                                                Image is too large.
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            
+
+                       
+                        </div>
+
+                 
+                    </div>
+                    <label>Inspiration Types Available</label>
+                    <div class="panel panel-default inspirationType">
+
+                        <div class="panel-body" style="padding-left:10px;">
+                       
+                           
+                                <div class="form-group col-xs-12 col-sm-12">
+                                   
+                                    <div class="col-xs-12 col-sm-12 input-group">
+                                        <label class="control-label" style="padding-top:0;">
+                                            <input ng-disabled="!canEditEntity(quest, program)" class="inspireType form-control" type="checkbox" ng-model="quest.inspireAvailableToUser" ng-checked="quest.inspireAvailableToUser == true" ng-click="checkMinBox('A')"/>
+                                            Appreciate
+                                        </label>
+                                        <label class="control-label" style="padding-top:0;">
+                                            <input ng-disabled="!canEditEntity(quest, program)" class="inspireType form-control" type="checkbox" ng-model="quest.encourageAvailableToUser" ng-checked="quest.encourageAvailableToUser == true" ng-click="checkMinBox('E')"/>
+                                            Encourage
+                                        </label>
+                                        <label class="control-label" style="padding-top:0;">
+                                            <input ng-disabled="!canEditEntity(quest, program)" class="inspireType form-control" type="checkbox" ng-model="quest.storyAvailableToUser" ng-checked="quest.storyAvailableToUser == true" ng-click="checkMinBox('S')" />
+                                            Story
+                                        </label>
+                                     
+                                    </div>
+
+                                </div>
+                            <div class="form-group col-xs-12 col-sm-12">
+
+                                <div class="col-xs-12 col-sm-12 input-group" >
+                                    <label class="control-label" style="padding-top:0;">
+                                        <input ng-disabled="!canEditEntity(quest, program)" class="mediaEnable form-control" type="checkbox" value="Enable" ng-model="quest.userAllowedMediaUpload" ng-click="showLog()" />
+                                        Enable user media upload
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+         
+    </div>
+
+   
+    
+</div>

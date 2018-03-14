@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=0">
+    <title>Authoring Suite</title>
+    
+<link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="./bootstrap/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="./css/styles.css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+<script src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="./js/bootstrap.min.js"></script>
+    </head>
+    <body>
+       
+        <div class="row authoring-wrapper">
+  
+        <div class="authoring-content col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding">
+     <div class="program-tiles-left col-lg-3 col-md-3 col-sm-3 col-xs-3 zeropadding">
+         <div class="drag-drop-heading">Drag and Drop Activity Types</div>
+         <div class="learn"><p>LEARN</p><p class="text-center"><span><img src="images/learn-blue-tile.svg"/></span></p></div>
+         <div class="do"><p>DO</p><p class="text-center"><span><img src="images/do-green-tile.svg"/></span></p></div>
+         <div class="inspire"><p>INSPIRE</p><p class="text-center"><span><img src="images/orange-inspire-icon.png"/></span></p></div>
+    </div>
+            <div class="program-tiles-right col-lg-9 col-md-9 col-sm-9 col-xs-9 zeropadding">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 zeropadding program-tile1">
+          <div class="program-front">
+              <p class="top-text">
+                  <span class="left-image"><img src="images/drag-icon.svg"></span>
+                 <span class="right-image fa fa-ellipsis-h" onclick="$('.program-tile1 .authoring-activities-dropdown').toggle();"></span>
+                 <ul class="authoring-activities-dropdown">
+                  <span class="white-arrow"></span>
+                  <li class="preview"><img src="images/preview-icon.svg"/><a href="#">Preview</a></li>
+                <li class="edit"><img src="images/edit-icon.svg"/><a href="#">Edit</a></li>
+                <li class="duplicate"><img src="images/duplicate-icon.svg"/><a href="#">Duplicate</a></li>
+                <li class="add-to-clipboard"><img src="images/clipboard-icon.svg"/><a href="#">Add to clipboard</a></li>
+                <li class="delete"><img src="images/delete-icon.svg"/><a href="#">Delete</a></li>
+                  </ul>
+                 </p>
+              <p class="center-image-learn"><span><img src="images/learn-white-tile-icon.svg"/></span></p>
+              <p class="bottom-text"><span>Learn</span></p>
+          </div>
+          <div class="program-text">
+                <input type="text" value="Authenticity Advantage"/>
+            </div>
+            
+                
+            </div>
+             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 zeropadding program-tile2">
+          <div class="program-front">
+              <p class="top-text">
+                 <span class="left-image"><img src="images/drag-icon.svg"></span>
+              <span class="right-image fa fa-ellipsis-h" onclick="$('.program-tile2 .authoring-activities-dropdown').toggle();"></span>
+               <ul class="authoring-activities-dropdown">
+                  <span class="white-arrow"></span>
+                  <li class="preview"><img src="images/preview-icon.svg"/><a href="#">Preview</a></li>
+                <li class="edit"><img src="images/edit-icon.svg"/><a href="#">Edit</a></li>
+                <li class="duplicate"><img src="images/duplicate-icon.svg"/><a href="#">Duplicate</a></li>
+                <li class="add-to-clipboard"><img src="images/clipboard-icon.svg"/><a href="#">Add to clipboard</a></li>
+                <li class="delete"><img src="images/delete-icon.svg"/><a href="#">Delete</a></li>
+                  </ul></p>
+              <p class="center-image-do"><span class=""><img src="images/do-white-tile-icon.svg"/></span></p>
+              <p class="bottom-text"><span>Do</span>
+              </p>
+          </div>
+            <div class="program-text">
+                <input type="text" value="The Science of Inspiration" style="display:none;"/>
+                <label>The Science of Inspiration</label>
+            </div>
+                
+            </div>
+             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 zeropadding program-tile3">
+          <div class="program-front">
+              <p class="top-text">
+                 <span class="left-image"><img src="images/drag-icon.svg"></span>
+                 <span class="right-image fa fa-ellipsis-h" onclick="$('.program-tile3 .authoring-activities-dropdown').toggle();"></span>
+                   <ul class="authoring-activities-dropdown">
+                  <span class="white-arrow"></span>
+                  <li class="preview"><img src="images/preview-icon.svg"/><a href="#">Preview</a></li>
+                <li class="edit"><img src="images/edit-icon.svg"/><a href="#">Edit</a></li>
+                <li class="duplicate"><img src="images/duplicate-icon.svg"/><a href="#">Duplicate</a></li>
+                <li class="add-to-clipboard"><img src="images/clipboard-icon.svg"/><a href="#">Add to clipboard</a></li>
+                <li class="delete"><img src="images/delete-icon.svg"/><a href="#">Delete</a></li>
+                  </ul>
+                 </p>
+              <p class="center-image-inspire"><span class=""><img src="images/inspire-white-tile-icon.png"/></span></p>
+              <p class="bottom-text"><span>Inspire</span>
+             </p>
+          </div>
+            <div class="program-text">
+                <input type="text" value="Purpose Power" style="display:none;"/>
+                <label>Purpose Power</label>
+            </div>
+                
+            </div>
+             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 zeropadding program-tile4">
+          <div class="program-front">
+              <p class="top-text">
+                <span class="left-image"><img src="images/drag-icon.svg"></span>
+               <span class="right-image fa fa-ellipsis-h" onclick="$('.program-tile4 .authoring-activities-dropdown').toggle();"></span>
+                <ul class="authoring-activities-dropdown">
+                  <span class="white-arrow"></span>
+                  <li class="preview"><img src="images/preview-icon.svg"/><a href="#">Preview</a></li>
+                <li class="edit"><img src="images/edit-icon.svg"/><a href="#">Edit</a></li>
+                <li class="duplicate"><img src="images/duplicate-icon.svg"/><a href="#">Duplicate</a></li>
+                <li class="add-to-clipboard"><img src="images/clipboard-icon.svg"/><a href="#">Add to clipboard</a></li>
+                <li class="delete"><img src="images/delete-icon.svg"/><a href="#">Delete</a></li>
+                  </ul>
+                  </p>
+              <p class="center-image-do"><span><img src="images/do-white-tile-icon.svg"/></span></p>
+              <p class="bottom-text"><span>Do</span>
+            </p>
+          </div>
+            <div class="program-text">
+                <input type="text" value="Voice of the Customer" style="display:none;"/>
+                <label>Voice of the Customer</label>
+            </div>
+                
+            </div>
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 zeropadding program-tile-add">
+          <div class="add-new">
+             <p>Add a new activity type from the menu</p>
+          </div>
+           <div class="program-text">
+                <input type="text" value="" style="display:none;"/>
+                <label></label>
+            </div>
+                
+            </div>
+        </div>
+        </div>
+       
+
+        </div>
+    </body>
+</html>

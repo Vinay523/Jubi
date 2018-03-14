@@ -1,0 +1,57 @@
+<div ng-controller="AuthoringSuiteProgramScoringController as c"
+     ng-init="c.init('<%- model.slug %>', '<%- model.restore %>')">
+    <div class="loading-overlay" style="left:-15px;right:-15px" ng-show="loading.isLoading">
+        <div class="loading">
+            <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+            <div>One moment please...</div>
+        </div>
+    </div>
+    <div ng-show="!loading.isLoading">
+        <div class="row page-heading panel">
+            <div class="col-xs-12">
+                <%- partial('manage/views/authoringSuite/scoring/header') %>
+            </div>
+        </div>
+
+        <form name="programEditFrm" method="post" action="">
+            <div class="row">
+
+                <div class="col-xs-12 col-md-8 col-lg-9 scoring-quests">
+                    <div id="bodyCanvas">
+
+                        <div style="left:-15px;right:-15px" ng-show="isSaving">
+                            <div class="loading">
+                                <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+                                <div>One moment please...</div>
+                            </div>
+                        </div>
+
+                        <div ng-show="!isSaving">
+                            <div ng-if="!programHasQuests(program)">
+                                Program does not have any quests.
+                            </div>
+                            <div ng-if="program.levels.length > 0"
+                                 ng-repeat="level in program.levels">
+                                <div class="panel panel-default" ng-if="level.quests.length > 0"
+                                     ng-repeat="quest in level.quests">
+                                    <%- partial('manage/views/authoringSuite/scoring/scoringEdit') %>
+                                </div>
+                            </div>
+                            <div class="panel panel-default" ng-if="program.quests.length > 0"
+                                 ng-repeat="quest in program.quests">
+                                <%- partial('manage/views/authoringSuite/scoring/scoringEdit') %>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="sidebarCanvas" class="col-xs-12 col-md-4 col-lg-3">
+                    <%- partial('manage/views/authoringSuite/scoring/sidebar') %>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+

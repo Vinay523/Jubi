@@ -1,0 +1,147 @@
+<div class="loading" ng-show="loading.isLoading">
+    <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+    <div>One moment please...</div>
+</div>
+
+<div ng-show="!loading.isLoading">
+    <div ng-controller="AuthoringSuiteProgramDiscussionController as c" ng-init="c.init('<%- model.slug %>','<%- model.restore %>')" ng-cloak ng-click="offClick($event)">
+        <div class="row page-heading panel">
+            <div class="col-xs-12">
+                <%- partial('manage/views/authoringSuite/discussion/discussionHeader') %>
+            </div>
+        </div>
+        <form action="" method="post" novalidate name="programEditFrm">
+            <div class="row">
+                <div class="col-xs-12 col-md-8 col-lg-9">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="loading" ng-show="isSaving">
+                                <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+                                <div>One moment please...</div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12" ng-show="!isSaving">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12">
+                                    <label>Scoring</label>
+
+                                    <div class="panel panel-default form-horizontal">
+                                        <div class="panel-body">
+
+                                            <div class="row form-group" ng-class="{'has-error':val.newTopicPoints.fmt}">
+                                                <label class="col-xs-12 col-md-6 control-label">Discussion Creation Points</label>
+                                                <div class="col-xs-3 col-md-2">
+                                                    <input type="text" class="form-control" number-mask allow-decimal="false" ng-model="forum.newTopicPoints" placeholder="# of points">
+                                                    <div class="text-sm text-danger" ng-if="val.newTopicPoints.fmt">Enter a number between 1 and 1000.</div>
+                                                </div>
+                                                <div class="col-xs-6 col-md-2">
+                                                    <label class="control-label">with maximum of</label>
+                                                </div>
+                                                <div class="col-xs-3 col-md-2">
+                                                    <input type="text" class="form-control" number-mask allow-decimal="false" ng-model="forum.newTopicPointsMax" placeholder="# of points">
+                                                    <div class="text-sm text-danger" ng-if="val.newTopicPointsMax.fmt">Enter a number between 1 and 1000.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group" ng-class="{'has-error':val.newCommentPoints.fmt}">
+                                                <label class="col-xs-12 col-md-6 control-label">Comment Creation Points</label>
+                                                <div class="col-xs-3 col-md-2">
+                                                    <input type="text" class="form-control" number-mask allow-decimal="false" ng-model="forum.newCommentPoints" placeholder="# of points">
+                                                    <div class="text-sm text-danger" ng-if="val.newCommentPoints.fmt">Enter a number between 1 and 1000.</div>
+                                                </div>
+                                                <div class="col-xs-6 col-md-2">
+                                                    <label class="control-label">with maximum of</label>
+                                                </div>
+                                                <div class="col-xs-3 col-md-2">
+                                                    <input type="text" class="form-control" number-mask allow-decimal="false" ng-model="forum.newCommentPointsMax" placeholder="# of points">
+                                                    <div class="text-sm text-danger" ng-if="val.newCommentPointsMax.fmt">Enter a number between 1 and 1000.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group" ng-class="{'has-error':val.topicCommentPoints.fmt}">
+                                                <label class="col-xs-12 col-md-6 control-label">Discussion Creator Comment Points</label>
+                                                <div class="col-xs-3 col-md-2">
+                                                    <input type="text" class="form-control" number-mask allow-decimal="false" ng-model="forum.topicCommentPoints" placeholder="# of points">
+                                                    <div class="text-sm text-danger" ng-if="val.topicCommentPoints.fmt">Enter a number between 1 and 1000.</div>
+                                                </div>
+                                                <div class="col-xs-6 col-md-2">
+                                                    <label class="control-label">with maximum of</label>
+                                                </div>
+                                                <div class="col-xs-3 col-md-2">
+                                                    <input type="text" class="form-control" number-mask allow-decimal="false" ng-model="forum.topicCommentPointsMax" placeholder="# of points">
+                                                    <div class="text-sm text-danger" ng-if="val.topicCommentPointsMax.fmt">Enter a number between 1 and 1000.</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row form-group" ng-class="{'has-error':val.likePoints.fmt}">
+                                                <label class="col-xs-12 col-md-6 control-label">Like Points</label>
+                                                <div class="col-xs-3 col-md-2">
+                                                    <input type="text" class="form-control" number-mask allow-decimal="false" ng-model="forum.likePoints" placeholder="# of points">
+                                                    <div class="text-sm text-danger" ng-if="val.likePoints.fmt">Enter a number between 1 and 1000.</div>
+                                                </div>
+                                                <div class="col-xs-6 col-md-2">
+                                                    <label class="control-label">with maximum of</label>
+                                                </div>
+                                                <div class="col-xs-3 col-md-2">
+                                                    <input type="text" class="form-control" number-mask allow-decimal="false" ng-model="forum.likePointsMax" placeholder="# of points">
+                                                    <div class="text-sm text-danger" ng-if="val.likePointsMax.fmt">Enter a number between 1 and 1000.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group" ng-class="{'has-error':val.itemLikePoints.fmt}">
+                                                <label class="col-xs-12 col-md-6 control-label">Discussion/Comment Creator Like Points</label>
+                                                <div class="col-xs-3 col-md-2">
+                                                    <input type="text" class="form-control" number-mask allow-decimal="false" ng-model="forum.itemLikePoints" placeholder="# of points">
+                                                    <div class="text-sm text-danger" ng-if="val.itemLikePoints.fmt">Enter a number between 1 and 1000.</div>
+                                                </div>
+                                                <div class="col-xs-6 col-md-2">
+                                                    <label class="control-label">with maximum of</label>
+                                                </div>
+                                                <div class="col-xs-3 col-md-2">
+                                                    <input type="text" class="form-control" number-mask allow-decimal="false" ng-model="forum.itemLikePointsMax" placeholder="# of points">
+                                                    <div class="text-sm text-danger" ng-if="val.itemLikePointsMax.fmt">Enter a number between 1 and 1000.</div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <label>Discussion Categories</label>
+                                        </div>
+                                        <div class="col-xs-6 text-right">
+                                            <button type="button" ng-click="addCategory()" class="btn btn-primary btn-xs">Add Category <span class="badge">{{forum.categories.length}}</span></button>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <div class="loading-overlay" ng-show="validationInProgress">
+                                                <div class="loading" style="min-height:0px">
+                                                    <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+                                                    <div>One moment please...</div>
+                                                </div>
+                                            </div>
+                                            <div class="forum-categories">
+                                                <div class="forum-category" ng-repeat="category in forum.categories" ng-class="{'has-error':category.val.name.req || category.val.name.dup}">
+                                                    <input type="text" ng-model="category.name" class="form-control" placeholder="category name">
+                                                    <i class="fa fa-times" ng-click="removeCategory($index,category);"></i>
+                                                    <div class="text-sm text-danger" ng-if="category.val.name.req">Category name cannot be empty.</div>
+                                                    <div class="text-sm text-danger" ng-if="category.val.name.dup">A category with the same name already exists.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-4 col-lg-3">
+                    <%- partial('manage/views/authoringSuite/discussion/sidebar', {hidePublish: true}) %>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

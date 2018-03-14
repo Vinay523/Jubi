@@ -1,0 +1,149 @@
+<div class="" data-ng-controller="SidebarRightController">
+    <section class="profile" data-toggle="modal" data-target=".profile-overlay">
+        <div class="header clearfix">
+            <div class="avatar">
+                <% /*<span class="badge pm-alert">10</span>*/ %>
+                <img ng-src="{{(user.avatarUrl ? (user.avatarUrl + '/100x100') : '/img/avatar.jpg')}}"
+                     class="medium circle left"
+                     alt="{{user.firstName}} {{user.lastName}}"
+                     ng-click="goToUserProfile()"/>
+
+                <div class="name">
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            {{user.firstName}} {{user.lastName}}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="/user/profile">Account Settings</a></li>
+                            <li><a href="/logout" ng-click="logout()">Logout</a></li>
+                            <li ng-if="canAdmin()" class="divider"></li>
+                            <li ng-if="canAdmin()"><a href="/admin/clients">Administration</a></li>
+                        </ul>
+                    </div>
+                    <span class="level">{{user.title}}</span>
+                </div>
+            </div>
+
+
+        </div>
+        <div ng-if="program" class="points row">
+            <div class="col-xs-6">
+                <div class="value"><span class="icon  icon-bars2 "></span> {{program.score.points.earned}} /
+                    {{program.score.points.total}}
+                </div>
+                <div class="meta">XP</div>
+            </div>
+            <div class="col-xs-2">
+                <!--<div class="value"><span class="icon icon-diamonds"></span> {{programs.score.jems.earned}} /-->
+                <!--{{programs.score.jems.total}}-->
+                <!--</div>-->
+                <!--<div class="meta">Jubi Jems</div>-->
+            </div>
+            <div class="col-xs-4">
+                <div style="position:absolute;right:12px" class="value"><span class="icon icon-globe"></span>
+                    {{result.badges.earned}} /
+                    {{result.badges.total}}
+                </div>
+                <div style="position:absolute;right:12px;top:20px" class="meta">{{getBadgeLabel(true) + 's'}}</div>
+            </div>
+        </div>
+        <div class="row" ng-if="program && program.currentLevelOrQuest">
+            <div class="col-xs-12">
+                <p class="text-center" style="margin-top:20px">{{program.currentLevelOrQuest}}</p>
+            </div>
+        </div>
+    </section>
+    <!-- <a href="#" class="hit" data-toggle="modal" data-target="#user-profile"></a> -->
+    <section class="to-do" ng-if="!program && programsHaveTodos()">
+        <div class="panel">
+            <div class="panel-heading"><h4><span class="icon icon-checkmark"></span> Do Activity</h4></div>
+            <div class="panel-body">
+                <div class="list-group">
+                    <section ng-if="program.userTodos.length > 0" ng-repeat="program in programs">
+                        <a data-toggle="collapse" data-parent="#to-do{{$index}}" href="#to-do-{{$index}}"
+                           class="list-group-item parent"><span class="fa fa-caret-right"></span>
+                            {{program.title}}
+                            <span class="badge">{{program.todos.length}}</span></a>
+
+                        <div class="list-group collapse" id="to-do-{{$index}}">
+                            <div ng-repeat="userTodo in program.userTodos"
+                                 data-blink="userTodo.blink"
+                                 blink-count="10">
+                                <a data-toggle="modal"
+                                   ng-click="setSelectedTodo(userTodo)"
+                                   style="max-width:225px"
+                                   data-target="#todoModal" href="javascript:void(0)"
+                                   class="list-group-item">{{userTodo.todo.title}}
+                                    <span ng-if="userTodo.status == 'completed' || userTodo.hasBeenCompleted" class="badge">
+                                         <i class="fa fa-check"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section ng-if="program" class="to-do">
+        <div class="panel">
+            <div class="panel-heading"><h4><span class="icon icon-checkmark"></span> Do Activity</h4></div>
+            <div class="panel-body">
+                <div class="list-group">
+                    <div data-blink="userTodo.blink"
+                         blink-count="10"
+                         ng-repeat="userTodo in program.userTodos">
+                        <a data-toggle="modal"
+                           ng-click="setSelectedTodo(userTodo)"
+                           style="max-width:225px"
+                           data-target="#todoModal" href="javascript:void(0)"
+                           class="list-group-item">{{userTodo.todo.title}}
+                                    <span ng-if="userTodo.status == 'completed' || userTodo.hasBeenCompleted" class="badge">
+                                         <i class="fa fa-check"></i>
+                                    </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="inspiration" ng-if="program">
+        <div class="panel">
+            <div class="panel-heading"><h4><span class="icon icon-thumbs-up"></span> Inspiration Station</h4></div>
+            <div id="to-do" class="panel-body">
+                <div class="list-group">
+
+                    <a href="javascript:void(0)" ng-click="openInspirationModal('encourageModal.html')" class="list-group-item parent"><span></span> Encourage</a>
+
+                    <!--<div class="list-group collapse" id="affirm">-->
+                        <!--<a href="#" class="list-group-item">Encourage Another</a>-->
+                        <!--<a href="#" class="list-group-item">Recognize Talent</a>-->
+                    <!--</div>-->
+                    <a href="javascript:void(0)" ng-click="openInspirationModal('appreciateModal.html')" class="list-group-item parent"><span></span> Appreciate</a>
+
+                    <!--<div class="list-group collapse" id="aspire">-->
+                        <!--<a href="#" class="list-group-item">Create Vision</a>-->
+                        <!--<a href="#" class="list-group-item">Share Vision</a>-->
+                    <!--</div>-->
+                    <a href="javascript:void(0)" ng-click="openInspirationModal('storyModal.html')" class="list-group-item parent"><span></span> Story</a>
+
+                    <!--<div class="list-group collapse" id="authentic">-->
+                        <!--<a href="#" class="list-group-item">Find a Coach</a>-->
+                        <!--<a href="#" class="list-group-item">Ask for Help</a>-->
+                    <!--</div>-->
+                    <!--
+                    <button data-ng-click="getChallenges()" class="btn btn-default">getChallenges!</button>
+                    <button data-ng-click="getQuests()" class="btn btn-default">getQuest!</button>
+                    <button data-ng-click="getPrograms()" class="btn btn-default">getPrograms!</button>
+                    -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>

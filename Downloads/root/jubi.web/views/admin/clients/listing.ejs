@@ -1,0 +1,64 @@
+<div ng-controller="ClientsController as c" ng-init="c.init(<%- model.trash %>)" ng-cloak class="clients">
+
+    <div ng-show="isLoading" class="loading">
+        <span us-spinner="{radius:30, width:8, length: 16, color: '#c1c1c1'}"></span>
+        <div>One moment please...</div>
+    </div>
+
+    <div ng-show="!isLoading">
+
+        <div class="row">
+            <div class="col-xs-6">
+                <h3 style="margin:0;">{{trash ? 'Client Trash' : 'Clients'}}</h3>
+                <div class="text-sm" ng-if="!trash && trashCount>0"><a href="/admin/clients/trash">Trash ({{trashCount}})</a></div>
+                <div class="text-sm" ng-if="trash"><a href="/admin/clients">Back to Clients</a></div>
+            </div>
+            <div class="col-xs-6 text-right" ng-if="!trash && allowCreateClient">
+                <a class="btn btn-primary btn-sm" href="/admin/clients/new">Add Client <span class="badge">{{clients.length}}</span></a>
+            </div>
+        </div>
+        <br>
+
+        <div class="panel panel-default" ng-if="clients.length > 0">
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table datatable="ng" dt-columns="dtColumnDefs" dt-options="dtOptions" class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Slug</th>
+                            <th>Role(s)</th>
+                            <th>Seats</th>
+                            <th>{{trash ? 'Deleted' : 'Updated'}}</th>
+                            <th ng-if="isSystemAdmin">Parent</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="client in clients">
+                            <td>
+                                {{client.name}}
+                                <div class="text-xs" ng-if="!trash">
+                                    <a href="/admin/clients/{{client.id}}">Edit</a> | <a href="#" ng-if="client.id != loggedInClientId" ng-click="removeClient($event,client,$index)">Remove</a>
+                                </div>
+                                <div class="text-xs" ng-if="trash">
+                                    <a href="#" ng-click="restoreClient($event,client,$index)">Restore</a>
+                                </div>
+                            </td>
+                            <td>{{client.slug}}</td>
+                            <td ng-bind-html="client.roleNames"></td>
+                            <td>{{client.seats}}</td>
+                            <td ng-if="!trash">{{client.updatedAt | date:'M/d/yyyy @ h:mm a'}}</td>
+                            <td ng-if="trash">{{client.deletedAt | date:'M/d/yyyy @ h:mm a'}}</td>
+                            <td ng-if="isSystemAdmin">{{client.parent.name}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<%- partial('modals/confirmModal') %>

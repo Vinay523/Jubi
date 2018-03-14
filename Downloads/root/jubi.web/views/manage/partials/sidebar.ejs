@@ -1,0 +1,163 @@
+<div class="sidebar-collapse" data-ng-controller="SidebarController">
+    <ul id="side-menu" class="nav visible-lg visible-md">
+        <li class="nav-header">
+            <div class="profile-element">
+                <div class="avatar">
+                    <img ng-src="{{(user.avatarUrl ? (user.avatarUrl + '/100x100') : '/img/avatar.jpg')}}" class="medium circle"
+                         alt="{{user.firstName}} {{user.lastName}}">
+                </div>
+                <div class="user-meta" ng-if="!toggle.asideNav">
+                    <div class="dropdown-wrapper">
+                        <div class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <span><strong>{{user.firstName}} {{user.lastName}} <i class="fa fa-angle-down"></i></strong></span>
+                            </a>
+                            <ul class="dropdown-menu" style="min-width:120px;">
+                                <% /*<li><a href="/manage/profile">Profile</a></li>
+                                 <li><a href="/manage/mailbox">Mailbox</a></li>
+                                 <li><a href="/manage/billing">Billing</a></li>
+                                 <li class="divider"></li>*/ %>
+                                <li><a href="/user/profile">Account Settings</a></li>
+                                <li><a href="/logout">Logout</a></li>
+                                <li ng-if="canAdmin()" class="divider"></li>
+                                <li ng-if="canAdmin()"><a href="/admin/clients">Administration</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div ng-if="user.title" class="text-muted text-xs">{{user.title}}</div>
+                </div>
+            </div>
+        </li>
+
+        <li ng-repeat="item in menu" ng-class="{'active':item.active,'expanded':item.expanded}">
+            <a ng-href="{{ isFunction(item.link) ? item.link() : (item.link || '#') }}" tabindex="-1" onfocus="blur()">
+                <i class="icon fa {{item.icon}}"></i>
+                <span class="nav-label">{{item.label}}</span>
+                <span ng-click="toggleItem($event, item); $event.preventDefault();" class="arrow fa"
+                      ng-class="{'fa-angle-down':item.expanded, 'fa-angle-left':!item.expanded}"></span>
+                <span ng-if="item.new" class="label label-info">NEW</span>
+            </a>
+            <ul  style="position:initial" class="nav nav-second-level collapse" ng-class="{in:item.expanded}">
+                <li data-ng-if="((isFunction(child.visible) && child.visible() != false) || (!isFunction(child.visible) && child.visible != false))"
+                    ng-repeat="child in item.items"
+                    ng-class="{active: ( (isFunction(child.active) && child.active()) || (!isFunction(child.active) && child.active) ), childActive: ( (isFunction(child.childActive) && child.childActive()) || (!isFunction(child.childActive) && child.childActive) ) }">
+                    <%/*ng-class="{active: ( (isFunction(child.active) && child.active()) || (!isFunction(child.active) && child.active) ) }">*/%>
+
+                    <a ng-href="{{ isFunction(child.link) ? child.link() : (child.link || '#') }}" tabindex="-1"
+                       onfocus="blur()">{{ isFunction(child.label) ? child.label() : child.label }}</a>
+                    <ul style="position:initial" class="nav nav-third-level collapse" ng-class="{in:item.expanded}">
+                        <li data-ng-if="((isFunction(nextChild.visible) && nextChild.visible() != false) || (!isFunction(nextChild.visible) && nextChild.visible != false))"
+                            ng-repeat="nextChild in child.items"
+                            ng-class="{active: ( (isFunction(nextChild.active) && nextChild.active()) || (!isFunction(nextChild.active) && nextChild.active) ) }">
+                            <a ng-href="{{ isFunction(nextChild.link) ? nextChild.link() : (nextChild.link || '#') }}"
+                               tabindex="-1" onfocus="blur()">{{isFunction(nextChild.label) ? nextChild.label() :
+                                nextChild.label}}</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <div ng-if="clipboard.show && !clipboard.hide" class="panel panel-default clipboard">
+        <div class="panel-heading">
+            <i class="fa fa-copy"></i> Clipboard
+            <i class="fa clipboard-expand" ng-class="{'fa-angle-down':!clipboard.expanded,'fa-angle-right':clipboard.expanded}"
+                    ng-click="clipboard.expanded=!clipboard.expanded"></i>
+        </div>
+
+        <div class="clipboard-wrapper" ng-class="{'in':clipboard.expanded}">
+            <div class="panel-body">
+                <div class="drop-here">Drop Here</div>
+                <ul dnd-list="clipboard.items"
+                    dnd-drop="clipboardDrop(event, index, item, external, type)"
+                    dnd-allowed-types="['quest', 'challenge']"
+                    dnd-dragover="clipboardDragOver(event,index,type)"
+                    id="clipboard">
+                    <li ng-repeat="item in clipboard.items"
+                        dnd-type="'{{item.dragItemType}}'"
+                        dnd-draggable="item"
+                        dnd-moved="clipboardItemMoved($index)"
+                        dnd-effect-allowed="move">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="padding-left:10px;">
+                                <div class="panel-title">
+                                    <div class="text-muted handle"><span style="margin-left:4px" class="fa fa-ellipsis-v"></span></div>
+                                    <div class="content" title="Quest: {{item.title}}" ng-if="item.dragItemType=='quest'">
+                                        <i class="fa fa-rocket"></i> {{item.title}}
+                                    </div>
+                                    <div class="content" title="Challenge: {{item.title}}" ng-if="item.dragItemType=='challenge'">
+                                        <i class="fa fa-code"></i> {{item.title}}
+                                    </div>
+                                </div>
+                                <div class="manage manage-program">
+                                    <button type="button" class="btn btn-primary" ng-click="removeClipboardItem(item)" tabindex="-1" onfocus="blur()">
+                                        <span class="icon fa fa-times"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--mobile version-->
+
+    <ul id="side-menu" class="nav visible-sm visible-xs">
+        <li class="nav-header">
+            <div class="profile-element">
+                <div class="avatar">
+                    <img ng-src="{{ (user.avatarUrl ? user.avatarUrl : '/img/avatar.jpg') }}" class="medium circle"
+                         alt="{{user.firstName}} {{user.lastName}}">
+                </div>
+                <div class="user-meta text-center">
+                    <strong>{{user.firstName}} {{user.lastName}}</strong>
+
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="text-muted text-xs block">{{user.title}} <b class="caret"></b></span>
+                        </a>
+                        <ul class="dropdown-menu" style="min-width:120px;">
+                            <% /*<li><a href="/manage/profile">Profile</a></li>
+                             <li><a href="/manage/mailbox">Mailbox</a></li>
+                             <li><a href="/manage/billing">Billing</a></li>
+                             <li class="divider"></li>*/ %>
+                            <li><a href="/user/profile">Profile</a></li>
+                            <li><a href="/logout">Logout</a></li>
+                            <li ng-if="canAdmin()" class="divider"></li>
+                            <li ng-if="canAdmin()"><a href="/admin">Administration</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </li>
+
+        <li ng-repeat="item in menu" ng-class="{'active':item.active,'expanded':item.expanded}">
+            <a ng-href="" tabindex="-1" onfocus="blur()">
+                <i class="icon fa {{item.icon}}"></i>
+                <span class="nav-label">{{item.label}}</span>
+                <span ng-click="toggleItem($event, item); $event.preventDefault();" class="arrow fa"
+                      ng-class="{'fa-angle-down':item.expanded, 'fa-angle-left':!item.expanded}"></span>
+                <span ng-if="item.new" class="label label-info">NEW</span>
+            </a>
+            <ul class="nav nav-second-level collapse" ng-class="{in:item.expanded}">
+                <li data-ng-if="((isFunction(child.visible) && child.visible() != false) || (!isFunction(child.visible) && child.visible != false))"
+                    ng-repeat="child in item.items"
+                    ng-class="{active: ( (isFunction(child.active) && child.active()) || (!isFunction(child.active) && child.active) ) }">
+                    <a ng-href="{{ isFunction(child.link) ? child.link() : (child.link || '#') }}" tabindex="-1"
+                       onfocus="blur()">{{ isFunction(child.label) ? child.label() : child.label }}</a>
+                    <ul class="nav nav-third-level collapse" ng-class="{in:item.expanded}">
+                        <li data-ng-if="((isFunction(nextChild.visible) && nextChild.visible() != false) || (!isFunction(nextChild.visible) && nextChild.visible != false))"
+                            ng-repeat="nextChild in child.items"
+                            ng-class="{active: ( (isFunction(nextChild.active) && nextChild.active()) || (!isFunction(nextChild.active) && nextChild.active) ) }">
+                            <a ng-href="{{ isFunction(nextChild.link) ? nextChild.link() : (nextChild.link || '#') }}"
+                               tabindex="-1" onfocus="blur()">{{isFunction(nextChild.label) ? nextChild.label() :
+                                nextChild.label}}</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

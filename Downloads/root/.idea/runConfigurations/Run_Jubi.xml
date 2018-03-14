@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run Jubi" type="Multirun" factoryName="Multirun" singleton="true" separateTabs="false" startOneByOne="true" markFailedProcess="true" hideSuccessProcess="false" delayTime="2">
+    <runConfiguration name="(shared) jubi.api (bin/www)" type="Node.js" />
+    <runConfiguration name="(shared) jubi.web (bin/www)" type="Node.js" />
+    <method />
+  </configuration>
+</component>

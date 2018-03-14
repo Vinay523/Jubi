@@ -1,0 +1,225 @@
+<div ng-controller="AuthoringSuiteChallengeController">
+
+    <div class="panel panel-default" ng-if="challenge.media.length > 0">
+        <div class="panel-body" style="padding-bottom:0;">
+            <ul dnd-list="challenge.media"
+                dnd-drop="challengeMediaDrop(event, index, item, external, type, 'challengeMedia', challenge)"
+                dnd-allowed-types="['challengeMedia']">
+                <li ng-repeat="media in challenge.media"
+                    dnd-type="'challengeMedia'"
+                    dnd-draggable="media"
+                    dnd-moved="challenge.media.splice($index, 1)"
+                    dnd-selected="selectChallengeMedia(challenge, media)"
+                    dnd-effect-allowed="move"
+                    dnd-disable-if="!media.canDrag"
+                    ng-class="{'selected':challenge.selectedMedia===media}">
+
+                    <div ng-show="media.encodings.length < 1" style="color:red;font-size:11px">You can click "save" and continue authoring while your media is being encoded</div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="padding-left:10px;" ng-class="{'quest-error':mediaHasError(media)}">
+                            <div class="panel-title">
+                                <div class="text-muted handle" ng-mousedown="challengeMediaHandleDown($event,challenge,media)" ng-mouseup="challengeMediaHandleDown($event,challenge,media)"><span style="margin-left:4px" class="fa fa-ellipsis-v"></span></div>
+                                <div class="content">
+                                    <button class="removeMedia" ng-click="removeMedia($event,challenge,$index)" onfocus="blur()" tabindex="-1" title="Remove Media">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+
+                                    <div class="row image-media" ng-if="media.type=='image'">
+                                        <div class="col-xs-3">
+                                            <img class="thumbnail media" alt="" ng-src="{{media.url}}">
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div class="form-group">
+                                                <input type="text"
+                                                       ng-model="media.name"
+                                                       placeholder="Media name."
+                                                       title="Media name."
+                                                       class="form-control">
+                                            </div>
+                                            <textarea ng-model="media.description"
+                                                      placeholder="Media description."
+                                                      title="Media description."
+                                                      class="form-control"
+                                                      rows="2"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row video-media" ng-if="media.type=='video' && media.source=='system'">
+                                        <div class="col-xs-3">
+                                            <img class="thumbnail media" alt="" ng-src="{{media.url}}">
+                                            <div class="video-play" ng-show="media.encodings.length > 0">
+                                                <i class="fa fa-play-circle-o" ng-click="playVideo(media)"></i>
+                                            </div>
+                                            <div class="loading-overlay" ng-show="media.encodings.length < 1" style="left:15px;right:15px;">
+                                                <div class="loading loading-sm">
+                                                    <span us-spinner="{radius:9, width:4, length: 6, color: '#b0b0b7'}"></span>
+                                                    <div>encoding...</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div class="form-group">
+                                                <input type="text"
+                                                       ng-model="media.name"
+                                                       placeholder="Name"
+                                                       class="form-control">
+                                            </div>
+                                            <textarea ng-model="media.description"
+                                                      placeholder="Description"
+                                                      class="form-control"
+                                                      rows="2"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row video-media" ng-if="media.type=='video' && media.source=='youtube'">
+                                        <div class="col-xs-3">
+                                            <img class="thumbnail media" alt="" ng-src="{{media.coverUrl}}">
+                                            <div class="video-play">
+                                                <i class="fa fa-play-circle-o" ng-click="playVideo(media)"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div class="form-group">
+                                                <input type="text"
+                                                       ng-model="media.name"
+                                                       placeholder="Name"
+                                                       class="form-control">
+                                            </div>
+                                            <textarea ng-model="media.description"
+                                                      placeholder="Description"
+                                                      class="form-control"
+                                                      rows="2"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row audio-media" ng-if="media.type=='audio'">
+                                        <div class="col-xs-3">
+                                            <div class="form-group">
+                                                <img class="thumbnail media" alt="" src="<%- config.web.contentUrl %>/img/audio.jpg">
+                                            </div>
+                                            <div class="audio-play">
+                                                <i class="fa" ng-class="{'fa-play-circle-o':(!media.audio || media.audio.paused),'fa-pause':(media.audio && !media.audio.paused)}" ng-click="playPauseAudio(media)"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <input type="text"
+                                                   ng-model="media.name"
+                                                   placeholder="Name"
+                                                   class="form-control">
+                                            <textarea ng-model="media.description"
+                                                      placeholder="Description"
+                                                      class="form-control"
+                                                      rows="2"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div ng-if="media.type=='text'">
+                                        <!--<div class="form-group">
+                                            <div text-angular
+                                                 ng-model="media.text"
+                                                 ng-model="anchorTarget(media)"
+                                                 ta-toolbar="taToolbar"></div>
+                                        </div>
+                                        <input type="text"
+                                               ng-model="media.description"
+                                               placeholder="Description"
+                                               class="form-control">-->
+                                        <ng-quill-editor ng-model="media.text" placeholder="Text"></ng-quill-editor>
+                                        <input type="text" ng-model="media.description" placeholder="Description" class="form-control">
+                                    </div>
+
+                                    <div ng-if="media.type=='link'">
+                                        <div class="form-group" ng-class="{'has-error':media.val.link.req || media.val.link.fmt}">
+                                            <input id="link{{$index}}"
+                                                   type="text"
+                                                   ng-model="media.link"
+                                                   class="form-control"
+                                                   placeholder="Link">
+                                            <div class="text-xs text-danger" ng-if="media.val.link.req">Link cannot be empty.</div>
+                                            <div class="text-xs text-danger" ng-if="media.val.link.fmt">URL is not properly formatted.</div>
+                                        </div>
+                                        <!--<input type="text"
+                                               ng-model="media.description"
+                                               placeholder="Description"
+                                               class="form-control">-->
+                                        <ng-quill-editor ng-model="media.description" placeholder="Description"></ng-quill-editor>
+                                    </div>
+
+                                    <div ng-if="media.type=='resource'">
+                                        <div class="form-group" ng-class="{'has-error':media.val.link.req || media.val.link.fmt}">
+                                            <a ng-href="{{media.url}}" target="_blank">
+                                                <img style="cursor:pointer;width: 50px;height: auto;" class="media-icon" src="<%-config.web.contentUrl%>/img/document-Icon.png">{{media.name}}
+                                            </a>
+                                        </div>
+                                        <!--<input type="text"
+                                               ng-model="media.description"
+                                               placeholder="Description"
+                                               class="form-control">-->
+                                    </div>
+                                    <!--<div class="media-uploaded col-lg-6 col-md-6 col-sm-12 col-xs-12" ng-if="media.type=='resource'">
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 media-image">
+                                            <a ng-href="{{media.url}}" target="_blank">
+                                                <img style="cursor:pointer" class="media-icon" src="<%-config.web.contentUrl%>/img/document-Icon.png">
+                                            </a>
+                                        </div>
+                                        <div class="media-info col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                            <textarea class="media-link" placeholder="Media file">{{media.name}}</textarea>
+                                            <textarea class="media-desc" placeholder="Description">{{media.description}}</textarea>
+                                        </div>
+                                        <div class="close col-lg-1 col-md-1 col-sm-1 col-xs-1"><img ng-click="closeInspireClick(media)" src="<%-config.web.contentUrl%>/img/x.svg" /></div>
+                                    </div>-->
+                                    
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-xs-12 col-md-4 add-media">
+            <button type="button" class="btn btn-primary outline btn-block" ng-click="addMedia($event,challenge)">Add Media</button>
+            <div class="add-media-popup" ng-class="{'open':challenge.addMedia.in}">
+                <div class="panel panel-default">
+                    <div ng-style="getHeaderCustomStyle()" class="panel-heading">Add Media</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="btn btn-primary outline btn-block" ng-file-select ng-file-change="uploadMedia($files, challenge)">
+                                    Upload From Your Computer
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-xs-12" ng-class="{'has-error':challenge.addMedia.val.req || challenge.addMedia.val.fmt}">
+                                <div>Embed Media</div>
+                                <textarea rows="2" class="form-control" placeholder="Embed Text" ng-click="$event.stopPropagation()" ng-model="challenge.addMedia.link"></textarea>
+                                <div class="text-sm text-danger" ng-if="challenge.addMedia.val.req">Video embed text cannot be empty.</div>
+                                <div class="text-sm text-danger" ng-if="challenge.addMedia.val.fmt">Invalid embed text.</div>
+                                <button type="button" class="btn btn-primary outline btn-block" style="margin-top:10px;"
+                                        ng-click="selectMediaLink($event,challenge,'YouTube')">OK</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-4">
+            <button type="button"
+                    class="btn btn-primary outline btn-block"
+                    ng-click="addText(challenge)">Add Text</button>
+        </div>
+        <div class="col-xs-12 col-md-4">
+            <button type="button"
+                    class="btn btn-primary outline btn-block"
+                    ng-click="addLink(challenge)">Add Link</button>
+        </div>
+    </div>
+    <div class="text-sm text-danger" ng-if="challenge.val.media.type">Unsupported media type.<br>Video: MP4, OGG, WEBM, MOV, or AVI.<br>Audio: MP3, WMA, or WAV.<br />Image: PNG, JPG, JPEG, GIF</div>
+    <div class="text-sm text-danger" ng-if="challenge.val.media.size">Media file is too large.<br>Max Video / Audio File Size: 100MB. <br>Max Image File Size: 4MB</div>
+</div>

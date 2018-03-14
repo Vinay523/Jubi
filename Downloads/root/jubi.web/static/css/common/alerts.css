@@ -1,0 +1,13 @@
+/*.alert { padding: 0!important; }*/
+div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer, .ui-growl-item-container { background: #5BC0DE!important; color: #fff!important; font-size: 13px!important; width: 100% !important; }
+
+/* QUEST OVERLAY */
+
+.carousel-control {
+  top: auto;
+  bottom: auto;
+  background: none!important;
+}
+.carousel-indicators {
+    bottom: 0;
+}

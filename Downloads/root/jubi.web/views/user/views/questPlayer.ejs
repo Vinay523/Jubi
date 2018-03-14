@@ -1,0 +1,737 @@
+
+<div>
+    <div class="obj-challenges-container row" ng-show="inState=='start'" ng-controller="QuestPlayerStartController" ng-cloak>
+        <div class="obj-challenges text-center">
+            <img src="<%-config.web.contentUrl%>/img/target.png" />
+            <p class="objective-heading">Objective</p>
+            <!--<p class="obj-description">
+                {{quest.objective}}
+            </p>-->
+            <ng-quill-editor ng-model="quest.objective" read-only="true"></ng-quill-editor>
+            <div class="challenges text-center">
+                <p>Challenges</p>
+                <ng-container ng-repeat="c in quest.challenges">
+                    <ng-container ng-if="c.type != 'finish'">
+                        <ng-container ng-if="c.result">
+                            <div class="challenge1finish">
+                                <p ng-click="gotoChallenge($index)" style="cursor:pointer; z-index:1; position:relative" id="{{c.id}}"><span>{{$index + 1}}. {{c.title}}</span><img src="<%-config.web.contentUrl%>/img/greencheck.png" style="float:right;" /></p>
+                            </div>
+                        </ng-container>
+                        <ng-container ng-if="!c.result">
+                            <div class="challenge1">
+                                <p>{{$index + 1}}. {{c.title}}</p>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+
+                    <ng-container ng-if="c.type == 'finish'">
+                        <ng-container ng-if="quest.challengesComplete != quest.challengeCount">
+                            <div class="challenge1">
+                                <p>{{$index + 1}}. {{c.title}}</p>
+                            </div>
+                        </ng-container>
+                        <ng-container ng-if="quest.challengesComplete == quest.challengeCount">
+                            <div class="challenge1finish">
+                                <p ng-click="start()" style="cursor:pointer; z-index:1; position:relative" id="{{c.id}}">{{$index + 1}}. {{c.title}}<img src="<%-config.web.contentUrl%>/img/greencheck.png" style="float:right;" /></p>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                    
+
+                </ng-container>
+            </div>
+        </div>
+    </div>
+
+    <div id="chal-section" class="content-bar row" ng-show="inState=='challenge'" ng-controller="QuestPlayerChallengeController" ng-cloak>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="question col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-7 col-lg-push-5 col-md-7 col-md-push-5 col-sm-12 col-xs-12 question-image text-center">
+                    
+                        <div ng-if="challenge.media.length > 0">
+                            <%- partial('user/partials/challengeMedia') %>
+                        </div>
+                    
+                </div>
+                <div class="col-lg-5 col-lg-pull-7 col-md-5 col-md-pull-7 col-sm-12 col-xs-12 question-text">
+                    <div ng-if="challenge.instructions" style="padding-top:20px;">
+                        <!--<p class="instructions" ng-bind-html="toHtml(challenge.instructions)"></p>-->
+                        <ng-quill-editor ng-model="challenge.instructions" read-only="true"></ng-quill-editor>
+                        
+                    </div>
+                    <br />
+                    <br />
+                    
+                    <form action="" method="post" name="challengeQuestions" ng-submit="submit($event,challenge)">
+                        <div ng-if="challenge.questions.length > 0">
+                            <div ng-if="challenge.questions.length > 0">
+                                <div class="noTouch-response" ng-if="showUntouchedMsg">
+                                    Please answer this question before submitting
+                                </div>
+                                <div ng-repeat="question in challenge.questions">
+                                    <%- partial('user/partials/challengeQuestion') %>
+                                </div>
+                            </div>
+
+                            <div class="success-response" ng-class="{ 'pulse' : val.correct }" ng-if="val.correct">
+                                
+                                <ng-container ng-if="!challenge.finishText">
+                                    {{(challenge.finishText ? challenge.finishText : 'Correct!')}}
+                                </ng-container>
+
+                                <ng-container ng-if="challenge.finishText">
+                                    <ng-quill-editor ng-model="challenge.finishText" read-only="true" ng-if="challenge.finishText"></ng-quill-editor>
+                                </ng-container>
+                               
+                            </div>
+
+                            <div class="failure-response" ng-class="{ 'pulse' : val.wrong }" ng-if="val.wrong">Oops! Try again!</div>
+                            <ng-container ng-repeat="hint in hintsAry">
+                                <div class="hint col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-show="shownHint != null && shownHint >= {{$index}}">
+                                    <p>Hint: {{hint.hint}}</p>
+                                </div>
+                            </ng-container>
+                        </div>
+                        
+                        <!--<div class="success-response col-lg-6 col-md-6 col-sm-12 col-xs-12" ng-class="{ 'pulse' : val.correct }" ng-if="val.correct">
+                            {{(challenge.finishText ? challenge.finishText : 'Correct!')}}
+                        </div>-->
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        </div>
+                        <div class="step-action col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-bottom:20px">
+                            <!--<div class="check-wrong animated" ng-class="{ 'pulse' : val.wrong }" ng-if="val.wrong">Oops! Try again!</div>-->
+                            <!--<div class="check-correct animated" ng-class="{ 'pulse' : val.correct }" ng-if="val.correct">{{(challenge.finishText ? challenge.finishText : 'Correct!')}}</div>-->
+                            <button type="submit" id="challenge-formSubmit" class="btn btn-success hidden" ng-show="!canContinue">{{checkLabel(challenge)}}</button>
+                            <!--<button ng-disabled="challengeQuestions.$dirty && challengeQuestions.touched" id="challenge-formIsHandled" class="btn btn-success hidden" ng-click="isChallengeTouched()"></button>-->
+                            <!--<button type="button" class="btn btn-success" ng-click="continue(challenge)" ng-show="canContinue">Continue</button>-->
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        </div>
+                        
+                        
+                        
+                    </form>
+                    
+                </div>
+                
+            </div>
+
+        </div>
+        <!--<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="failure-response" ng-class="{ 'pulse' : val.wrong }" ng-if="val.wrong">Oops! Try again!</div>
+            <ng-container ng-repeat="hint in hintsAry">
+                <div class="hint col-lg-6 col-md-6 col-sm-12 col-xs-12" ng-show="shownHint != null && shownHint >= {{$index}}">
+                    Hint: {{hint.hint}}
+                </div>
+            </ng-container>
+        </div>-->
+    </div>
+
+    <div class="congratulations-container row" ng-show="inState=='finish'" ng-controller="QuestPlayerFinishController" ng-cloak>
+        <div class="congratulations-content text-center">
+            <div>
+                <p class="congrats" ng-if="!challenge.finishText">{{challenge.finishText ? challenge.finishText : 'CONGRATULATIONS'}}</p>
+                <ng-container ng-if="challenge.finishText">
+                    <ng-quill-editor ng-model="challenge.finishText" read-only="true"></ng-quill-editor>
+                </ng-container>
+
+                <p class="congrats-msg" ng-if="!challenge.instructions">{{challenge.instructions ? challenge.instructions : 'You have successfully completed the activity ' + quest.title}}</p>
+                <ng-container ng-if="challenge.instructions">
+                    <ng-quill-editor ng-model="challenge.instructions" read-only="true"></ng-quill-editor>
+                </ng-container>
+            </div>
+            <div>
+                <p class="just-earned">YOU JUST EARNED</p>
+                <p class="earned-points">
+                    <span>{{quest.score.points.earned ? quest.score.points.earned : '0'}}pts</span>
+                </p>
+                <p class="AND" ng-if="badge">
+                    <span>AND</span>
+                </p>
+                <p class="completion-badge" ng-if="badge">
+                    <span class="mask">
+                        <span class="img">
+                            <img ng-if="badge.imageUrl" ng-src="{{badge.imageUrl + '/100x100'}}" />
+                            <img ng-if="!badge.imageUrl" src="/img/Badge Copy.png" />
+                        </span>
+                    </span>
+                    <span class="title">{{badge.title}}</span>
+                </p>
+            </div>
+            <ng-container ng-repeat="m in media">
+                <div class="You-can-learn" ng-if="m.type==='link' && m.link">
+                    You can learn more by visiting the following website.
+                    <a ng-href="{{m.link}}" target="_blank">{{m.link}}</a>
+                </div>
+                <div class="Here-is-some-additio" ng-if="m.type==='resource' && m.url">
+                    Here is some additional reading material for you.<br>
+                    <a ng-href="{{m.url}}" target="_blank">{{m.name ? m.name : m.url}}</a>
+                </div>
+            </ng-container>
+
+            <div class="Would-you-like-to-Up" ng-if="challenge.canUploadContent ? challenge.canUploadContent: false">
+                Would you like to Upload Material others might find helpful?
+                 
+                <a href="" type="button" class="Upload-button" style="position: relative;">
+                  
+                    <img src="<%-config.web.contentUrl%>/img/upload-icon.svg"> Upload Material
+                  
+                </a>
+                <!--<input type="file" title="" ng-file-select ng-file-change="uploadFileTest($files)" ng-accept="'.pdf'" ng-disabled="upload.active" />-->
+                <input type="file" title="" ng-file-select ng-file-change="uploadFile($files)" ng-accept="'.pdf'" ng-disabled="upload.active" />
+                <span ng-if="upload.active">
+                    <i class="fa fa-spinner fa-spin"></i>
+                    Uploading Your Material...
+                </span>
+                <p>8MB Max File Size</p>
+                <p class="file-link" ng-if="uploadFileName">{{uploadFileName}}<!--<a class="close" ng-click="resetVal()"><img src="<%-config.web.contentUrl%>/img/blue-x.svg"></a>--></p>
+                <div class="text-sm text-danger" ng-if="val.upload.type">Unsupported file type.</div>
+                <div class="text-sm text-danger" ng-if="val.upload.size">File is too large.</div>
+                <div class="text-sm text-success animated" ng-if="upload.status=='ok'" ng-class="{'fadeOut':upload.fade}">
+                    <i class="fa fa-thumbs-o-up"></i> Thank you, your material has been uploaded.
+                </div>
+                <div class="text-sm text-danger animated" ng-if="upload.status=='err'" ng-class="{'fadeOut':upload.fade}">
+                    <i class="fa fa-times"></i> Sorry, cannot upload your material at this time.
+                </div>
+            </div>
+            <!--<hr ng-if="quest.finishers.length > 0">-->
+            <!--<div class="participants" style="z-index: 0;position: relative;" ng-if="quest.finishers.length > 0">
+                <p>
+                    <ng-container ng-repeat="ava in quest.finishers">
+                        <span class="participant1"><img ng-src="{{ava.avatarUrl + '/100x100'}}" /></span>
+                    </ng-container>
+                    <span class="participant4">{{quest.totalFinishers}}</span>
+                </p>
+                <p><span class="participant-count"></span> Participants completed this Challenge</p>
+            </div>-->
+
+        </div>
+    </div>
+
+    <div class="Do-content row" ng-show="inState=='do'" ng-controller="QuestPlayerDoController" ng-cloak >
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 doObj-description" ng-if="doQuest.objective != null">
+            <p class="objectiveHeader">Objective</p>
+            <!--<p class="objectiveSentence">{{doQuest.objective}}</p>-->
+            <ng-quill-editor ng-model="doQuest.objective" read-only="true"></ng-quill-editor>
+            
+        </div>
+        <form action="" method="post" id="toDoActivityQuestions" name="toDoActivityQuestions" ng-submit="doSubmit($event)">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 verification-section zeropadding">
+                <!--<div class="Verification-Require col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding">{{todoActivityChallenge.todo.verificationInstructions}}</div>-->
+                <div class="Please-review-the-en col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding">{{todoActivityChallenge.todo.validate ? 'Verification Required' : 'Honor System'}}</div>
+                <div class="Please-review-the-inst-header col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding">Instructions</div>
+                <div class="Please-review-the-inst col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding"><!--{{todoActivityChallenge.todo.instructions}}-->
+                    <ng-quill-editor ng-model="todoActivityChallenge.todo.instructions" read-only="true"></ng-quill-editor>
+                </div>
+                <div class="duedate-calendar col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding">
+                    <!--<p>Due Date</p>
+                    <input type="text" ng-model="currentDate" calendar  ng-if="userEnableDueDate"/>
+
+                <div data-toggle="calendar" style="cursor:pointer;">
+                    <img src="<%-config.web.contentUrl%>/img/calendar.png">
+                </div>-->
+                </div>
+                <md-content layout-padding ng-cloak class="datePickerCal">
+
+                    <div class="col-xs-4" layout-gt-xs="row">
+                        <div class="datepickerCont" flex-gt-xs ng-if="userEnableDueDate">
+                            <label>Due Date:</label>
+                            <md-datepicker ng-model="currentDate" name="userDueDateField" md-min-date="minDueDate" md-placeholder="Enter date" ng-change="dateChanged(currentDate)"></md-datepicker>
+                            <div ng-messages="toDoActivityQuestions.userDueDateField.$error">
+                                <div class="hasError" ng-message="valid">The entered value is not a date!</div>
+                                <div class="hasError" ng-message="required">This date is required!</div>
+                                <div class="hasError" ng-message="mindate">Due Date cannot be same date or before.</div>
+                                <div class="hasError" ng-if="dateIsError">Due Date is Empty.</div>
+                                <!--<div ng-message="maxdate">Date is too late!</div>-->
+                            </div>
+                        </div>
+
+                        <div class="datepickerCont" flex-gt-xs ng-if="!userEnableDueDate">
+                            <label>Due Date:</label>
+                            <md-datepicker ng-model="currentDate" md-placeholder="Enter date" disabled></md-datepicker>
+                        </div>
+                    </div>
+                </md-content>
+
+                <div class="Activity-Rectangle col-lg-12 col-md-12 col-sm-7 col-xs-7 zeropadding" ng-if="todoActivityChallenge.todo.resourceUrl">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 zeropadding">
+                        <a ng-href="{{isResourceLinkFix(todoActivityChallenge.todo.resourceUrl)}}" target="_blank">
+                            <img src="<%-config.web.contentUrl%>/img/document-Icon.png" />
+                        </a>
+                    </div>
+                    <!--<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 zeropadding">  this is is resource is a array
+                    <p class="Activity-Guidance">Activity Guidance</p>
+                    <ng-container >
+                        <p class="links">Engagement Challenges To-Do.docx</p>
+                    </ng-container>
+                    <p class="links">Engagement Challenges To-Do.docx</p>
+                    <p class="links">www.learningstuff.com/engagement</p>
+                    <p class="links">coolvideo.mov</p>
+                </div>-->
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 zeropadding">
+                        <p class="Activity-Guidance">Activity Guidance</p>
+                        <p class="links"><a ng-href="{{isResourceLinkFix(todoActivityChallenge.todo.resourceUrl)}}" target="_blank">{{todoActivityChallenge.todo.resourceName}}</a></p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 feedback-section">
+                <div class=" add-verification">
+
+                    <!--<p>{{todoActivityChallenge.todo.verificationInstructions}}</p>-->
+                    <ng-quill-editor ng-model="todoActivityChallenge.todo.verificationInstructions" read-only="true"></ng-quill-editor>
+                    <p ng-if="quest.userAllowedMediaUpload"><a class="verifyMedia" href="javascript:void(0)" ng-click="showDoAddMediaModalNotification()">ADD VERIFICATION</a></p>
+
+                    <ng-container ng-repeat="media in challengeMedia">
+                        <ng-container ng-if="media.type=='video' && media.source=='youtube'">
+                            <div class="media-uploaded col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 media-image">
+                                    <img ng-if="!media.coverUrl" class="media-icon" src="<%-config.web.contentUrl%>/img/youTube.png"  />
+                                    <img ng-if="media.coverUrl" class="media-icon" src="" ng-src="{{media.coverUrl}}" />
+                                    <div class="video-play">
+                                        <i class="fa fa-play-circle-o" ng-click="playVideo(media)"></i>
+                                    </div>
+                                </div>
+                                <div class="media-info col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    <textarea class="media-link" placeholder="Media file">{{media.name}}</textarea>
+                                    <textarea class="media-desc" placeholder="Description" ng-model="media.description">{{media.description}}</textarea>
+                                </div>
+                                <div class="close col-lg-1 col-md-1 col-sm-1 col-xs-1"><img ng-if="media.userId == currentUserId" ng-click="closeToDoClick(media)" src="<%-config.web.contentUrl%>/img/x.svg" /></div>
+                            </div>
+                        </ng-container>
+                        <ng-container ng-if="media.type=='video' && media.source=='system'">
+                            <div class="media-uploaded col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 media-image">
+                                    <img ng-if="!media.coverUrl" class="media-icon" src="<%-config.web.contentUrl%>/img/media-placeholder.svg" />
+                                    <img ng-if="media.coverUrl" class="media-icon" src="" ng-src="{{media.coverUrl}}" />
+                                    <div class="video-play">
+                                        <i class="fa fa-play-circle-o" ng-click="playVideo(media)"></i>
+                                    </div>
+                                    <div class="loading-overlay" ng-show="media.encodings.length <= 0" style="left:0px;right:20px;">
+                                        <div class="loading loading-sm">
+                                            <span us-spinner="{radius:9, width:4, length: 6, color: '#b0b0b7'}"></span>
+
+                                            <div>encoding...</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="media-info col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    <textarea class="media-link" placeholder="Media file">{{media.name}}</textarea>
+                                    <textarea class="media-desc" placeholder="Description" ng-model="media.description">{{media.description}}</textarea>
+                                </div>
+                                <div class="close col-lg-1 col-md-1 col-sm-1 col-xs-1"><img ng-if="media.userId == currentUserId" ng-click="closeToDoClick(media)" src="<%-config.web.contentUrl%>/img/x.svg" /></div>
+                            </div>
+                        </ng-container>
+                        <ng-container ng-if="media.type=='image'">
+                            <div class="media-uploaded col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 media-image">
+                                    <a ng-href="{{media.url}}" target="_blank">
+                                        <img class="thumbnail media" alt="" ng-src="{{media.url}}" />
+                                    </a>
+                                </div>
+                                <div class="media-info col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    <textarea class="media-link" placeholder="Media file">{{media.name}}</textarea>
+                                    <textarea class="media-desc" placeholder="Description" ng-model="media.description">{{media.description}}</textarea>
+                                </div>
+                                <div class="close col-lg-1 col-md-1 col-sm-1 col-xs-1"><img ng-if="media.userId == currentUserId" ng-click="closeToDoClick(media)" src="<%-config.web.contentUrl%>/img/x.svg" /></div>
+                            </div>
+                        </ng-container>
+                        <ng-container ng-if="media.type=='audio'">
+                            <div class="media-uploaded col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                   <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11 media-image audio-wrapper">
+                                       <div class="audio_desc">
+                                           <videogular vg-player-ready="playerReady(media, $API)" vg-plays-inline="'true'">
+                                               <vg-media vg-type="audio" vg-src="media.sources" vg-native-controls="true"></vg-media>
+                                               
+                                           </videogular>
+                                           <div class="audio-description" ng-if="media.description">{{media.description}}</div>
+                                       </div>
+                                    <div class="media-info audio-media">
+                                        <textarea class="media-link" placeholder="Media file">{{media.name}}</textarea>
+                                        <textarea class="media-desc" placeholder="Description" ng-model="media.description">{{media.description}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="close col-lg-1 col-md-1 col-sm-1 col-xs-1 zeropadding"><img ng-if="media.userId == currentUserId" ng-click="closeToDoClick(media)" src="<%-config.web.contentUrl%>/img/x.svg" /></div>
+                            </div>
+                        </ng-container>
+                        <!--<ng-container ng-if="media.type=='audio'">
+                            <div class="media-uploaded col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 media-image">
+                                    <img class="media-icon" src="<%-config.web.contentUrl %>/img/audio.jpg" />
+
+                                    <div class="audio-play">
+                                        <i class="fa"
+                                           ng-class="{'fa-play-circle-o':(!media.audio || media.audio.paused),'fa-pause':(media.audio && !media.audio.paused)}"
+                                           ng-click="playPauseAudio(media)"></i>
+                                    </div>
+                                </div>
+                                <div class="media-info col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    <textarea class="media-link" placeholder="Media file">{{media.name}}</textarea>
+                                    <textarea class="media-desc" placeholder="Description" ng-model="media.description">{{media.description}}</textarea>
+                                </div>
+                                <div class="close col-lg-1 col-md-1 col-sm-1 col-xs-1"><img ng-if="media.userId == currentUserId" ng-click="closeToDoClick(media)" src="<%-config.web.contentUrl%>/img/x.svg" /></div>
+                            </div>
+                        </ng-container>-->
+                        <ng-container ng-if="media.type=='resource'">
+                            <div class="media-uploaded col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 media-image">
+                                    <a ng-href="{{media.url}}" target="_blank">
+                                        <img style="cursor:pointer" class="media-icon" src="<%-config.web.contentUrl%>/img/document-Icon.png">
+                                    </a>
+                                </div>
+                                <div class="media-info col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    <textarea class="media-link" placeholder="Media file">{{media.name}}</textarea>
+                                    <textarea class="media-desc" placeholder="Description" ng-model="media.description">{{media.description}}</textarea>
+                                </div>
+                                <div class="close col-lg-1 col-md-1 col-sm-1 col-xs-1"><img ng-if="media.userId == currentUserId" ng-click="closeToDoClick(media)" src="<%-config.web.contentUrl%>/img/x.svg" /></div>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                    <div class="provide-feedback" ng-class="{'has-error':errArry.doFeedMsg}">
+                        <textarea form="toDoActivityQuestions" placeholder="Provide General Feedback" ng-model="feedbackChallenge.answer" ng-change="newDataEntered()"></textarea>
+                        <p class="text-sm text-danger " ng-if="errArry.doFeedMsg">Must Include A Feedback</p>
+                    </div>
+
+                    <div class="users-comments" ng-repeat="res in feedbackChallengeRes">
+                        <div class="user-image">
+                            <img ng-if="res.user.avatarUrl" ng-src="{{res.user.avatarUrl + '/100x100'}}" />
+                            <!--<img ng-if="res.user.avatarUrl" ng-src="{{res.user.avatarUrl + '/100x100'}}" />-->
+                            <img ng-if="!res.user.avatarUrl" src="/img/avatar.jpg"/>
+                        </div>
+                        <div class="user-info-desc">
+                            <p class="user-namedate">By: <span class="name">{{res.user.firstName}} {{res.user.lastName}}</span> - <span class="date">{{formatTime(res.createdAt)}}</span></p>
+                            <p class="comment">{{res.items[0].data}}</p>
+
+                            <!--<div class="other-user-info">
+                                <p>Larry Johnson, uploaded  <span class="icon-link">sampleicon.png</span></p>
+                                <span>
+                                    <img src="<%-config.web.contentUrl%>/img/sampleicon.png" />
+                                </span>
+                                <p>“Check out this great resource! It should be very helpful for you”</p>
+                            </div>-->
+                        </div>
+                    </div>
+
+                </div>
+                <div class="question_answer_response" ng-if="todoActivityChallenge.todo.challenges.length > 0 &&  verificationQuestionAvailable">
+                    <p>Please reflect and answer the questions below:</p>
+                    <ng-container ng-repeat="challenge in todoActivityChallenge.todo.challenges">
+                        <div class="question1" ng-if="challenge.questions[0].question" ng-class="{'has-error':errArry.doAnsMsg}">>
+                            <p class="question">Question : <span>{{challenge.questions[0].question}}</span></p>
+                            <textarea form="toDoActivityQuestions" ng-model="challenge.answer" placeholder="Respond here" ng-change="newDataEntered()"></textarea>
+                            <p class="haserror" ng-if="errArry.doAnsMsg">Must Include An Answer</p>
+                            <ng-container ng-if="challenge.results.length > 0">
+                                <div class="users-comments">
+                                    <ng-container ng-repeat="res in challenge.results">
+                                        <div class="user1-info">
+                                            <div class="user-image">
+                                                <img ng-if="res.user.avatarUrl" ng-src="{{res.user.avatarUrl + '/100x100'}}" />
+                                                <!--<img ng-if="res.user.avatarUrl" ng-src="{{res.user.avatarUrl + '/100x100'}}" />-->
+                                                <img ng-if="!res.user.avatarUrl" src="/img/avatar.jpg" />
+                                               
+                                            </div>
+                                            <div class="user-info-desc">
+                                                <p class="user-namedate">By: <span class="name">{{res.user.firstName}}{{res.user.lastName}}</span> - <span class="date">{{formatTime(res.createdAt)}}</span></p>
+                                                <p class="comment">{{res.items[0].data}}</p>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                    <!--<div class="user2-info">
+                                        <div class="user-image">
+                                            <img src="<%-config.web.contentUrl%>/img/loren/loren.png" />
+                                        </div>
+                                        <div class="user-info-desc">
+                                            <p class="user-namedate">By: <span class="name">Angela Patterson</span> - <span class="date">Earlier Today</span></p>
+                                            <p class="comment">“I like the approach you took here, I feel very inspired by this”</p>
+                                        </div>
+                                    </div>-->
+                                </div>
+                            </ng-container>
+                        </div>
+
+                    </ng-container>
+
+                </div>
+                <button type="submit" ng-disabled="toDoActivityQuestions.$pristine && !toDoActivityQuestions.$dirty" id="todoActivity-formSubmit" class="btn btn-success hidden" ng-show="!todoCanContinue" >Submit</button>
+
+            </div>
+        </form>
+    </div>
+
+    <div class="Inspire-content row" ng-show="inState=='inspire'" ng-controller="QuestPlayerInspireController" ng-cloak  ng-init="inspireinit()">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 inspObj-description" ng-if="inspireQuest.objective != null">
+            <p class="objectiveHeader">Objective</p>
+            <!--<p class="objectiveSentence">{{inspireQuest.objective}}</p>-->
+            <ng-quill-editor ng-model="inspireQuest.objective" read-only="true"></ng-quill-editor>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 appreciate-content story-content encourage-content zeropadding">
+            <div class="col-push-lg-6 col-lg-6 col-md-push-6 col-md-6 col-sm-12 col-xs-12 zeropadding mobileview-up">
+                <ul class="inspire-tabs" ng-show="appreciateShow">
+                    <li class="active" ng-if="quest.inspireAvailableToUser" ng-init="appreciateContent()"><a href="#">Appreciate</a></li>
+                    <li class="border-right" ng-if="quest.storyAvailableToUser" ng-click="storyContent()"><a href="#">Story</a></li>
+                    <li ng-if="quest.encourageAvailableToUser" ng-click="encourageContent()"><a href="#">Encourage</a></li>
+                </ul>
+                <ul class="inspire-tabs" ng-show="storyShow">
+                    <li ng-if="quest.inspireAvailableToUser" ng-click="appreciateContent()"><a href="#">Appreciate</a></li>
+                    <li ng-if="quest.storyAvailableToUser" class="active" ng-init="storyContent()"><a href="#">Story</a></li>
+                    <li ng-if="quest.encourageAvailableToUser" ng-click="encourageContent()"><a href="#">Encourage</a></li>
+                </ul>
+                <ul class="inspire-tabs" ng-show="encourageShow">
+                    <li ng-if="quest.inspireAvailableToUser" class="border-right" ng-click="appreciateContent()"><a href="#">Appreciate</a></li>
+                    <li ng-if="quest.storyAvailableToUser" ng-click="storyContent()"><a href="#">Story</a></li>
+                    <li ng-if="quest.encourageAvailableToUser" class="active" ng-init="encourageContent()"><a href="#">Encourage</a></li>
+                </ul>
+            </div>
+
+            <div class="col-pull-lg-6 col-lg-6 col-md-pull-6 col-md-6 col-sm-12 col-xs-12 zeropadding mobileview-down">
+                <p class="tooltip" ng-show="appreciateShow"  ng-if="quest.inspireAvailableToUser">
+                    Appreciate a Member <img src="<%-config.web.contentUrl%>/img/tooltip.svg" />
+                    <span class="tooltiptext">{{inspirationHelpTexts.appreciateDescription.value}}</span>
+                </p>
+                <p class="tooltip" ng-show="storyShow" ng-if="quest.storyAvailableToUser">
+                    Share a Story <img src="<%-config.web.contentUrl%>/img/tooltip.svg" />
+                    <span class="tooltiptext">{{inspirationHelpTexts.storyDescription.value}}</span>
+                </p>
+                <p class="tooltip" ng-show="encourageShow" ng-if="quest.encourageAvailableToUser">
+                    Encourage a Member <img src="<%-config.web.contentUrl%>/img/tooltip.svg" />
+                    <span class="tooltiptext">{{inspirationHelpTexts.encourageDescription.value}}</span>
+                </p>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding">
+                <form action="" method="post" id="inspireMessages" name="inspireMessages" ng-submit="inspireSubmit($event)">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding" ng-show="appreciateShow" ng-if="quest.inspireAvailableToUser" ng-class="{'has-error':errArry.appreciateMsg}">
+                        <textarea form="inspireMessages" class="appreciation-message" placeholder="What is your message?" ng-model="formData.appreciationMessage">{{formData.appreciationMessage}}</textarea>
+                        <p class="haserror " ng-if="errArry.appreciateMsg">Must Include A Message</p>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding" ng-show="encourageShow" ng-if="quest.encourageAvailableToUser" ng-class="{'has-error':errArry.encourageMsg}">>
+                        <textarea form="inspireMessages" class="encourage-message" placeholder="What is your message?" ng-model="formData.encourageMessage">{{formData.encourageMessage}}</textarea>
+                        <p class="haserror" ng-if="errArry.encourageMsg">Must Include A Message</p>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding" ng-show="storyShow" ng-if="quest.storyAvailableToUser" ng-class="{'has-error':errArry.storyOpMsg || errArry.storyMidMsg || errArry.storyEndMsg}">
+                        <textarea form="inspireMessages" class="story-message" placeholder="Opening" ng-model="formData.storyMessage">{{formData.storyMessage}}</textarea>
+                        <p class="haserror" ng-if="errArry.storyOpMsg">Must Include A Message</p>
+                        <textarea form="inspireMessages" class="events-message" placeholder="Events" ng-model="formData.eventsMessage">{{formData.eventsMessage}}</textarea>
+                        <p class="haserror" ng-if="errArry.storyMidMsg">Must Include A Message</p>
+                        <textarea form="inspireMessages" class="user-message" placeholder="Closing" ng-model="formData.userMessage">{{formData.userMessage}}</textarea>
+                        <p class="haserror" ng-if="errArry.storyEndMsg">Must Include A Message</p>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding">
+                        <p ng-if="quest.userAllowedMediaUpload" class="add-media">
+                            <a href="javascript:void(0)" ng-click="showInspireAddMediaModalNotification()"><img src="<%-config.web.contentUrl%>/img/media-button-icon.png" /> ADD MEDIA</a>
+                        </p>
+                    </div>
+                    <ng-container ng-repeat="media in inspireModel.media">
+                        <ng-container ng-if="media.type=='video' && media.source=='youtube'">
+                            <div class="media-uploaded col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 media-image">
+                                    <img ng-if="!media.coverUrl" class="media-icon" src="<%-config.web.contentUrl%>/img/media-placeholder.svg" />
+                                    <img ng-if="media.coverUrl" class="media-icon" src="" ng-src="{{media.coverUrl}}" />
+                                    <div class="video-play">
+                                        <i class="fa fa-play-circle-o" ng-click="playVideo(media)"></i>
+                                    </div>
+                                </div>
+                                <div class="media-info col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    <textarea class="media-link" placeholder="Media file">{{media.name}}</textarea>
+                                    <textarea class="media-desc" placeholder="Description" ng-model="media.description">{{media.description}}</textarea>
+                                </div>
+                                <div class="close col-lg-1 col-md-1 col-sm-1 col-xs-1"><img ng-if="!quest.complete" ng-click="closeInspireClick(media)" src="<%-config.web.contentUrl%>/img/x.svg" /></div>
+                            </div>
+                        </ng-container>
+                        <ng-container ng-if="media.type=='video' && media.source=='system'">
+                            <div class="media-uploaded col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 media-image">
+                                    <img ng-if="!media.url" class="media-icon" src="<%-config.web.contentUrl%>/img/media-placeholder.svg" />
+                                    <img ng-if="media.url" class="media-icon" src="" ng-src="{{media.url}}" />
+                                    <div class="video-play">
+                                        <i class="fa fa-play-circle-o" ng-click="playVideo(media)"></i>
+                                    </div>
+                                    <div class="loading-overlay" ng-show="media.encodings.length <= 0" style="left:9px;right:10px;">
+                                        <div class="loading loading-sm">
+                                            <span us-spinner="{radius:9, width:4, length: 6, color: '#b0b0b7'}"></span>
+
+                                            <div>encoding...</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="media-info col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    <textarea class="media-link" placeholder="Media file">{{media.name}}</textarea>
+                                    <textarea class="media-desc" placeholder="Description" ng-model="media.description">{{media.description}}</textarea>
+                                </div>
+                                <div class="close col-lg-1 col-md-1 col-sm-1 col-xs-1"><img ng-if="!quest.complete" ng-click="closeInspireClick(media)" src="<%-config.web.contentUrl%>/img/x.svg" /></div>
+                            </div>
+                        </ng-container>
+                        <ng-container ng-if="media.type=='image'">
+                            <div class="media-uploaded col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 media-image">
+                                    <a ng-href="{{media.url}}" target="_blank">
+                                        <img class="thumbnail media" alt="" ng-src="{{media.url}}" />
+                                    </a>
+                                </div>
+                                <div class="media-info col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    <textarea class="media-link" placeholder="Media file">{{media.name}}</textarea>
+                                    <textarea class="media-desc" placeholder="Description" ng-model="media.description">{{media.description}}</textarea>
+                                </div>
+                                <div class="close col-lg-1 col-md-1 col-sm-1 col-xs-1"><img ng-if="!quest.complete" ng-click="closeInspireClick(media)" src="<%-config.web.contentUrl%>/img/x.svg" /></div>
+                            </div>
+                        </ng-container>
+                        <ng-container ng-if="media.type=='audio'">
+                            <div class="media-uploaded col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-11 media-image audio-wrapper">
+                                    <videogular vg-player-ready="playerReady(media, $API)" vg-plays-inline="'true'">
+                                        <vg-media vg-type="audio" vg-src="media.sources" vg-native-controls="true"></vg-media>
+                                    </videogular>
+                                    <div class="audio-description audio_desc" ng-if="media.description">{{media.description}}</div>
+                                </div>
+                                <div class="media-info audio-media col-lg-6 col-md-6 col-sm-6 col-xs-11">
+                                    <textarea class="media-link" placeholder="Media file">{{media.name}}</textarea>
+                                    <textarea class="media-desc" placeholder="Description" ng-model="media.description">{{media.description}}</textarea>
+                                </div>
+                                <div class="close col-lg-1 col-md-1 col-sm-1 col-xs-1"><img ng-if="!quest.complete" ng-click="closeInspireClick(media)" src="<%-config.web.contentUrl%>/img/x.svg" class="audioclose"/></div>
+                            </div>
+                        </ng-container>
+                        <!--<ng-container ng-if="media.type=='audio'">
+                            <div class="media-uploaded col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 media-image">
+                                    <img class="media-icon" src="<%-config.web.contentUrl %>/img/audio.jpg" />
+
+                                    <div class="audio-play">
+                                        <i class="fa"
+                                           ng-class="{'fa-play-circle-o':(!media.audio || media.audio.paused),'fa-pause':(media.audio && !media.audio.paused)}"
+                                           ng-click="playPauseAudio(media)"></i>
+                                    </div>
+                                </div>
+                                <div class="media-info col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    <textarea class="media-link" placeholder="Media file">{{media.name}}</textarea>
+                                    <textarea class="media-desc" placeholder="Description" ng-model="media.description">{{media.description}}</textarea>
+                                </div>
+                                <div class="close col-lg-1 col-md-1 col-sm-1 col-xs-1"><img ng-click="closeInspireClick(media)" src="<%-config.web.contentUrl%>/img/x.svg" /></div>
+                            </div>
+                        </ng-container>-->
+                        <ng-container ng-if="media.type=='resource'">
+                            <div class="media-uploaded col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 media-image">
+                                    <a ng-href="{{media.url}}" target="_blank">
+                                        <img style="cursor:pointer" class="media-icon" src="<%-config.web.contentUrl%>/img/document-Icon.png">
+                                    </a>
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 media-info">
+                                    <textarea class="media-link" placeholder="Media file">{{media.name}}</textarea>
+                                    <textarea class="media-desc" placeholder="Description" ng-model="media.description">{{media.description}}</textarea>
+                                </div>
+                                <div class="close col-lg-1 col-md-1 col-sm-1 col-xs-1"><img ng-if="!quest.complete" ng-click="closeInspireClick(media)" src="<%-config.web.contentUrl%>/img/x.svg" /></div>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+
+                    <div class="col-lg-6 col-md-6 col-sm-0 col-xs-0"></div>
+                    <button type="submit" ng-disabled="!inspireMessages.$dirty && !inspireMessages.touched" id="inspireActivity-formSubmit" class="btn btn-success hidden" ng-show="!inspireCanContinue">Submit</button>
+                </form>
+            </div>
+            <div class="appreciate-recommendation story-recommendation encourage-recommendation col-md-12 col-sm-12 col-xs-12 ">
+                <p ng-if="!quest.complete" ng-show="appreciateShow">Who would you like to Appreciate?</p>
+                <p ng-if="!quest.complete" ng-show="encourageShow">Who would you like to Encourage?</p>
+                <p ng-if="!quest.complete" ng-show="storyShow">Who would you like to share your Story with?</p>
+                <form class="" ng-class="{ 'choose-option' : !quest.complete || shareUserArry.length > 0 }">
+                    <div class="radio1 form-group" ng-if="!quest.complete">
+                        <input type="radio" name="radio" value="Everyone" id="radio1" ng-change="valueChanged()" ng-model="checkVal.value"><label>Everyone</label>
+                    </div>
+                    <div class="radio2 form-group" ng-if="!quest.complete">
+                        <input type="radio" name="radio" value="Groups" id="radio2" ng-change="valueChanged()" ng-model="checkVal.value"><label>Groups</label>
+                    </div>
+                    <div class="radio3 form-group" ng-if="!quest.complete">
+                        <input type="radio" name="radio" value="Individuals" id="radio3" ng-change="valueChanged()" ng-model="checkVal.value"><label>Individuals</label>
+                    </div>
+                    <span class="multiselect-native-select" ng-class="multiselectoption" ng-show="multiselectoption" ng-if="!quest.complete">
+                        <!--individual dropdown-->
+                        <div id="showIndividialDropdown" class="btn-group open" ng-show="showIndividialDropdown">
+                            <button type="button" class="multiselect dropdown-toggle btn btn-default" title="Click to add users" ng-click="showDropdown('indiv')">
+                                <span class="multiselect-selected-text" ng-show="!selectedcountertext">Click to add users</span>
+                                <span class="multiselect-selected-text" ng-show="selectedcountertext && selectedCounter == 1">{{selectedCounter}} user selected</span>
+                                <span class="multiselect-selected-text" ng-show="selectedcountertext && selectedCounter > 1">{{selectedCounter}} users selected</span>
+                                <span class="dropdownarrow"><img src="<%-config.web.contentUrl%>/img/dropdown-arrow.svg"></span>
+                            </button>
+                            <ul class="multiselect-container dropdown-menu" ng-show="showIndividialDropMenu">
+                                <li class="multiselect-item">
+                                    <div class="input-group">
+                                        <input class="form-control multiselect-search" type="text" placeholder="Search" ng-model="searchtext" ng-change="searchUser(searchtext)">
+                                    </div>
+                                </li>
+                                <li ng-repeat="item in selectedUserArry">
+                                    <a href="#"  ng-hide="item.userId == ownNetworkUser">
+                                        <label class="checkbox"><input type="checkbox" value="item.value" ng-model="item.selected" ng-click="toggleUser(item, false, true)">{{item.label}}</label>
+                                    </a>
+                                </li>
+                                <li ng-if="selectedUserArry.length <= 0">
+                                    <a href="#" style="cursor:default">
+                                        <label class="checkbox" style="cursor:default">
+                                            <p>No Users Found</p>
+                                        </label>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--group dropdown-->
+                        <div id="showGroupDropdown" class="btn-group open" ng-show="showGroupDropdown">
+                            <button type="button" class="multiselect dropdown-toggle btn btn-default" title="Click to add users" ng-click="showDropdown('group')">
+                                <span class="multiselect-selected-text" ng-show="!selectedGroupcountertext">Click to add Groups</span>
+                                <span class="multiselect-selected-text" ng-show="selectedGroupcountertext && selectedGroupCounter == 1">{{selectedGroupCounter}} Group selected</span>
+                                <span class="multiselect-selected-text" ng-show="selectedGroupcountertext && selectedGroupCounter > 1">{{selectedGroupCounter}} Groups selected</span>
+                                <span class="dropdownarrow"><img src="<%-config.web.contentUrl%>/img/dropdown-arrow.svg"></span>
+                            </button>
+                            <ul class="multiselect-container dropdown-menu" ng-show="showGroupDropMenu">
+                                <li class="multiselect-item">
+                                    <div class="input-group">
+                                        <input class="form-control multiselect-search" type="text" placeholder="Search" ng-model="searchtext" ng-change="searchGroup(searchtext)">
+                                    </div>
+                                </li>
+                                <li ng-repeat="item in selectedGroupArry">
+                                    <a href="#">
+                                        <label class="checkbox">
+                                            <input type="checkbox" value="item.value" ng-model="item.selected" ng-click="toggleGroup(item, item.id)">
+                                            <p>{{item.name}}</p>
+                                                
+                                        </label> 
+                                    </a>
+                                    <a class="groupDropCancel" href="#" ng-click="showToggleGroupModal('del', item.id )"><img src="<%-config.web.contentUrl%>/img/blue-x.svg" /></a>
+                                </li>
+                                <li ng-if="selectedGroupArry.length <= 0">
+                                    <a href="#" style="cursor:default">
+                                        <label class="checkbox" style="cursor:default">
+                                            <p>No Groups Found</p>
+                                        </label>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </span>
+                    <br />
+                    <p ng-if="showIndividialDropdown && displayerror==true" class="haserror text-sm" style="display: block;clear: both;color:darkred;font-size:16px;">Please select an individual</p>
+                    <div class="save-users">
+                      
+                        <p ng-show="showIndividialDropdown && shareUserArry.length > 1" ng-if="!quest.complete" ng-click="showToggleGroupModal('add')"><a href="#" class="SAVE-USERS-TO-GROUP">SAVE USERS TO GROUP</a></p>
+                        <span ng-repeat="usr in shareUserArry">
+                            <ng-container ng-if="usr.user.label">
+                                <p class="user1"><span>{{usr.user.label}}</span><span><a href="#" ng-click="toggleUser(usr, false)"><img ng-if="!quest.complete" src="<%-config.web.contentUrl%>/img/blue-x.svg" /></a></span></p>
+                            </ng-container>
+                            <ng-container ng-if="!usr.user.label">
+                                <p class="user1"><span>{{usr.user.firstName}}{{usr.user.lastName}}</span><span><a href="#" ng-click="toggleUser(usr, false, true)"><img ng-if="!quest.complete" src="<%-config.web.contentUrl%>/img/blue-x.svg" /></a></span></p>
+                            </ng-container>
+
+                        </span>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadding" ng-show="appreciateShow" ng-if="quest.inspireAvailableToUser && shareUserArry.length == 1 && getCurrentBonusPointsAvailable()">
+                        <input ng-model="inspireModel.bonusPoints" placeholder="Award Bonus Points" ng-disabled="quest.complete" ng-show="showBonus()" style="height: 32px;font-size: 12px;text-align: center;" />
+                        <p class="haserror" ng-if="errArry.bonusPoints.max">Only {{errArry.bonusPoints.remain}} bonus points available to assign. </p>
+                    </div> 
+                </form>
+            </div>
+           
+        </div>
+
+
+    </div>
+
+
+
+</div>

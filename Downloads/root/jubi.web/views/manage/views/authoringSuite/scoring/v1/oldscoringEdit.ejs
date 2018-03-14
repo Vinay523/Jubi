@@ -1,0 +1,51 @@
+<div class="panel-heading">
+    <div class="row">
+        <div class="col-xs-6">
+            <h3>{{quest.title}}</h3>
+        </div>
+        <div class="col-xs-6 text-right text-sm" ng-if="quest.challenges.length>0">
+            <label ng-attr-for="d{{$index}}">Distribute Points:</label>
+            <input number-mask allow-decimal="false"
+                   ng-disabled="!canEditEntity(quest, program)"
+                   ng-attr-id="d{{$index}}" type="text"
+                   title="<strong>Invalid Numeric Value</strong><br>Please enter a number<br>between 1 and 1000."
+                   class="form-control input-sm"
+                   ng-model="quest.distributePoints"
+                   ng-change="distributePointsChange($index)">
+            <button ng-disabled="!canEditEntity(quest, program)" type="button" class="btn btn-primary btn-sm" ng-click="distributePoints(quest,$index)">Go</button>
+        </div>
+    </div>
+</div>
+<div class="panel-body">
+
+    <div ng-if="quest.challenges.length<=0">
+        No challenges.
+    </div>
+
+    <table class="table table-striped" ng-if="quest.challenges.length>0">
+        <thead>
+        <tr>
+            <th class="challenge-title">Challenge</th>
+            <th class="challenge-type">Question Type</th>
+            <th class="challenge-points">Points</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="challenge in quest.challenges | filter:{type:'general'}">
+            <td class="challenge-title">{{challenge.title}}</td>
+            <td class="challenge-type">{{(challenge.questions.length > 0 ?
+                challenge.questions[0].type.name : '')}}
+            </td>
+            <td class="challenge-points">
+                <button ng-disabled="!canEditEntity(quest, program)" type="button" class="btn btn-primary"
+                        ng-click="decreasePoints(challenge)"><i
+                            class="fa fa-chevron-left"></i></button>
+                <div>{{challenge.points}}</div>
+                <button ng-disabled="!canEditEntity(quest, program)" type="button" class="btn btn-primary"
+                        ng-click="increasePoints(challenge)"><i
+                            class="fa fa-chevron-right"></i></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

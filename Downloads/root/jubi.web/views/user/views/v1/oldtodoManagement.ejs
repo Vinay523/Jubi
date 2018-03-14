@@ -1,0 +1,88 @@
+<div ng-controller="TodoManagementController as c" ng-init="c.init('<%- model.slug %>')" ng-cloak>
+
+    <div ng-show="isLoading" style="position: relative;" ng-cloak  ng-style="getBackgroundFontStyle()">
+        <div class="loading">
+            <span us-spinner="{radius:30, width:8, length: 16, color: getBackgroundFontColor()}"></span>
+            <div ng-style="getBackgroundFontStyle()">One moment please...</div>
+        </div>
+    </div>
+
+    <section ng-show="!isLoading" class="forum-topic-list" ng-show="!model.inCreate">
+        <div class="row form-group">
+            <div class="col-xs-6">
+            </div>
+            <div class="col-xs-6 text-right">
+                <label ng-style="getBackgroundFontStyle()" for="cat" class="control-label text-sm" style="display:inline;">Status</label>
+                &nbsp;&nbsp;
+                <select id="cat" ng-model="ui.selectedTodoStatusFilter" class="form-control input-sm"
+                        ng-options="c.status as (c.label + ' (' + countTodosByStatus(c.status) + ')') for c in todoStatuses"
+                        style="display:inline;width:auto;">
+                    <option value="">All ({{todosModel.userTodos.length}})</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+
+                <div ng-if="todosModel.userTodos.length<=0"  ng-style="getBackgroundFontStyle()" class="lead" style="margin-top:40px;">
+                    No To-Do’s Found.
+                </div>
+
+                <div ng-if="filteredUserTodos.length<=0 && todosModel.userTodos.length > 0"  ng-style="getBackgroundFontStyle()" class="lead" style="margin-top:40px;">
+                    No To-Do's found for selected status filter. {{todosModel.userTodos.length}} total.
+                </div>
+
+                <div  ng-click="clickTodo(userTodo)"
+                      href="#"
+                      ng-repeat="userTodo in filteredUserTodos = (todosModel.userTodos | filter: userTodosFilter)"
+                      class="forum-topic clearfix">
+                    <div class="forum-avatar">
+                        <img ng-if="userTodo.user.avatarUrl" alt="" ng-src="{{userTodo.user.avatarUrl + '/100x100'}}">
+                        <img ng-if="!userTodo.user.avatarUrl" alt="" src="/img/avatar.jpg">
+                    </div>
+                    <div class="forum-content">
+                        <h1>{{userTodo.todo.title}}</h1>
+                        <h1 style="float:right">{{getStatusStringForUserTodo(userTodo)}}</h1>
+                        <span class="text-xs">By: {{userTodo.user.firstName}} {{userTodo.user.lastName}} - {{formatTime(userTodo.updatedAt)}}</span>
+                        <!--<span ng-if="todo.quest" class="badge badge-quest">{{topic.quest.title}}</span>-->
+                        <!--<span ng-if="topic.challenge" class="badge badge-challenge">{{topic.challenge.title}}</span>-->
+                        <!--<span class="badge badge-category" ng-if="topic.category">{{topic.category.name}}</span>-->
+                        <!--<span class="text-xs" ng-if="topic.category">By: {{topic.createdBy.firstName}} {{topic.createdBy.lastName}} - {{formatTime(topic.createdAt)}}</span>-->
+                        <!--<button class="badge"-->
+                                <!--ng-if="topic.createdBy.id == userId && topic.children.length == 0 && topic.categoryId != null"-->
+                                <!--ng-click="deleteForumItem($event, topic, true)"-->
+                                <!--onfocus="blur()" tabindex="-1" title="Delete Topic"-->
+                                <!--style="background:rgba(0,0,0,0.5);border:none">-->
+                            <!--<i class="fa fa-times"></i>-->
+                        <!--</button>-->
+                        <!--<span class="badge pull-right">{{topic.children.length}} comments</span>-->
+                    </div>
+                </div>
+
+                <div class="forum-topic clearfix" style="padding-top: 3px;margin-left: 10px;margin-right: 10px;border-radius: 10px;">
+                    <div class="forum-avatar">
+                        <!--<img alt="" ng-src="{{userTodo.user.avatarUrl + '/100x100'}}">-->
+                        <img alt="" src="/img/avatar.jpg">
+                    </div>
+                    <div class="forum-content" style="padding-top:6px">
+                        <h1 >See Allison</h1>
+                        <h1 style="float:right;border-color: #31adf8;border-radius: 5px;border-style: solid;border-width: 2px;margin-top: -16px;">PENDING</h1>
+                        <span class="text-xs" style="color: #fff;margin-top: 5px;position: absolute;">By: Dino Pheo - 6/7/2017 3:49 pm</span>
+                        <!--<span ng-if="todo.quest" class="badge badge-quest">{{topic.quest.title}}</span>-->
+                        <!--<span ng-if="topic.challenge" class="badge badge-challenge">{{topic.challenge.title}}</span>-->
+                        <!--<span class="badge badge-category" ng-if="topic.category">{{topic.category.name}}</span>-->
+                        <!--<span class="text-xs" ng-if="topic.category">By: {{topic.createdBy.firstName}} {{topic.createdBy.lastName}} - {{formatTime(topic.createdAt)}}</span>-->
+                        <!--<button class="badge"-->
+                        <!--ng-if="topic.createdBy.id == userId && topic.children.length == 0 && topic.categoryId != null"-->
+                        <!--ng-click="deleteForumItem($event, topic, true)"-->
+                        <!--onfocus="blur()" tabindex="-1" title="Delete Topic"-->
+                        <!--style="background:rgba(0,0,0,0.5);border:none">-->
+                        <!--<i class="fa fa-times"></i>-->
+                        <!--</button>-->
+                        <!--<span class="badge pull-right">{{topic.children.length}} comments</span>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

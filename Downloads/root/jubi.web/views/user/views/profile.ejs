@@ -1,0 +1,197 @@
+<div ng-controller="ProfileController" ng-cloak ng-style="getBackgroundFontStyle()">
+
+    <form action="" method="post" ng-submit="submit($event)" autocomplete="off">
+
+        <br><br>
+
+        <div class="row user-profile">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mobileprofile">
+
+                <div class="text-lg col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                    Update your account information below.
+                </div>
+                <!--<div ng-style="getBackgroundFontStyle()" class="text-sm text-muted">* are required fields.</div>-->
+
+                
+                <div class="save-info col-lg-6 col-md-6 col-sm-7 col-xs-12">
+                    <div class="save-buttons">
+                        <div class="form-group" style="height:31px;">
+                            <button type="button" ng-style="{'color': getLinkFontColor()}" ng-click="redirectBack()" class="Cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary savesubmit" ng-disabled="busy">
+                                Save Account Information
+                            </button>
+                            
+                        </div>
+
+                        <div ng-show="save.active" class="mobile-save">
+                            <i class="fa fa-spinner fa-spin"></i>&nbsp;&nbsp;&nbsp;Saving information, one moment
+                            please...
+                        </div>
+                        <div class="animated mobile-save" ng-show="save.status=='ok'" ng-class="{'fadeOut':save.fade}">
+                            <i class="fa fa-check"></i>&nbsp;&nbsp;&nbsp;Your information has been saved!
+                        </div>
+                    </div>
+                </div>
+                <div class="text-md col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-if="originalPendingEmail != null">
+                    <br />
+                    A confirmation email has been sent to {{model.pendingEmail}}. Please click the link in the email for the change to take effect.
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                    <label for="email" class="control-label">Email: </label><br/>
+                    <span>{{model.email}}</span>
+                </div>
+               
+                        <div class="form-group col-lg-5 col-md-5 col-sm-12 col-xs-12"
+                             ng-class="{'has-error': val.pendingEmail.fmt || val.pendingEmail.dup || val.pendingEmail.own}">
+                            <label for="email" class="control-label">Update Email To: </label>
+
+                            <div>
+                                <div style="">
+                                    <input ng-readonly="originalPendingEmail != null" type="text" id="pendingEmail"
+                                           class="form-control"
+                                           ng-model="model.pendingEmail">
+                                </div>
+                                <div style="display:block">
+                                    <button class="badge"
+                                            type="button"
+                                            ng-if="originalPendingEmail != null"
+                                            ng-click="cancelPendingEmailUpdate()"
+                                            onfocus="blur()" tabindex="-1" title="Cancel Pending Email Update"
+                                            style="background:rgba(0,0,0,0.5);border:none">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="text-sm text-danger" ng-if="val.pendingEmail.fmt">Please enter a valid email
+                                address.
+                            </div>
+                            <div class="text-sm text-danger" ng-if="val.pendingEmail.dup">Email address is already in
+                                use.
+                            </div>
+                            <div class="text-sm text-danger" ng-if="val.pendingEmail.own">Email address is identical to
+                                current.
+                            </div>
+                        </div>
+                <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0"></div>
+              
+                     
+                           
+                                <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 form-group" ng-class="{'has-error':val.pass.len}">
+                                    <label for="updatePass" class="control-label">Update Password:</label>
+                                    <input type="password" auto id="updatePass" class="form-control" ng-model="model.password">
+
+                                    <div class="text-sm text-danger" ng-if="val.pass.len">Password must contain at least
+                                        6
+                                        characters.
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 form-group" ng-class="{'has-error':val.pass.match}">
+                                    <label for="updatePassConfirm" class="control-label">Confirm Updated Password:</label>
+                                    <input  type="password" id="updatePassConfirm" class="form-control" ng-model="model.password2">
+
+                                    <div class="text-sm text-danger" ng-if="val.pass.match">Passwords do not match.
+                                    </div>
+                                </div>
+                <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0"></div>
+
+                           
+                            <!--<div ng-style="getBackgroundFontStyle()" class="text-sm text-muted">Leave blank to keep current password.</div>-->
+                       <hr />
+                      
+               
+                        
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 form-group" ng-class="{'has-error':val.firstName.req}">
+                                    <label for="firstName" class="control-label">First Name: *</label>
+                                    <input type="text" id="firstName" class="form-control" ng-model="model.firstName">
+
+                                    <div class="text-sm text-danger" ng-if="val.firstName.req">First name cannot be
+                                        empty.
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 form-group" ng-class="{'has-error':val.lastName.req}">
+                                    <label for="lastName" class="control-label">Last Name: *</label>
+                                    <input type="text" id="lastName" class="form-control" ng-model="model.lastName">
+
+                                    <div class="text-sm text-danger" ng-if="val.lastName.req">Last name cannot be
+                                        empty.
+                                    </div>
+                                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="">
+                        <div class="form-group pull-right" ng-class="{'has-error':val.avatar.type || val.avatar.size}">
+
+                            <label class="control-label">Picture:</label>
+
+                            <div class="thumbnail profile-avatar">
+                                <div class="program-img">
+                                    <div ng-show="avatarLoading">
+                                        <div class="loading loading-sm">
+                                            <img src="<%- config.web.contentUrl %>/img/empty.png" />
+                                            <span us-spinner="{radius:15, width:4, length: 9, color: '#b0b0b7'}"></span>
+                                        </div>
+                                    </div>
+
+                                    <div ng-show="!avatarLoading">
+                                        <div class="manage manage-photo btn-sm">
+                                            <a ng-if="model.avatarUrl" href="#"
+                                               class="btn btn-default red pull-right"
+                                               ng-click="removeAvatar($event)">
+                                                <span class="fa fa-trash-o" title="Remove Image"></span>
+                                            </a>
+
+                                            <div class="btn btn-default blue pull-left" ng-file-select
+                                                 ng-file-change="uploadAvatar($files)">
+                                                upload
+                                            </div>
+                                        </div>
+                                        <div ng-if="model.avatarUrl">
+                                            <img ng-src="{{model.avatarUrl}}/100x100" alt="" />
+                                        </div>
+                                        <div ng-if="!model.avatarUrl">
+                                            <img src="<%- config.web.contentUrl %>/img/empty.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-sm text-danger" ng-if="val.avatar.type" style="padding-top:5px;">
+                                Unsupported image type.
+                            </div>
+                            <div class="text-sm text-danger" ng-if="val.avatar.size" style="padding-top:5px;">
+                                Image is too large.
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+                           
+                       
+                        <div class="form-group col-lg-10 col-md-10 col-sm-12 col-xs-10">
+                            <label for="title" class="control-label">Job Title:</label>
+                            <input type="text" id="title" class="form-control" ng-model="model.title">
+                            
+                            </div>
+                <div class="col-lg-2 col-md-2 col-md-2 col-xs-2"></div>
+               
+                    <div class="form-group col-lg-10 col-md-10 col-sm-12 col-xs-10"> 
+                        <label for="why" class="control-label">My Why: </label>
+                        <input type="text" id="why" class="form-control" ng-model="model.why">
+                    </div>
+                <div class="col-lg-2 col-md-2 col-md-2 col-xs-2"></div>
+              
+                    <div class="form-group col-lg-10 col-md-10 col-sm-12 col-xs-10">
+                        <label for="dest" class="control-label">My Destination: </label>
+                        <input type="text" id="dest" class="form-control" ng-model="model.destination">
+                    </div>
+                <div class="col-lg-2 col-md-2 col-md-2 col-xs-2"></div>
+                </div>
+
+            
+
+          
+            </div>
+       
+    </form>
+</div>

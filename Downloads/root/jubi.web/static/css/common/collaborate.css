@@ -1,0 +1,120 @@
+/* COLLABORATE */
+.new-discussion { 
+  padding: 30px;
+}
+.discussion, .comment-item {
+  border-top: 1px solid #374c60;
+  padding: 10px;
+  position: relative;
+}
+.discussion-meta {
+  clear: both;
+  margin-bottom: 20px;
+}
+.comments-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+	.comments-list .comment-item {
+		position: relative;
+	}
+		.comment-item .comment-entity, .comment-item .comment-content {
+			/*float: left;*/
+		}
+		.comment-item .comment-entity {
+			/*width: 20%;*/
+		}
+		.comment-item .comment-content {
+			/*width: 80%;*/
+		}
+	.comment-actions {
+		padding: 0;
+		margin: 0;
+		list-style: none;
+    position: relative;
+	}
+		.comment-actions > li {
+			display: inline-block;
+			/*margin-left: 4px;
+			padding-left: 4px; */
+		}
+		.comment-actions > li.first:before { content:""; }
+		.comment-actions > li:before {
+			content:"• ";
+		} 
+.commenter-name { font-weight: bold; }
+/*.new-discussion {
+  border-width: 1px 0 1px 0;
+  border-color: #374c60;
+  border-style: solid;
+  padding: 25px 0;
+  margin: 15px 0;
+}
+
+.discussion {
+  border-top: 1px solid #374c60;
+  padding: 10px;
+}
+  .discussion .comment {
+    border-top: 1px solid #374C60;
+    margin-top: 15px;
+    padding: 15px 0 0 20px;
+  }
+
+.thread-header h5 {
+  font-weight: bold;
+}
+.thread-meta { font-size: 12px; }
+
+.depth-1 { padding-left: 20px; }
+.depth-2 { padding-left: 40px; }
+.depth-3 { padding-left: 60px; }
+.depth-4 { padding-left: 80px; }
+.depth-5 { padding-left: 100px; }
+.depth-6 { padding-left: 120px; }
+.depth-7 { padding-left: 140px; }
+.depth-8 { padding-left: 160px; }
+.depth-9 { padding-left: 180px; }
+.depth-10 { padding-left: 200px; }
+.depth-11 { padding-left: 220px; }
+.depth-12 { padding-left: 240px; }*/
+
+@media screen and (max-width: 767px) {
+
+  /* MESSAGES */
+  /*.new-discussion {
+    border-width: 1px 0 1px 0;
+    border-color: #374c60;
+    border-style: solid;
+    padding: 5px 0;
+    margin: 5px 0;
+  }
+
+  .discussion {
+    border-top: 1px solid #374c60;
+    border-left: 2px solid #374c60;
+    padding: 10px 5px;
+
+  }
+    .discussion .comment {
+      border-top: 1px solid #374c60;
+      border-left: 1px solid #374c60;
+      margin-top: 0;
+      padding: 12px 6px 0 6px;
+      margin-left: -6px;
+    }
+    .citem { background: url("../images/thread-line.png") repeat-y 0 0 transparent; }
+    .depth-1 { padding-left: 6px; }
+    .depth-2 { padding-left: 12px; }
+    .depth-3 { padding-left: 18px; }
+    .depth-4 { padding-left: 24px; }
+    .depth-5 { padding-left: 30px; }
+    .depth-6 { padding-left: 36px; }
+    .depth-7 { padding-left: 42px; }
+    .depth-8 { padding-left: 48px; }
+    .depth-9 { padding-left: 54px; }
+    .depth-10 { padding-left: 60px; }
+    .depth-11 { padding-left: 66px; }
+    .depth-12 { padding-left: 72px; }*/
+}

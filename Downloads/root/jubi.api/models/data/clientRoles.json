@@ -1,0 +1,16 @@
+[
+  {
+    "model": "ClientRole",
+    "data": {
+      "id": 1,
+      "name": "Content Provider"
+    }
+  },
+  {
+    "model": "ClientRole",
+    "data": {
+      "id": 2,
+      "name": "Content Consumer"
+    }
+  }
+]

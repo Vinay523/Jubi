@@ -1,0 +1,265 @@
+[
+  {
+    "model": "SequencingType",
+    "data": {
+      "id": 1,
+      "title": "In Order"
+    }
+  },
+
+  {
+    "model": "SequencingType",
+    "data": {
+      "id": 2,
+      "title": "Parallel"
+    }
+  },
+  {
+    "model": "SequencingType",
+    "data": {
+      "id": 3,
+      "title": "Interval"
+    }
+  },
+  {
+    "model": "Program",
+    "data": {
+      "id": "1",
+      "sequencingTypeId": "1",
+      "slug": "habitudes",
+      "linkId": "1",
+      "title": "Habitudes",
+      "description": "Your objective is to learn the art of self-leadership by building strong character, steadfast commitment, self-discipline, and a healthy personal identity.",
+      "published": "2015-01-01T12:00:00",
+      "clientId": 1,
+      "contentProviderId": 1
+    }
+  },
+
+  {
+    "model": "Quest",
+    "data": {
+      "id": 1,
+      "slug": "quest-1",
+      "programId": 1,
+      "title": "Quest #1",
+      "objective": "Quest Magna nominati eam ut, an sit illum possit adversarium. Id possim qualisque sadipscing sit. Vis at eros recusabo. Mei ut ubique concludaturque. His eu probo putant graecis."
+    }
+  },
+  {
+    "model": "Challenge",
+    "data": {
+      "id": 1,
+      "slug": "challenge-1",
+      "type": "general",
+      "title": "Challenge #1",
+      "questId": 1,
+      "description": "Challenge 1 Magna nominati eam ut, an sit illum possit adversarium. Id possim qualisque sadipscing sit. Vis at eros recusabo. Mei ut ubique concludaturque. His eu probo putant graecis."
+    }
+  },
+  {
+    "model": "ChallengeQuestion",
+    "data": {
+      "id": 1,
+      "question": "When is my birthday?",
+      "challengeId": 1,
+      "typeId": 1
+    }
+  },
+  {
+    "model": "ChallengeAnswer",
+    "data": {
+      "id": 1,
+      "answer": "1/1/1986",
+      "correct": false,
+      "questionId": 1
+    }
+  },
+  {
+    "model": "ChallengeAnswer",
+    "data": {
+      "id": 2,
+      "answer": "7/14/1978",
+      "correct": false,
+      "questionId": 1
+    }
+  },
+  {
+    "model": "ChallengeAnswer",
+    "data": {
+      "id": 3,
+      "answer": "8/14/1993",
+      "correct": false,
+      "questionId": 1
+    }
+  },
+  {
+    "model": "ChallengeAnswer",
+    "data": {
+      "id": 4,
+      "answer": "12/19/1971",
+      "correct": true,
+      "questionId": 1
+    }
+  },
+
+
+  {
+    "model": "Challenge",
+    "data": {
+      "id": 2,
+      "slug": "challenge-2",
+      "type": "general",
+      "title": "Challenge #2",
+      "questId": 1,
+      "description": "Challenge 2 Magna nominati eam ut, an sit illum possit adversarium. Id possim qualisque sadipscing sit. Vis at eros recusabo. Mei ut ubique concludaturque. His eu probo putant graecis."
+    }
+  },
+  {
+    "model": "ChallengeMedia",
+    "data": {
+      "id": 2,
+      "type": "text",
+      "data": "<p>Hello World 2!</p>",
+      "challengeId": 2
+    }
+  },
+
+
+
+  {
+    "model": "Quest",
+    "data": {
+      "id": 2,
+      "slug": "quest-2",
+      "programId": 1,
+      "title": "Quest #2",
+      "objective": "Magna nominati eam ut, an sit illum possit adversarium. Id possim qualisque sadipscing sit. Vis at eros recusabo. Mei ut ubique concludaturque. His eu probo putant graecis."
+    }
+  },
+
+  {
+    "model": "History",
+    "data": {
+      "programId": "1",
+      "comment": "Loaded from fixture.",
+      "userId": "1"
+    }
+  },
+
+
+
+  {
+    "model": "Program",
+    "data": {
+      "id": "2",
+      "sequencingTypeId": "1",
+      "slug": "business-innovation",
+      "linkId": "2",
+      "title": "Business Innovation",
+      "description": "Your objective is to bring your passion for innovation to life by learning and applying the innovation process to realize your unique contribution.",
+      "version": 1,
+      "published": "2015-01-01T12:00:00",
+      "clientId": 1,
+      "contentProviderId": 1
+    }
+  },
+  {
+    "model": "History",
+    "data": {
+      "programId": "2",
+      "comment": "Loaded from fixture.",
+      "userId": "1"
+    }
+  },
+
+
+  {
+    "model": "Program",
+    "data": {
+      "id": "3",
+      "sequencingTypeId": "1",
+      "slug": "betterment-institute",
+      "linkId": "3",
+      "title": "Betterment Institute",
+      "description": "Your objective is to win new business, retain and grow existing business relationships, and take your relationship skills to the next level.",
+      "published": null,
+      "clientId": 1,
+      "contentProviderId": 1
+    }
+  },
+  {
+    "model": "History",
+    "data": {
+      "programId": "3",
+      "comment": "Loaded from fixture.",
+      "userId": "2"
+    }
+  },
+
+
+  {
+    "model": "ProgramUser",
+    "data": {
+      "id": 1,
+      "linkId": 1,
+      "userId": 1
+    }
+  },
+
+
+  {
+    "model": "Forum",
+    "data": {
+      "id": 1,
+      "linkId": 1,
+      "name": "Habitudes Forum"
+    }
+  },
+  {
+    "model": "ForumItemCategory",
+    "data": {
+      "id": 1,
+      "forumId": 1,
+      "name": "General"
+    }
+  },
+  {
+    "model": "ForumItem",
+    "data": {
+      "id": 1,
+      "type": "topic",
+      "forumId": 1,
+      "categoryId": 1,
+      "title": "Test Topic #1",
+      "content": "This is a Test topic.",
+      "createdById": 1
+    }
+  },
+  {
+    "model": "ForumItem",
+    "data": {
+      "id": 2,
+      "type": "comment",
+      "forumId": 1,
+      "categoryId": 1,
+      "content": "This is a test comment.",
+      "createdById": 1,
+      "parentId": 1
+    }
+  },
+  {
+    "model": "ForumItem",
+    "data": {
+      "id": 3,
+      "type": "topic",
+      "forumId": 1,
+      "categoryId": 1,
+      "title": "Test Topic #2",
+      "content": "This is a <strong>Test</strong> topic.",
+      "createdById": 1
+    }
+  }
+
+
+]

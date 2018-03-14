@@ -1,0 +1,312 @@
+
+
+/* *****************************
+.nav-el.active anim
+*****************************
+ ================================================== */
+@keyframes fx-tile-active { 
+  0% { transform: translate3d(0%, 0%, 0) }
+  50% { /*color: transparent*/ }
+  100% {
+    transform: translate3d(0%, 0%, 0) scale(15);
+    /*color: transparent;*/
+  }
+}
+@-moz-keyframes fx-tile-active { 
+  0% { -moz-transform: translate3d(0%, 0%, 0) }
+  33% {
+    -moz-transform: translate3d(0%, 0%, 0) scale(1);
+    color: #FFF;
+  }
+  40% {
+    -moz-transform: translate3d(0%, 0%, 0) scale(1);
+    color: #FFF;
+  }
+  50% { /*color: transparent*/ }
+  100% {
+    -moz-transform: translate3d(0%, 0%, 0) scale(15);
+   /* color: transparent;*/
+  }
+}
+@-webkit-keyframes fx-tile-active { 
+  0% { -webkit-transform: translate3d(0%, 0%, 0) }
+  50% { /*color: transparent*/ }
+  100% {
+    -webkit-transform: translate3d(0%, 0%, 0) scale(15);
+    /*color: transparent;*/
+  }
+}
+.tile.active {
+
+  /*animation: fx-tile-active 1s 1 ease-in-out forwards;
+  -moz-animation: fx-tile-active 1s 1 ease-in-out forwards;
+  -webkit-animation: fx-tile-active 1s 1 ease-in-out forwards;
+  z-index: 8888;*/
+}
+/* *****************************
+.nav-el.inactive anim
+*****************************
+ ================================================== */
+@keyframes fx-tile-inactive { 
+  0% {
+    /*transform: translate(0%, 0%);*/
+    color: #FFF;
+  }
+}
+@-moz-keyframes fx-tile-inactive { 
+  0% {
+    /*-moz-transform: translate3d(0%, 0%, 0);*/
+    color: #FFF;
+  }
+}
+@-webkit-keyframes fx-tile-inactive { 
+  0% {
+   /* -webkit-transform: translate3d(0%, 0%, 0);*/
+    color: #FFF;
+  }
+}
+}
+.tile.inactive {
+  /*animation: fx-tile-inactive 1s 1 ease-in-out forwards;
+  -moz-animation: fx-tile-inactive 1s 1 ease-in-out forwards;
+  -webkit-animation: fx-tile-inactive 1s 1 ease-in-out forwards;*/
+}
+/* *****************************
+.nav-el.active reverse
+*****************************
+ ================================================== */
+@keyframes fx-tile-active_reverse { 
+  0% {
+    transform: translate3d(0, 0, 0) scale(20);
+    color: transparent;
+    background-color: #4E5D6C;
+  }
+  50% {
+    color: transparent;
+    background-color: #4E5D6C;
+  }
+  60% {
+    transform: translate3d(0, 0, 0) scale(1);
+    color: #FFF;
+  }
+  67% {
+    transform: translate3d(0, 0, 0) scale(1);
+    color: #FFF;
+  }
+  82% { background-color: #2980b9 }
+  100% { transform: translate3d(0%, 0%, 0) }
+}
+@-moz-keyframes fx-tile-active_reverse { 
+  0% {
+    -moz-transform: translate3d(0%, 0%, 0) scale(20);
+    color: transparent;
+    background-color: #4E5D6C;
+  }
+  50% {
+    color: transparent;
+    background-color: #4E5D6C;
+  }
+  60% {
+    -moz-transform: translate3d(0%, 0%, 0) scale(1);
+    color: #FFF;
+  }
+  67% {
+    -moz-transform: translate3d(0%, 0%, 0) scale(1);
+    color: #FFF;
+  }
+  82% { background-color: #2980b9 }
+  100% { -moz-transform: translate3d(0%, 0%, 0) }
+}
+@-webkit-keyframes fx-tile-active_reverse { 
+  0% {
+    -webkit-transform: translate3d(0%, 0%, 0) scale(20);
+    color: transparent;
+    background-color: #4E5D6C;
+  }
+  50% {
+    color: transparent;
+    background-color: #4E5D6C;
+  }
+  60% {
+    -webkit-transform: translate3d(0%, 0%, 0) scale(1);
+    color: #FFF;
+  }
+  67% {
+    -webkit-transform: translate3d(0%, 0%, 0) scale(1);
+    color: #FFF;
+  }
+  82% { background-color: #2980b9; }
+  100% { -webkit-transform: translate3d(0%, 0%, 0) }
+}
+/*.tile.active_reverse {
+  animation: fx-tile-active_reverse 1s 1s 1 ease-in-out;
+  -moz-animation: fx-tile-active_reverse 1s 1s 1 ease-in-out;
+  -webkit-animation: fx-tile-active_reverse 1s 1s 1 ease-in-out;
+}*/
+/* ********************************************************
+.nav-el.inactive reverse
+**********************************************************
+Top prevent a bug on IE10 (the button jumps during anim), 
+use translate instead of translate3d for the first move.
+********************************************************
+ ================================================== */
+/*@keyframes fx-tile-inactive_reverse { 
+  0% {
+    transform: translate(0%, 0%);
+    color: #3498db;
+  }
+  67% {
+    transform: translate(0%, 0%);
+    color: #3498db;
+  }
+  100% {
+    transform: translate(0%, 0%, 0);
+    color: #FFF;
+  }
+}
+@-moz-keyframes fx-tile-inactive_reverse { 
+  0% {
+    -moz-transform: translate3d(0%, 0%, 0);
+    color: #3498db;
+  }
+  67% {
+    -moz-transform: translate3d(0%, 0%, 0);
+    color: #3498db;
+  }
+  100% {
+    -moz-transform: translate3d(0%, 0%, 0);
+    color: #FFF;
+  }
+}
+@-webkit-keyframes fx-tile-inactive_reverse { 
+  0% {
+    -webkit-transform: translate3d(0%, 0%, 0);
+    color: #3498db;
+  }
+  67% {
+    -webkit-transform: translate3d(0%, 0%, 0);
+    color: #3498db;
+  }
+  100% {
+    -webkit-transform: translate3d(0%, 0%, 0);
+    color: #FFF;
+  }
+}*/
+/*.tile.inactive_reverse {
+  animation: fx-tile-inactive_reverse 1s 1 ease-in-out;
+  -moz-animation: fx-tile-inactive_reverse 1s 1 ease-in-out;
+  -webkit-animation: fx-tile-inactive_reverse 1s 1 ease-in-out;
+}*/
+/* *****************************
+.overlay anim
+*****************************
+ ================================================== */
+@keyframes fx-overlay { 
+  0% {
+    visibility: visible;
+    color: transparent;
+  }
+  50% {
+    background-color: #4E5D6C;
+    color: #fff;
+  }
+  100% {
+    visibility: visible;
+    background-color: #4E5D6C;
+    color: #FFF;
+  }
+}
+@keyframes fx-overlay-reverse { 
+  0% {
+    visibility: visible;
+    background-color: #4E5D6C;
+    color: #FFF;
+  }
+  40% {
+    background-color: #4E5D6C;
+    color: transparent;
+  }
+  80% { background-color: transparent }
+  100% {
+    visibility: invisible;
+    color: transparent;
+    background-color: transparent;
+  }
+}
+@-webkit-keyframes fx-overlay { 
+  0% {
+    visibility: visible;
+    color: transparent;
+  }
+  50% {
+    background-color: #4E5D6C;
+    color: #fff;
+  }
+  100% {
+    visibility: visible;
+    background-color: #4E5D6C;
+    color: #FFF;
+  }
+}
+@-webkit-keyframes fx-overlay-reverse { 
+  0% {
+    visibility: visible;
+    background-color: #4E5D6C;
+    color: #FFF;
+  }
+  40% {
+    background-color: #4E5D6C;
+    color: transparent;
+  }
+  80% { background-color: transparent }
+  100% {
+    visibility: invisible;
+    color: transparent;
+    background-color: transparent;
+  }
+}
+@-moz-keyframes fx-overlay { 
+  0% {
+    visibility: visible;
+    color: transparent;
+  }
+  50% {
+    background-color: #4E5D6C;
+    color: #fff;
+  }
+  100% {
+      visibility: visible;
+      background-color: #4E5D6C;
+      color: #FFF;
+  }
+}
+@-moz-keyframes fx-overlay-reverse { 
+  0% {
+    visibility: visible;
+    background-color: #4E5D6C;
+    color: #FFF;
+  }
+  40% {
+    background-color: #4E5D6C;
+    color: transparent;
+  }
+  80% { background-color: transparent }
+  100% {
+    visibility: invisible;
+    color: transparent;
+    background-color: transparent;
+  }
+}
+.overlay.active {
+  visibility: visible;
+  background-color: #4E5D6C;
+  /*animation: fx-overlay .8s .8s 1 ease-in-out forwards;
+  -webkit-animation: fx-overlay .8s .8s 1 ease-in-out forwards;
+  -moz-animation: fx-overlay .8s .8s 1 ease-in-out forwards;*/
+}
+.overlay.active_reverse {
+  visibility: invisible;
+  animation: fx-overlay-reverse .8s 1 ease-in backwards;
+  -webkit-animation: fx-overlay-reverse .8s 1 ease-in backwards;
+  -moz-animation: fx-overlay-reverse .8s 1 ease-in backwards;
+}

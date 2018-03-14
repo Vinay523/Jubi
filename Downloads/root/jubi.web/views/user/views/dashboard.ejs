@@ -1,0 +1,451 @@
+<div class="dashboarddiv" ng-controller="DashboardController as d" ng-init="d.init('<%- model.slug %>')" ng-cloak>
+
+    <div class="content">
+        <h1 ng-style="getBackgroundFontStyle()">Dashboard</h1>
+        <ul ng-show="!isLoading" class="nav nav-tabs" style="margin-top: 20px; margin-bottom: 15px">
+            <li role="presentation" ng-class="{'active':isActivePage('progressStats')}"><a ng-style="!isActivePage('progressStats') && {'color': getLinkFontColor() }" ng-click="setActivePage($event, 'progressStats')" ng-href="javascript:void(0)">Progress Stats</a></li>
+            <li role="presentation" ng-class="{'active':isActivePage('pollResults')}"><a ng-style="!isActivePage('pollResults') && {'color': getLinkFontColor() }" ng-click="setActivePage($event, 'pollResults')" ng-href="javascript:void(0)">Poll Results</a></li>
+        </ul>
+        <div ng-show="isLoading" style="position: relative;" ng-cloak ng-style="getBackgroundFontStyle()">
+            <div class="loading">
+                <span us-spinner="{radius:30, width:8, length: 16, color: getBackgroundFontColor()}"></span>
+                <div ng-style="getBackgroundFontStyle()">One moment please...</div>
+            </div>
+        </div>
+        <!-- Progress Stats -->
+        <div ng-show="activePage == 'progressStats'">
+            <div ng-show="!isLoading" ng-style="getBackgroundFontStyle()">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>From:</label>
+                            <div class="input-group dashboard-datepicker">
+                                <input type="text" class="form-control" ng-model="ui.filters.startDate"
+                                       is-open="ui.startDatePickerOpen"
+                                       datepicker-popup="MM/dd/yyyy"
+                                       ng-click="ui.startDatePickerOpen = true; focusMe($event);"
+                                       datepicker-options="{showWeeks:false}"
+                                       ng-change="changeDates()" />
+                            <span class="input-group-btn">
+                                <button type="button" style="color:white" class="btn btn-primary"
+                                        ng-click="ui.startDatePickerOpen = !ui.startDatePickerOpen; $event.preventDefault(); $event.stopPropagation();">
+                                    <i class="fa fa-calendar"></i>
+                                </button>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>To:</label>
+                            <div class="input-group dashboard-datepicker">
+                                <input type="text" class="form-control" ng-model="ui.filters.endDate"
+                                       is-open="ui.endDatePickerOpen"
+                                       datepicker-popup="MM/dd/yyyy"
+                                       ng-click="ui.endDatePickerOpen = true; focusMe($event);"
+                                       datepicker-options="{showWeeks:false}"
+                                       ng-change="changeDates()" />
+                            <span class="input-group-btn">
+                                <button type="button" style="color:white" class="btn btn-primary"
+                                        ng-click="ui.endDatePickerOpen = !ui.endDatePickerOpen; $event.preventDefault(); $event.stopPropagation();">
+                                    <i class="fa fa-calendar"></i>
+                                </button>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 big-tooltips">
+                        <div class="form-group">
+                            <label>For Users:</label>
+                            <div class="for_users" ng-dropdown-multiselect=""
+                                 extra-settings="{'enableSearch': true, showCreateGroup: showCreateGroup, showCheckAll: true, showUncheckAll: true }"
+                                 translation-texts="{buttonDefaultText: 'Add Users', checkAll: 'Select All', uncheckAll: 'Clear All'}"
+                                 checkboxes="true"
+                                 options="ui.networkUsers"
+                                 selected-model="ui.filters.users"
+                                 events="{ onItemSelect: refresh, onItemDeselect: refresh, onSelectAll: selectAllUsers, onDeselectAll: unselectAllUsers, onRemoveGroup: removeGroup, onGroupSelect: groupSelected, onCreateGroup: createUserGroup }"
+                                 group-by="type">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <label>&nbsp;</label>
+                        <div>
+                            <label class="radio-inline">
+                                <input type="radio" name="statsView" id="statsViewChart" value="chart" ng-model="statsView"><span>Chart View</span>
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="statsView" id="statsViewTable" value="table" ng-model="statsView"><span>Table View</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="!isLoading && statsView == 'chart'" style="margin-top:20px;">
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <select class="form-control" style="font-weight: bold"
+                                            ng-model="ui.filters.statType"
+                                            ng-change="refresh()"
+                                            ng-options="statType.id as statType.name for statType in ui.statTypeList"></select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <select class="form-control" style="font-weight: bold"
+                                            ng-model="ui.filters.statDisplayAs"
+                                            ng-change="refresh()"
+                                            ng-options="statDisplayAs.id as statDisplayAs.name for statDisplayAs in ui.statDisplayAsList"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-sm-12">
+                                <div class="well dashboard-overall">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                                            <div id="spinChart" style="display: inline-block"></div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                            <h4 class="text-center">GROUP HIGH</h4>
+                                            <h1 ng-show="ui.filters.statDisplayAs == 'number'" class="text-center" style="margin-bottom: 0px"><strong>{{ui.groupStats.high}}</strong></h1>
+                                            <h1 ng-show="ui.filters.statDisplayAs == 'percentage'" class="text-center" style="margin-bottom: 0px"><strong>{{(ui.groupStats.highPct * 100) | number : 0}}%</strong></h1>
+                                            <h5 class="text-center"><small>{{ui.groupStats.highUser}}</small></h5>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                            <h4 class="text-center">GROUP LOW</h4>
+                                            <h1 ng-show="ui.filters.statDisplayAs == 'number'" class="text-center" style="margin-bottom: 0px"><strong>{{ui.groupStats.low}}</strong></h1>
+                                            <h1 ng-show="ui.filters.statDisplayAs == 'percentage'" class="text-center" style="margin-bottom: 0px"><strong>{{(ui.groupStats.lowPct * 100) | number : 0}}%</strong></h1>
+                                            <h5 class="text-center"><small>{{ui.groupStats.lowUser}}</small></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-sm-12">
+                                <div id="progressChart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-sm-12">
+                                <div class="form-group">
+                                    <label>Display Interval:</label>
+                                    <select ng-model="ui.filters.summaryInterval"
+                                            class="form-control"
+                                            ng-change="refresh()"
+                                            ng-options="interval.id as interval.name for interval in ui.intervalList"></select>
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-sm-12">
+                                <div id="statsChart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="!isLoading && statsView == 'table'" style="margin-top:20px;">
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <select class="form-control" style="font-weight: bold"
+                                            ng-model="ui.filters.statType"
+                                            ng-change="refresh()"
+                                            ng-options="statType.id as statType.name for statType in ui.statTypeList"></select>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <select class="form-control" style="font-weight: bold"
+                                            ng-model="ui.filters.statDisplayAs"
+                                            ng-change="refresh()"
+                                            ng-options="statDisplayAs.id as statDisplayAs.name for statDisplayAs in ui.statDisplayAsList"></select>
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+                                <button ng-click="exportTriggered()" class="dashboardExportBtn">Export</button>
+                            </div>
+                        </div>
+                        <div class="well dashboard-overall">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                    <h4 class="text-center">GROUP TOTAL</h4>
+                                    <h1 ng-show="ui.filters.statDisplayAs == 'number'" class="text-center"><strong>{{ui.groupStats.total}}</strong></h1>
+                                    <h1 ng-show="ui.filters.statDisplayAs == 'percentage'" class="text-center"><strong>{{(ui.groupStats.totalPct * 100) | number : 0}}%</strong></h1>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 avgclass">
+                                    <h4 class="text-center">GROUP AVERAGE</h4>
+                                    <h1 ng-show="ui.filters.statDisplayAs == 'number'" class="text-center"><strong>{{ui.groupStats.average | number : 2}}</strong></h1>
+                                    <h1 ng-show="ui.filters.statDisplayAs == 'percentage'" class="text-center"><strong>{{(ui.groupStats.averagePct * 100) | number : 0}}%</strong></h1>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                    <h4 class="text-center">GROUP HIGH</h4>
+                                    <h1 ng-show="ui.filters.statDisplayAs == 'number'" class="text-center" style="margin-bottom: 0px"><strong>{{ui.groupStats.high}}</strong></h1>
+                                    <h1 ng-show="ui.filters.statDisplayAs == 'percentage'" class="text-center" style="margin-bottom: 0px"><strong>{{(ui.groupStats.highPct * 100) | number : 0}}%</strong></h1>
+                                    <h5 class="text-center"><small>{{ui.groupStats.highUser}}</small></h5>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                    <h4 class="text-center">GROUP LOW</h4>
+                                    <h1 ng-show="ui.filters.statDisplayAs == 'number'" class="text-center" style="margin-bottom: 0px"><strong>{{ui.groupStats.low}}</strong></h1>
+                                    <h1 ng-show="ui.filters.statDisplayAs == 'percentage'" class="text-center" style="margin-bottom: 0px"><strong>{{(ui.groupStats.lowPct * 100) | number : 0}}%</strong></h1>
+                                    <h5 class="text-center"><small>{{ui.groupStats.lowUser}}</small></h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="panel panel-primary" style="color:white">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Program Counts&nbsp;<small>(Id:&nbsp;{{data.programItemCounts[0].currentProgramId}})</small></h3>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 50%">Item</th>
+                                        <th>Count</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="cursor:pointer">
+                                        <td>Total Levels</td>
+                                        <td>{{data.programItemCounts[0].levelsCount}}</td>
+                                    </tr>
+                                    <tr style="cursor:pointer">
+                                        <td>Total Activities</td>
+                                        <td>{{data.programItemCounts[0].questsCount}}</td>
+                                    </tr>
+                                    <tr style="cursor:pointer">
+                                        <td>Total Challenges</td>
+                                        <td>{{data.programItemCounts[0].challengesCount}}</td>
+                                    </tr>
+                                    <tr style="cursor:pointer">
+                                        <td>Max Challenge Points</td>
+                                        <td>{{data.programItemCounts[0].challengesPoints}}</td>
+                                    </tr>
+                                    <tr style="cursor:pointer">
+                                        <td>Total Do Activities</td>
+                                        <td>{{data.programItemCounts[0].todosCount}}</td>
+                                    </tr>
+                                    <tr style="cursor:pointer">
+                                        <td>Max Do Activity Points</td>
+                                        <td>{{data.programItemCounts[0].todosPoints}}</td>
+                                    </tr>
+                                    <tr style="cursor:pointer">
+                                        <td>Max Base Points</td>
+                                        <td>{{data.programItemCounts[0].totalBasePoints}}</td>
+                                    </tr>
+                                    <tr style="cursor:pointer">
+                                        <td>Total Badges</td>
+                                        <td>{{data.programItemCounts[0].badgesCount}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-primary" style="color:white">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">User Summary</h3>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="table" id="userSummary">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" style="width: 20%">Grouped By User</th>
+                                    <th class="text-center">{{ui.statTypeList[0].name}}</th>
+                                    <th class="text-center">{{ui.statTypeList[1].name}}</th>
+                                    <th class="text-center">{{ui.statTypeList[2].name}}</th>
+                                    <th class="text-center">{{ui.statTypeList[3].name}}</th>
+                                    <th class="text-center">{{ui.statTypeList[4].name}}</th>
+                                    <th class="text-center">{{ui.statTypeList[5].name}}</th>
+                                    <th class="text-center">{{ui.statTypeList[6].name}}</th>
+                                    <th class="text-center">{{ui.statTypeList[7].name}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="cursor:pointer" ng-repeat="userRow in data.summaryByUser">
+                                    <td colspan="2">{{userRow.userFullName}}</td>
+                                    <td class="text-center">{{userRow.sumLevelsCompletedCount}}</td>
+                                    <td class="text-center">{{userRow.sumQuestsCompletedCount}}</td>
+                                    <td class="text-center">{{userRow.sumChallengesCompletedCount}}</td>
+                                    <td class="text-center">{{userRow.sumChallengesCompletedPoints}}</td>
+                                    <td class="text-center">{{userRow.sumTodosCompletedCount}}</td>
+                                    <td class="text-center">{{userRow.sumTodosCompletedPoints}}</td>
+                                    <td class="text-center">{{userRow.sumTotalBasePoints}}</td>
+                                    <td class="text-center">{{userRow.sumBadgesEarnedCount}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel panel-primary" style="color:white">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Interval Summary</h3>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="table" id="intervalSummary">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" style="width: 20%">Grouped By {{ui.filters.summaryIntervalName}}</th>
+                                    <th class="text-center">{{ui.statTypeList[0].name}}</th>
+                                    <th class="text-center">{{ui.statTypeList[1].name}}</th>
+                                    <th class="text-center">{{ui.statTypeList[2].name}}</th>
+                                    <th class="text-center">{{ui.statTypeList[3].name}}</th>
+                                    <th class="text-center">{{ui.statTypeList[4].name}}</th>
+                                    <th class="text-center">{{ui.statTypeList[5].name}}</th>
+                                    <th class="text-center">{{ui.statTypeList[6].name}}</th>
+                                    <th class="text-center">{{ui.statTypeList[7].name}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="cursor:pointer" ng-repeat="intervalRow in data.summaryByInterval">
+                                    <td colspan="2" ng-show="ui.filters.summaryInterval == 'day'">{{intervalRow.dateDisplay}}</td>
+                                    <td colspan="2" ng-show="ui.filters.summaryInterval == 'week'">{{intervalRow.weekDisplay}}</td>
+                                    <td colspan="2" ng-show="ui.filters.summaryInterval == 'month'">{{intervalRow.monthDisplay}}</td>
+                                    <td colspan="2" ng-show="ui.filters.summaryInterval == 'quarter'">{{intervalRow.quarterDisplay}}</td>
+                                    <td colspan="2" ng-show="ui.filters.summaryInterval == 'year'">{{intervalRow.yearDisplay}}</td>
+                                    <td class="text-center">{{intervalRow.sumLevelsCompletedCount}}</td>
+                                    <td class="text-center">{{intervalRow.sumQuestsCompletedCount}}</td>
+                                    <td class="text-center">{{intervalRow.sumChallengesCompletedCount}}</td>
+                                    <td class="text-center">{{intervalRow.sumChallengesCompletedPoints}}</td>
+                                    <td class="text-center">{{intervalRow.sumTodosCompletedCount}}</td>
+                                    <td class="text-center">{{intervalRow.sumTodosCompletedPoints}}</td>
+                                    <td class="text-center">{{intervalRow.sumTotalBasePoints}}</td>
+                                    <td class="text-center">{{intervalRow.sumBadgesEarnedCount}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel panel-primary" style="color:white">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Detailed Stats</h3>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="table" id="detailedStats">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10%">Date</th>
+                                    <th style="width: 10%">User</th>
+                                    <th class="text-center">{{ui.statTypeList[0].name}}</th>
+                                    <th class="text-center">{{ui.statTypeList[1].name}}</th>
+                                    <th class="text-center">{{ui.statTypeList[2].name}}</th>
+                                    <th class="text-center">{{ui.statTypeList[3].name}}</th>
+                                    <th class="text-center">{{ui.statTypeList[4].name}}</th>
+                                    <th class="text-center">{{ui.statTypeList[5].name}}</th>
+                                    <th class="text-center">{{ui.statTypeList[6].name}}</th>
+                                    <th class="text-center">{{ui.statTypeList[7].name}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="cursor:pointer" ng-repeat="detailsRow in data.details">
+                                    <td>{{detailsRow.date | date : 'MM/dd/yyyy' : 'UTC'}}</td>
+                                    <td>{{detailsRow.userFullName}}</td>
+                                    <td class="text-center">{{detailsRow.levelsCompletedCount}}</td>
+                                    <td class="text-center">{{detailsRow.questsCompletedCount}}</td>
+                                    <td class="text-center">{{detailsRow.challengesCompletedCount}}</td>
+                                    <td class="text-center">{{detailsRow.challengesCompletedPoints}}</td>
+                                    <td class="text-center">{{detailsRow.todosCompletedCount}}</td>
+                                    <td class="text-center">{{detailsRow.todosCompletedPoints}}</td>
+                                    <td class="text-center">{{detailsRow.totalBasePoints}}</td>
+                                    <td class="text-center">{{detailsRow.badgesEarnedCount}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- Poll Results -->
+        <div ng-show="activePage == 'pollResults'" class="dashboard-poll-results">
+            <div ng-show="!isLoading">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 big-tooltips">
+                        <div class="form-group">
+                            <label>For Users:</label>
+                            <div class="for_users" ng-dropdown-multiselect=""
+                                 extra-settings="{'enableSearch': true, showCreateGroup: showCreateGroup, showCheckAll: true, showUncheckAll: true }"
+                                 translation-texts="{buttonDefaultText: 'Add Users', checkAll: 'Select All', uncheckAll: 'Clear All'}"
+                                 checkboxes="true"
+                                 options="ui.networkUsers"
+                                 selected-model="ui.filters.users"
+                                 events="{ onItemSelect: refresh, onItemDeselect: refresh, onSelectAll: selectAllUsers, onDeselectAll: unselectAllUsers, onRemoveGroup: removeGroup, onGroupSelect: groupSelected, onCreateGroup: createUserGroup }"
+                                 group-by="type">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 chartButtonExport">
+                        <button ng-show="!isExporting" ng-click="exportPollTriggered()" class="dashboardExportBtn">Export</button>
+                        <div class="loader" ng-show="isExporting" style="position: relative;" ng-cloak>
+                            <div class="loading">
+                                <span us-spinner="{radius:5, width:2, length:4, color: getBackgroundFontColor()}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="!isLoading">
+                <div class="row">
+                    <div ng-repeat="question in data.pollQuestions" class="col-lg-4 col-md-4 col-xs-12 col-sm-12 ">
+                        <div class="flip-container flipper" ng-click="doFlip($event, question)">
+                            <div class="flipper">
+                                <div class="front">
+                                    <div class="poll-question"><h3><ng-quill-editor ng-model="question.questionTitle" read-only="true"></ng-quill-editor></h3></div>
+                                    <div class="poll-icon"><span class="fa fa-th-large"></span></div>
+                                    <div ng-if="question.questOrTodo == 'quest'" class="poll-quest-todo">
+                                        <h4>Quest</h4>
+                                        <p>{{question.questTitle}}</p>
+                                    </div>
+                                    <div ng-if="question.questOrTodo == 'todo'" class="poll-quest-todo">
+                                        <h4>Do Activity</h4>
+                                        <p>{{question.todoTitle}}</p>
+                                    </div>
+                                    <div class="poll-challenge">
+                                        <h4>Challenge</h4>
+                                        <p>{{question.challengeTitle}}</p>
+                                    </div>
+                                </div>
+                                <div class="back">
+                                    <div class="chart-display-as">
+                                        <label class="radio-inline">
+                                            <input type="radio"
+                                                   name="chartDisplayAs-{{question.questionId}}"
+                                                   id="chartDisplayAsPie-{{question.questionId}}"
+                                                   value="pie"
+                                                   ng-model="question.chartDisplayAs"
+                                                   ng-change="setChartDisplay(question)"
+                                                   ng-click="$event.stopPropagation();"><span>Pie</span>
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio"
+                                                   name="chartDisplayAs-{{question.questionId}}"
+                                                   id="chartDisplayAsBar-{{question.questionId}}"
+                                                   value="bar"
+                                                   ng-model="question.chartDisplayAs"
+                                                   ng-change="setChartDisplay(question)"
+                                                   ng-click="$event.stopPropagation();"><span>Bar</span>
+</label>
+                                    </div>
+                                    <highchart id="chart-{{question.questionId}}" config="question.activeChart"></highchart>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

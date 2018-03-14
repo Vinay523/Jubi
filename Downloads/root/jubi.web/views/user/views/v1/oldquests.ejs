@@ -1,0 +1,57 @@
+<div ng-controller="QuestsController">
+
+    <section class="intro">
+        <div class="row">
+            <div class="col-xs-12" ng-style="getBackgroundFontStyle()">
+                <h1>Quests: {{program.title}}</h1>
+                <div class="alert in" ng-if="program.description" style="margin-bottom:0px;">
+                    <button aria-hidden="true" data-dismiss="alert" class="close text-xl" type="button">&times;</button>
+                    <p class="lead" ng-bind-html="program.description"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="quest-board">
+        <div class="grid row" style="padding-left:10px;padding-right:10px">
+            <section ng-repeat="level in program.levels">
+                <!--The below elements are duplicate, except one has a autoResizer. We only want one autoResizer per page to calcuate the tile hieght-->
+                <!--If there are program quests then we don't include the autoResizer on the level quests, if there are no program quests then the first level quest gets it-->
+                <!--Then the rest of the tiles get the height set by the autoResizer which ensures all tiles end up with same height-->
+                <div ng-repeat="quest in level.quests"
+                     class="col-xs-6 col-sm-6 col-md-4 col-lg-3"
+                        style="padding-left:0; padding-right:0;">
+                    <div style="height:17px" class="text-md">
+                        <span data-ng-show="$first && level.hovered">{{level.title}}</span>
+                    </div>
+                    <div ng-mouseover="level.hovered = true"
+                         ng-mouseleave="level.hovered = false"
+                         ng-class="{ 'first' : $first, 'last' : $last, 'levelQuest' : level.hovered }"
+                         ng-attr-auto-resizer="{{$first && program.quests.length == 0}}"
+                         resizeType="square-tiles-in-grid"
+                         ng-click="questClick($index,quest)"
+                         ng-style="getHeightStyle()"
+                         class="tile levelQuestBorder">
+                        <%- partial('user/partials/questView') %>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <!--The below elements are duplicate, except one has a autoResizer. We only want one autoResizer per page to calcuate the tile hieght-->
+                <!--The first program quest gets the autoResizer, all the rest use the size calculated by the first-->
+                <!--Then the rest of the tiles get the height set by the autoResizer which ensures all tiles end up with same height-->
+                <div ng-repeat="quest in program.quests"
+                     class="col-xs-6 col-sm-6 col-md-4 col-lg-3"
+                     style="padding-left:0; padding-right:0;">
+                    <div style="height:17px"></div>
+                    <div ng-attr-auto-resizer="{{$first}}" resizeType="square-tiles-in-grid"
+                         ng-click="questClick($index,quest)"
+                         ng-style="getHeightStyle()"
+                         class="tile quest levelQuestBorder">
+                        <%- partial('user/partials/questView') %>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+</div>

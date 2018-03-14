@@ -1,0 +1,4075 @@
+﻿@import url('http://fonts.googleapis.com/css?family=Roboto');
+@import url('http://fonts.googleapis.com/css?family=Open+Sans');
+@import url('../font-awesome/css/font-awesome.css');
+
+
+/* HTML5 display-role reset for older browsers */
+
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+    font-size: 100%;
+}
+
+
+ol, ul {
+	list-style: none;
+}
+
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+html {
+    overflow-x: hidden;
+    overflow-y: initial;/* makes screen zoomed*/
+    background-color: #f4f4f4;
+	-ms-overflow-style: scrollbar; /*removes overlaying of scrollbar for popup and background in IE .... manisha added 11/18*/
+}
+
+
+body {
+    margin: auto;
+    /*padding:auto;*/
+
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    transition: opacity ease-in 0.2s;
+    font-family: 'Roboto', 'sans-serif','Open Sans';
+
+    
+}
+
+.fixedPosition {
+    position: fixed;
+	overflow-y:hidden;
+}
+
+a:link {
+    text-decoration: none;
+}
+a:visited {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none;
+}
+a:active {
+    text-decoration: none;
+}
+.jubi-logo{
+    margin-top:62px;
+    padding-left: 55px;
+}
+
+#wrapper {
+    overflow:auto;
+    height: 100%;
+    position: absolute;
+    background-image :url("../images/Desktop Login BG.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center; 
+    width:100%;
+
+}
+#wrapper-intro {
+    overflow:auto;
+    height: 100%;
+    position: absolute;
+    background-image :url("../images/01-1 Program Intro blur.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center; 
+    width:100%;
+
+}
+
+#header {
+    background: #ffffff;
+    padding: 10px;
+}
+#content {
+    /*padding-bottom: 250px;*/
+        margin-top: 100px;
+  
+}
+
+.fill {
+    min-height: 100%;
+    height: 100%;
+}
+.container {
+    margin: auto;
+ }
+#footer {
+    background: #f4f4f4;
+    width: 100%;
+    height: 100px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+    border-bottom: 1px solid #eee; 
+    border-top: 1px solid #eee;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: #C3C3C3;
+    border: 2px solid #eee;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2); 
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.2); 
+}
+
+
+.LEARN-DO-INSPIRE {
+   font-family: Roboto;
+  font-size: 25px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.2px;
+  text-align: right;
+  color: #dedede;
+      margin-top: 92px;
+    padding-right: 64px;
+}
+
+.LEARN-DO-INSPIRE span.learn{
+    border-bottom: solid 3px #00d3ff;
+}
+.LEARN-DO-INSPIRE span.do{
+    border-bottom: solid 3px  #51fedf;
+}
+.LEARN-DO-INSPIRE span.inspire{
+    border-bottom: solid 3px #f8b446;
+}
+.Welcome-to-Modern-Le p{
+  font-family: Roboto;
+  font-size: 34px;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.3px;
+  text-align: center;
+  color: #ffffff;
+      margin-bottom: 43px;
+      margin-top: 147px;
+}
+.relogin p{
+    margin-top: 76px;
+}
+#Re-loginForm input::-webkit-input-placeholder, #loginForm input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  font-family: 'Roboto';
+  font-size: 18px;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #676767;
+}
+#Re-loginForm input::-moz-placeholder, #loginForm input::-moz-placeholder { /* Firefox 19+ */
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #676767;
+}
+#Re-loginForm input:-ms-input-placeholder, #loginForm input:-ms-input-placeholder { /* IE 10+ */
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #676767;
+}
+#Re-loginForm input:-moz-placeholder, #loginForm input:-moz-placeholder { /* Firefox 18- */
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #676767;
+}
+
+#loginForm input, #Re-loginForm input{
+  height: 45px;
+  background-color: #f5f5f5;
+  border: solid 1px #979797;
+  font-family: 'Roboto';
+  font-size: 15px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #676767;
+  padding: 10px;
+  width: 323px;
+}
+#loginForm button, #Re-loginForm button{
+    width: 107px;
+  height: 45px;
+  border-radius: 5px;
+  background-color: #f6a623;
+  font-family: Roboto;
+  font-size: 20px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+  padding: 10px;
+  border: none;
+  
+  }
+#loginForm, #Re-loginForm{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width:323px;
+}
+#Re-loginForm img{
+       margin-top: -30px;
+    margin-bottom: 9px;
+}
+.Forgot-your-password{
+    text-align: left;
+}
+.Forgot-your-password a{
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #88f1cb;
+}
+.Welcome-Back-Message {
+
+  font-family: Roboto;
+  font-size: 20px;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+}
+.program-intro{
+    width: 100%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+.welcome-message{
+    font-family: 'Open Sans';
+  font-size: 24px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.1px;
+  color: #fefefe;
+ width:100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+   /* margin-top: 175px;
+    margin-bottom: 175px;*/
+}
+ #wrapper-intro #myModal .modal-body{
+     padding:0;
+ }
+ #wrapper-intro .modal-dialog{
+      max-width: 867px;
+ }
+ #wrapper-intro button.close{
+     padding: 40px;
+    opacity: 1;
+    z-index: 99;
+    position: relative;
+    background-image:url('../images/close button.png');
+     background-repeat: no-repeat;
+    padding: 40px;
+    top: 40px;
+ }
+.welcome-message span{
+    position: relative;
+        vertical-align: middle;
+}
+.welcome-message img.profile-image{
+   width: 71px;
+    height: 70px;
+    position: relative;
+    margin: 31px;
+}
+.program-image{
+        position: absolute;
+ }
+#wrapper-intro .clearfix{
+    clear: both;
+    height:191px;
+}
+.PROGRAM {
+      width: 132px;
+    font-family: 'Open Sans';
+    font-size: 20px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 5.5px;
+    color: #ffffff;
+    border-bottom: solid 3px #ffffff;
+    position: relative;
+}
+.LEAD-TO-INSPIRE {
+  font-family: 'Open Sans';
+  font-size: 42px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 1.3px;
+  color: #ffffff;
+  position: relative;
+  text-align: center;
+}
+.GET-STARTED {
+  width: 233px;
+  height: 50px;
+  background-color: #e29c01;
+  padding:5px 10px;
+  font-family: 'Open Sans';
+  font-size: 18px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.2px;
+  color: #ffffff;
+  border:none;
+  position: relative;
+  text-align: center;
+  margin-bottom:35px; 
+}
+.upon-completion-message{
+     font-family: 'Open Sans';
+  font-size: 30px;
+  font-weight: 300;
+  font-style: italic;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.5px;
+  text-align: center;
+  color: #ffffff;
+background-image: url('../images/greengradient.png');
+background-repeat: no-repeat;
+    background-size: cover;
+position: relative;
+padding: 86px 98px;
+overflow: hidden;
+width: 867px;
+}
+.upon-completion-message hr{
+        margin: 70px 0 40px 0;
+}
+.upon-completion-message p:first-child{
+    font-weight: bold;
+}
+
+.quoteauthor-message{
+    font-family: 'Open Sans';
+  font-size: 17px;
+  font-weight: normal;
+  font-style: italic;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.2px;
+  color: #ffffff;
+  display:inline;
+}
+.quoteauthor-image{
+    width: 78px;
+  height: 78px;
+}
+.quoteauthor-name{
+ font-family: 'Open Sans';
+  font-size: 15px;
+  font-weight: bold;
+  font-style: italic;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.1px;
+  color: #ffffff;
+      margin-left: 10px;
+}
+
+.GET-STARTED-BIG a{
+    font-family: 'Open Sans';
+  font-size: 38px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.3px;
+  color: #ffffff;
+}
+
+.GET-STARTED-BIG {
+      width: 867px;
+  height: 129px;
+  background-color: #e9ac33;
+  text-align: center;
+    padding: 40px;
+}
+.start-quote{
+    display: inline; 
+    float: left; 
+    margin-left: -24px; 
+    margin-right: 10px;
+}
+
+.dashboard-wrapper, .questboard-wrapper, .objective-wrapper, .challenge-wrapper{
+    padding:0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+}
+.questboard-wrapper,.objective-wrapper,.challenge-wrapper{
+    position: relative;
+}
+.objective-wrapper .program-body, .challenge-wrapper .program-body{
+    height: 100%;
+}
+.challenge-wrapper .overlay-points{
+        width: 232px;
+    height: 229.3px;
+    display: block;
+    margin: 0 auto;
+}
+.challenge-wrapper .points-circle{
+     width: 232px;
+  height: 229.3px;
+  opacity: 0.51;
+  background-color: #ddb64b;
+  border-radius: 50%;
+  padding:26px;
+}
+.challenge-wrapper .points-circle .inner-circle
+{
+        padding: 50px 40px;
+      width: 180px;
+  height: 177.9px;
+  background-color: #c99b0d;
+    border-radius: 50%;
+}
+.challenge-wrapper .points-circle .inner-circle .points-text{
+    font-family: Roboto;
+  font-size: 30px;
+  letter-spacing: -1.2px;
+  color: #ffffff;
+}
+.challenge-wrapper .points-circle .inner-circle .points-number{
+    font-family: Roboto;
+     font-size: 61px;
+  letter-spacing: -2.3px;
+    color: #ffffff;
+}
+.challenge-wrapper .content-bar .question{
+      font-family: Roboto;
+  font-size: 20px;
+  line-height: 1.65;
+  letter-spacing: -0.8px;
+  color: #ddedf9;
+  padding:0;
+}
+.challenge-wrapper .content-bar .question-text{
+    margin-bottom: 34px;
+    padding:0;
+}
+.challenge-wrapper .content-bar .answer{
+    padding:0;
+}
+.challenge-wrapper .content-bar .answer textarea{
+  width: 415px;
+  height: 180px;
+  background-color: rgba(0, 0, 0, 0.26);
+  border: solid 1px #979797;
+  resize:none;
+  opacity: 0.53;
+  font-family: Roboto;
+  font-size: 20px;
+  letter-spacing: -0.8px;
+  color: #ddedf9;
+  padding:21px 19px;
+  margin-bottom: 10px;
+}
+.challenge-wrapper .content-bar .success-response{
+    width: 415px;
+  height: 79px;
+  background-color: #5d991a;
+   font-family: Roboto;
+  font-size: 18px;
+  font-style: italic;
+  line-height: 1.17;
+  letter-spacing: 0.3px;
+  text-align: left;
+  color: #f7f7f7;
+  padding:17px 21px;
+  margin-bottom: 17px;
+      clear: both;
+      
+}
+.challenge-wrapper .content-bar .hint{
+     font-family: Roboto;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+  text-align: left;
+  color: #26b2f6;
+      clear: both;
+      padding:0;
+}
+.program-topbar{
+       max-height: 96px;
+    background-color: #277f6c;
+    height: 100%;
+    padding: 0;
+}
+.program-topbar .Homepage{
+    font-family: Roboto;
+  font-size: 32px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+  margin:31px 42.8px;
+  float: left;
+}
+.program-topbar .right-profiledetails{
+        float: right;
+    margin: 0 75px 0 0;
+}
+.set-height{
+    margin-top: -35px;
+}
+
+.powered-by{
+        margin-top: 40px;
+    margin-bottom: -30px;
+    font-style: normal;
+    font-size: 15px;
+}
+.powered-by img{
+        height: 40px;
+    width: 61px;
+}
+.notification-ring{
+       width: 23px;
+    height: 23px;
+    background-color: #004c47;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.2px;
+    text-align: left;
+    color: #ffffff;
+    padding-left: 7px;
+    padding-top: 2px;
+    border-radius: 50%;
+    float: left;
+    margin-top: 37px;
+}
+span.fa-bell-o{
+    margin-top: 34.1px;
+    float: left;
+    padding-right: 24.2px;
+    color: white;
+    font-size: 25.9px;
+}
+.profile-info {
+    padding: 0;
+
+}
+.profile-info li img{
+    width: 48px;
+  height: 47.3px;
+}
+.profile-info .profile-image{
+        margin-top: 24.7px;
+    float: left;
+    margin-right: 17px;
+}
+.profile-info .name{
+    font-size: 20px;
+  font-weight: normal;
+  letter-spacing: 0.3px;
+  color: #fefefe;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  display: block;
+}
+.profile-info .points-count{
+     font-family: 'Open Sans';
+  font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.1px;
+  color: #71d2ca;
+  display: block;
+}
+.dashboard-wrapper .designation{
+    font-family: 'Open Sans';
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+  color: #71d2ca;
+}
+.program-status{
+    font-family: 'Roboto';
+  font-size: 15px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #12584c;
+  display: inline-block;
+      margin-right: 110px;
+}
+.program-status span{    
+color: #ffffff;
+}
+.filters, .Active-All{
+    font-family: 'Roboto';
+  font-size: 15px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+ margin-left: -45px;
+  color: #f0f0f0;
+}
+.Active-All ul > li a.active{
+color: #f0f0f0;
+margin-left: 20px;
+}
+
+.program-menu{
+    height: 44px;
+    background-color: #3ab89c;
+    text-align: right;
+    padding: 13px;
+    padding-right: 119px;
+}
+.program-menu p:nth-of-type(2)
+{
+    display: inline-block;
+}
+
+.Program-bg-image{
+    
+   position: relative;
+    max-height: 592px;
+    -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+      max-width: 425px;
+      height: 100%;   
+}
+.Program-bg-msg {
+    top: -420px;
+    position: relative;
+    text-align: center;  
+}
+
+
+.program-body{
+     background:-webkit-linear-gradient(359deg, #516585, #28354D);
+background: -o-linear-gradient(359deg, #516585, #28354D);
+background: -moz-linear-gradient(359deg, #516585, #28354D);
+background:linear-gradient(359deg, #516585, #28354d);
+padding: 0;
+
+    }
+    .program-body hr{
+            border-bottom: solid 1px #979797;
+    margin: 0;
+    border: 0;
+}
+    .program-img-height{
+        max-height: 683px;
+    }
+    .marginleft{
+        margin-left: -15px;
+        margin-bottom: 10px;
+    }
+    .marginright{
+        margin-top: -4px;
+    }
+.GO-TO-QUEST-BOARD  {
+  padding: 30px;
+        width: 410px;
+    height: 90px;
+    background-color: #e28301;
+    text-align: center;
+       display: inline-block;
+    position: relative;
+}
+.GO-TO-QUEST-BOARD a{
+font-family: "Roboto";
+    font-size: 23px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.4px;
+    color: #ffffff;
+}
+.program-body .LEAD-TO-INSPIRE {
+  font-family: "Roboto";
+  font-size: 28px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.9px;
+  color: #ffffff;
+}
+.program-body .PROGRAM {
+  display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 4.4px;
+    color: #ffffff;
+    border-bottom: solid 3px #ffffff;
+    position: relative;
+    width:109px;
+}
+.PROGRAM-DETAILS {
+  font-family: Roboto;
+  font-size: 20px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 1.9px;
+  text-align: left;
+  color: #f0f0f0;
+  display: inline-block;
+  margin-right: 17px;
+}
+
+.Progress-section{
+    padding: 62px 44px 0 25px;
+}
+.Progress-section-completed{
+    padding: 44px 44px 14px 25px;
+}
+.program-body .fa-info{
+    color: #ffffff;
+    border-radius: 12px;
+    width: 23px;
+    height: 23px;
+    border: solid 2px #979797;
+    padding: 7px 7px;
+}
+.program-body .Notifications{
+    font-family: Roboto;
+  font-size: 20px;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+}
+.program-body .notification-count{
+   width: 29px;
+    height: 29px;
+    border: solid 2px #e8a105;
+    display: inline-block;
+    margin-right: 17px;
+    padding-left: 6px;
+    border-radius: 14px;
+  }
+  .notification-count span{
+       font-family: Roboto;
+  font-size: 21px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffbe2d;
+  }
+
+  .program-body hr.programdetails{
+      
+    opacity: 0.21;
+    border-bottom: solid 1px #ffffff;
+    clear: both;
+  }
+ .program-body hr.programdetailsend{
+      margin-bottom: 106px;
+    opacity: 0.21;
+    border-bottom: solid 1px #ffffff;
+    clear: both;
+  }
+  .progress-status{
+      font-family: Roboto;
+  font-size: 15px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #e9ac34;
+     padding: 27px 0 0;
+   }
+   .progress-margin{
+       margin-bottom: 3px;
+   }
+   .buddies-desk{
+        padding: 28px 0 30px;
+   }
+  .progress-status .learn, .progress-status .do, .progress-status .inspired, .progress-status .badges{
+      font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: italic;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+  margin-top: -1px;
+  padding: 0px 0 166px;
+  }
+  .progress-status .learn img,
+  .progress-status .do img,
+  .progress-status .inspired img,
+   .progress-status .badges img
+  {
+      margin-right: 8px;
+      height: 30.2px;
+  }
+  .UP-NEXT {
+     font-family: Roboto;
+    font-size: 12px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ffffff;
+    max-width: 149px;
+    width: 100%;
+    float: right;
+    margin-top: 30px;
+}
+.UP-NEXT p{
+    margin-bottom: 20px;
+ 
+}
+.upnextdetails{
+    padding-top: 31px;
+}
+ .PROGRESS-TO-KPIS img{
+         margin: 9px 18px;
+ }
+.program-body p.progressbar{
+    height: 14.2px;
+    background-color: rgba(251, 251, 251, .19);
+      margin-bottom: 35.8px!important;
+}
+.program-body p.progressbar span{
+    width: 133.7px;
+    height: 14.2px;
+    background-color: #e9ac34;
+    position: absolute;
+ 
+}
+
+.program-body .total-points{
+     font-family: Roboto;
+  font-size: 15px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #f5a623;
+ 
+}
+.program-body .total-points p{
+        margin-bottom: 9px;
+}
+.program-body .total-points span{
+     color: #ffffff;
+}
+.program-body .leaderboard-rank{
+    font-family: Roboto;
+  font-size: 15px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #f5a623;
+  
+}
+.leaderboard-rank p.rank{
+    font-family: Roboto;
+  font-size: 26px;
+  font-weight: 300;
+  font-style: italic;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+  margin-top: -10px;
+  margin-bottom: 32px;
+}
+.leaderboard-rank .out-of{
+    font-family: Roboto;
+  font-size: 26px;
+  font-weight: 300;
+  font-style: italic;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #8a8a8a;
+}
+.leaderboard-rank .profilename{
+      font-family: Roboto;
+  font-size: 20px;
+  font-weight: 300;
+  font-style: italic;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+  margin-left: 7px;
+}
+
+
+.Buddies{
+     font-family: "Roboto";
+  font-size: 20px;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.6px;
+  color: #ffffff;
+  display: inline-block;
+  margin-right: 21px;
+  vertical-align: top;
+  margin-top:17px;
+}
+.Buddies1{
+    display: inline-block;
+    margin-right: 39.4px;
+}
+.Buddies2{
+    display: inline-block;
+    }
+.Buddies1 span, .Buddies2 span{
+    font-size: 12px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.4px;
+    color: #ffffff;
+}
+.Buddies1 img, .Buddies2 img{
+    display: block;
+    width: 47.6px;
+    height: 46px;
+    margin-bottom: 10px;
+}
+.Program-completed-image{
+          position: relative;
+          max-height: 592px;
+    height: 100%;
+}
+.PROGRAMCOMPLETED{
+    padding: 30px;
+    height: 90px;
+    background-color: #e28301;
+    width: 410px;
+    text-align: center;
+    display: inline-block;
+    position: relative;
+}
+
+.PROGRAMCOMPLETED p{
+  font-size: 23px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.4px;
+  color: #ffffff;
+}
+.programoverlay{
+   opacity:.31;
+    /*width: 410px;*/
+}
+.programoverlay .PROGRAM{
+ border-bottom: solid 3px #ffffff;
+    width: 109px;
+    position: static;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 4.4px;
+    color: #ffffff;
+    display: inline-block;
+    opacity: 0.45;
+}
+.programoverlay .completed_programname{
+    font-family: "Roboto";
+    font-size: 28px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.9px;
+  color: #ffffff;
+  opacity: 0.45;
+}
+.programoverlay .COMPLETED{
+    margin-bottom: 323px;
+    opacity: 0.45;
+    font-family: 'Roboto';
+    font-size: 32px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 6px;
+    color: #ffffff;
+}
+
+.completion_over_image{
+    top: -609px;
+    position: relative;
+}
+
+/*On hover profile image*/
+ul li{
+        display: inline-block;
+        position: relative;
+        line-height: 21px;
+        text-align: left;
+    }
+ ul li ul.dropdown{
+       min-width: 100%;
+    display: none;
+    position: absolute;
+    z-index: 999;
+    top: 87px;
+       width: 261px;
+    height: auto;
+    opacity: 0.88;
+    background-color: #041f2f;
+    left: -50px;
+    border-radius: 5px;
+    padding: 13px 28px 0;
+    }
+     ul li:hover ul.dropdown{
+        display: block;	/* Display the dropdown */
+        
+    }
+     ul li ul.dropdown li{
+      display: block;
+    padding: 12px 0;
+    border-bottom: solid 1px rgba(255, 255, 255, 0.5);
+    }
+    ul li ul.dropdown li a{
+         font-family: 'Roboto';
+  font-size: 15px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.27;
+  letter-spacing: normal;
+  color: #ffffff;
+    }
+    ul li ul.dropdown li:last-child , ul li ul.dropdown-green li:last-child {
+    border-bottom: none;
+}
+    .arrow-up {
+            width: 0;
+    height: 0;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-bottom: 20px solid #041f2f!important;
+    top: -9px;
+    opacity: 0.88;
+    left: 45px;
+    position: absolute;
+    }
+
+
+/*On hover Active in menu*/
+ul li ul.dropdown-green{
+       min-width: 100%;
+    display: none;
+    position: absolute;
+    z-index: 999;
+    top: 30px;
+    width: 213px;
+    height: auto;
+    background-color: #189c80;
+    left: -44px;
+    border-radius: 5px;
+    padding: 13px 28px 0;
+    }
+     ul li:hover ul.dropdown-green{
+        display: block;	/* Display the dropdown */
+        
+    }
+     ul li ul.dropdown-green li{
+      display: block;
+    padding: 12px 0;
+    border-bottom: solid 1px rgba(255, 255, 255, 0.5);
+    }
+    ul li ul.dropdown-green li a{
+   font-family: Roboto;
+  font-size: 15px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.27;
+  letter-spacing: normal;
+  color: #ffffff;
+    }
+    .arrow-up-green {
+       width: 0;
+    height: 0;
+       border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 10px solid #189c80!important;
+    top: -10px;
+    left: 83px;
+    position: absolute;
+    }
+
+footer.powered-by{
+     margin-top: -70px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+footer.powered-by span{
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #ffffff;
+    margin-left: 20px;
+    margin-right: 6px;
+}
+footer.powered-by span img{
+    margin-left:-20px;
+}
+.programdetailsleft{
+        padding: 0;
+    padding-top: 37px;
+}
+.zeropadding{
+    padding: 0;
+}
+.positionUPNEXT, .positionKPI{
+ display:block;
+}
+.positionUPNEXTmobile, .positionKPImobile{
+ display:none;
+}
+.Reset-Password{
+  font-family: 'Roboto';
+  font-size: 34px;
+  font-weight: 300;
+  letter-spacing: -0.3px;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 18px;
+  margin-top: 142px;
+}
+.Email-Sent {
+  font-family: Roboto;
+  font-size: 34px;
+  font-weight: 300;
+  letter-spacing: -0.3px;
+  text-align: center;
+  color: #ffffff;
+    margin-top: 177px;
+    display: none;
+}
+.Enter-your-email-and {
+  font-family: 'Roboto';
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+  color: #eeeeee;
+  margin-bottom:31px;
+}
+#resetForm input {
+    max-width: 323px;
+    height: 45px;
+    background-color: #f5f5f5;
+    font-family: 'Roboto';
+    font-size: 18px;
+    font-weight: 300;
+    text-align: left;
+    color: #676767;
+    width: 100%;
+    border: none;
+    padding: 11px 15px;
+    margin-bottom:15px;
+}
+#resetForm button{
+max-width: 325px;
+width: 100%;
+  height: 45px;
+  border-radius: 3px;
+  background-color: #15b1e9;
+  font-family: 'Roboto';
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  color: #ffffff;
+  border: none;
+  margin-bottom: 5px;
+}
+#resetForm a.Login, .Email-Sent a.Login , #newPwdForm a.Login, .success-msg a.Login{
+    font-family: Roboto;
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+  color: #f5a623;
+  
+}
+
+.New-Password {
+  font-family: 'Roboto';
+  font-size: 34px;
+  font-weight: 300;
+  letter-spacing: -0.3px;
+  text-align: center;
+  color: #ffffff;
+  margin-top: 61px;
+}
+.Please-enter-your-ne {
+letter-spacing: normal;
+  font-family: 'Roboto';
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+  color: #eeeeee;
+  margin-bottom: 31px;
+  margin-top: 18px;
+}
+
+.Please-enter-your-ne a {
+  color: #f1951c;
+}
+#newPwdForm input{
+     max-width: 323px;
+     width: 100%;
+  height: 45px;
+  background-color: #f5f5f5;
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 300;
+  text-align: left;
+  color: #676767;
+  padding: 11px 15px;
+  border: none;
+      margin-bottom: 7px;
+}
+#newPwdForm button{
+max-width: 325px;
+width: 100%;
+  height: 45px;
+  border-radius: 3px;
+  background-color: #15b1e9;
+   font-family: 'Roboto';
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  color: #ffffff;
+  border: none;
+  margin-bottom: 5px;
+}
+#newPwdForm .error-msg{
+    font-family: 'Roboto';
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+  color: #ff4747;
+      margin-top: -10px;
+    margin-bottom: 46px;
+    display: none;
+}
+.success-msg{
+display: none;
+  font-family: 'Roboto';
+  font-size: 34px;
+  font-weight: 300;
+  letter-spacing: -0.3px;
+  text-align: center;
+  color: #ffffff;
+margin-top: 172px;
+}
+.Your-password-has-be, .Check-your-email-for  {
+  font-family: 'Roboto';
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+  color: #eeeeee;
+  margin-top: 18px;
+  margin-bottom: 8px;
+}
+
+/*Quest board*/
+.questboard-wrapper .program-topbar{
+    padding: 0;
+    max-height: 96px;
+}
+.questboard-wrapper .program-topbar .program-name{
+     font-family: Roboto;
+    font-size: 32px;
+  padding: 41px 0 0 18px;
+    color: #ffffff;
+}
+.questboard-wrapper .program-topbar li.logo img, .dashboard-wrapper .program-topbar li.logo img{
+    width: 95px;
+  height: 95px;
+  margin:0;
+  padding: 0;
+}
+
+.questboard-wrapper .profile-info{
+padding-left: 0px;
+}
+.questboard-wrapper li.logo,.dashboard-wrapper li.logo{
+        float: left;
+        margin-bottom: 1px;
+}
+.questboard-wrapper .notification-ring, .dashboard-wrapper .notification-ring{
+    margin-right: 2.9px;
+}
+.questboard-wrapper .program-topbar .right-profiledetails{
+        float: right;
+    margin: 0 30px 0 0;
+}
+.questboard-wrapper .designation{
+     font-family: 'Open Sans';
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+  color: #71d2ca;
+} 
+.questboard-wrapper .name{
+    font-family: 'Open Sans';
+      font-size: 18px;
+  font-weight: normal;
+  letter-spacing: 0.3px;
+  color: #fefefe;
+}
+.questboard-wrapper .points-count{
+    color: #d2f3f0;
+    
+    font-family: 'Open Sans';
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+}
+.questboard-wrapper ul li{
+    line-height: 10px;
+}
+.questboard-wrapper .program-menu li{
+     font-family: Helvetica;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  color: #ffffff;
+      padding: 0 17.5px;
+}
+.questboard-wrapper .program-menu li.active{
+    color: #404040;
+}
+.questboard-wrapper .program-menu{
+    text-align: left;
+        padding: 15px 17.5px;
+}
+
+/*Quest-board-menu*/
+.questboard-wrapper ul li ul.dropdown{
+        width: 261px;
+    height: auto;
+    margin-top: 7px;
+}
+.My-Programs {
+  font-family: Roboto;
+  font-size: 15px;
+  line-height: 1.27;
+  color: #31e3ad;
+}
+.questboard-wrapper .My-Programs li{
+    display: block;
+    border-bottom:none;
+}
+.questboard-wrapper .My-Programs ul{
+    padding: 0;
+}
+.questboard-wrapper .My-Programs img{
+     width: 30px;
+  height: 30px;
+  margin-right: 7px;
+}
+.questboard-wrapper .My-Programs span {
+  font-family: Roboto;
+  font-size: 15px;
+  line-height: 1.27;
+  color: #8198a3;
+}
+.questboard-wrapper .program-body{
+        font-family: Roboto;
+    font-size: 26px;
+    font-weight: 300;
+    text-align: left;
+    color: #ffffff;
+    height: 100%;
+    background: -webkit-linear-gradient(359deg, #516585, #28354d);
+    background: -o-linear-gradient(359deg, #516585, #28354d);
+    background: -moz-linear-gradient(359deg, #516585,#28354d);
+    background: linear-gradient(359deg, #516585, #28354d);
+}
+.questboard-wrapper footer.powered-by{
+     text-align: left;
+    margin: -19.8px 0 78px 95px;
+    padding: 0;
+}
+.questboard-wrapper .Learn_tile div.status{
+    background: url('../images/Group 8 Copy 2.png');
+	 background-color: #27c2f4;
+    height: 206px;
+        border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    padding: 13px 17px;
+        background-size: cover;
+        position:relative;
+          background-color: rgba(0,0,0,0.5);
+    background-blend-mode: multiply;
+    background-position: center;
+}
+.questboard-wrapper .Learn_tile div.info, .questboard-wrapper .Do_tile div.info,  .questboard-wrapper .Inspire_tile div.info
+{
+        background-color: #ffffff;
+    height: 77px;
+        border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    padding: 13px 17px;
+    position: relative;
+        
+}
+.questboard-wrapper .Do_tile div.status{
+ background:url('../images/Group 9 Copy 2.png');
+     background-size: cover;
+    
+    height: 206px;
+    
+    padding: 13px 17px;
+    position: relative;
+        border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background-size: cover;
+      background-color: rgba(0,0,0,0.5);
+    background-blend-mode: multiply;
+    background-position: center;
+}
+.questboard-wrapper .Inspire_tile div.status{
+    background:url('../images/Group 15 Copy 2.png');
+     height: 206px;
+    
+    padding: 13px 17px;
+    position: relative;
+        border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+      background-size: cover;
+        background-color: rgba(0,0,0,0.5);
+    background-blend-mode: multiply;
+    background-position: center;
+}
+.questboard-wrapper .Learn_tile div.status-image{
+    background-image:url('../images/Tile 1.png');
+     height: 206px;
+     padding: 13px 17px;
+    position: relative;
+        border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background-size: cover;
+        background-blend-mode: multiply;
+    background-color: rgba(0,0,0,0.5);
+        background-position: center;
+}
+.questboard-wrapper .back .status-image{
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.53;
+    letter-spacing: 0.4px;
+    text-align: left;
+    color: #f7f7f7;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+        height: 206px;
+    position: relative;
+    padding: 13px 17px;
+    
+}
+.questboard-wrapper .Do_tile div.status-image{
+    background-image:url('../images/Tile2.png');
+     height: 206px;
+    padding: 13px 17px;
+    position: relative;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+       background-size: cover;   
+           background-blend-mode: multiply;
+    background-color: rgba(0,0,0,0.5); 
+        background-position: center;
+}
+.questboard-wrapper .Inspire_tile  div.status-image{
+    background-image:url('../images/Tile 3.png');
+    height: 206px;
+    padding: 13px 17px;
+    position: relative;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+       background-size: cover;
+           background-blend-mode: multiply;
+    background-color: rgba(0,0,0,0.5);
+        background-position: center;
+}
+
+.questboard-wrapper div.status-image .heading
+{
+ font-family: Roboto;
+  font-size: 28px;
+  font-weight: 300;
+  text-align: left;
+  color: #e7e7e7;
+}
+
+.questboard-wrapper .Learn_tile,.questboard-wrapper .Do_tile,
+.questboard-wrapper .Inspire_tile {
+   -webkit-transition: -webkit-transform 1s;
+    -moz-transition: -moz-transform 1s;
+    -o-transition: -o-transform 1s;
+    
+    transition: transform 1s;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    -ms-transform-style:preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transform-origin: 50% 50%;
+    -moz-transform-origin: 50% 50%;
+    -o-transform-origin:50% 50%;
+    transform-origin:50% 50%;
+        -webkit-perspective: 800px;
+    -moz-perspective: 800px;
+    -o-perspective: 800px;
+    perspective: 800px;
+    position: relative;
+ padding: 0;
+height: 100%;
+/*margin-bottom: 315px;*/
+}
+
+
+.questboard-wrapper .Learn_tile.flipped .back, .questboard-wrapper .Learn_tile.flipped .front,
+.questboard-wrapper .Do_tile.flipped .back,.questboard-wrapper .Do_tile.flipped .front,
+.questboard-wrapper .Inspire_tile.flipped .back,.questboard-wrapper .Inspire_tile.flipped .front
+{
+        border-radius: 4px;
+         border:none;
+}
+.questboard-wrapper .Learn_tile div.front,.questboard-wrapper .Learn_tile div.back,
+.questboard-wrapper .Do_tile div.front,.questboard-wrapper .Do_tile div.back,
+.questboard-wrapper .Inspire_tile div.front,.questboard-wrapper .Inspire_tile div.back
+
+{
+
+        -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+        position: absolute;
+    width: 100%;
+    z-index:999;
+}
+
+.questboard-wrapper .Do_tile .back .status{
+    
+       background:url('../images/Do Green Box.png');
+       font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.53;
+  letter-spacing: 0.4px;
+  text-align: left;
+  color: #f7f7f7;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background-size: cover;
+     background-color: rgba(0,0,0,0.5);
+    background-blend-mode: multiply;
+}
+
+.questboard-wrapper .Learn_tile .back .status{
+ 
+        background: url('../images/learn blank box.png');
+        background-size: cover;
+       font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.53;
+  letter-spacing: 0.4px;
+  text-align: left;
+  color: #f7f7f7;
+      border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+     background-color: rgba(0,0,0,0.5);
+    background-blend-mode: multiply;
+}
+.questboard-wrapper .Inspire_tile .back .status{
+    
+          background: url('../images/Inspire blank box.png');
+        background-size: cover; 
+       font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.53;
+  letter-spacing: 0.4px;
+  text-align: left;
+  color: #f7f7f7;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+     background-color: rgba(0,0,0,0.5);
+    background-blend-mode: multiply;
+}
+.questboard-wrapper .back{
+      -webkit-transform: rotateY( 180deg );
+    -moz-transform: rotateY( 180deg );
+    -o-transform: rotateY( 180deg );
+    transform: rotateY( 180deg );
+   
+}
+
+
+.questboard-wrapper .back .heading{
+    color: #e7e7e7!important;
+}
+.Learn_tile.flipped,.Do_tile.flipped,.Inspire_tile.flipped
+{
+    -webkit-transform: rotateY( 180deg );
+    -moz-transform: rotateY( 180deg );
+    -o-transform: rotateY( 180deg );
+    transform: rotateY( 180deg );
+}
+
+.questboard-wrapper .Learn_tile .heading, 
+.questboard-wrapper .Inspire_tile .heading, 
+.questboard-wrapper .Do_tile .heading
+{
+     font-family: Roboto;
+  font-size: 28px;
+  font-weight: 300;
+  float: left;
+  color: #e7e7e7;
+}
+  .questboard-wrapper span.corner {
+    opacity: 0.4;
+    top: 0;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-top: 36.5px solid #f1efef;
+    border-left: 34.1px solid transparent;
+    cursor: pointer;
+        border-top-right-radius: 4px;
+    border-right: 4px solid #f1efef;
+    border-bottom: 4px solid transparent;
+}
+.questboard-wrapper .status .completed, .questboard-wrapper .status-image .completed{
+   height: 22px;
+    opacity: 0.78;
+    border-radius: 100px;
+    background-color: #212121;
+    font-family: Roboto;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    color: #ffffff;
+    display: inline-block;
+    float: right;
+    padding: 5px 16px;
+    margin-right: 5px;
+    text-transform: uppercase;
+}
+.questboard-wrapper .status .locked img, .questboard-wrapper .status-image .locked img
+{
+  float: right;
+   margin-right: 15px;
+}
+
+.questboard-wrapper .Learn_tile .fa-graduation-cap{
+    font-size: 26px;
+    opacity: 0.8;
+    color: #2b2b2b;
+    margin-left: 4px;
+}
+.questboard-wrapper .badge-img{
+        margin-top: 16px;
+        text-align: center;
+}
+.questboard-wrapper .Learn_tile .badge-img img{
+     width: 98px;
+  
+}
+.questboard-wrapper .Do_tile .badge-img img{
+       width: 58.2px;
+    height: 66.4px;
+}
+.questboard-wrapper .Inspire_tile .badge-img img{
+       width: 66px;
+    height: 78px;
+}
+.questboard-wrapper .tile-top{
+    height: 44px;
+}
+.questboard-wrapper .info .activity-name{
+    font-family: Roboto;
+  font-size: 20px;
+  font-weight: 500;
+  text-align: left;
+  color: #686868;
+  margin-bottom: 7px;
+}
+.questboard-wrapper .info .points_challenges,
+.questboard-wrapper .info .points,.questboard-wrapper .info .challenges{
+     font-family: Roboto;
+  font-size: 13px;
+  text-align: left;
+  color: #a3a3a3;
+  display: inline-block;
+
+}
+.mobile-quest-heading{
+        margin: 35px 0 54px 66px;
+}
+.questboard-wrapper .row1, .questboard-wrapper .row2, .questboard-wrapper .row3{
+       padding-top: 36px;
+    margin-bottom: 76.8px;
+    background:#506383;
+    padding-left: 66px;
+    height: 359px;
+    display: table;
+    width:100%;
+}
+.questboard-wrapper .arrow-up{
+        width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid #041f2f!important;
+    top: -15px;
+    opacity: 0.88;
+    left: 65px;
+    position: absolute;
+}
+.questboard-wrapper .back .BASE {
+ margin-top: 29px;
+  opacity: 0.45;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: left;
+  color: #e7e7e7;
+}
+.questboard-wrapper .program-menu .quest_mobile_menu{
+display: none;
+}
+
+.questboard-wrapper .level1, .questboard-wrapper .level2, .questboard-wrapper .level3{
+    font-family: Roboto;
+    font-size: 20px;
+    margin-left: 81px;
+    width: 103px;
+    height: 26px;
+    background-color: #506483;
+    letter-spacing: 0px;
+    text-align: center;
+    color: #c0d4f5;
+    padding-top: 6px;
+    margin-bottom: 0;
+    
+}
+/*Objective*/
+.topbar{
+      height: 103px;
+      margin: 0;
+}
+.topbar p.heading{
+     opacity: 0.97;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.4px;
+    color: #a4bacf;
+    margin-bottom: 12px;
+  }
+  .topbar .questboard-icon i{
+      font-size: 17px;
+    opacity: 0.56;
+    color: #447aaf;
+  }
+  .topbar a.questboard-icon{
+        width: 38.6px;
+    margin-top: 24px;
+    text-align: center;
+    margin-left: 35px;
+    display: block;
+    margin-bottom: 12px;
+  }
+.topbar .greenbutton {
+    margin-right: 1px;
+    float: left;
+    display: inline-block;
+}
+.topbar .greenbutton-mobile, .topbar .graybutton-mobile{
+   display: none;
+}
+  
+   .topbar .graybutton{
+       float: right;
+       display: block;
+   }
+  
+  .topbar .nextchallenge{
+    max-width: 91.8%;
+    width: 100%;
+    height: 103px;
+    background-color: #869cb1;
+    display: inline-block;
+    padding: 12px 20px;
+  }
+  .topbar .nextchallenge-heading
+  {
+       font-family: Roboto;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.1px;
+  text-align: left;
+  color: #ffffff;
+  margin-bottom:15px;
+  }
+  .topbar .nextchallenge-desc
+  {
+        font-family: Roboto;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: -0.1px;
+  color: #ffffff;
+  width:60%;
+  }
+  .topbar .quest-section{
+   
+    height: 103px;
+    background-color: #2e3f50;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0;
+  }
+  .topbar .objective-title{
+      height: 42px;
+  background-color: #1b886f;
+   margin: 0;
+    padding:10px 24px;
+  }
+    .topbar .objective-title .activity-name{
+        font-family: Roboto;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.1px;
+  text-align: left;
+  color: #ffffff;
+  margin-right: 15px;
+  
+    }
+  .topbar .objective{
+        height: 61px;
+  background-color: #3ab89c;
+   margin: 0;
+   font-family: Roboto;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: -0.1px;
+  color: #ffffff;
+  padding:20px 24px;
+  }
+  .topbar .challenge-title{
+          font-family: Roboto;
+    font-size: 18px;
+    font-weight: 300;
+    letter-spacing: -0.1px;
+    color: #ffffff;
+    height: 61px;
+    margin: 0;
+    padding: 10px 24px;
+    width: 60%;
+  }
+   .topbar .objective-section{
+  display: inline-block;
+    max-width: 90%;
+   width:100%;
+       background-color: #3ab89c;
+   }
+
+   .topbar .objective-section span.activity{
+         width: 54px;
+  height: 20px;
+  border-radius: 82px;
+     border: solid 1px #ffffff;
+     color: #ffffff;
+    padding: 2px 5px;
+   }
+
+.objective-wrapper .obj-challenges{
+      padding: 71.6px 92px 0px 158px;
+    margin-bottom: 221px;
+}
+.objective-wrapper .objective-heading{
+     font-family: Roboto;
+  font-size: 25px;
+  font-weight: bold;
+  letter-spacing: -0.1px;
+  color: #e8e8e8;
+  margin-bottom: 26px;
+    margin-top: 5.6px;
+}
+.objective-wrapper .obj-description{
+     
+    font-family: Roboto;
+    font-size: 20px;
+    letter-spacing: -0.1px;
+    color: #e8e8e8;
+    text-align: left;
+    width: 68%;
+    margin: 0 auto;
+}
+.objective-wrapper .challenges{
+    font-family: Roboto;
+  font-size: 30px;
+  font-weight: 300;
+ 
+  color: #ffffff;
+  margin-top:53px;
+}
+.objective-wrapper .challenges .challenge1,.objective-wrapper .challenges .challenge2,
+.objective-wrapper .challenges .challenge3,.objective-wrapper .challenges .challenge4,
+.objective-wrapper .challenges .challenge5{
+           font-family: Roboto;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 2.7;
+    letter-spacing: 0.2px;
+    height: 40px;
+    border-radius: 69px;
+    border: solid 1px #dddddd;
+    color: #ffffff;
+    width: 350px;
+    margin: 0 auto 15px;
+    text-align: left;
+}
+.objective-wrapper .challenges .challenge1 p,.objective-wrapper .challenges .challenge2 p,
+.objective-wrapper .challenges .challenge3 p,.objective-wrapper .challenges .challenge4 p,
+.objective-wrapper .challenges .challenge5 p
+{
+        margin-top: -8px;
+        margin-left: 24px;
+}
+
+.objective-wrapper .bottom-bar, .objective-wrapper .bottom-bar-resume, .challenge-wrapper .bottom-bar-next{
+    bottom:0;
+    right:0;
+    margin: 0;
+    position: absolute;
+    width:100%;
+}
+
+.objective-wrapper .bottom-bar .begin {
+       height: 102px;
+    background-color: #e5930c;
+    text-align: center;
+    padding: 38px 80px 0;
+}
+
+.objective-wrapper .bottom-bar .begin a
+{
+     font-family: Roboto;
+  font-size: 25px;
+  letter-spacing: 0.2px;
+  text-align: center;
+  color: #ffffff;
+}
+.objective-wrapper .bottom-bar .discussion, 
+.objective-wrapper .bottom-bar-resume .discussion,
+.challenge-wrapper .bottom-bar-next .discussion
+{
+     font-family: Roboto;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.1px;
+  text-align: center;
+  color: #ffffff;
+     text-align: center;
+    padding-top: 12.6px;
+  height: 102px;
+  background-color: #6a7a8a;
+}
+.objective-wrapper .bottom-bar .discussion span.count, 
+.objective-wrapper .bottom-bar-resume .discussion span.count,
+.challenge-wrapper .bottom-bar-next .discussion span.count
+{
+      width: 32px;
+  height: 28.9px;
+  background-color: #fd4f44;
+  font-family: Roboto;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.1px;
+    text-align: left;
+    color: #ffffff;
+    padding: 6px 10px;
+    border-radius: 50%;
+    margin-top: -10px;
+    position: absolute;
+    margin-left: -10px;
+}
+.objective-wrapper .bottom-bar .discussion img, 
+.objective-wrapper .bottom-bar-resume .discussion img,
+.challenge-wrapper .bottom-bar-next .discussion img
+{
+    width: 42.6px;
+  height: 35px;
+}
+.objective-wrapper .bottom-bar .discussion p, 
+.objective-wrapper .bottom-bar-resume .discussion p,
+.challenge-wrapper .bottom-bar-next .discussion p{
+    margin-top:4.7px;
+}
+.objective-wrapper .bottom-bar .challenge-description, 
+.objective-wrapper .bottom-bar-resume .challenge-description,
+.challenge-wrapper .bottom-bar-next .challenge-description{
+      
+  text-align: left;
+  height: 102px;
+  border-top: solid 2px #6a7a8a;
+  padding:16px 15px;
+}
+.objective-wrapper .bottom-bar .challenge-description p:first-child,
+.objective-wrapper .bottom-bar-resume .challenge-description p:first-child,
+ .challenge-wrapper .bottom-bar-next .challenge-description p:first-child
+{
+      font-family: Roboto;
+  font-size: 22px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  color: #c1c1c1;
+  margin-left:15px;
+    border-bottom: solid 1px #979797;
+    padding-bottom:6px;
+}
+.objective-wrapper .bottom-bar .challenge-description p span.total-challenges,
+ .challenge-wrapper .bottom-bar-next .challenge-description p span.total-challenges
+{
+    font-weight: bold;
+  color: #ffffff;
+}
+.objective-wrapper .bottom-bar .challenge-description p.max-points,
+ .challenge-wrapper .bottom-bar-next .challenge-description p.max-points
+{
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 0.4px;
+  color: #c1c1c1; 
+   margin-left:15px;
+}
+.objective-wrapper .obj-challenges .challenges .completed{
+    background-color: #222d3f;
+  border: solid 1px #94eb3c;
+}
+.objective-wrapper .obj-challenges .challenges .completed span img{
+    width: 23px;
+  height: 23px;
+ 
+}
+.objective-wrapper .obj-challenges .challenges .completed span.tick-image
+{
+         float: right;
+    margin-right: 13px;
+}
+.objective-wrapper .bottom-bar-resume .resume,
+ .challenge-wrapper .bottom-bar-next .next {
+       height: 102px;
+    background-color: #31adf8;
+    text-align: center;
+    padding: 38px 80px 0;
+}
+.challenge-wrapper .content-bar{
+    padding:154px 105px 91px 86px;
+}
+.objective-wrapper .bottom-bar-resume .resume a,
+ .challenge-wrapper .bottom-bar-next .next a
+{
+     font-family: Roboto;
+  font-size: 25px;
+  letter-spacing: 0.2px;
+  text-align: center;
+  color: #ffffff;
+}
+.objective-wrapper .bottom-bar-resume .points-earned,
+.objective-wrapper .bottom-bar-resume .points-earned .out-of,
+  .challenge-wrapper .bottom-bar-next .points-earned .out-of,
+    .challenge-wrapper .bottom-bar-next .points-earned
+{
+        font-family: Roboto;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 0.4px;
+    color: #c1c1c1;
+    margin-left: 15px;
+}
+.objective-wrapper .bottom-bar-resume .challenge-description .challenge-completed,
+.objective-wrapper .bottom-bar-resume .challenge-description .out-of,
+ .challenge-wrapper .bottom-bar-next  .challenge-description .challenge-completed,
+  .challenge-wrapper .bottom-bar-next .challenge-description .out-of
+{
+ font-weight: bold;
+  color: #ffffff;
+}
+.objective-wrapper .bottom-bar-resume .challenge-description .total-challenges,
+ .challenge-wrapper .bottom-bar-next .challenge-description .total-challenges{
+        font-weight: bold;
+    color: #b4b4b4;
+}
+/*Mobile view*/
+@media only screen and (max-device-width:1365px){
+  
+.jubi-logo{
+    margin-top: 26px;
+    padding-left: 27.5px;
+}
+.jubi-logo img{
+     width: 57.5px;
+    height: 37.5px;
+}
+.LEARN-DO-INSPIRE{
+  margin-top: 40.6px;
+    padding-right: 26.6px;
+    font-size: 15px;
+}
+.Welcome-to-Modern-Le p{
+    font-size: 15px;
+    margin-bottom: 10px;
+    margin-top: 109.5px;
+}
+.Welcome-to-Modern-Le{
+    margin-bottom: 276px;
+}
+#loginForm, #Re-loginForm, #loginForm input, #Re-loginForm input{
+ width: 100%;
+    max-width: 234.5px;
+    height: 35.5px;
+    padding: 8px 10px;
+
+}
+#loginForm div.form-group, #Re-loginForm div.form-group{
+        margin-bottom: 22px;
+}
+.Forgot-your-password{
+    margin-top: -9.5px;
+    margin-bottom: 20px;
+}
+.Forgot-your-password a{
+font-size: 15px;
+}
+#loginForm button, #Re-loginForm button{
+        width: 96.5px;
+    height: 34px;
+    border-radius: 2.5px;
+    font-size: 15px;
+    padding: 5px;
+}
+#wrapper{
+    background-position: left center;
+}
+#Re-loginForm img{
+    width: 28.5px;
+    height: 28px;
+}
+.Welcome-Back-Message{
+    font-size: 12.5px;
+    margin-bottom: 12px;
+}
+.relogin p {
+    margin-bottom: 30px;
+    margin-top: 50px;
+}
+.welcome-message{
+    margin:0;
+    max-width: 100%;
+    width: 100%;
+}
+.welcome-message img.program-image{
+    left: 0;
+    right: 0;
+    max-width: 100%;
+    width: 100%;
+    height: 262px;
+}
+.welcome-message img.profile-image{
+    margin: 15.5px 10px;
+    width: 35.5px;
+    height: 35px;
+}
+#wrapper-intro .modal-dialog{
+    margin:0;
+}
+#wrapper-intro #myModal{
+    padding:0!important;
+}
+.PROGRAM{
+        font-size: 10px;
+    width: 66px;
+    letter-spacing: 2.8px;
+}
+.LEAD-TO-INSPIRE{
+    font-size: 21px;
+    letter-spacing: 0.7px;
+}
+.GET-STARTED{
+        width: 116.5px;
+    height: 25px;
+    padding: 5px 9.5px;
+    font-size: 9px;
+}
+#wrapper-intro .clearfix{
+    height: 106px;
+}
+.program-intro{
+    padding: 0;
+}
+#wrapper-intro button.close{
+    padding: 20px;
+    top: 10px;
+}
+.upon-completion-message, .GET-STARTED-BIG{
+   max-width: 100%;
+    width: 100%;
+    font-size: 15px;
+    letter-spacing: -0.2px;
+    padding: 38px 20px;
+}
+.welcome-message span{
+   font-size: 8.5px;
+    letter-spacing: -0.1px;
+}
+.quoteauthor-image {
+    width: 39px;
+    height: 39px;
+}
+.start-quote img{
+        width: 17px;
+}
+.start-quote{
+    margin-left: 0px;
+    margin-right: 5px;
+}
+.quoteauthor-message img{
+    width: 17px;
+}
+.quoteauthor-name{
+    font-size: 7.5px;
+    margin-left: 20px;
+}
+.GET-STARTED-BIG a{
+        font-size: 19px;
+            letter-spacing: -0.2px;
+}
+.GET-STARTED-BIG{
+    padding: 20px;
+    height: auto;
+}
+.powered-by{
+        margin-top: 20px;
+    margin-bottom: -21px;
+    font-style: normal;
+    font-size: 7.5px;
+}
+.powered-by img{
+        height: 20px;
+    width: 30.5px;
+}
+.program-topbar{
+    max-height: 50px;
+}
+.program-topbar .Homepage{
+    font-size: 16px;
+    margin: 15.5px 0 0 11.5px;
+    -webkit-padding-start: 0;
+}
+.program-topbar .right-profiledetails{
+     margin: 0;
+     padding: 0;
+    padding-right: 10px;
+}
+.program-topbar .right-profiledetails ul{
+    -webkit-padding-start: 0;
+}
+.program-topbar .right-profiledetails ul li{
+    vertical-align: top;
+    margin-top: 17px;
+    line-height: 10px;
+}
+.notification-ring{
+  width: 11.5px;
+    height: 11.5px;
+    font-size: 8px;
+    padding-left: 4px;
+    letter-spacing: 0.1px;
+    padding-top: 1px;
+    margin-top:0;
+}
+.profile-info{
+    height: 72px;
+    margin: 0;
+}
+.profile-info .points-count, .profile-info .designation{
+        font-size: 7px;
+}
+span.fa-bell-o{
+    margin-top: 0px;
+   padding-right: 12.1px;
+    font-size: 14px;
+}
+.profile-info .profile-image {
+    margin-top: -4.7px;
+    margin-right: 14.5px;
+}
+.profile-info li img{
+        width: 24px;
+    height: 23.7px;
+}
+.profile-info .name{
+    letter-spacing: 0.1px;
+        font-size: 10px;
+}
+.profile-info .points-count
+{
+    font-size: 7px;
+}
+.program-menu{
+    height: 22px;
+    padding: 0px;
+    text-align: left;
+}
+.program-menu ul{
+    -webkit-padding-start: 0;
+    padding: 0 0 0 12px;
+}
+.program-status{
+    font-size: 7.5px;
+    margin-right: 112px;
+}
+.filters, .Active-All{
+font-size:7.5px;    
+margin-left: -28px;
+}
+
+
+.Program-bg-msg {
+       top: -184.5px;
+    margin-bottom: -80px;
+}
+.program-body .PROGRAM{
+    font-size: 8px;
+    letter-spacing: 2.2px;
+    width: 54.5px;
+    margin-bottom: 6px;
+}
+.program-body .LEAD-TO-INSPIRE{
+    font-size: 14px;
+    letter-spacing: 0.4px;
+}
+.GO-TO-QUEST-BOARD a{
+        font-size: 11.5px;
+    
+    letter-spacing: 0.1px;
+}
+.Program-bg-image{
+    max-height: 296px;
+        /*max-width: 182.5px;*/
+}
+.Program-bg-image img,.Program-completed-image img{
+    width: 100%;
+}
+.Program-bg-image img{
+height: 329.5px;
+}
+.Program-completed-image img{
+height: 286.5px;
+}
+.program-img-height{
+    max-height: 340px;
+}
+.GO-TO-QUEST-BOARD{
+        height: 44.2px;
+    max-width: 94.6%;
+    padding: 14px;
+    width: 100%;
+}
+.marginleft{
+        padding: 0;
+        margin:0;
+}
+.Progress-section-completed{
+    padding:14.5px 0 0 11px;
+}
+.PROGRAM-DETAILS{
+        font-size: 10px;
+            letter-spacing: 0.9px;
+             margin-right: 5.5px;
+             margin-bottom: 5.5px;
+}
+.Progress-section{
+    padding: 17px 0 0 12.5px;
+}
+ .program-body .fa-info{
+     border-radius: 10px;
+   width: 11.5px;
+    height: 11.5px;
+    padding: 0px 4px;
+    border:solid 1px #979797;
+    font-size: 11.5px;
+ }
+ .marginright{
+     padding: 0;
+     margin:0;
+ }
+ .program-body .fa-info:before{
+    font-size: 5.8px;
+ }
+.program-body .notification-count{
+        width: 12px;
+    height: 12px;
+    border: solid 1px #e8a105;
+    padding-left: 3px;
+    margin-right: 5.5px;
+    margin-bottom:6.5px;
+}
+.notification-count span{
+      font-size: 8px;
+}
+.program-body .Notifications{
+        font-size: 10px;
+}
+.program-body .total-points p{
+    margin-bottom:4.5px;
+}
+.program-body hr.programdetails{
+        max-width: 139.4px;
+    border: solid 0.5px #ffffff;
+}
+.programdetailsleft{
+    padding-top: 19.5px;
+}
+.program-body .total-points{
+    font-size: 7.5px;
+}
+.program-body p.progressbar{
+        max-width: 121.1px;
+    height: 7.1px;
+    margin-bottom: 17.9px!important;
+}
+.program-body p.progressbar span{
+    width: 29.8px;
+    height: 7.1px;
+}
+.program-body .leaderboard-rank{
+        font-size: 7.5px;
+}
+.leaderboard-rank p.rank, .leaderboard-rank .out-of{
+        font-size: 13px;
+}
+ .leaderboard-rank .profilename{
+     font-size: 10px;
+ }
+.leaderboard-rank p.rank{
+        margin-bottom: 16px;
+}
+.progress-status{
+    font-size: 7.5px;
+    padding: 14.5px 0 0;
+}
+.progress-status .learn img, .progress-status .do img,
+ .progress-status .inspired img, .progress-status .badges img{
+    width: 17px;
+    height: 15.1px;
+    padding-right: 3px;
+}
+.progress-status .learn, .progress-status .do,
+ .progress-status .inspired, .progress-status .badges
+{
+  font-size: 7px;
+  padding: 0 0 3.4px;
+}
+.UP-NEXT img{
+     max-width: 72.5px;
+     width:100%;
+}
+.UP-NEXT{
+    font-size: 6px;
+    margin: 0;
+    padding: 0;
+}
+.UP-NEXT p{
+        margin: 0;
+        padding: 0px 0 14.5px 0;
+}
+.PROGRESS-TO-KPIS{
+    font-size: 5px;
+     margin: 0;
+    padding: 0;
+}
+.positionUPNEXT, .positionKPI{
+ display:none;
+}
+.positionUPNEXTmobile, .positionKPImobile{
+ display:block;
+ margin-top:23px;
+}
+.positionUPNEXTmobile{
+    margin-top: 30px;
+    
+}
+
+.PROGRESS-TO-KPIS img{
+    width: 30.8px;
+        margin: -2.7px 6.2px 0;
+}
+
+.positionleft{
+    right: 50%;
+}
+hr.programdetails-mobile{
+    display: none;
+}
+.Buddies{
+   font-size: 10px;
+    letter-spacing: 0.3px;
+    margin: 0;
+    display: block;
+    margin-bottom: 10px;
+}
+.buddies-desk{
+   padding: 0;
+    text-align: center;
+    top: 34px;
+}
+.Buddies1{
+        margin: 0;
+    
+}
+.Buddies1 img, .Buddies2 img{
+    width: 23.8px;
+    height: 23px;
+    margin: 0;
+}
+.Buddies1 span, .Buddies2 span{
+        font-size: 6px;
+    letter-spacing: 0.2px;
+}
+.program-body hr.programdetailsend{
+        margin: 0;
+}
+
+
+.programoverlay .COMPLETED{
+    display: none;
+}
+.completion_over_image{
+   padding: 0;
+   top: -140px;
+    margin-bottom: -64px;
+}
+.programoverlay .completed_programname{
+    font-size: 14px;
+    letter-spacing: 0.4px;
+    opacity: 0.33;
+    width:98%;
+}
+.PROGRAMCOMPLETED p{
+    font-size: 11.5px;
+    letter-spacing: 0.2px;
+}
+.PROGRAMCOMPLETED{
+  height: 39px;
+    max-width: 94.6%;
+    padding: 14px;
+    width: 100%;
+}
+.Program-completed-image{
+    max-height: 275.5px;
+}
+footer.powered-by{
+    margin-top: 23px;
+        margin-bottom: 10px;
+        text-align: left;
+}
+footer.powered-by span{
+    font-size: 7.5px;
+}
+ul li ul.dropdown-green{
+   width: 97.5px;
+    height: auto;
+    left: -36px;
+    padding: 5px 14px;
+    top: 21px;
+
+}
+
+.arrow-up-green{
+    top: -9px;
+       left: 55px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+}
+ul li ul.dropdown-green li a, ul li ul.dropdown li a{
+        font-size: 7.5px;
+}
+ul li ul.dropdown-green li, ul li ul.dropdown li{
+   padding: 6px 0;
+    line-height: 10px;
+}
+ul li ul.dropdown{
+    width: 97.5px;
+    
+    top:50px;
+    padding: 0 14px 0;
+}
+.dashboard-wrapper ul li ul.dropdown
+{
+ width: 130.5px;
+    height: auto;
+    top:32px;
+}
+.dashboard-wrapper .program-topbar .right-profiledetails ul li ul.dropdown li{
+    margin-top: -10px;
+    padding: 20.5px 14px 6px 0;
+    margin-left: 14px;
+}
+.dashboard-wrapper .arrow-up{
+        border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    top:-7px;
+}
+.dashboard-wrapper .arrow-up-green{
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+         top: -5px;
+    left: 30px;
+}
+.dashboard-wrapper ul li ul.dropdown-green{
+        left: -15px;
+}
+.arrow-up{
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #041f2f!important;
+    top: -10px;
+    left: 50px;
+}
+
+
+#resetForm input, #newPwdForm input{
+    width: 100%;
+    max-width: 234.5px;
+    height: 35.5px;
+    padding: 8px 10px;
+    font-size: 15px;
+    margin-bottom: 23.5px;
+}
+ #newPwdForm input{
+      margin-bottom: 1.5px;
+ }
+#resetForm button, #newPwdForm button{
+    width: 100%;
+    max-width: 234.5px;
+    height: 40px;
+    padding: 8px 10px;
+    font-size: 15px;
+     margin-bottom: -0.5px;
+}
+#newPwdForm button{
+    margin-top:28px;
+}
+.Reset-Password, .Email-Sent, .New-Password,.success-msg{
+    font-size: 17.5px;
+        margin-top: 104.5px;
+}
+.Check-your-email-for,.Your-password-has-be{
+     font-size: 12.5px;
+    margin-bottom: 14.5px;
+    margin-top: 9px;
+}
+#resetForm a.Login, .Email-Sent a.Login , #newPwdForm a.Login, 
+.success-msg a.Login{
+font-size: 15px;
+}
+.Enter-your-email-and, .Please-enter-your-ne{
+    font-size: 12.5px;
+    margin-bottom: 27px;
+    margin-top: 9px;
+}
+#newPwdForm .error-msg{
+        font-size: 15px;
+    margin-top: -12px;
+    margin-bottom: 17px;
+}
+.questboard-wrapper .program-topbar{
+        max-height: 50px;
+}
+.questboard-wrapper .program-topbar li.logo img, .dashboard-wrapper .program-topbar li.logo img{
+     width: 47.5px;
+  height: 47.5px;
+}
+.questboard-wrapper .program-topbar .right-profiledetails{
+    margin: 0;
+    padding: 0;
+padding-right: 10px;
+}
+.questboard-wrapper .fa-bell-o{
+    padding-right: 2.6px;
+}
+.questboard-wrapper .right-profiledetails ul{
+    -webkit-padding-start: 0;
+    padding: 0;
+}
+.questboard-wrapper .program-topbar .program-name{
+   padding: 0;
+    font-size: 12px;
+    margin-top: 19.3px;
+    padding-left: 12px;
+}
+.questboard-wrapper .notification-ring{
+        margin-right: 4.1px;
+}
+.questboard-wrapper .profile-info .profile-image{
+    margin-right: 4.5px;
+}
+.questboard-wrapper .profile-info .name{
+    font-size: 9px;
+    margin-top: -8px;
+}
+.questboard-wrapper .profile-info .designation, .questboard-wrapper .profile-info .points-count{
+    font-size: 7px;
+}
+.questboard-wrapper .program-menu ul{
+    display: none;
+}
+.questboard-wrapper .program-menu ul.quest_mobile_menu{
+     padding: 8px;
+    height: 27px;
+    border-radius: 4px;
+    background-color: #2d8f80;
+    display: block;
+    border: none;
+    width: 91.5px;
+    color: #073d35;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+
+}
+.questboard-wrapper .program-menu ul.quest_mobile_menu a{
+ font-family: Helvetica;
+  font-size: 10px;
+  font-weight: bold;
+  color: #073d35;
+}
+.questboard-wrapper .program-menu ul.quest_mobile_menu a span
+{
+        margin-right: 40px;
+}
+.questboard-wrapper .program-menu ul.quest_mobile_menu:hover{
+ border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.questboard-wrapper ul.quest_mobile_menu ul.dropdown{
+        background-color: #2d8f80;
+    height: 131px;
+    top: 16px;
+    margin-top: 3px;
+    width: 91.5px;
+    left: -8px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    opacity: 1;
+        padding: 0;
+    margin: 0;
+}
+.questboard-wrapper ul.quest_mobile_menu li{
+    padding: 0;
+}
+.questboard-wrapper ul.quest_mobile_menu ul.dropdown li{
+        font-family: Helvetica;
+    font-size: 9px;
+    line-height: 2.83;
+    letter-spacing: 0px;
+    color: #ffffff;
+    margin:0;
+    padding: 0;
+    text-align: left;
+    padding-left: 13px;
+    border-bottom: solid 0.5px rgba(226, 219, 21,.18);
+}
+
+.questboard-wrapper .program-menu{
+    height: 31.5px;
+    padding: 3px 0 0 58px;
+}
+.questboard-wrapper .program-body{
+    font-size: 13px;
+
+}
+.questboard-wrapper .desktop_view{
+    display: block;
+
+    height: 100%;
+}
+.mobile-quest-heading {
+    margin: 22.7px 0 14.8px 21px;
+}
+.questboard-wrapper .Learn_tile div.status, .questboard-wrapper .Do_tile div.status,
+.questboard-wrapper .Inspire_tile div.status,.questboard-wrapper div.status-image
+{
+        padding: 7.4px 9.7px!important;
+        height: 117.9px!important;
+}
+
+.questboard-wrapper .Learn_tile .fa-graduation-cap{
+        font-size: 14.9px;
+}
+.questboard-wrapper .status .completed, .questboard-wrapper .status-image .completed{
+        font-size: 6px;
+    height: 12.6px;
+    padding: 3px 6.3px;
+}
+.questboard-wrapper span.corner{
+    border-top: 19.7px solid #f1efef;
+    border-left: 21.1px solid transparent;
+}
+.questboard-wrapper .status .heading,.questboard-wrapper .status-image .heading{
+    font-size: 14px!important;
+}
+.questboard-wrapper .tile-top{
+    height: 22px;
+}
+.questboard-wrapper .badge-img{
+    margin-top: 10.9px;
+}
+
+.questboard-wrapper .Inspire_tile .badge-img img{
+        width: 33px;
+    height: 39px;
+}
+.questboard-wrapper .Do_tile .badge-img img{
+        width: 33.3px;
+    height: 38px;
+}
+.questboard-wrapper .Learn_tile .badge-img img{
+    width: 56.2px;
+}
+.questboard-wrapper .status .locked img, .questboard-wrapper .status-image .locked img{
+        height: 12.1px;
+}
+.questboard-wrapper .info .activity-name{
+    margin-bottom: 5.7px;
+    font-size: 10px;
+}
+.questboard-wrapper .Learn_tile div.info, 
+.questboard-wrapper .Do_tile div.info, .questboard-wrapper .Inspire_tile div.info{
+padding: 7.4px 9.7px;
+        height: 44.1px;
+}
+.questboard-wrapper .info .points_challenges, 
+.questboard-wrapper .info .points, .questboard-wrapper .info .challenges{
+        font-size: 6.5px;
+}
+.questboard-wrapper footer.powered-by{
+      margin:84px 0 21.5px 21px;
+}
+.questboard-wrapper footer.powered-by span{
+    margin-left: 6px;
+    margin-right: 20px;
+}
+.questboard-wrapper .Learn_tile, 
+.questboard-wrapper .Do_tile, .questboard-wrapper .Inspire_tile{
+height: 178.5px;
+width: 160.2px;
+        margin-right: 7px;
+    margin-left: 7px;
+    margin-bottom:32px;
+}
+.questboard-wrapper .Learn_tile div.front,.questboard-wrapper .Learn_tile div.back,
+.questboard-wrapper .Do_tile div.front,.questboard-wrapper .Do_tile div.back,
+.questboard-wrapper .Inspire_tile div.front,.questboard-wrapper .Inspire_tile div.back{
+        margin-bottom: 16.5px;
+}
+.questboard-wrapper .Learn_tile .back .status,
+.questboard-wrapper .Do_tile .back .status,
+.questboard-wrapper .Inspire_tile .back .status, .questboard-wrapper .back .status-image{
+        font-size: 7.5px;
+            letter-spacing: 0.2px;
+}
+.questboard-wrapper .back .BASE{
+    font-size: 7.5px;
+    margin-top: 27.5px;
+}
+.questboard-wrapper ul li ul.dropdown{
+        width: 130.5px;
+    height: auto;
+    top:25px;
+    margin-top: 3px;
+}
+.questboard-wrapper ul li ul.dropdown li a{
+    line-height: 1.6;
+    letter-spacing: 0.2px;
+}
+.questboard-wrapper ul li ul.dropdown li
+{
+        margin: 10px 14px;
+}
+.My-Programs, .questboard-wrapper .My-Programs span{
+     font-size: 7.5px;
+  line-height: 1.27;
+}
+.questboard-wrapper .My-Programs img{
+        width: 15px;
+    height: 15px;
+}
+.questboard-wrapper .My-Programs li{
+    margin: 6px 0!important;
+}
+.questboard-wrapper .arrow-up{
+        border-left: 7.5px solid transparent;
+    border-right: 7.5px solid transparent;
+    border-bottom: 7.5px solid #041f2f!important;
+    top: -6px;
+    left: 55px;
+}
+.questboard-wrapper .level1, .questboard-wrapper .level2, .questboard-wrapper .level3{
+    font-size: 10px;
+    margin-left: 20.5px;
+    height: 14px;
+    width: 51.5px;
+}
+.questboard-wrapper .row1, .questboard-wrapper .row2, .questboard-wrapper .row3{
+        padding-top: 23px;
+    margin-bottom: 30px;
+        padding-left: 10px;
+        height: 400px;
+}
+.objective-wrapper{
+    position: absolute;
+}
+.objective-wrapper .topbar{
+    height: 51px;
+    margin: 0;
+    padding: 0;
+}
+.objective-wrapper .topbar p.heading{
+    font-size: 7px;
+    letter-spacing: 0.2px;
+}
+.objective-wrapper .topbar a.questboard-icon{
+        width: 19.2px;
+    margin:12.5px auto 6.6px ;
+   }
+.objective-wrapper .topbar .questboard-icon i{
+    font-size: 8.5px;
+}
+.objective-wrapper .topbar .quest-section
+{
+     
+  height: 51px;
+}
+.objective-wrapper .topbar .greenbutton,.objective-wrapper .topbar .graybutton{
+  display: none;
+}
+.objective-wrapper .topbar .greenbutton-mobile{
+       
+    float: left;
+    display: inline-block;
+       
+}
+
+.objective-wrapper .topbar .graybutton-mobile
+{
+ display: block;
+    float: right;
+}
+
+.objective-wrapper .topbar .greenbutton-mobile img,.objective-wrapper .topbar .graybutton-mobile img
+{
+           width: 16px;
+    height: 51px;
+}
+
+.topbar .objective-title{
+    height: 21px;
+    padding: 5.5px 12px;
+}
+.topbar .objective{
+    height: 30px;
+        font-size: 7.5px;
+    letter-spacing: 0px;
+     padding: 5px 12px;
+}
+.topbar .objective-title .activity-name{
+    font-size: 8.5px;
+    letter-spacing: 0;
+    margin-right: 7.5px;
+}
+.topbar .objective-section, .topbar .nextchallenge{
+    
+    height: 51px;
+    display: inline-block;
+    max-width: 88%;
+    float: left;
+}
+.topbar .nextchallenge{
+        padding: 6px 14.5px;
+        
+}
+.topbar .nextchallenge-heading{
+    font-size: 8.5px;
+    letter-spacing: 0px;
+    margin-bottom: 9px;
+}
+.topbar .nextchallenge-desc{
+        font-size: 7.5px;
+      letter-spacing: 0px;
+    width: 100%;
+}
+.topbar .objective-section span.activity{
+    float: right;
+    width: 27px;
+    height: 10px;
+    border-radius: 41px;
+    border: solid 0.5px #ffffff;
+    font-size: 6.5px;
+    padding: 1px 2.5px;
+}
+.objective-wrapper .obj-challenges{
+        padding: 47.5px 48px 0px 56.5px;
+    margin-bottom: 183.5px;
+}
+.objective-wrapper .obj-challenges img
+{
+    width: 25.4px;
+    height: 25.3px;
+}
+.objective-wrapper .objective-heading{
+        margin-top: 2.8px;
+    margin-bottom: 27px;
+    font-size: 12.5px;
+    letter-spacing: 0px;
+}
+.objective-wrapper .obj-description{
+        font-size: 10px;
+    letter-spacing: 0px;
+    width: 100%;
+}
+.objective-wrapper .challenges{
+    margin-top: 33.5px;
+    font-size: 15px;
+
+}
+.objective-wrapper .challenges .challenge1, .objective-wrapper .challenges .challenge2,
+ .objective-wrapper .challenges .challenge3, .objective-wrapper .challenges .challenge4,
+  .objective-wrapper .challenges .challenge5{
+      width: 175px;
+    height: 20px;
+    border-radius: 34.5px;
+    border: solid 0.5px #dddddd;
+  }
+  .objective-wrapper .challenges .challenge1 p, .objective-wrapper .challenges .challenge2 p,
+   .objective-wrapper .challenges .challenge3 p, .objective-wrapper .challenges .challenge4 p,
+   .objective-wrapper .challenges .challenge5 p{
+       font-size: 10px;
+       line-height: 2.7;
+    letter-spacing: 0.1px;
+    margin-top: -4px;
+    margin-left: 12px
+   }
+   .objective-wrapper .bottom-bar .begin, .objective-wrapper .bottom-bar .challenge-description,
+   .objective-wrapper .bottom-bar .discussion, .objective-wrapper .bottom-bar-resume .resume,
+   .objective-wrapper .bottom-bar-resume .challenge-description,
+   .objective-wrapper .bottom-bar-resume .discussion
+   {
+       padding:0;
+       height: 51.5px;
+   }
+   .objective-wrapper .bottom-bar .begin, .objective-wrapper .bottom-bar-resume .resume{
+padding-top: 17.5px;
+   }
+   .objective-wrapper .bottom-bar .begin a, .objective-wrapper .bottom-bar-resume .resume a{
+       font-size: 12.5px;
+    letter-spacing: 0.1px;
+   }
+   .objective-wrapper .bottom-bar .challenge-description p.max-points,
+   .objective-wrapper .bottom-bar-resume .challenge-description p.max-points,
+   .objective-wrapper .bottom-bar-resume .points-earned, 
+   .objective-wrapper .bottom-bar-resume .points-earned .out-of
+   {
+           font-size: 7.5px;
+           margin-left: 0;
+        letter-spacing: 0.2px;
+   }
+   .objective-wrapper .bottom-bar .challenge-description p:first-child, 
+   .objective-wrapper .bottom-bar-resume .challenge-description p:first-child{
+    font-size: 11px;
+        letter-spacing: 0px;
+        margin-left: 0;
+        border-bottom: solid .5px #979797;
+        padding-bottom: 3px;
+   }
+   
+   .objective-wrapper .bottom-bar .challenge-description,
+      .objective-wrapper .bottom-bar-resume .challenge-description{
+       padding: 8px 7.5px;
+
+  border: solid 1px #6a7a8a;
+   }
+
+.objective-wrapper .bottom-bar .discussion img,
+ .objective-wrapper .bottom-bar-resume .discussion img{
+width: 21.3px;
+    height: 17.5px;
+}
+.objective-wrapper .bottom-bar .discussion, 
+.objective-wrapper .bottom-bar-resume .discussion{
+font-size: 8.5px;
+letter-spacing: 0px;
+padding-top: 9.9px;
+}
+.objective-wrapper .bottom-bar .discussion p, 
+.objective-wrapper .bottom-bar-resume .discussion p{
+    margin-top: 2.3px;
+}
+.objective-wrapper .bottom-bar .discussion span.count, .objective-wrapper .bottom-bar-resume .discussion span.count{
+     width: 16px;
+  height: 14.4px;
+  font-size: 8.5px;
+    letter-spacing: 0px;
+    padding: 3px 5px;
+    margin-top: -5px;
+    margin-left: -5px;
+}
+.objective-wrapper .obj-challenges .challenges .completed span.tick-image{
+        margin-right: 6.5px;
+}
+.objective-wrapper .obj-challenges .challenges .completed span img{
+    width: 11.5px;
+    height: 11.5px;
+}
+}
+@media only screen and (max-width:1024px) and (min-width:768px) and (orientation:portrait){
+     .topbar .objective-section,.topbar .nextchallenge
+    {
+            max-width: 95%!important;
+    }
+    .set-height{
+        margin-top:-75px;
+    }
+    .GO-TO-QUEST-BOARD, .PROGRAMCOMPLETED{
+        max-width: 94.5%!important;
+    }
+    .buddies-desk {
+    float: right!important;
+    top: 94px!important;
+}
+hr.programdetails-mobile{
+    display: none!important;
+}
+hr.programdetailscompletestart{
+    display:block;
+    margin-bottom: 0px!important;
+}
+.positionUPNEXT{
+    display: none!important;
+}
+.positionUPNEXTmobile{
+    display: block!important;
+}
+.positionUPNEXTmobile {
+    margin-top: -30px!important;
+}
+.UP-NEXT{
+    margin-bottom:0px!important;
+    
+}
+.progress-status .learn, .progress-status .do,
+ .progress-status .inspired, .progress-status .badges{
+padding:10px!important;
+}
+.positionleft {
+    right: 50%!important;
+}
+.Buddies{
+    display: block!important;
+}
+.progress-status{
+    padding: 14.5px 1px 13.4px 0!important;
+}
+.Buddies1{
+    margin-right: 0px;
+}
+footer.powered-by{
+    text-align:left;
+}
+ .questboard-wrapper .Learn_tile, .questboard-wrapper .Do_tile, .questboard-wrapper .Inspire_tile{
+            width: 38%!important;
+    }
+}
+@media only screen and (max-width:1024px) and (min-width:768px){
+     .topbar .objective-section
+    {
+            max-width: 96%;
+    }
+    .topbar .nextchallenge{
+        max-width: 96.8%
+    }
+    .profile-info .designation {
+    font-size: 14px;
+}
+    .questboard-wrapper .program-menu ul.quest_mobile_menu
+    {
+display:none;
+    }
+    .Program-bg-image img, .Program-completed-image img{
+        height: 100%!important;
+    }
+    .jubi-logo{
+    margin-top: 26px;
+    padding-left: 27.5px;
+}
+.jubi-logo img{
+     width: 57.5px;
+    height: 37.5px;
+}
+.LEARN-DO-INSPIRE{
+  margin-top: 40.6px;
+    padding-right: 26.6px;
+    font-size: 15px;
+}
+.Welcome-to-Modern-Le p{
+    font-size: 15px;
+    margin-bottom: 10px;
+    margin-top: 109.5px;
+}
+.Welcome-to-Modern-Le{
+    margin-bottom: 276px;
+}
+#loginForm, #Re-loginForm, #loginForm input, #Re-loginForm input{
+  width: 100%;
+    max-width: 234.5px;
+    height: 35.5px;
+    padding: 8px 10px;
+}
+#loginForm div.form-group, #Re-loginForm div.form-group{
+        margin-bottom: 22px;
+}
+.Forgot-your-password{
+    margin-top: -9.5px;
+    margin-bottom: 20px;
+}
+.Forgot-your-password a{
+font-size: 15px;
+}
+#loginForm button, #Re-loginForm button{
+        width: 96.5px;
+    height: 34px;
+    border-radius: 2.5px;
+    font-size: 15px;
+    padding: 5px;
+}
+
+#Re-loginForm input::-webkit-input-placeholder, #loginForm input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+   font-size: 15px;
+}
+#Re-loginForm input::-moz-placeholder, #loginForm input::-moz-placeholder { /* Firefox 19+ */
+    font-size: 15px;
+}
+#Re-loginForm input:-ms-input-placeholder, #loginForm input:-ms-input-placeholder { /* IE 10+ */
+   font-size: 15px;
+}
+#Re-loginForm input:-moz-placeholder, #loginForm input:-moz-placeholder { /* Firefox 18- */
+    font-size: 15px;
+  }
+ 
+#Re-loginForm img{
+    width: 28.5px;
+    height: 28px;
+}
+.Welcome-Back-Message{
+    font-size: 12.5px;
+    margin-bottom: 12px;
+}
+.relogin p {
+    margin-bottom: 30px;
+    margin-top: 50px;
+}
+#wrapper-intro .modal-dialog{
+    margin:auto;
+}
+.welcome-message img.program-image{
+    
+    max-width: auto;
+    width: auto;
+    height: auto;
+}
+.welcome-message img.profile-image {
+    width: 71px;
+    height: 70px;
+    margin: 31px;
+}
+.welcome-message span{
+        font-size: 24px;
+        letter-spacing: -0.2px;
+}
+.PROGRAM{
+        width: 132px;
+        font-size: 20px;
+        letter-spacing: 5.5px;
+}
+.LEAD-TO-INSPIRE{
+    font-size: 42px;
+    letter-spacing: 1.3px;
+}
+.GET-STARTED{
+    width: 233px;
+    height: 50px;
+   
+    padding: 5px 10px;
+    
+    font-size: 18px;
+}
+.upon-completion-message{
+        
+        letter-spacing: -0.5px;
+    width: 867px;
+    font-size: 30px;
+}
+.quoteauthor-image{
+    width: 78px;
+    height: 78px;
+}
+.quoteauthor-name{
+    font-size: 15px;
+    margin-left: 0px;
+}
+.GET-STARTED-BIG{
+    height: 129px;
+   padding: 40px;
+}
+.GET-STARTED-BIG a{
+        font-size: 38px;
+       letter-spacing: -0.3px;
+}
+.start-quote {
+    margin-left: -20px;
+    margin-right: 10px;
+}
+
+.powered-by img{
+        height: 40px;
+    width: 61px;
+}
+.GO-TO-QUEST-BOARD{
+     max-width: 79%;
+     height: 90px;
+    padding: 30px;
+}
+.Program-bg-image{
+      height: 100%;
+    max-height: 683px;
+    width: auto;
+}
+.GO-TO-QUEST-BOARD a{
+    font-size: 23px;
+    letter-spacing: 0.4px;
+}
+
+.Program-bg-msg {
+        top: -420px;
+}
+.program-body .PROGRAM{
+    font-size: 16px;
+    letter-spacing: 4.4px;
+    width: 109px;
+}
+.program-body .LEAD-TO-INSPIRE{
+    font-size: 28px;
+    letter-spacing: 0.9px;
+}
+.PROGRAM-DETAILS {
+    font-size: 20px;
+    letter-spacing: 1.9px;
+    margin-right: 17px;
+}
+.program-body .fa-info{
+  
+    border-radius: 12px;
+    width: 23px;
+    height: 23px;
+    padding: 4px 8px;
+}
+.program-body .fa-info:before {
+    font-size: 14px;
+}
+.program-body .notification-count {
+    width: 29px;
+    height: 29px;
+    border: solid 2px #e8a105;
+    margin-right: 17px;
+    padding-left: 6px;
+    border-radius: 14px;
+}
+.notification-count span{
+    font-size: 21px;
+}
+.program-body .Notifications{
+    font-size:20px;
+}
+.Progress-section, .Progress-section-completed{
+    padding:62px 44px 0 0;
+}
+.program-body hr.programdetails {
+    max-width: 100%;
+    border: solid 1px #ffffff;
+}
+.program-body .total-points, .program-body .leaderboard-rank{
+    font-size:15px;
+}
+.program-body p.progressbar {
+    height: 14.2px;
+    max-width: 100%;
+    margin-bottom: 35.8px;
+}
+.program-body p.progressbar span{
+        width: 133.7px;
+    height: 14.2px;
+}
+.leaderboard-rank p.rank, .leaderboard-rank .out-of{
+    font-size: 26px;
+}
+.leaderboard-rank .profilename{
+    font-size: 20px;
+}
+.positionUPNEXTmobile{
+    display: none;
+}
+.positionUPNEXT{
+    display: block;
+}
+.UP-NEXT p {
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+.UP-NEXT
+{
+        margin-bottom: 24px;
+        font-size: 12px;
+}
+.progress-status{
+        font-size: 15px;
+        padding: 27px 0;
+}
+.progress-status .learn, .progress-status .do, 
+.progress-status .inspired, .progress-status .badges{
+font-size: 14px;
+}
+.progress-status .learn img, .progress-status .do img, 
+.progress-status .inspired img, .progress-status .badges img{
+        width: auto;
+    height: auto;
+}
+.positionleft{
+    right: 0;
+}
+.buddies-desk{
+        float: none;
+        padding: 28px 0 30px;
+        top:0;
+        text-align: right;
+}
+.Buddies1 img, .Buddies2 img
+{        width: 47.6px;
+    height: 46px;
+    margin-bottom: 10px;
+}
+hr.programdetails-mobile{
+    display: block;
+}
+.Buddies{
+    font-size: 20px;
+    letter-spacing: 0.6px;
+     display: inline-block;
+    margin-right: 21px;
+    vertical-align: top;
+    margin-top: 17px;
+}
+.Buddies1 span, .Buddies2 span{
+        font-size: 12px;
+     letter-spacing: 0.4px;
+}
+.UP-NEXT img{
+    max-width:100%;
+}
+.program-topbar{
+    max-height: 101px;
+}
+.profile-info{
+    height: auto;
+}
+.program-topbar .Homepage{
+        margin: 31px 42.8px;
+            font-size: 32px;
+}
+.program-topbar .right-profiledetails{
+        margin: 0 63px 0 0;
+}
+.notification-ring{
+        width: 23px;
+    height: 23px;
+        font-size: 16px;
+            letter-spacing: 0.2px;
+                padding-left: 7px;
+    padding-top: 2px;
+        margin-top: 37px;
+}
+span.fa-bell-o{
+        margin-top: 34.1px;
+       padding-right: 24.2px;
+       font-size: 25.9px;
+}
+.profile-info .profile-image{
+    margin-top: 24.7px;
+    margin-right: 29px;
+}
+.program-topbar .right-profiledetails ul li{
+    margin-top: 0px;
+}
+.program-topbar .right-profiledetails ul.dropdown li{
+        margin-left: 24px!important;
+        padding-left: 0px!important;
+        margin-top: -10px!important;
+}
+.questboard-wrapper .right-profiledetails ul.dropdown li{
+    margin-left:14px!important;
+    margin-top:10px!important;
+       
+    padding: 12px 0!important;
+}
+.profile-info li img {
+    width: 48px;
+    height: 47.3px;
+}
+.profile-info .name{
+        font-size: 20px;
+        letter-spacing: 0.3px;
+        margin-top: 17px;
+}
+.profile-info .points-count{
+    font-size: 14px;
+
+}
+.program-menu{
+    height: 44px;
+        text-align: right;
+    padding: 13px;
+    padding-right: 119px;
+}
+.program-status{
+        font-size: 15px;
+        margin-right: 63px;
+}
+.filters, .Active-All{
+        font-size: 15px;
+}
+.arrow-up-green{
+        border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+        top: -10px!important;
+    left: 65px!important;
+}
+ul li ul.dropdown-green{
+    top: 30px;
+    width: 195px;
+    height: auto;
+    left: -50px!important;
+    padding: 13px 28px 0;
+}
+ul li ul.dropdown-green li a, ul li ul.dropdown li a{
+    font-size: 15px;
+}
+ul li ul.dropdown-green li, ul li ul.dropdown li{
+        padding: 6px 0;
+}
+ul li ul.dropdown{
+    top: 94px;
+    width: 195px;
+    height: auto;
+    padding: 13px 28px 0;
+}
+
+.arrow-up{
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 20px solid #041f2f!important;
+    top: -20px;
+        left: 55px;
+}
+.dashboard-wrapper .arrow-up{
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    top:-9px;
+}
+.dashboard-wrapper ul li ul.dropdown{
+      top: 87px;
+    width: 261px;
+    height: auto;
+}
+.PROGRAMCOMPLETED{
+        padding: 30px;
+    height: 90px;
+            max-width: 79%;
+}
+.PROGRAMCOMPLETED p{
+        font-size: 23px;
+            letter-spacing: 0.4px;
+}
+.Program-completed-image{
+    max-width: 425px;
+    height: 100%;
+    max-height: 683px;
+}
+
+.program-img-height{
+    max-height: 767px;
+}
+.questboard-wrapper .program-topbar{
+        max-height: 96px;
+}
+.questboard-wrapper .program-topbar li.logo img{
+        width: 95px;
+    height: 95px;
+}
+.questboard-wrapper .program-topbar .program-name{
+        font-size: 32px;
+    padding: 31px 18px;
+}
+.questboard-wrapper .name{
+    font-size: 18px!important;
+    margin-top: 17px!important;
+}
+.questboard-wrapper .designation, .questboard-wrapper .profile-info .points-count
+{
+    font-size: 14px!important;
+
+}
+.questboard-wrapper .program-menu ul{
+    display: block;
+}
+.questboard-wrapper .program-menu .quest_mobile_menu{
+    display: none;
+}
+.questboard-wrapper .program-menu{
+        padding: 15px 17.5px;
+        height: 44px;
+}
+
+
+.questboard-wrapper .Learn_tile div.status, .questboard-wrapper .Do_tile div.status, .questboard-wrapper .Inspire_tile div.status,
+.questboard-wrapper .Learn_tile div.status-image, .questboard-wrapper .Do_tile div.status-image, .questboard-wrapper .Inspire_tile div.status-image
+{
+    height: 206px!important;
+    padding: 13px 17px!important;
+}
+
+.questboard-wrapper .Learn_tile div.info, .questboard-wrapper .Do_tile div.info, .questboard-wrapper .Inspire_tile div.info{
+        height: 77px;
+        padding: 13px 17px
+}
+.questboard-wrapper .tile-top{
+        height: 44px;
+}
+.questboard-wrapper .status .heading, .questboard-wrapper div.status-image .heading{
+        font-size: 28px;
+}
+.questboard-wrapper .status .completed{
+        height: 22px;
+        font-size: 12px;
+            padding: 4px 10px;
+            margin-right: 2px;
+}
+.questboard-wrapper span.corner{
+        border-top: 36.5px solid #f1efef;
+    border-left: 34.1px solid transparent;
+}
+.questboard-wrapper .program-body{
+    font-size: 26px;
+     
+}
+.mobile-quest-heading{
+        margin: 35px 0 54px 66px;
+}
+.questboard-wrapper .level1, .questboard-wrapper .level2, .questboard-wrapper .level3{
+        font-size: 20px;
+    margin-left: 81px;
+    width: 103px;
+    height: 26px;
+}
+.questboard-wrapper .row1, .questboard-wrapper .row2, .questboard-wrapper .row3{
+        padding-top: 36px;
+    margin-bottom: 76.8px;
+    padding-left: 66px;
+    height: 359px
+}
+.questboard-wrapper .Learn_tile, .questboard-wrapper .Do_tile, .questboard-wrapper .Inspire_tile{
+    width:25%;
+    margin-bottom: 140px;
+    margin-right: 66px;
+}
+.questboard-wrapper .status .locked img{
+    height: auto;
+}
+.questboard-wrapper .Learn_tile .badge-img img{
+    width:98px;
+}
+.questboard-wrapper .Do_tile .badge-img img {
+    width: 58.2px;
+    height: 66.4px;
+}
+.questboard-wrapper .Inspire_tile .badge-img img {
+    width: 66px;
+    height: 78px;
+}
+.questboard-wrapper .info .activity-name{
+    font-size: 20px;
+  margin-bottom: 7px;
+}
+.questboard-wrapper .info .points_challenges, .questboard-wrapper .info .points, .questboard-wrapper .info .challenges{
+        font-size: 13px;
+}
+.questboard-wrapper .Learn_tile .fa-graduation-cap{
+        font-size: 26px;
+}
+.questboard-wrapper .Learn_tile .back .status, .questboard-wrapper .Do_tile .back .status, .questboard-wrapper .Inspire_tile .back .status{
+    letter-spacing: 0.4px;
+    font-size: 15px;
+}
+.questboard-wrapper .back .BASE{
+    font-size: 15px;
+    margin-top: 13.5px;
+}
+.questboard-wrapper ul li ul.dropdown{
+        width: 261px;
+    height: auto;
+    margin-top: 65px;
+}
+.questboard-wrapper .arrow-up{
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid #041f2f!important;
+    top: -15px;
+        left: 65px;
+}
+.questboard-wrapper ul li ul.dropdown li a{
+        line-height: 1.27;
+    letter-spacing: normal;
+}
+.My-Programs, .questboard-wrapper .My-Programs span{
+        font-size: 15px;
+}
+.profile-info li img {
+    width: 48px!important;
+    height: 47.3px!important;
+}
+.dashboard-wrapper li.logo img{
+        width: 95px!important;
+    height: 95px!important;
+}
+.questboard-wrapper .Learn_tile .heading, 
+.questboard-wrapper .Inspire_tile .heading, .questboard-wrapper .Do_tile .heading{
+        font-size: 22px!important;
+}
+.questboard-wrapper .info .activity-name{
+        font-size: 14px;
+}
+.questboard-wrapper .program-topbar li.logo img {
+    width: 95px!important;
+    height: 95px!important;
+}
+}
+
+@media only screen and (max-width:1365px) and (min-width:1024px) and (orientation:portrait)
+{
+    .topbar .objective-section
+    {
+            max-width: 96%!important;
+    }
+    .topbar .nextchallenge{
+        max-width: 96.8%!important;
+    }
+     .questboard-wrapper .program-menu ul.quest_mobile_menu
+    {
+display:none;
+    }
+     .jubi-logo{
+    margin-top: 26px;
+    padding-left: 27.5px;
+}
+.jubi-logo img{
+     width: 57.5px;
+    height: 37.5px;
+}
+.LEARN-DO-INSPIRE{
+  margin-top: 40.6px;
+    padding-right: 26.6px;
+    font-size: 15px;
+}
+.Welcome-to-Modern-Le p{
+    font-size: 15px;
+    margin-bottom: 10px;
+    margin-top: 109.5px;
+}
+.Welcome-to-Modern-Le{
+    margin-bottom: 276px;
+}
+#loginForm, #Re-loginForm, #loginForm input, #Re-loginForm input{
+  width: 100%;
+    max-width: 234.5px;
+height: 35.5px;
+    padding: 8px 10px;
+}
+#loginForm div.form-group, #Re-loginForm div.form-group{
+        margin-bottom: 22px;
+}
+.Forgot-your-password{
+    margin-top: -9.5px;
+    margin-bottom: 20px;
+}
+.Forgot-your-password a{
+font-size: 15px;
+}
+#loginForm button, #Re-loginForm button{
+        width: 96.5px;
+    height: 34px;
+    border-radius: 2.5px;
+    font-size: 15px;
+    padding: 5px;
+}
+
+#Re-loginForm input::-webkit-input-placeholder, #loginForm input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+   font-size: 15px;
+}
+#Re-loginForm input::-moz-placeholder, #loginForm input::-moz-placeholder { /* Firefox 19+ */
+    font-size: 15px;
+}
+#Re-loginForm input:-ms-input-placeholder, #loginForm input:-ms-input-placeholder { /* IE 10+ */
+   font-size: 15px;
+}
+#Re-loginForm input:-moz-placeholder, #loginForm input:-moz-placeholder { /* Firefox 18- */
+    font-size: 15px;
+  }
+  
+#Re-loginForm img{
+    width: 28.5px;
+    height: 28px;
+}
+.Welcome-Back-Message{
+    font-size: 12.5px;
+    margin-bottom: 12px;
+}
+.relogin p {
+    margin-bottom: 30px;
+    margin-top: 50px;
+}
+#wrapper-intro .modal-dialog{
+    margin:auto;
+}
+
+.powered-by img{
+        height: 40px;
+    width: 61px;
+}
+.GO-TO-QUEST-BOARD, .PROGRAMCOMPLETED{
+     max-width: 80.8%!important
+ }
+ .Buddies{
+     display: inline-block!important;
+ }
+ .positionUPNEXTmobile {
+    margin-top: 30px!important;
+}
+.positionUPNEXT, .positionKPI {
+    display: block!important;
+}
+.positionUPNEXTmobile, .positionKPImobile {
+    display: none!important;
+}
+.positionleft {
+    right: 0%!important;
+}
+hr.programdetails-mobile {
+    display: block!important;
+}
+.buddies-desk {
+    float: none!important;
+    padding: 28px 0 30px!important;
+    top: 0!important;
+    text-align: right;
+}
+footer.powered-by{
+    text-align: left;
+}
+.Program-bg-image img, .Program-completed-image img {
+    width: auto;
+}
+}
+@media only screen and (max-width:736px) and (min-width:412px){
+    .questboard-wrapper .Learn_tile, .questboard-wrapper .Do_tile, .questboard-wrapper .Inspire_tile{
+        margin-right: 21px;
+    margin-left: 14px;
+    }
+    .topbar .objective-section, .topbar .nextchallenge{
+        max-width: 90%!important;
+    }
+}
+@media only screen and (max-width:568px) and (min-width:320px){
+    .topbar .objective-section, .topbar .nextchallenge{
+        max-width: 87%;
+    } 
+}
+@media only screen and (max-width:667px) and (min-width:375px){
+    .topbar .objective-section, .topbar .nextchallenge{
+        max-width: 89%;
+    } 
+}
+
+
+
+@media only screen and (max-width:640px) and (min-width:340px){
+.topbar .objective-section, .topbar .nextchallenge{
+        max-width: 89%;
+    } 
+}

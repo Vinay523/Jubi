@@ -1,0 +1,88 @@
+<div class="loading" ng-show="loading.isLoading">
+    <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+    <div>One moment please...</div>
+</div>
+
+<div ng-show="!loading.isLoading">
+    <div ng-controller="AuthoringSuiteProgramDiscussionController as c" ng-init="c.init('<%- model.slug %>','<%- model.restore %>')" ng-cloak ng-click="offClick($event)">
+        <div class="row page-heading panel">
+            <div class="col-xs-12">
+                <%- partial('manage/views/authoringSuite/inspiration/inspirationHeader') %>
+            </div>
+        </div>
+        <form action="" method="post" novalidate name="programEditFrm">
+            <div class="row">
+                <div class="col-xs-12 col-md-8 col-lg-9">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="loading" ng-show="isSaving">
+                                <span us-spinner="{radius:30, width:8, length: 16, color: '#b0b0b7'}"></span>
+                                <div>One moment please...</div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12" ng-show="!isSaving">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12">
+                                    <label>Inspiration</label>
+
+                                    <div class="panel panel-default form-horizontal">
+                                        <div class="panel-body">
+                                            <div class="row form-group" ng-class="{'has-error':val.newEncouragePoints.fmt}">
+                                                <label class="col-xs-12 col-md-6 control-label">Encourage Points</label>
+                                                <div class="col-xs-3 col-md-2">
+                                                    <input type="text" class="form-control" number-mask allow-decimal="false" ng-model="forum.newEncouragePoints" placeholder="# of points">
+                                                    <div class="text-sm text-danger" ng-if="val.newEncouragePoints.fmt">Enter a number between 1 and 1000.</div>
+                                                </div>
+                                                <div class="col-xs-6 col-md-2">
+                                                    <label class="control-label">with maximum of</label>
+                                                </div>
+                                                <div class="col-xs-3 col-md-2">
+                                                    <input type="text" class="form-control" number-mask allow-decimal="false" ng-model="forum.newEncouragePointsMax" placeholder="# of points">
+                                                    <div class="text-sm text-danger" ng-if="val.newEncouragePointsMax.fmt">Enter a number between 1 and 1000.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group" ng-class="{'has-error':val.newAppreciatePoints.fmt}">
+                                                <label class="col-xs-12 col-md-6 control-label">Appreciate Points</label>
+                                                <div class="col-xs-3 col-md-2">
+                                                    <input type="text" class="form-control" number-mask allow-decimal="false" ng-model="forum.newAppreciatePoints" placeholder="# of points">
+                                                    <div class="text-sm text-danger" ng-if="val.newAppreciatePoints.fmt">Enter a number between 1 and 1000.</div>
+                                                </div>
+                                                <div class="col-xs-6 col-md-2">
+                                                    <label class="control-label">with maximum of</label>
+                                                </div>
+                                                <div class="col-xs-3 col-md-2">
+                                                    <input type="text" class="form-control" number-mask allow-decimal="false" ng-model="forum.newAppreciatePointsMax" placeholder="# of points">
+                                                    <div class="text-sm text-danger" ng-if="val.newAppreciatePointsMax.fmt">Enter a number between 1 and 1000.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group" ng-class="{'has-error':val.newStoryPoints.fmt}">
+                                                <label class="col-xs-12 col-md-6 control-label">Story Points</label>
+                                                <div class="col-xs-3 col-md-2">
+                                                    <input type="text" class="form-control" number-mask allow-decimal="false" ng-model="forum.newStoryPoints" placeholder="# of points">
+                                                    <div class="text-sm text-danger" ng-if="val.newStoryPoints.fmt">Enter a number between 1 and 1000.</div>
+                                                </div>
+                                                <div class="col-xs-6 col-md-2">
+                                                    <label class="control-label">with maximum of</label>
+                                                </div>
+                                                <div class="col-xs-3 col-md-2">
+                                                    <input type="text" class="form-control" number-mask allow-decimal="false" ng-model="forum.newStoryPointsMax" placeholder="# of points">
+                                                    <div class="text-sm text-danger" ng-if="val.newStoryPointsMax.fmt">Enter a number between 1 and 1000.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-4 col-lg-3">
+                    <%- partial('manage/views/authoringSuite/inspiration/sidebar', {hidePublish: true}) %>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

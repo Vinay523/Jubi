@@ -1,0 +1,108 @@
+<ul dnd-list="question.workAnswers.grouping.answers"
+    dnd-drop="answerDrop(event, index, item, external, type, 'grouping', question)"
+    dnd-allowed-types="['groupingAnswer']">
+    <li ng-repeat="answer in question.workAnswers.grouping.answers"
+        dnd-type="'groupingAnswer'"
+        dnd-draggable="answer"
+        dnd-moved="question.workAnswers.grouping.answers.splice($index, 1)"
+        dnd-selected="question.workAnswers.grouping.selectedAnswer=answer"
+        dnd-effect-allowed="move"
+        dnd-disable-if="!question.workAnswers.grouping.canDrag || quest.publishedAt"
+        ng-class="{'selected':question.workAnswers.grouping.selectedAnswer===answer}">
+
+        <div class="panel-group accordion">
+            <div class="panel panel-default" ng-class="{'quest-error':answer.hasError}">
+                <div class="panel-heading" style="padding-left:10px;">
+                    <div class="panel-title">
+                        <div class="text-muted handle"
+                             ng-mousedown="canEditEntity(quest, program) && answerDragHandleDown($event,question,answer,'grouping')"
+                             ng-mouseup="canEditEntity(quest, program) && answerDragHandleUp($event,question,answer,'grouping')">
+                            <span ng-style="{ color: getEntityHandleColor(quest, program) }"
+                                  style="margin-left:4px"
+                                  class="fa fa-ellipsis-v"></span>
+                        </div>
+                        <div class="content">
+
+                            <div class="row">
+                                <div class="col-xs-12" ng-class="{'has-error':answer.val.answer.req}">
+                                    <input type="text"
+                                           class="form-control"
+                                           placeholder="Group"
+                                           ng-model="answer.answer">
+                                    <div class="text-sm text-danger" ng-if="answer.val.answer.req">Group name cannot be
+                                        empty.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-xs">
+                                <a href="#" ng-click="canEditEntity(quest, program) && groupingRemoveAnswer($event,answer,$index,question)">Remove
+                                    Group</a>
+                            </div>
+
+                            <div ng-if="answer.items.length > 0" style="padding-top:10px;">
+                                <ul dnd-list="answer.items"
+                                    dnd-drop="groupItemDrop(event, index, item, answer)"
+                                    dnd-allowed-types="['groupingItem']">
+                                    <li ng-repeat="item in answer.items"
+                                        dnd-type="'groupingItem'"
+                                        dnd-draggable="item"
+                                        dnd-moved="answer.items.splice($index, 1)"
+                                        dnd-selected="answer.selectedItem=item"
+                                        dnd-effect-allowed="move"
+                                        dnd-disable-if="!item.canDrag || !canEditEntity(quest, program)"
+                                        ng-class="{'selected':answer.selectedItem===item}">
+
+                                        <div class="panel-group accordion">
+                                            <div class="panel panel-default" ng-class="{'quest-error':item.hasError}">
+                                                <div class="panel-heading" style="padding-left:10px;">
+                                                    <div class="panel-title">
+                                                        <div class="text-muted handle"
+                                                             ng-mousedown="canEditEntity(quest, program) && groupItemDragHandleDown($event,answer,item)"
+                                                             ng-mouseup="canEditEntity(quest, program) && groupItemDragHandleUp($event,answer,item)">
+                                                            <span style="margin-left:4px"
+                                                                  ng-style="{ color: getEntityHandleColor(quest, program) }"
+                                                                  class="fa fa-ellipsis-v"></span></div>
+                                                        <div class="content">
+
+                                                            <div class="row">
+                                                                <div class="col-xs-12"
+                                                                     ng-class="{'has-error':item.val.item.req}">
+                                                                    <input type="text"
+                                                                           class="form-control"
+                                                                           placeholder="Group Item"
+                                                                           ng-model="item.item">
+                                                                    <div class="text-sm text-danger"
+                                                                         ng-if="item.val.item.req">Group items cannot be
+                                                                        empty.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-xs">
+                                                                <a href="#"
+                                                                   ng-click="canEditEntity(quest, program) && groupingRemoveItem($event,item,$index,answer)">Remove
+                                                                    Group Item</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+
+                            <button ng-disabled="!canEditEntity(quest, program)" type="button" class="btn btn-primary outline btn-block"
+                                    ng-click="addGroupItem(answer)" style="margin-top:10px;">
+                                <span class="icon fa fa-plus"></span> Add Group Item
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+<button ng-disabled="!canEditEntity(quest, program)" type="button" class="btn btn-primary outline btn-block" ng-click="addAnswer('grouping',question)">
+    <span class="icon fa fa-plus" title="Add New Answer"></span> Add New Group
+</button>

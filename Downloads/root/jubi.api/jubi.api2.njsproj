@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4731169e-d43c-4c19-8ab2-7d35ee040ca4}</ProjectGuid>
+    <ProjectHome />
+    <ProjectView>ProjectFiles</ProjectView>
+    <StartupFile>app.js</StartupFile>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <StartWebBrowser>True</StartWebBrowser>
+    <Environment>NODE_ENV=localWithPorts</Environment>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <ItemGroup>
+    <Content Include="package.json" />
+    <Compile Include="app.js" />
+    <Content Include="config\app.json" />
+    <Content Include="config\db.json" />
+    <Compile Include="controllers\auth.js" />
+    <Compile Include="controllers\forum.js" />
+    <Compile Include="controllers\login.js" />
+    <Compile Include="controllers\media.js" />
+    <Compile Include="controllers\models\distributionPartner.js" />
+    <Compile Include="controllers\models\programs.js" />
+    <Compile Include="controllers\stats.js" />
+    <Content Include="emails\confirmEmailUpdate.ejs" />
+    <Content Include="emails\confirmEmailUpdate.text.ejs" />
+    <Content Include="emails\emailUpdated.ejs" />
+    <Content Include="emails\emailUpdated.text.ejs" />
+    <Content Include="emails\forgotPassword.ejs" />
+    <Content Include="emails\forgotPassword.text.ejs" />
+    <Compile Include="helpers\constants.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\badge.js" />
+    <Compile Include="models\badgeRequirement.js" />
+    <Compile Include="models\bonusPoints.js" />
+    <Compile Include="models\challenge.js" />
+    <Compile Include="models\challengeHint.js" />
+    <Compile Include="models\challengeAnswer.js" />
+    <Compile Include="models\challengeMedia.js" />
+    <Compile Include="models\challengeQuestion.js" />
+    <Compile Include="models\challengeQuestionType.js" />
+    <Compile Include="models\challengeResult.js" />
+    <Compile Include="models\challengeResultItem.js" />
+    <Compile Include="models\client.js" />
+    <Compile Include="models\clientClientRole.js" />
+    <Compile Include="models\clientRole.js" />
+    <Compile Include="models\clientUser.js" />
+    <Compile Include="models\communication.js" />
+    <Compile Include="models\dimDate.js" />
+    <Compile Include="models\email.js" />
+    <Compile Include="models\encoding.js" />
+    <Compile Include="models\factProgramUserCompletedItems.js" />
+    <Compile Include="models\factProgramUserCompletedItemsIntraday.js" />
+    <Compile Include="models\factProgramUserStats.js" />
+    <Compile Include="models\factProgramUserStatsIntraday.js" />
+    <Compile Include="models\forum.js" />
+    <Compile Include="models\forumItem.js" />
+    <Compile Include="models\forumItemCategory.js" />
+    <Compile Include="models\forumItemDislike.js" />
+    <Compile Include="models\forumItemLike.js" />
+    <Compile Include="models\forumItemMedia.js" />
+    <Compile Include="models\forumItemUser.js" />
+    <Compile Include="models\history.js" />
+    <Compile Include="models\index.js" />
+    <Compile Include="models\level.js" />
+    <Compile Include="models\pollResults.js" />
+    <Compile Include="models\program.js" />
+    <Compile Include="models\programItemCounts.js" />
+    <Compile Include="models\programLicense.js" />
+    <Compile Include="models\programPollQuestions.js" />
+    <Compile Include="models\programUser.js" />
+    <Compile Include="models\programUserAssociation.js" />
+    <Compile Include="models\programUserAssociationType.js" />
+    <Compile Include="models\programUserGroup.js" />
+    <Compile Include="models\programUserGroupUser.js" />
+    <Compile Include="models\programUserStats.js" />
+    <Compile Include="models\programUserStatsSummary.js" />
+    <Compile Include="models\quest.js" />
+    <Compile Include="models\resetUser.js" />
+    <Compile Include="models\role.js" />
+    <Compile Include="models\sequencingType.js" />
+    <Compile Include="models\ssoProvider.js" />
+    <Compile Include="models\ssoProviderProgram.js" />
+    <Compile Include="models\ssoSession.js" />
+    <Compile Include="models\systemConfiguration.js" />
+    <Compile Include="models\todo.js" />
+    <Compile Include="models\todoRequirement.js" />
+    <Compile Include="models\user.js" />
+    <Compile Include="models\userBadge.js" />
+    <Compile Include="models\userBadgeRequirementsFulfillment.js" />
+    <Compile Include="models\userChallengeMedia.js" />
+    <Compile Include="models\userRole.js" />
+    <Compile Include="models\userTodo.js" />
+    <Compile Include="models\userTodoRequirementsFulfillment.js" />
+    <Compile Include="routes\index.js" />
+    <Compile Include="services\email.js" />
+    <Compile Include="services\forum.js" />
+    <Compile Include="services\helpers.js" />
+    <Compile Include="services\index.js" />
+    <Compile Include="services\quests.js" />
+    <Compile Include="services\stats.js" />
+    <Compile Include="controllers\models\authoring.js" />
+    <Compile Include="controllers\models\badges.js" />
+    <Compile Include="controllers\models\challengeQuestionType.js" />
+    <Compile Include="controllers\models\challenges.js" />
+    <Compile Include="controllers\models\clientRoles.js" />
+    <Compile Include="controllers\models\clients.js" />
+    <Compile Include="controllers\models\controllerBase.js" />
+    <Compile Include="controllers\models\passwordReset.js" />
+    <Compile Include="controllers\models\teprograms.js" />
+    <Compile Include="controllers\models\quests.js" />
+    <Compile Include="controllers\models\roles.js" />
+    <Compile Include="controllers\models\todos.js" />
+    <Compile Include="controllers\models\userChallengeAnswers.js" />
+    <Compile Include="controllers\models\users.js" />
+    <Content Include="emails\layouts\main.ejs" />
+    <Content Include="emails\layouts\main.text.ejs" />
+    <Content Include="models\data\challengeQuestionTypes.json" />
+    <Content Include="models\data\clientRoles.json" />
+    <Content Include="models\data\levels.json" />
+    <Content Include="models\data\programs.json" />
+    <Content Include="models\data\roles.json" />
+    <Content Include="models\data\users.json" />
+    <Compile Include="models\helpers\migrate.js" />
+    <Compile Include="models\helpers\sync.js" />
+    <Compile Include="models\migrations\20151005-0001.js" />
+    <Compile Include="models\migrations\20151005-0002.js" />
+    <Compile Include="models\migrations\20151008-0001.js" />
+    <Compile Include="models\migrations\20151014-0001.js" />
+    <Compile Include="models\migrations\20151027-0001.js" />
+    <Compile Include="models\migrations\20151103-0001.js" />
+    <Compile Include="models\migrations\20151103-0002.js" />
+    <Compile Include="models\migrations\20151104-0001.js" />
+    <Compile Include="models\migrations\20151105-0001.js" />
+    <Compile Include="models\migrations\20151105-0002.js" />
+    <Compile Include="models\migrations\20151106-0001.js" />
+    <Compile Include="models\migrations\20151117-0001.js" />
+    <Compile Include="models\migrations\20151123-0001.js" />
+    <Compile Include="models\migrations\20151123-0002.js" />
+    <Compile Include="models\migrations\20151124-0001.js" />
+    <Compile Include="models\migrations\20151125-0001.js" />
+    <Compile Include="models\migrations\20151130-0001.js" />
+    <Compile Include="models\migrations\20151130-0002.js" />
+    <Compile Include="models\migrations\20151201-0001.js" />
+    <Compile Include="models\migrations\20151201-0002.js" />
+    <Compile Include="models\migrations\20160203-0001.js" />
+    <Compile Include="models\migrations\20160629-0001.js" />
+    <Compile Include="models\migrations\20160629-0002.js" />
+    <Compile Include="models\migrations\20160822-0001.js" />
+    <Compile Include="models\migrations\20160830-0001.js" />
+    <Compile Include="models\migrations\20160830-0002.js" />
+    <Compile Include="models\migrations\20160916-0001.js" />
+    <Compile Include="models\migrations\20161109-0001.js" />
+    <Compile Include="models\migrations\20161110-0001.js" />
+    <Compile Include="models\migrations\20161110-0002.js" />
+    <Compile Include="models\migrations\20161119-0001.js" />
+    <Compile Include="models\migrations\20161119-0002.js" />
+    <Compile Include="models\migrations\20170119-0001.js" />
+    <Compile Include="models\migrations\archive\20150520-0001.js" />
+    <Compile Include="models\migrations\archive\20150520-0002.js" />
+    <Compile Include="models\migrations\archive\20150528-0001.js" />
+    <Compile Include="models\migrations\archive\20150602-0001.js" />
+    <Compile Include="models\migrations\archive\20150603-0001.js" />
+    <Compile Include="models\migrations\archive\20150607-0001.js" />
+    <Compile Include="models\migrations\archive\20150619-0001.js" />
+    <Compile Include="models\migrations\archive\20150619-0002.js" />
+    <Compile Include="models\migrations\archive\20150620-0001.js" />
+    <Compile Include="models\migrations\archive\20150620-0002.js" />
+    <Compile Include="models\migrations\archive\20150623-0001.js" />
+    <Compile Include="models\migrations\archive\20150624-0001.js" />
+    <Compile Include="models\migrations\archive\20150625-0001.js" />
+    <Compile Include="models\migrations\archive\20150629-0001.js" />
+    <Compile Include="models\migrations\archive\20150629-0002.js" />
+    <Compile Include="models\migrations\archive\20150701-0001.js" />
+    <Compile Include="models\migrations\archive\20150701-0002.js" />
+    <Compile Include="models\migrations\archive\20150705-0001.js" />
+    <Compile Include="models\migrations\archive\20150705-0002.js" />
+    <Compile Include="models\migrations\archive\20150707-0001.js" />
+    <Compile Include="models\migrations\archive\20150708-0001.js" />
+    <Compile Include="models\migrations\archive\20150709-0001.js" />
+    <Compile Include="models\migrations\archive\20150710-0001.js" />
+    <Compile Include="models\migrations\archive\20150710-0002.js" />
+    <Compile Include="models\migrations\archive\20150717-0001.js" />
+    <Compile Include="models\migrations\archive\20150723-0001.js" />
+    <Compile Include="models\migrations\archive\20150723-0002.js" />
+    <Compile Include="models\migrations\archive\20150802-0001.js" />
+    <Compile Include="models\migrations\archive\20150809-0001.js" />
+    <Compile Include="models\migrations\archive\20150810-0001.js" />
+    <Compile Include="models\migrations\archive\20150818-0001.js" />
+    <Compile Include="models\migrations\archive\20150824-0001.js" />
+    <Compile Include="models\migrations\archive\20150826-0001.js" />
+    <Compile Include="models\migrations\archive\20150827-0001.js" />
+    <Compile Include="models\migrations\archive\20150901-0001.js" />
+    <Compile Include="models\migrations\archive\20150907-0001.js" />
+    <Compile Include="models\migrations\archive\20150908-0001.js" />
+    <Compile Include="models\migrations\archive\20150911-reporting-tables.js" />
+    <Compile Include="models\migrations\archive\20150915-0001.js" />
+    <Compile Include="models\migrations\archive\20150917-0001.js" />
+    <Compile Include="models\migrations\archive\20150917-0002.js" />
+    <Compile Include="models\migrations\archive\20150921-reporting-tables-intraday.js" />
+    <Compile Include="models\migrations\archive\20150922-0001.js" />
+    <Compile Include="models\migrations\archive\20150922-0002.js" />
+    <Compile Include="models\migrations\archive\20150923-0001.js" />
+    <Compile Include="models\migrations\archive\20150924-0001.js" />
+    <Compile Include="models\migrations\archive\20150924-0002.js" />
+    <Compile Include="models\migrations\archive\20150924-0003.js" />
+    <Compile Include="models\migrations\archive\20150925-0001.js" />
+    <Compile Include="models\migrations\archive\20150925-0002.js" />
+    <Compile Include="models\migrations\archive\20150930-0001.js" />
+    <Compile Include="models\migrations\archive\20150930-0002.js" />
+    <Compile Include="models\migrations\archive\20150930_0003.js" />
+    <Content Include="sql\Jubi_V2_SQL_Schema.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="config" />
+    <Folder Include="controllers" />
+    <Folder Include="controllers\models" />
+    <Folder Include="emails" />
+    <Folder Include="emails\layouts" />
+    <Folder Include="jubi.api" />
+    <Folder Include="jubi.api2" />
+    <Folder Include="logs" />
+    <Folder Include="models" />
+    <Folder Include="models\data" />
+    <Folder Include="models\helpers" />
+    <Folder Include="models\migrations" />
+    <Folder Include="models\migrations\archive" />
+    <Folder Include="models\scripts" />
+    <Folder Include="models\scripts\functions" />
+    <Folder Include="models\scripts\procedures" />
+    <Folder Include="models\scripts\triggers" />
+    <Folder Include="models\scripts\views" />
+    <Folder Include="helpers\" />
+    <Folder Include="routes" />
+    <Folder Include="services" />
+    <Folder Include="sql\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

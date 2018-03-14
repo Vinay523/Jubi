@@ -1,0 +1,23 @@
+<div ng-controller="ProgramsController" style="padding-bottom:142px;">
+    <section class="intro">
+    </section>
+    <section class="discussion" style="padding: 10px">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-program-text"  ng-if="programs && programs.length == 0"><h3>No programs available</h3></div>
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3" ng-repeat="program in programs">
+                <div class="thumbnail program animated bounceInUp">
+                    <a href="" ng-click="programClick($index, program)" style="display:block;">
+                        <div class="program-img">
+                            <img ng-src="{{(program.imageUrl ? (program.imageUrl+'/600x600') : '<%-config.web.contentUrl%>/img/no-picture.jpg')}}" alt="{{program.title}}" />
+                        </div>
+                        <div class="caption">
+                            <h3 class="program">{{program.title}}</h3>
+                            <p class="author"><span class="program-author">By: {{program.content.author}}</span><span class="version small pull-right">v{{program.version.toFixed(1)}}</span></p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+   
+</div>

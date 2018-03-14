@@ -1,0 +1,11 @@
+<div style="padding:0 0 15px;">
+    <div class="form-group">
+        <h2 style="margin-bottom:0;">{{program.title}}</h2>
+    </div>
+    <div ng-if="program.description" ng-bind-html="program.description"></div>
+</div>
+<ol class="breadcrumb text-sm">
+    <li><a ng-href="/manage/dashboard">Dashboard</a></li>
+    <li><a ng-href="/manage/authoring-suite/programs">Authoring Suite</a></li>
+    <li class="active">{{(program.title ? program.title + ' - Activities' : 'Program Title')}}</li>
+</ol>

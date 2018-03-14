@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="(shared) jubi.api (migrate)" type="NodeJSConfigurationType" factoryName="Node.js" folderName="Helpers" path-to-node="/usr/local/bin/node" path-to-js-file="app.js" application-parameters="migrate:up" working-dir="$PROJECT_DIR$/jubi.api">
+    <method />
+  </configuration>
+</component>
